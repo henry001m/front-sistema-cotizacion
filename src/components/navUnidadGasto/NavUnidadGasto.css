@@ -1,0 +1,16 @@
+#cabecera{
+    background :dodgerblue;
+    color: white;
+    font-family: Lato; 
+    border-width: 5px;
+    border-color: black;
+}
+
+#userImg{
+    color: white;
+}
+
+#navmenu{
+    border: 15px;
+    border-color: black;
+}

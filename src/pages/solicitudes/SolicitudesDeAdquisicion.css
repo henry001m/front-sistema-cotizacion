@@ -1,0 +1,11 @@
+.containerTabla {
+  
+    position: absolute;
+    width:  90%;
+    height: 2px;
+    left: 50%;
+    /*top: 400px;*/
+    transform: translate(-50%, -50%);
+    padding:  200px;
+    
+  }
