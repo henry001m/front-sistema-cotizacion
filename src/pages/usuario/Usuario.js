@@ -18,7 +18,7 @@ function Usuario(){
                                 <button className="btn btn-outline-success my-2 my-sm-0">Search</button>
                         </div>
                         <div className="form-group col-md-6" id="button">
-                            <button type="button" className="btn btn-success">Agregar
+                            <button type="button" className="btn btn-success">Nuevo
                             </button>
                         </div>
                     </div>
