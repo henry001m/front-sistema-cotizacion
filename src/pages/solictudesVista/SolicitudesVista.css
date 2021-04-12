@@ -28,7 +28,7 @@
 
 .table-striped tbody td,
 .table-striped thead > tr> th{
-  float: left;
+  float:inline-end;
   border-bottom-width: 0;
 }
-
+  

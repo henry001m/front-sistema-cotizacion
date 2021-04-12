@@ -1,8 +1,14 @@
 import React from  'react'
 import './AgregarDetalleSolicitud.css'
+import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
+
 function AgregarDetalleSolictud(){
     return(
         <>
+            <div>
+                <h1 align = "center">Nueva Solicitud</h1>
+                <br></br>
+            </div>
             <div className="form-register">
                 <form>
                     <div className="form-row">
@@ -17,8 +23,10 @@ function AgregarDetalleSolictud(){
                             <input type="text" className="form-control"></input>
                         </div>
                         <div className="form-group col-md-6" id="button">
-                            
-                            <button type="button" className="btn btn-success my-2 my-sm-0"> Agregar </button>
+                            <button type="button" className="btn btn-success"
+                            data-toggle="modal"
+                            data-target="#modalAgregarAdquisicion">Agregar
+                            </button>
                         </div>
                     </div>
                     <div className="form-row" id="list">
@@ -105,6 +113,7 @@ function AgregarDetalleSolictud(){
                         </div>
                     </div>
                 </form>
+                <ModalAgregarAdquisicion/>
             </div>
         </>
     );
