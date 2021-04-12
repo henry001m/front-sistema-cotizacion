@@ -34,7 +34,7 @@ function NavUnidadGasto() {
                 <Switch>
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicion" component={ SolicitudesDeAdquisicion }/>
-                    <Route exact path="/DescargarFormulario" component={ AgregarDetalleSolictud }/>
+                    <Route exact path="/AgregarDetalleSolictud" component={ AgregarDetalleSolictud }/>
                 </Switch>
             </Router>
         </>

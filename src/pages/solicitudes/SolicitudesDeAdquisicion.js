@@ -1,7 +1,14 @@
 import React from 'react'
 import './SolicitudesDeAdquisicion.css'
+import { useHistory } from 'react-router-dom'
 
 function SolicitudesDeAdquisicion(){
+
+    let history = useHistory();
+    function ButtonAgregar(){
+        history.push("/AgregarDetalleSolictud")
+    }
+
     return(
         <>
             <div>
@@ -14,7 +21,8 @@ function SolicitudesDeAdquisicion(){
                     <button className="btn btn-outline-success my-2 my-sm-0">Search</button>
                 </div>
                 <div className="col-sm-6">
-                    <button type="button" className="btn btn-success my-2 my-sm-0"> Nueva Solicitud </button>
+                    <button type="button" className="btn btn-success my-2 my-sm-0"
+                    onClick={ ButtonAgregar }> Nueva Solicitud </button>
                 </div>
             </form>
             <br></br>
