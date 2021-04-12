@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import UserImg from './../../resources/user.jpg'
 import Home from './../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
+import EnviarCotizacion from '../../pages/EnviarFormulario/EnviarCotizacion';
 
 function NavAdministrador() {
     return(
@@ -25,12 +26,10 @@ function NavAdministrador() {
                         <a className="nav-link" href="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item dropdown">
-                        <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-haspopup="true" aria-expanded="true">Cotización</a>
+                        <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="/EnviarCotizacion" aria-haspopup="true" aria-expanded="true">Cotización</a>
                         <div className="dropdown-menu">
-                            <a className="dropdown-item" href="#">Action</a>
-                            <a className="dropdown-item" href="#">Another action</a>
-                            <a className="dropdown-item" href="#">Something else here</a>
-                            <a className="dropdown-item" href="#">Separated link</a>
+                            <a className="dropdown-item" >Realizar Cotización</a>
+                            <a className="dropdown-item" href="">Enviar Cotizacion</a>
                         </div>
                     </li>
                     <li className="nav-container--item">
@@ -46,6 +45,7 @@ function NavAdministrador() {
                 <Switch>
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
+                    <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 </Switch>
             </Router>
         </>
