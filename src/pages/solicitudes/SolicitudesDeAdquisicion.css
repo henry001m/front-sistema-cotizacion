@@ -1,4 +1,4 @@
-.table-striped{
+/* .table-striped{
   border-collapse: separate;
   border: 3px solid rgb(2, 129, 146);
   border-radius: 10px;
@@ -30,5 +30,5 @@
 .table-striped thead > tr> th{
   float: left;
   border-bottom-width: 0;
-}
+} */
 

@@ -14,7 +14,7 @@ function NavAdministrador() {
                 </h1>
                 <button type="button" className="btn btn-default" id="userImg">
                     <img  src={UserImg} height="50" alt="logo" />
-                        Administrador
+                        Unidad Administrativa
                 </button>
             </nav>
             <Router>
