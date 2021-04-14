@@ -1,14 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SolicitudesDeAdquisicion.css'
 import { useHistory } from 'react-router-dom'
-import { PlusCircle } from 'bootstrap-icons-react'
+import { PlusCircle} from 'bootstrap-icons-react'
 
 function SolicitudesDeAdquisicion(){
 
     let history = useHistory();
+
+
     function ButtonAgregar(){
         history.push("/AgregarDetalleSolictud")
     }
+
+    const [requests, setRequests ] = useState([])
+
+    // const Requests = this.state.requests.map((request,index)=>{
+    //     return(
+    //         <tr key={index}>
+    //             <td className="col-1">
+    //                 {index}         
+    //             </td>
+    //             <td className="col-2">
+    //                 {request.nombreUnidadGasto}         
+    //             </td>
+    //             <td className="col-2">
+    //                 {request.fecha}         
+    //             </td>
+    //             <td className="col-2" align="center">
+    //                 <a className="link">ver</a>
+    //             </td>
+    //             <td className="col-3">
+    //                 {request.estado}         
+    //             </td>
+    //             <td className="col-2">
+    //                 <a className="link">ver</a>        
+    //             </td>
+    //         </tr>
+    //     );
+    // });
 
     return(
         <>

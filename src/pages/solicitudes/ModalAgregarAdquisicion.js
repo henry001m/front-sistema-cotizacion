@@ -16,11 +16,11 @@ function ModalAgregarAdquisicion(){
     }
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detalle, setDetalle] = useState({cantida:null, unidad:"", descripcion:""})
+    const [ detail, setDetail] = useState({amount:null, unitMesure:"", description:""})
 
     const handleInputChange = (event) => {
-        setDetalle({
-            ...detalle,
+        setDetail({
+            ...detail,
             [event.target.name] : event.target.value
         });
     };
@@ -48,8 +48,8 @@ function ModalAgregarAdquisicion(){
                                     <div className="form-group col-md-6">
                                         <label>Cantidad:</label>
                                         <input
-                                        name="cantidad"
-                                        {...register("cantidad",{
+                                        name="amount"
+                                        {...register("amount",{
                                             required:"El campo es requerido",
                                             min:{
                                                 value:1,
@@ -64,13 +64,13 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.cantidad && <span className="text-danger text-small d-block mb-2">{errors.cantidad.message}</span>}
+                                        {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label>Unidad:</label>
                                         <input 
-                                        name="unidad"
-                                        {...register("unidad",{
+                                        name="unitMesure"
+                                        {...register("unitMesure",{
                                             required:"El campo es requerido",
                                             maxLength:{
                                                 value:20,
@@ -85,15 +85,15 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.unidad && <span className="text-danger text-small d-block mb-2">{errors.unidad.message}</span>}
+                                        {errors.unitMesure && <span className="text-danger text-small d-block mb-2">{errors.unitMesure.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col">
                                         <label>Descripcion:</label>
                                         <textarea 
-                                        name="descripcion"
-                                        {...register("descripcion",{
+                                        name="description"
+                                        {...register("description",{
                                             required:"El campo es requerido",
                                             minLength:{
                                                 value:20,
@@ -107,7 +107,7 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></textarea>
-                                        {errors.descripcion && <span className="text-danger text-small d-block mb-2">{errors.descripcion.message}</span>}
+                                        {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">

@@ -1,4 +1,4 @@
-import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
 import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
 import './AgregarDetalleSolicitud.css'
@@ -8,16 +8,14 @@ function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
 
-    const [ adquiscion, setAdquisicion] = useState({nombreUsuario:"", fecha:"", detalle:[], monto:null})
+    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", details:[], amount:null})
+
 
     const handleInputChange = (event) => {
         setAdquisicion({
-            ...adquiscion,
+            ...adquisicion,
             [event.target.name] : event.target.value
         });
-        console.log(event.target.name);
-        console.log(event.target.value);
-        console.log(errors)
     };
 
     const enviarDatos = ( data ) => {
@@ -25,6 +23,25 @@ function AgregarDetalleSolictud(){
         console.log(errors)
         reset();
     };
+
+    // const Details = adquiscion.details.map((detail,index)=>{
+    //     return(
+    //         <tr key={index}>
+    //             <td className="col-1">
+    //                 {index}         
+    //             </td>
+    //             <td className="col-2">
+    //                 {datail.cantida}         
+    //             </td>
+    //             <td className="col-4">
+    //                 {detail.unidad}         
+    //             </td>
+    //             <td className="col-3">
+    //                 {detail.descripcion}         
+    //             </td>
+    //         </tr>
+    //     );
+    // })
 
     return(
         <>
@@ -40,8 +57,8 @@ function AgregarDetalleSolictud(){
                                     <label>Nombre del Solicitante:</label>
                                     <div className="form-row" id="inputs">
                                         <input 
-                                            name ="nombreUsuario" 
-                                            {...register("nombreUsuario",{
+                                            name ="aplicantName" 
+                                            {...register("aplicantName",{
                                                 required:"El campo es requerido",
                                                 minLength:{
                                                     value:3,
@@ -60,7 +77,7 @@ function AgregarDetalleSolictud(){
                                             className="form-control" 
                                             onChange={ handleInputChange }
                                         ></input>
-                                        {errors.nombreUsuario && <span className="text-danger text-small d-block mb-2">{errors.nombreUsuario.message}</span>}
+                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>}
                                     </div>
                                 </div>
                             </div>
@@ -69,8 +86,8 @@ function AgregarDetalleSolictud(){
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
                                         <input
-                                        name="fecha" 
-                                        {...register("fecha",{
+                                        name="requestDate" 
+                                        {...register("requestDate",{
                                             required:"El campo monto es requerido",
                                             pattern:{
                                                 value:/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})+$/,
@@ -80,7 +97,7 @@ function AgregarDetalleSolictud(){
                                         type="text" 
                                         className="form-control"
                                         ></input>
-                                        {errors.fecha && <span className="text-danger text-small d-block mb-2">{errors.fecha.message}</span>}
+                                        {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
@@ -160,8 +177,8 @@ function AgregarDetalleSolictud(){
                                     <label>Monto Estimado:</label>
                                     <div className="form-row" id="inputs">
                                         <input
-                                        name="monto"
-                                        {...register("monto",{
+                                        name="amount"
+                                        {...register("amount",{
                                             required:"El campo monto es requerido",
                                             min:{
                                                 value:1,
@@ -171,7 +188,7 @@ function AgregarDetalleSolictud(){
                                         type="number" 
                                         className="form-control"
                                         ></input>
-                                        {errors.monto && <span className="text-danger text-small d-block mb-2">{errors.monto.message}</span>}
+                                        {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
