@@ -1,17 +1,17 @@
 import React from 'react'
 
-function ModalAgregarAdquisicion(){
+function ModalAgregarUsuario(){
     return(
-        <div class="modal fade" id="modalAgregarAdquisicion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div className="modal-fade" id="modalAgregarAdquisicion" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">Agregar Usuario</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                     <form>
                         <div className="form-row">
                             <div className="form-group col-md-6">
@@ -46,14 +46,14 @@ function ModalAgregarAdquisicion(){
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label>Tipo de usuario:</label>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>...</option>
                                 </select>
                             </div>
                             <div className="form-group col-md-6">
                                 <label>Rol de Usuario:</label>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" className="form-control">
                                     <option selected>Choose...</option>
                                     <option>...</option>
                                 </select>
@@ -61,9 +61,9 @@ function ModalAgregarAdquisicion(){
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" className="btn btn-primary">Guardar</button>
                 </div>
                 </div>
             </div>
@@ -71,4 +71,4 @@ function ModalAgregarAdquisicion(){
     );
 }
 
-export default ModalAgregarAdquisicion;
+export default ModalAgregarUsuario;

@@ -1,6 +1,7 @@
 import { PlusCircle } from 'bootstrap-icons-react';
 import React from  'react'
 import './Usuarios.css'
+import ModalAgregarUsuario from './ModalAgregarUsuario'
 
 function Usuario(){
     return(
@@ -16,7 +17,9 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <button type="button" className="btn btn-success my-2 my-sm-0"> 
+                        <button type="button" className="btn btn-success my-2 my-sm-0"
+                        data-toggle="modal"
+                        data-target="#modalUsuario"> 
                         <PlusCircle className="mb-1"/> Nuevo </button>
                     </div>
                 </div>
@@ -95,7 +98,7 @@ function Usuario(){
                         </table>
                     </div>
                 </div>
-            
+            <ModalAgregarUsuario/>
         </div>
         </>
     );

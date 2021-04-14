@@ -4,12 +4,16 @@
   }
 
   #button{
-    margin-top: 5%;
+    margin-top: 4%;
+    text-align: right
+  }
+
+  #toolbar{
     text-align: right;
   }
-  #btnCE{
-    text-align: right;
-    align-content: flex-end;
+
+  #btnV{
+    margin-left: 15px;
   }
   
   #registro{

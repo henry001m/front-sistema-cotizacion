@@ -1,46 +1,30 @@
-import { FileArrowUpFill, FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
 import React, { useState } from  'react'
+import { useForm } from 'react-hook-form'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 
 function AgregarDetalleSolictud(){
 
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+
     const [ adquiscion, setAdquisicion] = useState({nombreUsuario:"", fecha:"", detalle:[], monto:null})
 
-    const [ errorUser, setErroruser ] = useState({tamanio:"", caracter:""})
+    const handleInputChange = (event) => {
+        setAdquisicion({
+            ...adquiscion,
+            [event.target.name] : event.target.value
+        });
+        console.log(event.target.name);
+        console.log(event.target.value);
+        console.log(errors)
+    };
 
-
-    const ValidarCaracteresAfabeticos = (e) => {
-        if(e.target.value[0]!==" "){
-            if(e.target.value.length !== 5){
-                setErroruser({
-                    ...errorUser,
-                    tamanio:""
-                })
-                if(e.target.value.match("^[Ññíóáéú a-zA-Z ]*$")!=null){
-                    setAdquisicion({
-                        ...adquiscion,
-                        nombreUsuario:e.target.value
-                    })
-                }else{
-                    setErroruser({
-                        ...errorUser,
-                        caracter:"El campo solo permite caracteres alfabeticos"
-                    })
-                }
-            }else{
-                setErroruser({
-                    ...errorUser,
-                    tamanio:"el tamaño maximo es de 5"
-                })
-            }
-        }else{
-            setErroruser({
-                ...errorUser,
-                caracter:"Debe epezar con un caracter"
-            })
-        }
-    }
+    const enviarDatos = ( data ) => {
+        console.log("enviar")
+        console.log(errors)
+        reset();
+    };
 
     return(
         <>
@@ -50,18 +34,33 @@ function AgregarDetalleSolictud(){
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
-                        <form>
+                        <form onSubmit={handleSubmit(enviarDatos)}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        <input type="text" className="form-control" onChange={ ValidarCaracteresAfabeticos }>
-                                        </input>
-                                        <div style={{color:"red"}}>
-                                            {errorUser.tamanio}
-                                            {errorUser.caracter}  
-                                        </div>
-
+                                        <input 
+                                            name ="nombreUsuario" 
+                                            {...register("nombreUsuario",{
+                                                required:"El campo es requerido",
+                                                minLength:{
+                                                    value:3,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                maxLength:{
+                                                    value:50,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                pattern:{
+                                                    value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                    message:"El campo solo permite caracteres alfabeticos"
+                                                }
+                                            })}
+                                            type="text" 
+                                            className="form-control" 
+                                            onChange={ handleInputChange }
+                                        ></input>
+                                        {errors.nombreUsuario && <span className="text-danger text-small d-block mb-2">{errors.nombreUsuario.message}</span>}
                                     </div>
                                 </div>
                             </div>
@@ -69,15 +68,23 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-6">
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <input type="text" className="form-control"></input>
+                                        <input
+                                        name="fecha" 
+                                        {...register("fecha",{
+                                            required:"El campo monto es requerido",
+                                            pattern:{
+                                                value:/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})+$/,
+                                                message:"dato invalido"
+                                            }
+                                        })}
+                                        type="text" 
+                                        className="form-control"
+                                        ></input>
+                                        {errors.fecha && <span className="text-danger text-small d-block mb-2">{errors.fecha.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
-                                        <button type="button" className="btn btn-success"
-                                        data-toggle="modal"
-                                        data-target="#modalAgregarAdquisicion">
-                                        <PlusCircle className="mb-1"/> Agregar
-                                        </button>                                  
+                                    <ModalAgregarAdquisicion/>                                 
                                 </div>
                             </div>
                             <div className="form-row" id="list">
@@ -152,7 +159,19 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-6">
                                     <label>Monto Estimado:</label>
                                     <div className="form-row" id="inputs">
-                                        <input type="text" className="form-control"></input>
+                                        <input
+                                        name="monto"
+                                        {...register("monto",{
+                                            required:"El campo monto es requerido",
+                                            min:{
+                                                value:1,
+                                                message:"el monto debe ser mayor a 0"
+                                            }
+                                        })}
+                                        type="number" 
+                                        className="form-control"
+                                        ></input>
+                                        {errors.monto && <span className="text-danger text-small d-block mb-2">{errors.monto.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
@@ -163,13 +182,12 @@ function AgregarDetalleSolictud(){
                                 </div>
                             </div>
                             <div className="form-row" >
-                                <div className="form-group col" id="btnCE">
-                                    <button type="button" className="btn btn-secondary my-2 my-sm-0"> Cancelar </button>
-                                    <button type="button" className="btn btn-info my-2 my-sm-0"> Enviar </button>
+                                <div className="form-group col" id="toolbar">
+                                    <button type="button" className="btn btn-secondary" id="btnV"> Cancelar </button>
+                                    <button type="submit" className="btn btn-info" id="btnV"> Enviar </button>
                                 </div>
                             </div>
                         </form>
-                        <ModalAgregarAdquisicion/>
                     </div>
                 </div>
             </div>
