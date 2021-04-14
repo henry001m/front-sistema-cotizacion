@@ -1,5 +1,6 @@
 import React from "react"
 import './EnviarCotizacion.css'
+import { FileEarmarkArrowUpFill, PrinterFill } from 'bootstrap-icons-react'
 
 function EnviarCotizacion(){
     return(
@@ -34,13 +35,15 @@ function EnviarCotizacion(){
                                 <label>Formulario de Cotización:</label>
                             </div>
                             <div className="form-row" id="inputsEC">
-                                <button type="button" className="btn btn-secondary my-2 my-sm-0"> Adjuntar Archivo </button>
+                                <button type="button" className="btn btn-secondary my-2 my-sm-0"> 
+                                <FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
                             </div>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col" id="btnCE">
-                            <button type="button" className="btn btn-secondary my-2 my-sm-0"> Imprimir </button>
+                            <button type="button" className="btn btn-secondary my-2 my-sm-0">
+                                <PrinterFill className="mb-1"/> Imprimir </button>
                             <button type="button" className="btn btn-info my-2 my-sm-0"> Enviar </button>
                         </div>
                     </div>

@@ -1,14 +1,45 @@
-import React from  'react'
-import { useForm } from 'react-hook-form'
+import { FileArrowUpFill, FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import React, { useState } from  'react'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 
 function AgregarDetalleSolictud(){
 
-    const { register, handleSubmit, formState:{ errors } } = useForm();
+    const [ adquiscion, setAdquisicion] = useState({nombreUsuario:"", fecha:"", detalle:[], monto:null})
 
-    const validarCampos = (data, e) => {
-        console.log(data);
+    const [ errorUser, setErroruser ] = useState({tamanio:"", caracter:""})
+
+
+    const ValidarCaracteresAfabeticos = (e) => {
+        if(e.target.value[0]!==" "){
+            if(e.target.value.length !== 5){
+                setErroruser({
+                    ...errorUser,
+                    tamanio:""
+                })
+                if(e.target.value.match("^[Ññíóáéú a-zA-Z ]*$")!=null){
+                    setAdquisicion({
+                        ...adquiscion,
+                        nombreUsuario:e.target.value
+                    })
+                }else{
+                    setErroruser({
+                        ...errorUser,
+                        caracter:"El campo solo permite caracteres alfabeticos"
+                    })
+                }
+            }else{
+                setErroruser({
+                    ...errorUser,
+                    tamanio:"el tamaño maximo es de 5"
+                })
+            }
+        }else{
+            setErroruser({
+                ...errorUser,
+                caracter:"Debe epezar con un caracter"
+            })
+        }
     }
 
     return(
@@ -19,25 +50,18 @@ function AgregarDetalleSolictud(){
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
-                        <form onSubmit={handleSubmit(validarCampos)}>
+                        <form>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        <input type="text"
-                                        {
-                                            ...register('nombre',{ required:true, minLength: 3, maxLength:50})
-                                        }
-                                        className="form-control"></input>
-                                        {errors.nombre && errors.nombre.type === "required" && 
-                                            <span className="text-danger text-small d-block mb-2">Ingrese un nombre</span>
-                                        }
-                                        {errors.nombre && errors.nombre.type === "minLength" && (
-                                            <span className="text-danger text-small d-block mb-2">El minimo de caracteres es 3</span>
-                                        )}
-                                        {errors.nombre && errors.nombre.type === "maxLength" && (
-                                            <span className="text-danger text-small d-block mb-2">El maximo de caracteres es 50</span>
-                                        )}
+                                        <input type="text" className="form-control" onChange={ ValidarCaracteresAfabeticos }>
+                                        </input>
+                                        <div style={{color:"red"}}>
+                                            {errorUser.tamanio}
+                                            {errorUser.caracter}  
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -48,13 +72,12 @@ function AgregarDetalleSolictud(){
                                         <input type="text" className="form-control"></input>
                                     </div>
                                 </div>
-                                <div className="form-group col-md-6" id="button">
-                                    
+                                <div className="form-group col-md-6" id="button">                                   
                                         <button type="button" className="btn btn-success"
                                         data-toggle="modal"
-                                        data-target="#modalAgregarAdquisicion">Agregar
-                                        </button>
-                                    
+                                        data-target="#modalAgregarAdquisicion">
+                                        <PlusCircle className="mb-1"/> Agregar
+                                        </button>                                  
                                 </div>
                             </div>
                             <div className="form-row" id="list">
@@ -134,14 +157,15 @@ function AgregarDetalleSolictud(){
                                 </div>
                                 <div className="form-group col-md-6" id="button">
                                     
-                                        <button type="button" className="btn btn-secondary my-2 my-sm-0"> Adjuntar Archivo </button>
+                                        <button type="button" className="btn btn-secondary my-2 my-sm-0"
+                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
                                    
                                 </div>
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="btnCE">
                                     <button type="button" className="btn btn-secondary my-2 my-sm-0"> Cancelar </button>
-                                    <button type="submit" className="btn btn-info my-2 my-sm-0"> Enviar </button>
+                                    <button type="button" className="btn btn-info my-2 my-sm-0"> Enviar </button>
                                 </div>
                             </div>
                         </form>

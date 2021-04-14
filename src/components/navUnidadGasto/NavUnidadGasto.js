@@ -6,6 +6,7 @@ import Home from './../../pages/Home'
 import SolicitudesDeAdquisicion from '../../pages/solicitudes/SolicitudesDeAdquisicion'
 import './NavUnidadGasto.css'
 import AgregarDetalleSolictud from '../../pages/solicitudes/AgregarDetallleSolicitud'
+import { PersonCircle } from 'bootstrap-icons-react'
 
 function NavUnidadGasto() {
     return(
@@ -15,8 +16,7 @@ function NavUnidadGasto() {
                     Sistema de Cotizaciones
                 </h1>
                 <button type="button" className="btn btn-default" id="userImg">
-                    <img  src={UserImg} height="50" alt="logo" />
-                        Unidad de Gasto
+                    <PersonCircle height={45} width={45}/> Unidad de Gasto
                 </button>
             </nav>
             <Router>

@@ -4,6 +4,7 @@ import UserImg from './../../resources/user.jpg'
 import Home from '../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import Usuario from '../../pages/usuario/Usuario';
+import { PersonCircle } from 'bootstrap-icons-react';
 
 function NavSuperusuario() {
     return(
@@ -13,8 +14,7 @@ function NavSuperusuario() {
                     Sistema de Cotizaciones
                 </h1>
                 <button type="button" className="btn btn-default" id="userImg">
-                    <img  src={UserImg} height="50" alt="logo" />
-                        Superusuario
+                    <PersonCircle height={45} width={45}/>   Superusuario
                 </button>
             </nav>
             <Router>

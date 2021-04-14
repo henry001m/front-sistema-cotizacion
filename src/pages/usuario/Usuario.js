@@ -1,3 +1,4 @@
+import { PlusCircle } from 'bootstrap-icons-react';
 import React from  'react'
 import './Usuarios.css'
 
@@ -15,7 +16,8 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <button type="button" className="btn btn-success my-2 my-sm-0"> Nuevo </button>
+                        <button type="button" className="btn btn-success my-2 my-sm-0"> 
+                        <PlusCircle className="mb-1"/> Nuevo </button>
                     </div>
                 </div>
                 <br></br>

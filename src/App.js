@@ -8,7 +8,7 @@ import NavSuperusuario from './components/navSuperusuario/NavSuperusuario';
 function App() {
   return (
     <div className="App">
-      <NavAdministrador/>
+      <NavSuperusuario/>
     </div>
   );
 }

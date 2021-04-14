@@ -4,6 +4,7 @@ import UserImg from './../../resources/user.jpg'
 import Home from './../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
+import { PersonCircle } from 'bootstrap-icons-react';
 
 function NavAdministrador() {
     return(
@@ -13,8 +14,7 @@ function NavAdministrador() {
                     Sistema de Cotizaciones
                 </h1>
                 <button type="button" className="btn btn-default" id="userImg">
-                    <img  src={UserImg} height="50" alt="logo" />
-                        Unidad Administrativa
+                    <PersonCircle height={45} width={45} />  Unidad Administrativa
                 </button>
             </nav>
             <Router>

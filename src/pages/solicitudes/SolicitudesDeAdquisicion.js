@@ -1,6 +1,7 @@
 import React from 'react'
 import './SolicitudesDeAdquisicion.css'
 import { useHistory } from 'react-router-dom'
+import { PlusCircle } from 'bootstrap-icons-react'
 
 function SolicitudesDeAdquisicion(){
 
@@ -22,7 +23,8 @@ function SolicitudesDeAdquisicion(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> Nueva Solicitud </button>
+                        <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 
+                        <PlusCircle  className="mb-1"/> Nueva Solicitud </button>
                     </div>
                 </div>
                 <br></br>
