@@ -1,8 +1,28 @@
+import React,{useEffect, useState} from  'react'
 import { PlusCircle } from 'bootstrap-icons-react';
-import React from  'react'
-import ModalAgregarUsuario from './ModalAgregarUsuario'
+import ModalAgregarUsuario from './ModalAgregarUsuario';
+import { getUsers } from '../../services/Http/UserService' ;
+
 
 function Usuario(){
+
+const [users, setUsers] = useState([]);
+const [flag, setFlag] = useState(false);
+const updateUsers = ()=>{
+    setFlag(!flag);
+}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUsers();
+        setUsers(response.users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [setUsers,flag]);
     return(
         <>
             <div className="container" align="left">
@@ -16,7 +36,7 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <ModalAgregarUsuario/>
+                        <ModalAgregarUsuario updateUsers={updateUsers}/>
                     </div>
                 </div>
                 <br></br>
@@ -34,54 +54,20 @@ function Usuario(){
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
-                                <tr>
-                                <td>2</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
-                                <tr>
-                                <td>3</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
-                                <tr>
-                                <td>1</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
-                                <tr>
-                                <td>2</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
-                                <tr>
-                                <td>3</td>
-                                <td>Mark</td>
-                                <td>1234579</td>
-                                <td>7458931</td>
-                                <td>@mdo</td>
-                                <td>admin</td>
-                                </tr>
+                               {
+                                   users.map((user)=>{
+                                        return (
+                                            <tr key={user.id}>
+                                                <td></td>
+                                                <td>{user.name}</td>
+                                                <td>{user.ci}</td>
+                                                <td>{user.phone}</td>
+                                                <td>{user.email}</td>
+                                                <td>.....</td>
+                                            </tr>
+                                        );
+                                   })
+                               }
                             </tbody>
                         </table>
                     </div>

@@ -13,6 +13,28 @@ function SolicitudesVista(){
         getAllQuotitations();
         //eslint-disable-next-line
     }, []);
+    const Quotitations = quotitations.map((quotitation,index)=>{
+        return(
+            <tr key={index}>
+                <td className="col-1">
+                    {index+1}         
+                </td>
+                <td className="col-2">
+                    {/limpieza/}         
+                </td>
+                <td className="col-2">
+                    {/fecha/}         
+                </td>
+                <td className="col-2">
+                    <a className="link">ver</a>
+                </td>
+                <td className="col-3">
+                    {/pendiente/}         
+                </td>
+                <td className="col-2">----</td>
+            </tr>
+        );
+    })
     return(
         <div className="container" align="left">
                     <br></br>

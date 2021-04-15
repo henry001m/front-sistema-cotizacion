@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import UserImg from './../../resources/user.jpg'
 import Home from './../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
-import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
+import EnviarCotizacion from '../../pages/EnviarFormulario/EnviarCotizacion';
 import { PersonCircle } from 'bootstrap-icons-react';
 
 function NavAdministrador() {
@@ -39,7 +39,7 @@ function NavAdministrador() {
                         <a className="nav-link" href="">Empresas</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="./Solicitud de contización.doc">Descargar Formulario</a>
+                        <a className="nav-link" href="./SolicitudDeCotización.pdf" download>Descargar Formulario</a>
                     </li>
                 </ul>
                 <Switch>

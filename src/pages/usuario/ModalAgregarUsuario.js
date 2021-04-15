@@ -1,9 +1,9 @@
 import React, { useState, useRef }from 'react'
 import { PlusCircle } from 'bootstrap-icons-react';
-import  Modal from './../../components/modal/Modal'
-import { useForm } from 'react-hook-form'
-
-function ModalAgregarUsuario(){
+import  Modal from './../../components/modal/Modal';
+import { useForm } from 'react-hook-form';
+import { createUser } from '../../services/Http/UserService' ;
+function ModalAgregarUsuario(props){
 
     const modalref = useRef();
 
@@ -26,8 +26,11 @@ function ModalAgregarUsuario(){
         });
     };
 
-    const SaveData = ( data ) => {
-        console.log("enviar");
+    const SaveData = async ( ) => {
+        console.log("enviar",user);
+        const result = await createUser(user);
+        props.updateUsers();
+        console.log("resultado",result);
         reset();
     };
 
@@ -55,7 +58,7 @@ function ModalAgregarUsuario(){
                                     {...register("name",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
+                                            value:3,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
@@ -76,7 +79,7 @@ function ModalAgregarUsuario(){
                                     {...register("lastName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
+                                            value:3,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
