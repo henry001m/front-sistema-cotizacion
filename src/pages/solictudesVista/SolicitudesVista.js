@@ -1,10 +1,21 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
-
+import {getQuotitation} from '../../services/Http/QuotitationService';
 function SolicitudesVista(){
+    const [quotitations, setQuotitations] = useState([]);
+
+    useEffect(() => {
+        async function getAllQuotitations() {
+            const result = await getQuotitation();
+            setQuotitations(result.request_quotitations);
+            
+        }
+        getAllQuotitations();
+        console.log(quotitations)
+        //eslint-disable-next-line
+    }, []);
     return(
-        <>
-            <div className="container" align="left">
+        <div className="container" align="left">
                     <br></br>
                     <h1>Solicitudes</h1>
                     <br></br>
@@ -96,7 +107,6 @@ function SolicitudesVista(){
                 </div>
             
         </div>
-        </>
     );
 }
 
