@@ -12,7 +12,7 @@ export async function getQuotitation() {
 
 export async function createQuotitation(quotitation) {
     try {
-        await API.post('/pokemones', quotitation);
+        await API.post('/quotitation', quotitation);
         return quotitation;
     } catch (error) {
         console.log(error);

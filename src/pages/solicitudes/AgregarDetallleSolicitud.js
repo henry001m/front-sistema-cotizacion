@@ -1,30 +1,59 @@
-import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
 import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
+import { createQuotitation } from '../../services/Http/QuotitationService' 
 
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
 
-    const [ adquiscion, setAdquisicion] = useState({nombreUsuario:"", fecha:"", detalle:[], monto:null})
+    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
+
+    const [ newDetails, setNewDetails] = useState([])
 
     const handleInputChange = (event) => {
         setAdquisicion({
-            ...adquiscion,
+            ...adquisicion,
             [event.target.name] : event.target.value
         });
-        console.log(event.target.name);
-        console.log(event.target.value);
-        console.log(errors)
     };
 
-    const enviarDatos = ( data ) => {
-        console.log("enviar")
-        console.log(errors)
+    const updateDetails = (data) => {
+        console.log("ventana",data)
+        setNewDetails([...newDetails,data])
+    }
+
+    const sendData = ( data ) => {
+        const obj = {aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+        console.log(obj);
+        console.log(adquisicion)
+        async function SendQuotittations(){
+            console.log("envio",adquisicion.details);
+            const result = await createQuotitation(adquisicion);
+        };
         reset();
     };
+
+    const Details = newDetails.map((detail,index)=>{
+        return(
+            <tr key={index}>
+                <th scope="row">
+                    {index}         
+                </th>
+                <td>
+                    {detail.amount}         
+                </td>
+                <td>
+                    {detail.unitMesure}         
+                </td>
+                <td >
+                    {detail.description}         
+                </td>
+            </tr>
+        );
+    })
 
     return(
         <>
@@ -34,14 +63,14 @@ function AgregarDetalleSolictud(){
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
-                        <form onSubmit={handleSubmit(enviarDatos)}>
+                        <form onSubmit={handleSubmit(sendData)}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
                                     <div className="form-row" id="inputs">
                                         <input 
-                                            name ="nombreUsuario" 
-                                            {...register("nombreUsuario",{
+                                            name ="aplicantName" 
+                                            {...register("aplicantName",{
                                                 required:"El campo es requerido",
                                                 minLength:{
                                                     value:3,
@@ -60,7 +89,7 @@ function AgregarDetalleSolictud(){
                                             className="form-control" 
                                             onChange={ handleInputChange }
                                         ></input>
-                                        {errors.nombreUsuario && <span className="text-danger text-small d-block mb-2">{errors.nombreUsuario.message}</span>}
+                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>}
                                     </div>
                                 </div>
                             </div>
@@ -69,8 +98,8 @@ function AgregarDetalleSolictud(){
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
                                         <input
-                                        name="fecha" 
-                                        {...register("fecha",{
+                                        name="requestDate" 
+                                        {...register("requestDate",{
                                             required:"El campo monto es requerido",
                                             pattern:{
                                                 value:/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})+$/,
@@ -79,79 +108,28 @@ function AgregarDetalleSolictud(){
                                         })}
                                         type="text" 
                                         className="form-control"
+                                        onChange={ handleInputChange }
                                         ></input>
-                                        {errors.fecha && <span className="text-danger text-small d-block mb-2">{errors.fecha.message}</span>}
+                                        {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
-                                    <ModalAgregarAdquisicion/>                                 
+                                    <ModalAgregarAdquisicion
+                                    updateDetails={updateDetails}/>                                 
                                 </div>
                             </div>
                             <div className="form-row" id="list">
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                        <th className="col-1">#</th>
-                                        <th className="col-2">Cantidad</th>
-                                        <th className="col-4">Unidad</th>
-                                        <th className="col-5">Descripcion</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Unidad</th>
+                                        <th scope="col">Descripcion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
+                                        {Details}
                                     </tbody>
                                 </table>
                             </div>
@@ -160,8 +138,8 @@ function AgregarDetalleSolictud(){
                                     <label>Monto Estimado:</label>
                                     <div className="form-row" id="inputs">
                                         <input
-                                        name="monto"
-                                        {...register("monto",{
+                                        name="amount"
+                                        {...register("amount",{
                                             required:"El campo monto es requerido",
                                             min:{
                                                 value:1,
@@ -170,8 +148,9 @@ function AgregarDetalleSolictud(){
                                         })}
                                         type="number" 
                                         className="form-control"
+                                        onChange={ handleInputChange }
                                         ></input>
-                                        {errors.monto && <span className="text-danger text-small d-block mb-2">{errors.monto.message}</span>}
+                                        {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">

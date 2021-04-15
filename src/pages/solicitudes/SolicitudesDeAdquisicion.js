@@ -1,14 +1,53 @@
-import React from 'react'
-import './SolicitudesDeAdquisicion.css'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { PlusCircle } from 'bootstrap-icons-react'
+import { PlusCircle} from 'bootstrap-icons-react'
+import { getQuotitation } from '../../services/Http/QuotitationService';
 
 function SolicitudesDeAdquisicion(){
 
     let history = useHistory();
+
+
     function ButtonAgregar(){
         history.push("/AgregarDetalleSolictud")
     }
+
+    const [quotitations, setQuotitations] = useState([]);
+
+    useEffect(() => {
+        async function getAllQuotitations() {
+            const result = await getQuotitation();
+            const resultQuotitations=result.request_quotitations;
+            setQuotitations(resultQuotitations);
+        }
+        getAllQuotitations();
+        //eslint-disable-next-line
+    }, []);
+
+    const Quotitations = quotitations.map((quotitation,index)=>{
+        return(
+            <tr key={index}>
+                <th scope="row">
+                    {index+1}         
+                </th>
+                <td >
+                    {quotitation.nameUnidadGasto}         
+                </td>
+                <td >
+                    {quotitation.requestDate}         
+                </td>
+                <td  align="center">
+                    <a className="link">ver</a>
+                </td>
+                <td>
+                    {quotitation.status}         
+                </td>
+                <td >
+                    <a className="link">ver</a>        
+                </td>
+            </tr>
+        );
+    });
 
     return(
         <>
@@ -31,89 +70,18 @@ function SolicitudesDeAdquisicion(){
                 <div className="form-register">             
                     <div className="form-row">
                         <table className="table table-striped">
-                        <thead>
+                            <thead>
                                 <tr>
-                                <th className="col-1">#</th>
-                                <th className="col-2">Unidad de Gasto</th>
-                                <th className="col-2">Fecha</th>
-                                <th className="col-2">solicitud</th>
-                                <th className="col-3">Estado</th>
-                                <th className="col-2">Respuesta</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Unidad de Gasto</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">solicitud</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Respuesta</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td className="col-1">1</td>
-                                <td className="col-2">limpieza</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                <a className="link">ver</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="col-1">2</td>
-                                <td className="col-2">maquinaria</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="col-1">3</td>
-                                <td className="col-2">laboratorios</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                <a className="link">ver</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="col-1">1</td>
-                                <td className="col-2">limpieza</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-sm-2" align="char">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="col-1">2</td>
-                                <td className="col-2">maquinaria</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td className="col-1">3</td>
-                                <td className="col-2">laboratorios</td>
-                                <td className="col-2">02/02/21</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                                <td className="col-3">pendiente</td>
-                                <td className="col-2">
-                                    <a className="link">ver</a>
-                                </td>
-                            </tr>
+                                {Quotitations}
                             </tbody>
                         </table>
                     </div>

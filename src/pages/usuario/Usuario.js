@@ -1,9 +1,28 @@
+import React,{useEffect, useState} from  'react'
 import { PlusCircle } from 'bootstrap-icons-react';
-import React from  'react'
-import './Usuarios.css'
-import ModalAgregarUsuario from './ModalAgregarUsuario'
+import ModalAgregarUsuario from './ModalAgregarUsuario';
+import { getUsers } from '../../services/Http/UserService' ;
+
 
 function Usuario(){
+
+const [users, setUsers] = useState([]);
+const [flag, setFlag] = useState(false);
+const updateUsers = ()=>{
+    setFlag(!flag);
+}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getUsers();
+        setUsers(response.users);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [setUsers,flag]);
     return(
         <>
             <div className="container" align="left">
@@ -17,10 +36,7 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <button type="button" className="btn btn-success my-2 my-sm-0"
-                        data-toggle="modal"
-                        data-target="#modalUsuario"> 
-                        <PlusCircle className="mb-1"/> Nuevo </button>
+                        <ModalAgregarUsuario updateUsers={updateUsers}/>
                     </div>
                 </div>
                 <br></br>
@@ -29,76 +45,33 @@ function Usuario(){
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                <th className="col-1">#</th>
-                                <th className="col-2">Nombre</th>
-                                <th className="col-3">Carnet de Identidad</th>
-                                <th className="col-2">Telefono</th>
-                                <th className="col-2">Correo</th>
-                                <th className="col-2">Tipo de Usuario</th>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Carnet de Identidad</th>
+                                <th scope="col">Telefono</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Rol de Usuario</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                <td className="col-1">1</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">2</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">3</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">4</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">5</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">6</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
-                                <tr>
-                                <td className="col-1">7</td>
-                                <td className="col-2">Mark</td>
-                                <td className="col-3">1234579</td>
-                                <td className="col-2">7458931</td>
-                                <td className="col-2">@mdo</td>
-                                <td className="col-2">admin</td>
-                                </tr>
+                               {
+                                   users.map((user)=>{
+                                        return (
+                                            <tr key={user.id}>
+                                                <td></td>
+                                                <td>{user.name}</td>
+                                                <td>{user.ci}</td>
+                                                <td>{user.phone}</td>
+                                                <td>{user.email}</td>
+                                                <td>.....</td>
+                                            </tr>
+                                        );
+                                   })
+                               }
                             </tbody>
                         </table>
                     </div>
                 </div>
-            <ModalAgregarUsuario/>
         </div>
         </>
     );

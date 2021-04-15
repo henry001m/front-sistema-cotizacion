@@ -9,9 +9,8 @@ import ModalAgregarUsuario from './pages/usuario/ModalAgregarUsuario'
 function App() {
   return (
     <div className="App">
-      <NavUnidadGasto/>
+      <NavSuperusuario/>
     </div>
   );
 }
-
 export default App;

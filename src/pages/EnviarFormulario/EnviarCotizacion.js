@@ -40,11 +40,11 @@ function EnviarCotizacion(){
                             </div>
                         </div>
                     </div>
-                    <div className="form-row">
-                        <div className="form-group col" id="btnCE">
+                    <div className="form-row" align="right">
+                        <div className="form-group col">
                             <button type="button" className="btn btn-secondary my-2 my-sm-0">
                                 <PrinterFill className="mb-1"/> Imprimir </button>
-                            <button type="button" className="btn btn-info my-2 my-sm-0"> Enviar </button>
+                            <button type="button" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
                         </div>
                     </div>
                 </form>

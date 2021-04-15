@@ -2,8 +2,9 @@ import  Modal from './../../components/modal/Modal'
 import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import './AgregarDetalleSolicitud.css'
+import { PlusCircle} from 'bootstrap-icons-react'
 
-function ModalAgregarAdquisicion(){
+function ModalAgregarAdquisicion(props){
 
     const modalref = useRef();
 
@@ -16,23 +17,26 @@ function ModalAgregarAdquisicion(){
     }
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detalle, setDetalle] = useState({cantida:null, unidad:"", descripcion:""})
+    const [ detail, setDetail] = useState({amount:null, unitMesure:"", description:""})
 
     const handleInputChange = (event) => {
-        setDetalle({
-            ...detalle,
+        setDetail({
+            ...detail,
             [event.target.name] : event.target.value
         });
     };
 
-    const enviarDetalle = ( data ) => {
-        console.log("enviar");
+    const saveDetail = () => {
+        props.updateDetails(detail)
+        console.log("modal",detail)
         reset();
     };
 
     return(
         <div>
-            <button className="btn btn-success" onClick={ openModal }>Agregar</button>
+            <button className="btn btn-success" onClick={ openModal }>
+                < PlusCircle className="mb-1"/> Agregar
+            </button>
             <Modal ref={modalref}>
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -43,13 +47,13 @@ function ModalAgregarAdquisicion(){
                             </button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={handleSubmit(enviarDetalle)}>
+                            <form onSubmit={handleSubmit(saveDetail)}>
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <label>Cantidad:</label>
                                         <input
-                                        name="cantidad"
-                                        {...register("cantidad",{
+                                        name="amount"
+                                        {...register("amount",{
                                             required:"El campo es requerido",
                                             min:{
                                                 value:1,
@@ -64,13 +68,13 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.cantidad && <span className="text-danger text-small d-block mb-2">{errors.cantidad.message}</span>}
+                                        {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label>Unidad:</label>
                                         <input 
-                                        name="unidad"
-                                        {...register("unidad",{
+                                        name="unitMesure"
+                                        {...register("unitMesure",{
                                             required:"El campo es requerido",
                                             maxLength:{
                                                 value:20,
@@ -85,15 +89,15 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.unidad && <span className="text-danger text-small d-block mb-2">{errors.unidad.message}</span>}
+                                        {errors.unitMesure && <span className="text-danger text-small d-block mb-2">{errors.unitMesure.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col">
                                         <label>Descripcion:</label>
                                         <textarea 
-                                        name="descripcion"
-                                        {...register("descripcion",{
+                                        name="description"
+                                        {...register("description",{
                                             required:"El campo es requerido",
                                             minLength:{
                                                 value:20,
@@ -107,7 +111,7 @@ function ModalAgregarAdquisicion(){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></textarea>
-                                        {errors.descripcion && <span className="text-danger text-small d-block mb-2">{errors.descripcion.message}</span>}
+                                        {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">
@@ -122,44 +126,6 @@ function ModalAgregarAdquisicion(){
                     </div>
             </Modal>
         </div>
-
-        
-        // <div class="modal fade" id="modalAgregarAdquisicion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        //     <div class="modal-dialog">
-        //         <div class="modal-content">
-        //         <div class="modal-header">
-        //             <h5 class="modal-title" id="exampleModalLabel">Agregar Compra/Alquiler</h5>
-        //             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        //             <span aria-hidden="true">&times;</span>
-        //             </button>
-        //         </div>
-        //         <div class="modal-body">
-        //             <form>
-        //                 <div className="form-row">
-        //                     <div className="form-group col-md-6">
-        //                         <label>Cantidad:</label>
-        //                         <input type="integer" className="form-control"></input>
-        //                     </div>
-        //                     <div className="form-group col-md-6">
-        //                         <label>Cantidad:</label>
-        //                         <input type="integer" className="form-control"></input>
-        //                     </div>
-        //                 </div>
-        //                 <div className="form-row">
-        //                     <div className="form-group col">
-        //                         <label>Descripcion:</label>
-        //                         <textarea className="form-control"></textarea>
-        //                     </div>
-        //                 </div>
-        //             </form>
-        //         </div>
-        //         <div class="modal-footer">
-        //             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        //             <button type="button" class="btn btn-primary">Guardar</button>
-        //         </div>
-        //         </div>
-        //     </div>
-        // </div>
     );
 }
 
