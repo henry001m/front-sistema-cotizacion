@@ -9,7 +9,7 @@ import ModalAgregarUsuario from './pages/usuario/ModalAgregarUsuario'
 function App() {
   return (
     <div className="App">
-      <NavAdministrador/>
+      <NavUnidadGasto/>
     </div>
   );
 }

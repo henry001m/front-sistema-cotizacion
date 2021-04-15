@@ -28,7 +28,7 @@ function NavUnidadGasto() {
                         <a className="nav-link" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="./PEDIDO MATERIALES.doc">Descargar Formulario</a>
+                        <a className="nav-link" href="./PedidoMaterial.pdf">Descargar Formulario</a>
                     </li>
                 </ul>
                 <Switch>
