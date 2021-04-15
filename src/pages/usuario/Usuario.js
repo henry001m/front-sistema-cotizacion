@@ -30,7 +30,7 @@ function Usuario(){
                                 <th scope="col">Carnet de Identidad</th>
                                 <th scope="col">Telefono</th>
                                 <th scope="col">Correo</th>
-                                <th scope="col">Tipo de Usuario</th>
+                                <th scope="col">Rol de Usuario</th>
                                 </tr>
                             </thead>
                             <tbody>

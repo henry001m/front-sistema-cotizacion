@@ -17,7 +17,7 @@ function ModalAgregarUsuario(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
 
-    const [user, setUser]  = useState({name:"", lastName:"", ci:null, phone:null, direction:"", email:""});
+    const [user, setUser]  = useState({name:"", lastName:"", ci:null, phone:null, direction:"", email:"",userName:""});
     
     const handleInputChange = (event) => {
         setUser({
@@ -185,11 +185,25 @@ function ModalAgregarUsuario(){
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label>Tipo de usuario:</label>
-                                    <select id="inputState" className="form-control">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
+                                    <label>Nombre de usuario:</label>
+                                    <input
+                                    name="userName" 
+                                    {...register("userName",{
+                                        required:"Campo requerido",
+                                        minLength:{
+                                            value:10,
+                                            message:"Dato invalido"
+                                        },
+                                        maxLength:{
+                                            value:30,
+                                            message:"Dato invalido"
+                                        }
+                                    })}
+                                    type="text" 
+                                    className="form-control"
+                                    onChange={ handleInputChange }
+                                    ></input>
+                                    {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label>Rol de Usuario:</label>
