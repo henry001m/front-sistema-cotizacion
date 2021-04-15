@@ -17,7 +17,7 @@ function ModalAgregarAdquisicion(props){
     }
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detail, setDetail] = useState({amount:null, unitMesure:"", description:""})
+    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
 
     const handleInputChange = (event) => {
         setDetail({
@@ -73,8 +73,8 @@ function ModalAgregarAdquisicion(props){
                                     <div className="form-group col-md-6">
                                         <label>Unidad:</label>
                                         <input 
-                                        name="unitMesure"
-                                        {...register("unitMesure",{
+                                        name="unitMeasure"
+                                        {...register("unitMeasure",{
                                             required:"El campo es requerido",
                                             maxLength:{
                                                 value:20,
@@ -89,7 +89,7 @@ function ModalAgregarAdquisicion(props){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.unitMesure && <span className="text-danger text-small d-block mb-2">{errors.unitMesure.message}</span>}
+                                        {errors.unitMeasure && <span className="text-danger text-small d-block mb-2">{errors.unitMeasure.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">

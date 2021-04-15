@@ -21,14 +21,12 @@ function AgregarDetalleSolictud(){
     };
 
     const updateDetails = (data) => {
-        console.log("ventana",data)
         setNewDetails([...newDetails,data])
     }
 
     const sendData = ( data ) => {
         const obj = {aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
         console.log(obj);
-        console.log(adquisicion)
         async function SendQuotittations(){
             console.log("envio",adquisicion.details);
             const result = await createQuotitation(adquisicion);
