@@ -3,13 +3,15 @@ import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
+import { createQuotitation } from '../../services/Http/QuotitationService' 
 
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
 
-    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", details:[], amount:null})
+    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
 
+    const [ newDetails, setNewDetails] = useState([])
 
     const handleInputChange = (event) => {
         setAdquisicion({
@@ -18,30 +20,39 @@ function AgregarDetalleSolictud(){
         });
     };
 
-    const enviarDatos = ( data ) => {
-        console.log("enviar")
-        console.log(errors)
+    const updateDetails = (data) => {
+        console.log("ventana",data)
+        setNewDetails([...newDetails,data])
+    }
+
+    const sendData = ( data ) => {
+        console.log("envio",{aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount});
+
+        async function SendQuotittations(){
+            console.log("envio",adquisicion.details);
+            const result = await createQuotitation(adquisicion);
+        };
         reset();
     };
 
-    // const Details = adquiscion.details.map((detail,index)=>{
-    //     return(
-    //         <tr key={index}>
-    //             <td className="col-1">
-    //                 {index}         
-    //             </td>
-    //             <td className="col-2">
-    //                 {datail.cantida}         
-    //             </td>
-    //             <td className="col-4">
-    //                 {detail.unidad}         
-    //             </td>
-    //             <td className="col-3">
-    //                 {detail.descripcion}         
-    //             </td>
-    //         </tr>
-    //     );
-    // })
+    const Details = newDetails.map((detail,index)=>{
+        return(
+            <tr key={index}>
+                <th scope="row">
+                    {index}         
+                </th>
+                <td>
+                    {detail.amount}         
+                </td>
+                <td>
+                    {detail.unitMesure}         
+                </td>
+                <td >
+                    {detail.description}         
+                </td>
+            </tr>
+        );
+    })
 
     return(
         <>
@@ -51,7 +62,7 @@ function AgregarDetalleSolictud(){
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
-                        <form onSubmit={handleSubmit(enviarDatos)}>
+                        <form onSubmit={handleSubmit(sendData)}>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
@@ -96,79 +107,28 @@ function AgregarDetalleSolictud(){
                                         })}
                                         type="text" 
                                         className="form-control"
+                                        onChange={ handleInputChange }
                                         ></input>
                                         {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
-                                    <ModalAgregarAdquisicion/>                                 
+                                    <ModalAgregarAdquisicion
+                                    updateDetails={updateDetails}/>                                 
                                 </div>
                             </div>
                             <div className="form-row" id="list">
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                        <th className="col-1">#</th>
-                                        <th className="col-2">Cantidad</th>
-                                        <th className="col-4">Unidad</th>
-                                        <th className="col-5">Descripcion</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Unidad</th>
+                                        <th scope="col">Descripcion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">1</td>
-                                        <td className="col-2">Mark</td>
-                                        <td className="col-4">Otto</td>
-                                        <td className="col-5">@mdo</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">2</td>
-                                        <td className="col-2">Jacob</td>
-                                        <td className="col-4">Thornton</td>
-                                        <td className="col-5">@fat</td>
-                                        </tr>
-                                        <tr>
-                                        <td className="col-1">3</td>
-                                        <td className="col-2">Larry</td>
-                                        <td className="col-4">the Bird</td>
-                                        <td className="col-5">@twitter</td>
-                                        </tr>
+                                        {Details}
                                     </tbody>
                                 </table>
                             </div>
@@ -187,6 +147,7 @@ function AgregarDetalleSolictud(){
                                         })}
                                         type="number" 
                                         className="form-control"
+                                        onChange={ handleInputChange }
                                         ></input>
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>

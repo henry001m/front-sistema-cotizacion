@@ -31,27 +31,27 @@ function SolicitudesVista(){
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    <th className="col-1">#</th>
-                                    <th className="col-2">Unidad de Gasto</th>
-                                    <th className="col-2">Fecha</th>
-                                    <th className="col-2">solicitud</th>
-                                    <th className="col-3">Estado</th>
-                                    <th className="col-2">Informe</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Unidad de Gasto</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">solicitud</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Informe</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {quotitations.map((quotitation) => {
                                 return(
                                     <tr key={quotitation.id}>
-                                    <td className="col-1">{quotitation.id}</td>
-                                    <td className="col-2">{quotitation.nameUnidadGasto}</td>
-                                    <td className="col-2">{quotitation.requestDate}</td>
-                                    <td className="col-2">
-                                        <a className="link">ver</a>
-                                    </td>
-                                    <td className="col-3">{quotitation.status}</td>
-                                    <td className="col-2">----</td>
-                                </tr>
+                                        <th scope="row">{quotitation.id}</th>
+                                        <td >{quotitation.nameUnidadGasto}</td>
+                                        <td>{quotitation.requestDate}</td>
+                                        <td>
+                                            <a className="link">ver</a>
+                                        </td>
+                                        <td>{quotitation.status}</td>
+                                        <td>----</td>
+                                    </tr>
                                 );
                             })}
                                 

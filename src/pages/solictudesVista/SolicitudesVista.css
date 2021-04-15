@@ -2,9 +2,10 @@
 .table-striped{
   border-collapse: collapse;
   border: 1px solid darkgrey;
-}
+  text-align: center;
+} 
 
-.table-striped thead{
+/* .table-striped thead{
 text-align: center;
 width: 100%;
 }
@@ -28,4 +29,4 @@ display: block;
 float: left;
 border-bottom-width: 0;
 } 
-  
+   */
