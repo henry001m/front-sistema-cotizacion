@@ -26,8 +26,9 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = ( data ) => {
-        console.log("envio",{aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount});
-
+        const obj = {aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+        console.log(obj);
+        console.log(adquisicion)
         async function SendQuotittations(){
             console.log("envio",adquisicion.details);
             const result = await createQuotitation(adquisicion);
