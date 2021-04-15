@@ -2,6 +2,37 @@ import React from 'react'
 import './SolicitudesVista.css'
 
 function SolicitudesVista(){
+
+
+
+
+    const [ number, setNumber ] = useState([9,8,7,6,5,4,3,2,1])
+
+    const Requests = number.map((number,index)=>{
+        return(
+            <tr key={index}>
+                <td className="col-1">
+                    {index+1}         
+                </td>
+                <td className="col-2">
+                    {number}         
+                </td>
+                <td className="col-2">
+                    {number}         
+                </td>
+                <td className="col-2" align="center">
+                    <a className="link">ver</a>
+                </td>
+                <td className="col-3">
+                    {number}         
+                </td>
+                <td className="col-2">
+                    <a className="link">ver</a>        
+                </td>
+            </tr>
+        );
+    });
+
     return(
         <>
             <div className="container" align="left">

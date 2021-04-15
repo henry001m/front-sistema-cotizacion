@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './SolicitudesDeAdquisicion.css'
 import { useHistory } from 'react-router-dom'
 import { PlusCircle} from 'bootstrap-icons-react'
+import Axios from "axios"
 
 function SolicitudesDeAdquisicion(){
 
@@ -12,32 +13,48 @@ function SolicitudesDeAdquisicion(){
         history.push("/AgregarDetalleSolictud")
     }
 
+    const [list, setList] = useState([]);
+    useEffect(() => {
+        Axios({
+        url: "http://127.0.0.1:8000/quotitations",
+        })
+        .then((response) => {
+            setList(response.data);
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }, [setList]);
+
     const [requests, setRequests ] = useState([])
 
-    // const Requests = this.state.requests.map((request,index)=>{
-    //     return(
-    //         <tr key={index}>
-    //             <td className="col-1">
-    //                 {index}         
-    //             </td>
-    //             <td className="col-2">
-    //                 {request.nombreUnidadGasto}         
-    //             </td>
-    //             <td className="col-2">
-    //                 {request.fecha}         
-    //             </td>
-    //             <td className="col-2" align="center">
-    //                 <a className="link">ver</a>
-    //             </td>
-    //             <td className="col-3">
-    //                 {request.estado}         
-    //             </td>
-    //             <td className="col-2">
-    //                 <a className="link">ver</a>        
-    //             </td>
-    //         </tr>
-    //     );
-    // });
+    const [ number, setNumber ] = useState([9,8,7,6,5,4,3,2,1])
+
+    const Requests = number.map((number,index)=>{
+        return(
+            <tr key={index}>
+                <td className="col-1">
+                    {index+1}         
+                </td>
+                <td className="col-2">
+                    {number}         
+                </td>
+                <td className="col-2">
+                    {number}         
+                </td>
+                <td className="col-2" align="center">
+                    <a className="link">ver</a>
+                </td>
+                <td className="col-3">
+                    {number}         
+                </td>
+                <td className="col-2">
+                    <a className="link">ver</a>        
+                </td>
+            </tr>
+        );
+    });
 
     return(
         <>
@@ -71,6 +88,7 @@ function SolicitudesDeAdquisicion(){
                                 </tr>
                             </thead>
                             <tbody>
+                            {Requests}
                             <tr>
                                 <td className="col-1">1</td>
                                 <td className="col-2">limpieza</td>
