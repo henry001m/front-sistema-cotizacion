@@ -13,11 +13,12 @@ function ModalAgregarAdquisicion(props){
     };
 
     const closeModal = () => {
+        reset();
         modalref.current.closeModal()
     }
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detail, setDetail] = useState({amount:null, unitMesure:"", description:""})
+    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
 
     const handleInputChange = (event) => {
         setDetail({
@@ -30,6 +31,7 @@ function ModalAgregarAdquisicion(props){
         props.updateDetails(detail)
         console.log("modal",detail)
         reset();
+        closeModal();
     };
 
     return(
@@ -73,12 +75,16 @@ function ModalAgregarAdquisicion(props){
                                     <div className="form-group col-md-6">
                                         <label>Unidad:</label>
                                         <input 
-                                        name="unitMesure"
-                                        {...register("unitMesure",{
+                                        name="unitMeasure"
+                                        {...register("unitMeasure",{
                                             required:"El campo es requerido",
+                                            minLength:{
+                                                value:1,
+                                                message:"Este campo debe tener entre 1 y 20 caracteres"
+                                            },
                                             maxLength:{
                                                 value:20,
-                                                message:"Este campo debe tener como maximo 20 caracteres"
+                                                message:"Este campo debe tener entre 1 y 20 caracteres"
                                             },
                                             pattern:{
                                                 value: /^[Ññíóáéú a-zA-Z ]+$/,
@@ -89,7 +95,7 @@ function ModalAgregarAdquisicion(props){
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
-                                        {errors.unitMesure && <span className="text-danger text-small d-block mb-2">{errors.unitMesure.message}</span>}
+                                        {errors.unitMeasure && <span className="text-danger text-small d-block mb-2">{errors.unitMeasure.message}</span>}
                                     </div>
                                 </div>
                                 <div className="form-row">
@@ -100,12 +106,12 @@ function ModalAgregarAdquisicion(props){
                                         {...register("description",{
                                             required:"El campo es requerido",
                                             minLength:{
-                                                value:20,
-                                                message:"Este campo debe tener entre 20 y 120 caracteres"
+                                                value:5,
+                                                message:"Este campo debe tener entre 5 y 120 caracteres"
                                             },
                                             maxLength:{
                                                 value:120,
-                                                message:"Este campo debe tener entre 20 y 120 caracteres"
+                                                message:"Este campo debe tener entre 5 y 120 caracteres"
                                             }
                                         })}
                                         className="form-control" 

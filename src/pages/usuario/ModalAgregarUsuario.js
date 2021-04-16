@@ -30,6 +30,7 @@ function ModalAgregarUsuario(props){
         const result = await createUser(user);
         props.updateUsers();
         reset();
+        closeModal();
     };
 
     return(
@@ -56,11 +57,15 @@ function ModalAgregarUsuario(props){
                                     {...register("name",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
+                                            value:10,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
                                             value:30,
+                                            message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Dato invalido"
                                         }
                                     })}
@@ -77,11 +82,15 @@ function ModalAgregarUsuario(props){
                                     {...register("lastName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
+                                            value:10,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
                                             value:30,
+                                            message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Dato invalido"
                                         }
                                     })}
@@ -154,6 +163,10 @@ function ModalAgregarUsuario(props){
                                         maxLength:{
                                             value:30,
                                             message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                            message:"Dato invalido"
                                         }
                                     })}
                                     type="text" 
@@ -192,7 +205,7 @@ function ModalAgregarUsuario(props){
                                     {...register("userName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
+                                            value:3,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{

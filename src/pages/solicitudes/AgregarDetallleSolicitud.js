@@ -1,6 +1,7 @@
 import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
 import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
+import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation } from '../../services/Http/QuotitationService' 
@@ -8,6 +9,8 @@ import { createQuotitation } from '../../services/Http/QuotitationService'
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
+
+    const [ nameUnidadGasto, setNameUnidadGasto ] = useState("mecanica")
 
     const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
 
@@ -21,20 +24,22 @@ function AgregarDetalleSolictud(){
     };
 
     const updateDetails = (data) => {
-        console.log("ventana",data)
         setNewDetails([...newDetails,data])
     }
 
-    const sendData = ( data ) => {
-        const obj = {aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
-        console.log(obj);
-        console.log(adquisicion)
-        async function SendQuotittations(){
-            console.log("envio",adquisicion.details);
-            const result = await createQuotitation(adquisicion);
-        };
+    const sendData = async ( ) => {
+        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+        const result = await createQuotitation(obj);
+        console.log("resultado",result);
         reset();
+        closePage();
     };
+
+    let history = useHistory();
+
+    function closePage(){
+        history.goBack();
+    }
 
     const Details = newDetails.map((detail,index)=>{
         return(
@@ -102,12 +107,13 @@ function AgregarDetalleSolictud(){
                                         {...register("requestDate",{
                                             required:"El campo monto es requerido",
                                             pattern:{
-                                                value:/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})+$/,
+                                                value:/^\d{4}([-])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
                                                 message:"dato invalido"
                                             }
                                         })}
                                         type="text" 
                                         className="form-control"
+                                        placeholder="ej: 2018-02-09"
                                         onChange={ handleInputChange }
                                         ></input>
                                         {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}
@@ -162,7 +168,7 @@ function AgregarDetalleSolictud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-secondary" id="btnV"> Cancelar </button>
+                                    <button type="button" className="btn btn-secondary" id="btnV" onClick={closePage}> Cancelar </button>
                                     <button type="submit" className="btn btn-info" id="btnV"> Enviar </button>
                                 </div>
                             </div>
