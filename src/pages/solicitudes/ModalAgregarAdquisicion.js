@@ -13,6 +13,7 @@ function ModalAgregarAdquisicion(props){
     };
 
     const closeModal = () => {
+        reset();
         modalref.current.closeModal()
     }
 
@@ -30,6 +31,7 @@ function ModalAgregarAdquisicion(props){
         props.updateDetails(detail)
         console.log("modal",detail)
         reset();
+        closeModal();
     };
 
     return(

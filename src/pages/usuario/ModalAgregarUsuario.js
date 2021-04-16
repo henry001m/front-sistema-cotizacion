@@ -32,6 +32,7 @@ function ModalAgregarUsuario(props){
         props.updateUsers();
         console.log("resultado",result);
         reset();
+        closeModal();
     };
 
     return(
@@ -194,7 +195,7 @@ function ModalAgregarUsuario(props){
                                     {...register("userName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
+                                            value:3,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
