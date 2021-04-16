@@ -59,11 +59,15 @@ function ModalAgregarUsuario(props){
                                     {...register("name",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
+                                            value:10,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
                                             value:30,
+                                            message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Dato invalido"
                                         }
                                     })}
@@ -80,11 +84,15 @@ function ModalAgregarUsuario(props){
                                     {...register("lastName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
+                                            value:10,
                                             message:"Dato invalido"
                                         },
                                         maxLength:{
                                             value:30,
+                                            message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Dato invalido"
                                         }
                                     })}
@@ -156,6 +164,10 @@ function ModalAgregarUsuario(props){
                                         },
                                         maxLength:{
                                             value:30,
+                                            message:"Dato invalido"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Dato invalido"
                                         }
                                     })}

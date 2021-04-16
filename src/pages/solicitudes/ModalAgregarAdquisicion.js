@@ -78,9 +78,13 @@ function ModalAgregarAdquisicion(props){
                                         name="unitMeasure"
                                         {...register("unitMeasure",{
                                             required:"El campo es requerido",
+                                            minLength:{
+                                                value:1,
+                                                message:"Este campo debe tener entre 1 y 20 caracteres"
+                                            },
                                             maxLength:{
                                                 value:20,
-                                                message:"Este campo debe tener como maximo 20 caracteres"
+                                                message:"Este campo debe tener entre 1 y 20 caracteres"
                                             },
                                             pattern:{
                                                 value: /^[Ññíóáéú a-zA-Z ]+$/,
@@ -102,12 +106,12 @@ function ModalAgregarAdquisicion(props){
                                         {...register("description",{
                                             required:"El campo es requerido",
                                             minLength:{
-                                                value:20,
-                                                message:"Este campo debe tener entre 20 y 120 caracteres"
+                                                value:5,
+                                                message:"Este campo debe tener entre 5 y 120 caracteres"
                                             },
                                             maxLength:{
                                                 value:120,
-                                                message:"Este campo debe tener entre 20 y 120 caracteres"
+                                                message:"Este campo debe tener entre 5 y 120 caracteres"
                                             }
                                         })}
                                         className="form-control" 
