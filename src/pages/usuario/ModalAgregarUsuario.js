@@ -27,10 +27,8 @@ function ModalAgregarUsuario(props){
     };
 
     const SaveData = async ( ) => {
-        console.log("enviar",user);
         const result = await createUser(user);
         props.updateUsers();
-        console.log("resultado",result);
         reset();
     };
 
