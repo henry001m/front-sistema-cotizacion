@@ -16,14 +16,15 @@ function AgregarDetalleSolictud(){
 
     const [ newDetails, setNewDetails] = useState([])
 
-    const [ file, setFile ] = useState(null);
+    const [ file, setFile ] = useState([]);
 
     const saveFiles = (e) => {
         setFile(e);
-        const listFile = [];
+        var listFile = [];
         for (let index = 0; index < e.target.files.length; index++) {
             listFile.push(e.target.files[index]);    
         }
+        listFile=listFile.concat(file);
         setFile(listFile);
     };
 
@@ -39,7 +40,7 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-
+        console.log(file)
         const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:file};
         const result = await createQuotitation(obj);
         console.log("resultado",result);
@@ -117,7 +118,7 @@ function AgregarDetalleSolictud(){
                                         <input
                                         name="requestDate" 
                                         {...register("requestDate",{
-                                            required:"El campo monto es requerido",
+                                            required:"El campo es requerido",
                                             pattern:{
                                                 value:/^\d{4}([-])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
                                                 message:"dato invalido"
@@ -158,10 +159,10 @@ function AgregarDetalleSolictud(){
                                         <input
                                         name="amount"
                                         {...register("amount",{
-                                            required:"El campo monto es requerido",
+                                            required:"El campo es requerido",
                                             min:{
                                                 value:1,
-                                                message:"el monto debe ser mayor a 0"
+                                                message:"Dato invalido"
                                             }
                                         })}
                                         type="number" 
