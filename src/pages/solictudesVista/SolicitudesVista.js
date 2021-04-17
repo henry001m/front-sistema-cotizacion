@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
-import {getQuotitation} from '../../services/Http/QuotitationService';
+import {getQuotitation} from '../../services/http/QuotitationService';
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
 

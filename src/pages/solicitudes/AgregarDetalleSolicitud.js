@@ -4,29 +4,14 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/Http/QuotitationService'
+import { createQuotitation } from '../../services/http/QuotitationService';
+import axios from 'axios';
 
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
-    const [ nameUnidadGasto, setNameUnidadGasto ] = useState("mecanica")
-
-    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
-
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
-
-    const [ file, setFile ] = useState([]);
-
-    const saveFiles = (e) => {
-        setFile(e);
-        var listFile = [];
-        for (let index = 0; index < e.target.files.length; index++) {
-            listFile.push(e.target.files[index]);    
-        }
-        listFile=listFile.concat(file);
-        setFile(listFile);
-    };
 
     const handleInputChange = (event) => {
         setAdquisicion({
@@ -39,13 +24,28 @@ function AgregarDetalleSolictud(){
         setNewDetails([...newDetails,data])
     }
 
+    const [fls, setFls] = useState(null);
+
+    const fileSelectHandler =(e)=>{
+        setFls(e.target.files);   
+    }
+    const onSubmit =async (id) =>{
+        const formData = new FormData();
+        for(var i=0 ; i<fls.length ; i++){
+          let name = 'file'+i;
+          formData.append(name,fls[i],fls[i].name);
+        }
+        const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
+        console.log("respuesta ",res);
+    }
+
     const sendData = async ( ) => {
-        console.log(file)
-        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:file};
+        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
-        console.log("resultado",result);
+        await onSubmit(result.success);
         reset();
         closePage();
+        
     };
 
     let history = useHistory();
@@ -64,7 +64,7 @@ function AgregarDetalleSolictud(){
                     {detail.amount}         
                 </td>
                 <td>
-                    {detail.unitMesure}         
+                    {detail.unitMeasure}         
                 </td>
                 <td >
                     {detail.description}         
@@ -82,6 +82,35 @@ function AgregarDetalleSolictud(){
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
                         <form onSubmit={handleSubmit(sendData)}>
+                        <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label>Unidad de gasto:</label>
+                                    <div className="form-row" id="inputs">
+                                        <input 
+                                            name ="nameUnidadGasto" 
+                                            {...register("nameUnidadGasto",{
+                                                required:"El campo es requerido",
+                                                minLength:{
+                                                    value:3,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                maxLength:{
+                                                    value:50,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                pattern:{
+                                                    value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                    message:"El campo solo permite caracteres alfabeticos"
+                                                }
+                                            })}
+                                            type="text" 
+                                            className="form-control" 
+                                            onChange={ handleInputChange }
+                                        ></input>
+                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
+                                    </div>
+                                </div>
+                            </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
@@ -173,15 +202,13 @@ function AgregarDetalleSolictud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
-                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e)}></input>                                 
-                                        {/* <button type="button" className="btn btn-secondary my-2 my-sm-0"
-                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button> */}
+                                    <input type="file" multiple onChange = {fileSelectHandler}></input>                                 
                                 </div>
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
                                     <button type="button" className="btn btn-secondary" id="btnV" onClick={closePage}> Cancelar </button>
-                                    <button type="submit" className="btn btn-info" id="btnV"> Enviar </button>
+                                    <button type="submit" className="btn btn-info" id="btnV" > Enviar </button>
                                 </div>
                             </div>
                         </form>

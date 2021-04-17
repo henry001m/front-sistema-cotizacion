@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import UserImg from './../../resources/user.jpg'
 import Home from './../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
-import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
+import EnviarCotizacion from '../../pages/EnviarFormulario/EnviarCotizacion';
 import { PersonCircle } from 'bootstrap-icons-react';
 
 function NavAdministrador() {

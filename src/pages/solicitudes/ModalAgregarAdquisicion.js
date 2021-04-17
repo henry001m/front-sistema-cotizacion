@@ -87,7 +87,7 @@ function ModalAgregarAdquisicion(props){
                                                 message:"Este campo debe tener entre 1 y 20 caracteres"
                                             },
                                             pattern:{
-                                                value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                value: /^[Ññíóáéú a-zA-Z/ ]+$/,
                                                 message:"El campo solo permite caracteres alfabeticos"
                                             }
                                         })}
