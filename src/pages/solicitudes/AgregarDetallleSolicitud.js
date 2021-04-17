@@ -37,8 +37,8 @@ function AgregarDetalleSolictud(){
 
         const f = new FormData();
 
-        for (let index = 0; index < files.length; index++) {
-            f.append("files", files[index]);           
+        for (let index = 0; index < file.length; index++) {
+            f.append("file", file[index]);           
         };
 
         const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:f};
