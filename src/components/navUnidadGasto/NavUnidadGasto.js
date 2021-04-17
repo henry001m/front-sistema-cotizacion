@@ -5,7 +5,7 @@ import UserImg from './../../resources/user.jpg'
 import Home from './../../pages/Home'
 import SolicitudesDeAdquisicion from '../../pages/solicitudes/SolicitudesDeAdquisicion'
 import './NavUnidadGasto.css'
-import AgregarDetalleSolictud from '../../pages/solicitudes/AgregarDetallleSolicitud'
+import AgregarDetalleSolictud from '../../pages/solicitudes/AgregarDetalleSolicitud'
 import { PersonCircle } from 'bootstrap-icons-react'
 
 function NavUnidadGasto() {

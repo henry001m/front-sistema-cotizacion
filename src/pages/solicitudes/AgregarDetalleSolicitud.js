@@ -12,6 +12,17 @@ function AgregarDetalleSolictud(){
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
 
+    const [ file, setFile ] = useState(null);
+
+    const saveFiles = (e) => {
+        setFile(e);
+        const listFile = [];
+        for (let index = 0; index < e.target.files.length; index++) {
+            listFile.push(e.target.files[index]);    
+        }
+        setFile(listFile);
+    };
+
     const handleInputChange = (event) => {
         setAdquisicion({
             ...adquisicion,
@@ -185,10 +196,9 @@ function AgregarDetalleSolictud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
-                                    
-                                        <button type="button" className="btn btn-secondary my-2 my-sm-0"
-                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
-                                   
+                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e)}></input>                                 
+                                        {/* <button type="button" className="btn btn-secondary my-2 my-sm-0"
+                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button> */}
                                 </div>
                             </div>
                             <div className="form-row" >
@@ -198,6 +208,7 @@ function AgregarDetalleSolictud(){
                                 </div>
                             </div>
                         </form>
+                                
                     </div>
                 </div>
             </div>
