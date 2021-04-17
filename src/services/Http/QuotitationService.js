@@ -12,8 +12,8 @@ export async function getQuotitation() {
 
 export async function createQuotitation(quotitation) {
     try {
-        await API.post('/quotitation', quotitation);
-        return quotitation;
+        const res = await API.post('/quotitation', quotitation);
+        return res.data;
     } catch (error) {
         console.log(error);
     }

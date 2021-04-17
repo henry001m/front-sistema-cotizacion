@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/http/QuotitationService' 
+import { createQuotitation } from '../../services/http/QuotitationService';
+import axios from 'axios';
 
 function AgregarDetalleSolictud(){
 
@@ -34,12 +35,30 @@ function AgregarDetalleSolictud(){
         setNewDetails([...newDetails,data])
     }
 
+    const [fls, setFls] = useState(null);
+
+    const fileSelectHandler =(e)=>{
+        setFls(e.target.files);   
+    }
+    const onSubmit =async (id) =>{
+        //e.preventDefault();
+        const fd = new FormData();
+        for(var i=0 ; i<fls.length ; i++){
+          let name = 'file'+i;
+          fd.append(name,fls[i],fls[i].name);
+        }
+        const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,fd);
+        console.log("respuesta ",res);
+    }
+
     const sendData = async ( ) => {
         const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
-        console.log("resultado",result);
+        console.log("resultado",result.success);
+        await onSubmit(result.success);
         reset();
         closePage();
+        
     };
 
     let history = useHistory();
@@ -196,15 +215,13 @@ function AgregarDetalleSolictud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
-                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e)}></input>                                 
-                                        {/* <button type="button" className="btn btn-secondary my-2 my-sm-0"
-                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button> */}
+                                    <input type="file" multiple onChange = {fileSelectHandler}></input>                                 
                                 </div>
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
                                     <button type="button" className="btn btn-secondary" id="btnV" onClick={closePage}> Cancelar </button>
-                                    <button type="submit" className="btn btn-info" id="btnV"> Enviar </button>
+                                    <button type="submit" className="btn btn-info" id="btnV" > Enviar </button>
                                 </div>
                             </div>
                         </form>
