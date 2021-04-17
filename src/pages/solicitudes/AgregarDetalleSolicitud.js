@@ -13,17 +13,6 @@ function AgregarDetalleSolictud(){
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
 
-    const [ file, setFile ] = useState(null);
-
-    const saveFiles = (e) => {
-        setFile(e);
-        const listFile = [];
-        for (let index = 0; index < e.target.files.length; index++) {
-            listFile.push(e.target.files[index]);    
-        }
-        setFile(listFile);
-    };
-
     const handleInputChange = (event) => {
         setAdquisicion({
             ...adquisicion,
@@ -41,20 +30,18 @@ function AgregarDetalleSolictud(){
         setFls(e.target.files);   
     }
     const onSubmit =async (id) =>{
-        //e.preventDefault();
-        const fd = new FormData();
+        const formData = new FormData();
         for(var i=0 ; i<fls.length ; i++){
           let name = 'file'+i;
-          fd.append(name,fls[i],fls[i].name);
+          formData.append(name,fls[i],fls[i].name);
         }
-        const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,fd);
+        const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
         console.log("respuesta ",res);
     }
 
     const sendData = async ( ) => {
         const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
-        console.log("resultado",result.success);
         await onSubmit(result.success);
         reset();
         closePage();
