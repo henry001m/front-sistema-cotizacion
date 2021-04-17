@@ -19,7 +19,12 @@ function AgregarDetalleSolictud(){
     const [ file, setFile ] = useState(null);
 
     const saveFiles = (e) => {
-        setFile(e); 
+        setFile(e);
+        const listFile = [];
+        for (let index = 0; index < e.target.files.length; index++) {
+            listFile.push(e.target.files[index]);    
+        }
+        setFile(listFile);
     };
 
     const handleInputChange = (event) => {
@@ -35,13 +40,7 @@ function AgregarDetalleSolictud(){
 
     const sendData = async ( ) => {
 
-        const f = new FormData();
-
-        for (let index = 0; index < file.length; index++) {
-            f.append("file", file[index]);           
-        };
-
-        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:f};
+        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:file};
         const result = await createQuotitation(obj);
         console.log("resultado",result);
         reset();
@@ -173,7 +172,7 @@ function AgregarDetalleSolictud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
-                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e.target.files)}></input>                                 
+                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e)}></input>                                 
                                         {/* <button type="button" className="btn btn-secondary my-2 my-sm-0"
                                         >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button> */}
                                 </div>
