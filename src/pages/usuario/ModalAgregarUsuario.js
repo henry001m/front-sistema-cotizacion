@@ -2,7 +2,7 @@ import React, { useState, useRef }from 'react'
 import { PlusCircle } from 'bootstrap-icons-react';
 import  Modal from './../../components/modal/Modal';
 import { useForm } from 'react-hook-form';
-import { createUser } from '../../services/Http/UserService' ;
+import { createUser } from '../../services/http/UserService' ;
 function ModalAgregarUsuario(props){
 
     const modalref = useRef();
@@ -222,8 +222,8 @@ function ModalAgregarUsuario(props){
                                 <div className="form-group col-md-6">
                                     <label>Rol de Usuario:</label>
                                     <select id="inputState" className="form-control">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
+                                        <option selected>Unidad Gasto</option>
+                                        <option>Administrador</option>
                                     </select>
                                 </div>
                             </div>

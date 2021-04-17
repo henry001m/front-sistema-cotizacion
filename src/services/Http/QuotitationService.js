@@ -19,4 +19,13 @@ export async function createQuotitation(quotitation) {
     }
 }
 
+export async function sendEmail(desciptionEmail) {
+    try {
+        const res = await API.post('/sendEmail', desciptionEmail);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 

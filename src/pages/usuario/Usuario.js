@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from  'react'
 import { PlusCircle } from 'bootstrap-icons-react';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
-import { getUsers } from '../../services/Http/UserService' ;
+import { getUsers } from '../../services/http/UserService' ;
 
 
 function Usuario(){

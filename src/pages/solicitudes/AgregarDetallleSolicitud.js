@@ -4,16 +4,12 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/Http/QuotitationService' 
+import { createQuotitation } from '../../services/http/QuotitationService' 
 
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
-    const [ nameUnidadGasto, setNameUnidadGasto ] = useState("mecanica")
-
-    const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
-
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
 
     const handleInputChange = (event) => {
@@ -28,7 +24,7 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
         console.log("resultado",result);
         reset();
@@ -51,7 +47,7 @@ function AgregarDetalleSolictud(){
                     {detail.amount}         
                 </td>
                 <td>
-                    {detail.unitMesure}         
+                    {detail.unitMeasure}         
                 </td>
                 <td >
                     {detail.description}         
@@ -69,6 +65,35 @@ function AgregarDetalleSolictud(){
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
                         <form onSubmit={handleSubmit(sendData)}>
+                        <div className="form-row">
+                                <div className="form-group col-md-6">
+                                    <label>Unidad de gasto:</label>
+                                    <div className="form-row" id="inputs">
+                                        <input 
+                                            name ="nameUnidadGasto" 
+                                            {...register("nameUnidadGasto",{
+                                                required:"El campo es requerido",
+                                                minLength:{
+                                                    value:3,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                maxLength:{
+                                                    value:50,
+                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
+                                                },
+                                                pattern:{
+                                                    value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                    message:"El campo solo permite caracteres alfabeticos"
+                                                }
+                                            })}
+                                            type="text" 
+                                            className="form-control" 
+                                            onChange={ handleInputChange }
+                                        ></input>
+                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
+                                    </div>
+                                </div>
+                            </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
