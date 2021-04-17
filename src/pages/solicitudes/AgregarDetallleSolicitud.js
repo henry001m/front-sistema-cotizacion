@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/Http/QuotitationService' 
+import { createQuotitation } from '../../services/Http/QuotitationService'
 
 function AgregarDetalleSolictud(){
 
@@ -15,6 +15,12 @@ function AgregarDetalleSolictud(){
     const [ adquisicion, setAdquisicion] = useState({aplicantName:"", requestDate:"", amount:null})
 
     const [ newDetails, setNewDetails] = useState([])
+
+    const [ file, setFile ] = useState(null);
+
+    const saveFiles = (e) => {
+        setFile(e); 
+    };
 
     const handleInputChange = (event) => {
         setAdquisicion({
@@ -28,7 +34,14 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+
+        const f = new FormData();
+
+        for (let index = 0; index < files.length; index++) {
+            f.append("files", files[index]);           
+        };
+
+        const obj = {nameUnidadGasto: nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount,file:f};
         const result = await createQuotitation(obj);
         console.log("resultado",result);
         reset();
@@ -160,10 +173,9 @@ function AgregarDetalleSolictud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">
-                                    
-                                        <button type="button" className="btn btn-secondary my-2 my-sm-0"
-                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
-                                   
+                                    <input type="file" name="files" multiple onChange={(e)=>saveFiles(e.target.files)}></input>                                 
+                                        {/* <button type="button" className="btn btn-secondary my-2 my-sm-0"
+                                        >< FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button> */}
                                 </div>
                             </div>
                             <div className="form-row" >
@@ -173,6 +185,7 @@ function AgregarDetalleSolictud(){
                                 </div>
                             </div>
                         </form>
+                                
                     </div>
                 </div>
             </div>
