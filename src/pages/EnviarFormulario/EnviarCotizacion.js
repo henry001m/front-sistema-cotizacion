@@ -39,13 +39,13 @@ function EnviarCotizacion(){
                                     {...register("email",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:11,
+                                            message:"Este campo debe tener mínimo 11 caracteres"
                                         },
-                                        maxLength:{
-                                            value:50,
-                                            message:"Dato invalido"
-                                        },
+                                        pattern:{
+                                            value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                                            message:"Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                                        }
                                     })}
                                     type="email" 
                                     className="form-control"
@@ -65,16 +65,15 @@ function EnviarCotizacion(){
                                     {...register("description",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:20,
-                                            message:"Dato invalido"
+                                            value:10,
+                                            message:"Este campo debe tener entre 10 y 300 caracteres"
                                         },
                                         maxLength:{
-                                            value:500,
-                                            message:"Dato invalido"
+                                            value:300,
+                                            message:"Este campo debe tener entre 10 y 300 caracteres"
                                         },
-                                        pattern:{
-                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
+                                        validate:{
+                                            //validar que no se ingrese espacios al inicio
                                         }
                                     })}
                                     type="text" 

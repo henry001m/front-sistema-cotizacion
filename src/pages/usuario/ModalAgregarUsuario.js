@@ -67,6 +67,9 @@ function ModalAgregarUsuario(props){
                                         pattern:{
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Este campo solo acepta caracteres alfabéticos"
+                                        },
+                                        validate:{
+                                            //validar que no se ingresen spacios al inicio
                                         }
                                     })}
                                     type="text" 
@@ -82,16 +85,19 @@ function ModalAgregarUsuario(props){
                                     {...register("lastName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:3,
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         pattern:{
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
+                                            message:"Este campo solo acepta caracteres alfabéticos"
+                                        },
+                                        validate:{
+                                            //validar que no inicie con spacio vacio
                                         }
                                     })}
                                     type="text" 
@@ -110,15 +116,15 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:6,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 6 y 10 valores numéricos"
                                         },
                                         maxLength:{
                                             value:10,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 6 y 10 valores numéricos"
                                         },
                                         pattern:{
                                             value:/^[0-9]+$/,
-                                            message:"dato invalido"
+                                            message:"Este campo solo acepta valores numéricos"
                                         }
                                     })}
                                     type="text" 
@@ -135,11 +141,18 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:7,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 7 y 8 números"
+                                        },
+                                        maxLength:{
+                                            value:8,
+                                            message:"Este campo debe tener entre 7 y 8 números"
                                         },
                                         pattern:{
                                             value:/^[0-9]+$/,
-                                            message:"dato invalido"
+                                            message:"Este campo solo acepta valores numéricos"
+                                        },
+                                        validate:{
+                                            //implementar la validacion de spacio vacio
                                         }
                                     })}
                                     type="text" 
@@ -158,15 +171,14 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:10,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 10 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 10 y 30 caracteres"
                                         },
-                                        pattern:{
-                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
+                                        validate:{
+                                            //validar espacios vacios
                                         }
                                     })}
                                     type="text" 
@@ -182,12 +194,15 @@ function ModalAgregarUsuario(props){
                                     {...register("email",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:11,
+                                            message:"Este campo debe tener mínimo 11 caracteres"
                                         },
                                         pattern:{
                                             value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
                                             message:"Dato invalido"
+                                        },
+                                        validate:{
+                                            //validar @
                                         }
                                     })}
                                     type="text" 
@@ -205,12 +220,20 @@ function ModalAgregarUsuario(props){
                                     {...register("userName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
-                                            message:"Dato invalido"
+                                            value:5,
+                                            message:"Este campo debe tener entre 5 y 15 caracteres"
                                         },
                                         maxLength:{
-                                            value:30,
-                                            message:"Dato invalido"
+                                            value:15,
+                                            message:"Este campo debe tener entre 5 y 15 caracteres"
+                                        },
+                                        pattern:{
+                                            //validar solo - . _
+                                            value:/^/,
+                                            message:""
+                                        },
+                                        validate:{
+                                            
                                         }
                                     })}
                                     type="text" 
