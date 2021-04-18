@@ -57,16 +57,16 @@ function ModalAgregarUsuario(props){
                                     {...register("name",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:3,
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         pattern:{
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
+                                            message:"Este campo solo acepta caracteres alfabéticos"
                                         }
                                     })}
                                     type="text" 

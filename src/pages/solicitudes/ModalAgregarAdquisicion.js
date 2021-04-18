@@ -59,11 +59,11 @@ function ModalAgregarAdquisicion(props){
                                             required:"El campo es requerido",
                                             min:{
                                                 value:1,
-                                                message:"Este debe tener valores numéricos entre 1 y 9999"
+                                                message:"Este campo debe tener valores numéricos entre 1 y 9999"
                                             },
                                             max:{
                                                 value:9999,
-                                                message:"Este debe tener valores numéricos entre 1 y 9999"
+                                                message:"Este campo debe tener valores numéricos entre 1 y 9999"
                                             }
                                         })}
                                         type="number" 
@@ -88,7 +88,7 @@ function ModalAgregarAdquisicion(props){
                                             },
                                             pattern:{
                                                 value: /^[Ññíóáéú a-zA-Z/ ]+$/,
-                                                message:"El campo solo permite caracteres alfabeticos"
+                                                message:"Este campo no permite caracteres especiales excepto el '/'"
                                             }
                                         })}
                                         type="integer" 

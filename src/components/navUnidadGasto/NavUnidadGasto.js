@@ -22,13 +22,13 @@ function NavUnidadGasto() {
             <Router>
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     <li className="nav-container--item">
-                        <a className="nav-link" href="/">Home</a>
+                        <a className="nav-link" type="button" href="/">Home</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
+                        <a className="nav-link" type="button" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="./PedidoMaterial.pdf" download>Descargar Formulario</a>
+                        <a className="nav-link" type="button" href="./PedidoMaterial.pdf" download>Descargar Formulario</a>
                     </li>
                 </ul>
                 <Switch>

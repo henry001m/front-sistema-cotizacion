@@ -10,7 +10,7 @@ import axios from 'axios';
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"hola", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
 
     const handleInputChange = (event) => {
@@ -18,6 +18,13 @@ function AgregarDetalleSolictud(){
             ...adquisicion,
             [event.target.name] : event.target.value
         });
+    };
+
+    const invalidateSpace = (e) => {
+        if(e[0]==" "){
+            return "Dato invalido";
+        }
+        return true;
     };
 
     const updateDetails = (data) => {
@@ -101,6 +108,9 @@ function AgregarDetalleSolictud(){
                                                 pattern:{
                                                     value: /^[Ññíóáéú a-zA-Z ]+$/,
                                                     message:"El campo solo permite caracteres alfabeticos"
+                                                },
+                                                validate:{
+                                                    value:(value)=>invalidateSpace(value)
                                                 }
                                             })}
                                             type="text" 
@@ -130,6 +140,9 @@ function AgregarDetalleSolictud(){
                                                 pattern:{
                                                     value: /^[Ññíóáéú a-zA-Z ]+$/,
                                                     message:"El campo solo permite caracteres alfabeticos"
+                                                },
+                                                validate:{
+                                                    value:(value)=>invalidateSpace(value)
                                                 }
                                             })}
                                             type="text" 
@@ -201,8 +214,19 @@ function AgregarDetalleSolictud(){
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
-                                <div className="form-group col-md-6" id="button">
-                                    <input type="file" multiple onChange = {fileSelectHandler}></input>                                 
+                                <div className="form-group col-md-6" id="button" align="flex-end">
+                                    <input 
+                                    name="files"
+                                    {...register("files",{
+                                        required:"Se debe ajuntar un documento",
+                                    })}
+                                    type="file" 
+                                    id="files" 
+                                    multiple 
+                                    onChange = {fileSelectHandler}
+                                    ></input>
+                                    <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
+                                    {errors.files && <span className="text-danger text-small d-block mb-2">{errors.files.message}</span>}                                 
                                 </div>
                             </div>
                             <div className="form-row" >
