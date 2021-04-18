@@ -1,8 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import {getQuotitation} from '../../services/http/QuotitationService';
+import { useHistory  } from 'react-router-dom'
+
+
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
+    let history = useHistory();
+    const [request, setRequest ] = useState({});
 
     useEffect(() => {
         async function getAllQuotitations() {
@@ -13,6 +18,13 @@ function SolicitudesVista(){
         getAllQuotitations();
         //eslint-disable-next-line
     }, []);
+
+
+    const RequestSelect = (index) =>{
+        setRequest(quotitations[index])
+        console.log("solicitud",quotitations[index])
+    }
+
     const Quotitations = quotitations.map((quotitation,index)=>{
         return(
             <tr key={index}>
@@ -62,14 +74,14 @@ function SolicitudesVista(){
                                 </tr>
                             </thead>
                             <tbody>
-                            {quotitations.map((quotitation) => {
+                            {quotitations.map((quotitation,index) => {
                                 return(
                                     <tr key={quotitation.id}>
                                         <th scope="row">{quotitation.id}</th>
                                         <td >{quotitation.nameUnidadGasto}</td>
                                         <td>{quotitation.requestDate}</td>
                                         <td>
-                                            <a className="link">ver</a>
+                                            <a className="link" onClick={()=> RequestSelect(index) } href="/DetalleSolicitud/${quotitation}">ver</a>
                                         </td>
                                         <td>{quotitation.status}</td>
                                         <td>----</td>
@@ -81,7 +93,6 @@ function SolicitudesVista(){
                         </table>
                     </div>
                 </div>
-            
         </div>
     );
 }

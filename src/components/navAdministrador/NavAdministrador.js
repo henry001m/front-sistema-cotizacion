@@ -5,6 +5,7 @@ import Home from './../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
 import { PersonCircle } from 'bootstrap-icons-react';
+import DetalleSolicitud from '../../pages/solictudesVista/DetalleSolicutd';
 
 function NavAdministrador() {
     return(
@@ -46,6 +47,7 @@ function NavAdministrador() {
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
+                    <Route exact path="/DetalleSolicitud/:request" component={ DetalleSolicitud }/>
                 </Switch>
             </Router>
         </>

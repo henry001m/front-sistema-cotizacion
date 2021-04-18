@@ -8,11 +8,19 @@ function EnviarCotizacion(){
     const [respuestaAPI, setRespuestaAPI] = useState({ respuesta: 'KO' });
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
+
     const handleInputChange = (event) => {
-        setEmailMessage({
-            ...emailMessage,
-            [event.target.name] : event.target.value
-        });
+        if(event.target.value[0]==" "){
+            setEmailMessage({
+                ...emailMessage,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setEmailMessage({
+                ...emailMessage,
+                [event.target.name] : event.target.value
+            });
+        }
     };
     const saveEmail = async ( ) => {
         console.log(emailMessage);
@@ -47,6 +55,7 @@ function EnviarCotizacion(){
                                             message:"Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
                                         }
                                     })}
+                                    value={emailMessage.email}
                                     type="email" 
                                     className="form-control"
                                     onChange={ handleInputChange }
@@ -76,6 +85,7 @@ function EnviarCotizacion(){
                                             //validar que no se ingrese espacios al inicio
                                         }
                                     })}
+                                    value={emailMessage.description}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
