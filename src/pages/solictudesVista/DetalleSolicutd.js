@@ -11,8 +11,6 @@ function DetalleSolicitud(){
     const [ requestDate, setRequestDate ] = useState();
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
-    const nombre = "hola"
-    console.log(id)
 
     useEffect(() => {
         async function getRequestId() {
@@ -105,8 +103,8 @@ function DetalleSolicitud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-secondary" id="btnV"> Cancelar </button>
-                                    <button type="submit" className="btn btn-info" id="btnV" > Enviar </button>
+                                    <button type="button" className="btn btn-danger" id="btnV"> Rechazar solicitud </button>
+                                    <button type="submit" className="btn btn-success" id="btnV" > Aceptar Solicitud </button>
                                 </div>
                             </div>
                         </form>
