@@ -6,8 +6,12 @@ import { getRequest } from '../../services/http/QuotitationService'
 function DetalleSolicitud(){
     const {id} = useParams();
     const [ request, setRequest ] = useState();
+    const [ nameUnidadGasto, setNameUnidadGasto ] = useState();
+    const [ aplicantName, setAplicantName ] = useState();
+    const [ requestDate, setRequestDate ] = useState();
+    const [ amount, setAmount ] = useState();
+    const [ details, setDetails ] = useState([])
     const nombre = "hola"
-    const details = []
     console.log(id)
 
     useEffect(() => {
@@ -15,7 +19,11 @@ function DetalleSolicitud(){
             const result = await getRequest(id);
             const resultQuotitations=result;
             setRequest(resultQuotitations);
-            console.log(resultQuotitations);
+            setNameUnidadGasto(resultQuotitations.nameUnidadGasto)
+            setAplicantName(resultQuotitations.aplicantName)
+            setRequestDate(resultQuotitations.requestDate)
+            setDetails(resultQuotitations.details)
+            setAmount(resultQuotitations.amount)
         }
         getRequestId();
     }, []);
@@ -52,7 +60,7 @@ function DetalleSolicitud(){
                                 <div className="form-group col-md-6">
                                     <label>Unidad de gasto:</label>
                                     <div className="form-row" id="inputs">
-                                        <label class="col-form-label">{nombre}</label>
+                                        <label class="col-form-label">{nameUnidadGasto}</label>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +68,7 @@ function DetalleSolicitud(){
                                 <div className="form-group col-md-6">
                                     <label>Nombre del Solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        <label class="col-form-label">{nombre}</label>
+                                        <label class="col-form-label">{aplicantName}</label>
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +76,7 @@ function DetalleSolicitud(){
                                 <div className="form-group col-md-6">
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <label class="col-form-label">{nombre}</label>
+                                        <label class="col-form-label">{requestDate}</label>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +99,7 @@ function DetalleSolicitud(){
                                 <div className="form-group col-md-6">
                                     <label>Monto Estimado:</label>
                                     <div className="form-row" id="inputs">
-                                        <label class="col-form-label">{nombre}</label>
+                                        <label class="col-form-label">{amount}</label>
                                     </div>
                                 </div>
                             </div>
