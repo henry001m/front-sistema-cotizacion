@@ -8,7 +8,7 @@ import DetalleSolicitud from './pages/solictudesVista/DetalleSolicutd'
 function App() {
   return (
     <div className="App">
-      <NavSuperusuario/>
+      <NavAdministrador/>
     </div>
   );
 }

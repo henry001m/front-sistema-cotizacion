@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { getRequest } from '../../services/http/QuotitationService'
 
 function DetalleSolicitud(){
@@ -11,6 +11,8 @@ function DetalleSolicitud(){
     const [ requestDate, setRequestDate ] = useState();
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
+
+    let history = useHistory();
 
     useEffect(() => {
         async function getRequestId() {
@@ -25,6 +27,14 @@ function DetalleSolicitud(){
         }
         getRequestId();
     }, []);
+
+    const acceptRequest = () => {
+        history.replace("/SolicitudesDeAdquisicionAdmin")
+    };
+
+    const rejectRequest = () => {
+        history.replace("/SolicitudesDeAdquisicionAdmin")
+    };
 
     const Details = details.map((detail,index)=>{
         return(
@@ -103,8 +113,8 @@ function DetalleSolicitud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger" id="btnV"> Rechazar solicitud </button>
-                                    <button type="submit" className="btn btn-success" id="btnV" > Aceptar Solicitud </button>
+                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ acceptRequest }> Rechazar solicitud </button>
+                                    <button type="button" className="btn btn-success" id="btnV" onClick={ rejectRequest }> Aceptar Solicitud </button>
                                 </div>
                             </div>
                         </form>
