@@ -44,6 +44,19 @@ function AgregarDetalleSolictud(){
         return true;
     };
 
+    const validateDate = (e) => {
+        const fecha = new Date();
+        var aux = adquisicion.requestDate.split("-")
+        const newFecha = new Date(parseInt(aux[2]),parseInt(aux[1]-1),parseInt(aux[0]));
+        console.log(newFecha)
+        console.log(fecha)
+        if(newFecha.getFullYear() < fecha.getFullYear() || newFecha.getMonth() < fecha.getMonth() || newFecha.getDay() < fecha.getDay() ){
+            return "dato invalido"
+        }else{
+            return true
+        }
+    };
+
     const updateDetails = (data) => {
         setNewDetails([...newDetails,data])
     }
@@ -64,7 +77,10 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:adquisicion.requestDate, details:newDetails ,amount:adquisicion.amount};
+        const aux = adquisicion.requestDate.split("-")
+        const fechaAux = aux[2]+"-"+aux[1]+"-"+aux[0]
+
+        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:fechaAux, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
         await onSubmit(result.success);
         reset();
@@ -181,14 +197,17 @@ function AgregarDetalleSolictud(){
                                         {...register("requestDate",{
                                             required:"El campo es requerido",
                                             pattern:{
-                                                value:/^\d{4}([-])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
+                                                value:/^(?:3[01]|[12][0-9]|0?[1-9])([-])(0?[1-9]|1[1-2])\1\d{4}$/,
                                                 message:"dato invalido"
+                                            },
+                                            validate:{
+                                                value:(value)=>validateDate(value)
                                             }
                                         })}
                                         value={adquisicion.requestDate}
                                         type="text" 
                                         className="form-control"
-                                        placeholder="ej: 2018-02-09"
+                                        placeholder="ej: 09-08-2018"
                                         onChange={ handleInputChange }
                                         ></input>
                                         {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}

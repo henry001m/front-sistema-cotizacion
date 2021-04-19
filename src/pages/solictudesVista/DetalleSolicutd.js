@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
+import { getRequest } from '../../services/http/QuotitationService'
 
 function DetalleSolicitud(){
-    const request = useParams();
+    const {id} = useParams();
+    const [ request, setRequest ] = useState();
     const nombre = "hola"
     const details = []
+    console.log(id)
+
+    useEffect(() => {
+        async function getRequestId() {
+            const result = await getRequest(id);
+            const resultQuotitations=result;
+            setRequest(resultQuotitations);
+            console.log(resultQuotitations);
+        }
+        getRequestId();
+    }, []);
 
     const Details = details.map((detail,index)=>{
         return(
@@ -30,7 +43,7 @@ function DetalleSolicitud(){
         <>
             <div className="container" align="left">
                 <br></br>
-                <h1>Solicitud #</h1>
+                <h1>Solicitud # {id}</h1>
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
@@ -39,7 +52,7 @@ function DetalleSolicitud(){
                                 <div className="form-group col-md-6">
                                     <label>Unidad de gasto:</label>
                                     <div className="form-row" id="inputs">
-                                        <label class="col-form-label">{request}</label>
+                                        <label class="col-form-label">{nombre}</label>
                                     </div>
                                 </div>
                             </div>

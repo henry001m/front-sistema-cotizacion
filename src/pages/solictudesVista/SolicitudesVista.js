@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import {getQuotitation} from '../../services/http/QuotitationService';
-import { useHistory  } from 'react-router-dom'
+import { Link, useHistory  } from 'react-router-dom'
 
 
 function SolicitudesVista(){
@@ -81,7 +81,7 @@ function SolicitudesVista(){
                                         <td >{quotitation.nameUnidadGasto}</td>
                                         <td>{quotitation.requestDate}</td>
                                         <td>
-                                            <a className="link" onClick={()=> RequestSelect(index) } href="/DetalleSolicitud/${quotitation}">ver</a>
+                                            <Link className="link" to={`/DetalleSolicitud/${quotitation.id}`}>ver</Link>
                                         </td>
                                         <td>{quotitation.status}</td>
                                         <td>----</td>

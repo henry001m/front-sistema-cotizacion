@@ -28,4 +28,11 @@ export async function sendEmail(desciptionEmail) {
     }
 }
 
-
+export async function getRequest(id) {
+    try {
+        const response = await API.get('/quotitation',id);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

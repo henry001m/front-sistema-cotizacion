@@ -47,7 +47,7 @@ function NavAdministrador() {
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
-                    <Route exact path="/DetalleSolicitud/:request" component={ DetalleSolicitud }/>
+                    <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
                 </Switch>
             </Router>
         </>
