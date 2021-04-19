@@ -91,7 +91,7 @@ function AgregarDetalleSolictud(){
     let history = useHistory();
 
     function closePage(){
-        history.goBack();
+        history.replace("/SolicitudesDeAdquisicion");
     }
 
     const Details = newDetails.map((detail,index)=>{
