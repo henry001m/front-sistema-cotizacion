@@ -6,6 +6,9 @@ import { PlusCircle} from 'bootstrap-icons-react'
 
 function ModalAgregarAdquisicion(props){
 
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
+
     const modalref = useRef();
 
     const openModal = () => {
@@ -14,11 +17,13 @@ function ModalAgregarAdquisicion(props){
 
     const closeModal = () => {
         reset();
+        setDetail({
+            amount:"", 
+            unitMeasure:"", 
+            description:""
+        })
         modalref.current.closeModal()
     }
-
-    const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -47,7 +52,11 @@ function ModalAgregarAdquisicion(props){
     const saveDetail = () => {
         props.updateDetails(detail)
         console.log("modal",detail)
-        reset();
+        setDetail({
+            amount:"", 
+            unitMeasure:"", 
+            description:""
+        })
         closeModal();
     };
 

@@ -12,9 +12,8 @@ function AgregarDetalleSolictud(){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
-    var f = new Date()
-    const [fecha , setFecha ] = useState(f.getDate()+"-"+(f.getMonth()+1)+"-"+f.getFullYear())
-
+    const [fecha , setFecha ] = useState(new Date())
+    
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
@@ -66,7 +65,8 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:fecha, details:newDetails ,amount:adquisicion.amount};
+        const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
+        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
         await onSubmit(result.success);
         reset();
@@ -178,7 +178,7 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-6">
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{fecha}</label>
+                                        <label className="col-form-label">{fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+fecha.getFullYear()}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
