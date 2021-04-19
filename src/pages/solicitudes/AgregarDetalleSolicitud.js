@@ -12,6 +12,8 @@ function AgregarDetalleSolictud(){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
+    var f = new Date()
+    const [fecha , setFecha ] = useState(f.getDate()+"-"+(f.getMonth()+1)+"-"+f.getFullYear())
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -44,19 +46,6 @@ function AgregarDetalleSolictud(){
         return true;
     };
 
-    const validateDate = (e) => {
-        const fecha = new Date();
-        var aux = adquisicion.requestDate.split("-")
-        const newFecha = new Date(parseInt(aux[2]),parseInt(aux[1]-1),parseInt(aux[0]));
-        console.log(newFecha)
-        console.log(fecha)
-        if(newFecha.getFullYear() < fecha.getFullYear() || newFecha.getMonth() < fecha.getMonth() || newFecha.getDay() < fecha.getDay() ){
-            return "dato invalido"
-        }else{
-            return true
-        }
-    };
-
     const updateDetails = (data) => {
         setNewDetails([...newDetails,data])
     }
@@ -77,10 +66,7 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        const aux = adquisicion.requestDate.split("-")
-        const fechaAux = aux[2]+"-"+aux[1]+"-"+aux[0]
-
-        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:fechaAux, details:newDetails ,amount:adquisicion.amount};
+        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:fecha, details:newDetails ,amount:adquisicion.amount};
         const result = await createQuotitation(obj);
         await onSubmit(result.success);
         reset();
@@ -192,25 +178,7 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-6">
                                     <label>Fecha de Solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <input
-                                        name="requestDate" 
-                                        {...register("requestDate",{
-                                            required:"El campo es requerido",
-                                            pattern:{
-                                                value:/^(?:3[01]|[12][0-9]|0?[1-9])([-])(0?[1-9]|1[1-2])\1\d{4}$/,
-                                                message:"dato invalido"
-                                            },
-                                            validate:{
-                                                value:(value)=>validateDate(value)
-                                            }
-                                        })}
-                                        value={adquisicion.requestDate}
-                                        type="text" 
-                                        className="form-control"
-                                        placeholder="ej: 09-08-2018"
-                                        onChange={ handleInputChange }
-                                        ></input>
-                                        {errors.requestDate && <span className="text-danger text-small d-block mb-2">{errors.requestDate.message}</span>}
+                                        <label className="col-form-label">{fecha}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" id="button">                                   
