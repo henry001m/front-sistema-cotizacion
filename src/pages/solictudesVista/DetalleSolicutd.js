@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 import { getRequest } from '../../services/http/QuotitationService'
+import { updateStatus } from './../../services/http/QuotitationService'
 
 function DetalleSolicitud(){
     const {id} = useParams();
@@ -28,11 +29,19 @@ function DetalleSolicitud(){
         getRequestId();
     }, []);
 
-    const acceptRequest = () => {
+    const acceptRequest = async ( ) => {
+        const aux = {status:"aceptado"}
+        const result = await updateStatus(id,aux);
         history.replace("/SolicitudesDeAdquisicionAdmin")
     };
 
-    const rejectRequest = () => {
+    const rejectRequest = async ( ) => {
+        const aux = {status:"rechazado"}
+        const result = await updateStatus(id,aux);
+        history.replace("/SolicitudesDeAdquisicionAdmin")
+    };
+
+    const closePage = ( ) => {
         history.replace("/SolicitudesDeAdquisicionAdmin")
     };
 
@@ -58,9 +67,17 @@ function DetalleSolicitud(){
     return(
         <>
             <div className="container" align="left">
-                <br></br>
-                <h1>Solicitud # {id}</h1>
-                <br></br>
+                <div className="row">
+                    <div className="col-md-6">
+                        <h1>Solicitud # {id}</h1>   
+                    </div>
+                    <div className="col-md-6" align="end">
+                        <button type="button" className="close" onClick={ closePage }>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
                         <form>
@@ -113,8 +130,8 @@ function DetalleSolicitud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ acceptRequest }> Rechazar solicitud </button>
-                                    <button type="button" className="btn btn-success" id="btnV" onClick={ rejectRequest }> Aceptar Solicitud </button>
+                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ rejectRequest }> Rechazar solicitud </button>
+                                    <button type="button" className="btn btn-success" id="btnV" onClick={ acceptRequest }> Aceptar Solicitud </button>
                                 </div>
                             </div>
                         </form>

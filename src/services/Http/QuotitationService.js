@@ -36,3 +36,12 @@ export async function getRequest(id) {
         console.log(error)
     }
 }
+
+export async function updateStatus(id,status) {
+    try {
+        const res = await API.put(`/quotitation/status/${id}`,status);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
