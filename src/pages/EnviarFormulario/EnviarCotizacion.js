@@ -10,7 +10,9 @@ function EnviarCotizacion(){
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
 
     const handleInputChange = (event) => {
+        console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
+            console.log("primer",event.target.value[0])
             setEmailMessage({
                 ...emailMessage,
                 [event.target.name] : event.target.value.substring(1)
@@ -26,6 +28,19 @@ function EnviarCotizacion(){
         console.log(emailMessage);
         const result = await sendEmail(emailMessage);
         reset();
+    };
+
+    const validateAroba = (e) => {
+        const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+        if(/@/.test(e)){
+            if (reg.exec(e)!=null) {
+                return true
+            }else{
+                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+            }
+        }else{
+            return "Este campo debe tener el carácter @"
+        }
     };
     return(
         <>
@@ -46,21 +61,24 @@ function EnviarCotizacion(){
                                     name="email" 
                                     {...register("email",{
                                         required:"Campo requerido",
+                                        validate:{
+                                            value:(value)=>validateAroba(value)
+                                        },
                                         minLength:{
                                             value:11,
                                             message:"Este campo debe tener mínimo 11 caracteres"
                                         },
-                                        pattern:{
-                                            value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-                                            message:"Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
-                                        }
+                                        // pattern:{
+                                        //     value:/^[a-z0-9_-]+(?:\.[a-z0-9!_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                                        //     message:"Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                                        // },
                                     })}
                                     value={emailMessage.email}
-                                    type="email" 
+                                    type="text" 
                                     className="form-control"
                                     onChange={ handleInputChange }
                                 ></input>
-                            {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
+                                {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
 
                             </div>
                         </div>
@@ -81,9 +99,6 @@ function EnviarCotizacion(){
                                             value:300,
                                             message:"Este campo debe tener entre 10 y 300 caracteres"
                                         },
-                                        validate:{
-                                            //validar que no se ingrese espacios al inicio
-                                        }
                                     })}
                                     value={emailMessage.description}
                                     type="text" 
@@ -98,12 +113,12 @@ function EnviarCotizacion(){
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <div className="form-row">
-                                <label>Formulario de Cotización:</label>
+                                <label>Se adjunto el formulario de cotizacion</label>
                             </div>
-                            <div className="form-row" id="inputsEC">
+                            {/* <div className="form-row" id="inputsEC">
                                 <button type="button" className="btn btn-secondary my-2 my-sm-0"> 
                                 <FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="form-row" align="right">

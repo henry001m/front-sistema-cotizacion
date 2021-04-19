@@ -20,10 +20,32 @@ function ModalAgregarUsuario(props){
     const [user, setUser]  = useState({name:"", lastName:"", ci:null, phone:null, direction:"", email:"",userName:""});
     
     const handleInputChange = (event) => {
-        setUser({
-            ...user,
-            [event.target.name] : event.target.value
-        });
+        console.log("cambio",event.target.value[0])
+        if(event.target.value[0]==" "){
+            console.log("primer",event.target.value[0])
+            setUser({
+                ...user,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setUser({
+                ...user,
+                [event.target.name] : event.target.value
+            });
+        }
+    };
+
+    const validateEmail = (e) => {
+        const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+        if(/@/.test(e)){
+            if (reg.exec(e)!=null) {
+                return true
+            }else{
+                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+            }
+        }else{
+            return "Este campo debe tener el carácter @"
+        }
     };
 
     const SaveData = async ( ) => {
@@ -68,10 +90,8 @@ function ModalAgregarUsuario(props){
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Este campo solo acepta caracteres alfabéticos"
                                         },
-                                        validate:{
-                                            //validar que no se ingresen spacios al inicio
-                                        }
                                     })}
+                                    value={user.name}
                                     type="text" 
                                     className="form-control"
                                     onChange={ handleInputChange }
@@ -96,10 +116,8 @@ function ModalAgregarUsuario(props){
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
                                             message:"Este campo solo acepta caracteres alfabéticos"
                                         },
-                                        validate:{
-                                            //validar que no inicie con spacio vacio
-                                        }
                                     })}
+                                    value={user.lastName}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -127,6 +145,7 @@ function ModalAgregarUsuario(props){
                                             message:"Este campo solo acepta valores numéricos"
                                         }
                                     })}
+                                    value={user.ci}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -151,10 +170,8 @@ function ModalAgregarUsuario(props){
                                             value:/^[0-9]+$/,
                                             message:"Este campo solo acepta valores numéricos"
                                         },
-                                        validate:{
-                                            //implementar la validacion de spacio vacio
-                                        }
                                     })}
+                                    value={user.phone}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -177,10 +194,8 @@ function ModalAgregarUsuario(props){
                                             value:30,
                                             message:"Este campo debe tener entre 10 y 30 caracteres"
                                         },
-                                        validate:{
-                                            //validar espacios vacios
-                                        }
                                     })}
+                                    value={user.direction}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -193,18 +208,19 @@ function ModalAgregarUsuario(props){
                                     name="email"
                                     {...register("email",{
                                         required:"Campo requerido",
+                                        validate:{
+                                            value:(value)=>validateEmail(value)
+                                        },
                                         minLength:{
                                             value:11,
                                             message:"Este campo debe tener mínimo 11 caracteres"
                                         },
-                                        pattern:{
-                                            value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-                                            message:"Dato invalido"
-                                        },
-                                        validate:{
-                                            //validar @
-                                        }
+                                        // pattern:{
+                                        //     value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                                        //     message:"Dato invalido"
+                                        // },
                                     })}
+                                    value={user.email}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -228,27 +244,24 @@ function ModalAgregarUsuario(props){
                                             message:"Este campo debe tener entre 5 y 15 caracteres"
                                         },
                                         pattern:{
-                                            //validar solo - . _
-                                            value:/^/,
-                                            message:""
+                                            value:/^[\w._-]+$/,
+                                            message:"Este campo solo acepta caracteres alfanuméricos y especiales como el .(punto) - (guión) y _ (guión bajo)"
                                         },
-                                        validate:{
-                                            
-                                        }
                                     })}
+                                    value={user.userName}
                                     type="text" 
                                     className="form-control"
                                     onChange={ handleInputChange }
                                     ></input>
                                     {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                                 </div>
-                                <div className="form-group col-md-6">
+                                {/* <div className="form-group col-md-6">
                                     <label>Rol de Usuario:</label>
                                     <select id="inputState" className="form-control">
                                         <option selected>Unidad Gasto</option>
                                         <option>Administrador</option>
                                     </select>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="form-row">
                                 <div className="form-group col" id="toolbar">

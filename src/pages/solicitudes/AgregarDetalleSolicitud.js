@@ -10,15 +10,32 @@ import axios from 'axios';
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"hola", requestDate:"", amount:null})
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
     const [ newDetails, setNewDetails] = useState([])
 
     const handleInputChange = (event) => {
+        console.log("cambio",event.target.value[0])
+        if(event.target.value[0]==" "){
+            console.log("primer",event.target.value[0])
+            setAdquisicion({
+                ...adquisicion,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setAdquisicion({
+                ...adquisicion,
+                [event.target.name] : event.target.value
+            });
+        }
+    };
+
+    const handleInputAmount = (event) => {
+        console.log("number",event.target.value)
         setAdquisicion({
             ...adquisicion,
             [event.target.name] : event.target.value
         });
-    };
+    }
 
     const invalidateSpace = (e) => {
         if(e[0]==" "){
@@ -113,6 +130,7 @@ function AgregarDetalleSolictud(){
                                                     value:(value)=>invalidateSpace(value)
                                                 }
                                             })}
+                                            value={adquisicion.nameUnidadGasto}
                                             type="text" 
                                             className="form-control" 
                                             onChange={ handleInputChange }
@@ -145,6 +163,7 @@ function AgregarDetalleSolictud(){
                                                     value:(value)=>invalidateSpace(value)
                                                 }
                                             })}
+                                            value={adquisicion.aplicantName}
                                             type="text" 
                                             className="form-control" 
                                             onChange={ handleInputChange }
@@ -166,6 +185,7 @@ function AgregarDetalleSolictud(){
                                                 message:"dato invalido"
                                             }
                                         })}
+                                        value={adquisicion.requestDate}
                                         type="text" 
                                         className="form-control"
                                         placeholder="ej: 2018-02-09"
@@ -207,9 +227,10 @@ function AgregarDetalleSolictud(){
                                                 message:"Dato invalido"
                                             }
                                         })}
+                                        value={adquisicion.amount}
                                         type="number" 
                                         className="form-control"
-                                        onChange={ handleInputChange }
+                                        onChange={ handleInputAmount }
                                         ></input>
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>

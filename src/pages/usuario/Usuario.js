@@ -55,10 +55,10 @@ const updateUsers = ()=>{
                             </thead>
                             <tbody>
                                {
-                                   users.map((user)=>{
+                                   users.map((user,index)=>{
                                         return (
                                             <tr key={user.id}>
-                                                <td></td>
+                                                <td scope="row">{index+1}</td>
                                                 <td>{user.name}</td>
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
