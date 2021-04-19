@@ -7,17 +7,36 @@ function ModalAgregarUsuario(props){
 
     const modalref = useRef();
 
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+
+    const [user, setUser]  = useState({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
+
     const openModal = () => {
+        setUser({
+            name:"", 
+            lastName:"", 
+            ci:"", 
+            phone:"", 
+            direction:"", 
+            email:"",
+            userName:""
+        });
         modalref.current.openModal()
     };
 
     const closeModal = () => {
+        reset()
+        setUser({
+            name:"", 
+            lastName:"", 
+            ci:"", 
+            phone:"", 
+            direction:"", 
+            email:"",
+            userName:""
+        });
         modalref.current.closeModal()
     };
-
-    const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
-    const [user, setUser]  = useState({name:"", lastName:"", ci:null, phone:null, direction:"", email:"",userName:""});
     
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -51,7 +70,6 @@ function ModalAgregarUsuario(props){
     const SaveData = async ( ) => {
         const result = await createUser(user);
         props.updateUsers();
-        reset();
         closeModal();
     };
 
