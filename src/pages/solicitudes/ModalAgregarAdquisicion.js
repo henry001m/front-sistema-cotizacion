@@ -6,6 +6,9 @@ import { PlusCircle} from 'bootstrap-icons-react'
 
 function ModalAgregarAdquisicion(props){
 
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
+
     const modalref = useRef();
 
     const openModal = () => {
@@ -14,23 +17,46 @@ function ModalAgregarAdquisicion(props){
 
     const closeModal = () => {
         reset();
+        setDetail({
+            amount:"", 
+            unitMeasure:"", 
+            description:""
+        })
         modalref.current.closeModal()
     }
 
-    const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ detail, setDetail] = useState({amount:null, unitMeasure:"", description:""})
-
     const handleInputChange = (event) => {
+        console.log("cambio",event.target.value[0])
+        if(event.target.value[0]==" "){
+            console.log("primer",event.target.value[0])
+            setDetail({
+                ...detail,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setDetail({
+                ...detail,
+                [event.target.name] : event.target.value
+            });
+        }
+    };
+
+    const handleInputAmount = (event) => {
+        console.log("number",event.target.value)
         setDetail({
             ...detail,
             [event.target.name] : event.target.value
         });
-    };
+    }
 
     const saveDetail = () => {
         props.updateDetails(detail)
         console.log("modal",detail)
-        reset();
+        setDetail({
+            amount:"", 
+            unitMeasure:"", 
+            description:""
+        })
         closeModal();
     };
 
@@ -59,16 +85,17 @@ function ModalAgregarAdquisicion(props){
                                             required:"El campo es requerido",
                                             min:{
                                                 value:1,
-                                                message:"Este debe tener valores numéricos entre 1 y 9999"
+                                                message:"Este campo debe tener valores numéricos entre 1 y 9999"
                                             },
                                             max:{
                                                 value:9999,
-                                                message:"Este debe tener valores numéricos entre 1 y 9999"
+                                                message:"Este campo debe tener valores numéricos entre 1 y 9999"
                                             }
                                         })}
+                                        value={detail.amount}
                                         type="number" 
                                         className="form-control" 
-                                        onChange={ handleInputChange }
+                                        onChange={ handleInputAmount }
                                         ></input>
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
@@ -88,10 +115,11 @@ function ModalAgregarAdquisicion(props){
                                             },
                                             pattern:{
                                                 value: /^[Ññíóáéú a-zA-Z/ ]+$/,
-                                                message:"El campo solo permite caracteres alfabeticos"
+                                                message:"Este campo no permite caracteres especiales excepto el '/'"
                                             }
                                         })}
-                                        type="integer" 
+                                        value={detail.unitMeasure}
+                                        type="text" 
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></input>
@@ -114,6 +142,7 @@ function ModalAgregarAdquisicion(props){
                                                 message:"Este campo debe tener entre 5 y 120 caracteres"
                                             }
                                         })}
+                                        value={detail.description}
                                         className="form-control" 
                                         onChange={ handleInputChange }
                                         ></textarea>

@@ -7,29 +7,69 @@ function ModalAgregarUsuario(props){
 
     const modalref = useRef();
 
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+
+    const [user, setUser]  = useState({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
+
     const openModal = () => {
+        setUser({
+            name:"", 
+            lastName:"", 
+            ci:"", 
+            phone:"", 
+            direction:"", 
+            email:"",
+            userName:""
+        });
         modalref.current.openModal()
     };
 
     const closeModal = () => {
+        reset()
+        setUser({
+            name:"", 
+            lastName:"", 
+            ci:"", 
+            phone:"", 
+            direction:"", 
+            email:"",
+            userName:""
+        });
         modalref.current.closeModal()
     };
-
-    const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
-    const [user, setUser]  = useState({name:"", lastName:"", ci:null, phone:null, direction:"", email:"",userName:""});
     
     const handleInputChange = (event) => {
-        setUser({
-            ...user,
-            [event.target.name] : event.target.value
-        });
+        console.log("cambio",event.target.value[0])
+        if(event.target.value[0]==" "){
+            console.log("primer",event.target.value[0])
+            setUser({
+                ...user,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setUser({
+                ...user,
+                [event.target.name] : event.target.value
+            });
+        }
+    };
+
+    const validateEmail = (e) => {
+        const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+        if(/@/.test(e)){
+            if (reg.exec(e)!=null) {
+                return true
+            }else{
+                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+            }
+        }else{
+            return "Este campo debe tener el carácter @"
+        }
     };
 
     const SaveData = async ( ) => {
         const result = await createUser(user);
         props.updateUsers();
-        reset();
         closeModal();
     };
 
@@ -57,18 +97,19 @@ function ModalAgregarUsuario(props){
                                     {...register("name",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:3,
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         pattern:{
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
-                                        }
+                                            message:"Este campo solo acepta caracteres alfabéticos"
+                                        },
                                     })}
+                                    value={user.name}
                                     type="text" 
                                     className="form-control"
                                     onChange={ handleInputChange }
@@ -82,18 +123,19 @@ function ModalAgregarUsuario(props){
                                     {...register("lastName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                            value:3,
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 3 y 30 caracteres"
                                         },
                                         pattern:{
                                             value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
-                                        }
+                                            message:"Este campo solo acepta caracteres alfabéticos"
+                                        },
                                     })}
+                                    value={user.lastName}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -110,17 +152,18 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:6,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 6 y 10 valores numéricos"
                                         },
                                         maxLength:{
                                             value:10,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 6 y 10 valores numéricos"
                                         },
                                         pattern:{
                                             value:/^[0-9]+$/,
-                                            message:"dato invalido"
+                                            message:"Este campo solo acepta valores numéricos"
                                         }
                                     })}
+                                    value={user.ci}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -135,13 +178,18 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:7,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 7 y 8 números"
+                                        },
+                                        maxLength:{
+                                            value:8,
+                                            message:"Este campo debe tener entre 7 y 8 números"
                                         },
                                         pattern:{
                                             value:/^[0-9]+$/,
-                                            message:"dato invalido"
-                                        }
+                                            message:"Este campo solo acepta valores numéricos"
+                                        },
                                     })}
+                                    value={user.phone}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -158,17 +206,14 @@ function ModalAgregarUsuario(props){
                                         required:"Campo requerido",
                                         minLength:{
                                             value:10,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 10 y 30 caracteres"
                                         },
                                         maxLength:{
                                             value:30,
-                                            message:"Dato invalido"
+                                            message:"Este campo debe tener entre 10 y 30 caracteres"
                                         },
-                                        pattern:{
-                                            value: /^[Ññíóáéú a-zA-Z ]+$/,
-                                            message:"Dato invalido"
-                                        }
                                     })}
+                                    value={user.direction}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -181,15 +226,19 @@ function ModalAgregarUsuario(props){
                                     name="email"
                                     {...register("email",{
                                         required:"Campo requerido",
-                                        minLength:{
-                                            value:10,
-                                            message:"Dato invalido"
+                                        validate:{
+                                            value:(value)=>validateEmail(value)
                                         },
-                                        pattern:{
-                                            value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-                                            message:"Dato invalido"
-                                        }
+                                        minLength:{
+                                            value:11,
+                                            message:"Este campo debe tener mínimo 11 caracteres"
+                                        },
+                                        // pattern:{
+                                        //     value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                                        //     message:"Dato invalido"
+                                        // },
                                     })}
+                                    value={user.email}
                                     type="text" 
                                     className="form-control" 
                                     onChange={ handleInputChange }
@@ -205,27 +254,32 @@ function ModalAgregarUsuario(props){
                                     {...register("userName",{
                                         required:"Campo requerido",
                                         minLength:{
-                                            value:3,
-                                            message:"Dato invalido"
+                                            value:5,
+                                            message:"Este campo debe tener entre 5 y 15 caracteres"
                                         },
                                         maxLength:{
-                                            value:30,
-                                            message:"Dato invalido"
-                                        }
+                                            value:15,
+                                            message:"Este campo debe tener entre 5 y 15 caracteres"
+                                        },
+                                        pattern:{
+                                            value:/^[\w._-]+$/,
+                                            message:"Este campo solo acepta caracteres alfanuméricos y especiales como el .(punto) - (guión) y _ (guión bajo)"
+                                        },
                                     })}
+                                    value={user.userName}
                                     type="text" 
                                     className="form-control"
                                     onChange={ handleInputChange }
                                     ></input>
                                     {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                                 </div>
-                                <div className="form-group col-md-6">
+                                {/* <div className="form-group col-md-6">
                                     <label>Rol de Usuario:</label>
                                     <select id="inputState" className="form-control">
                                         <option selected>Unidad Gasto</option>
                                         <option>Administrador</option>
                                     </select>
-                                </div>
+                                </div> */}
                             </div>
                             <div className="form-row">
                                 <div className="form-group col" id="toolbar">
