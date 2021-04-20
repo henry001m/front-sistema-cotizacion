@@ -33,10 +33,12 @@ function NavSuperusuario() {
                         </div>
                     </li>
                     <li className="nav-container--item dropdown">
-                        <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="usuarios" aria-haspopup="true" aria-expanded="true">Usuarios</a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item" >Usuarios</a>
-                            <a className="dropdown-item" href="">Rol de Usuarios</a>
+                        <div class="dropdown">
+                            <button class="dropbtn nav-link ">Administrar accesos</button>
+                                <div class="dropdown-content">
+                                    <a className="dropdown-item" href="usuarios">Usuarios</a>
+                                    <a className="dropdown-item" href="/">Rol de Usuarios</a>
+                                </div>
                         </div>
                     </li>
                     <li className="nav-container--item">

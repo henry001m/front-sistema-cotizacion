@@ -1,7 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
-
-import UserImg from './../../resources/user.jpg'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from './../../pages/Home'
 import SolicitudesDeAdquisicion from '../../pages/solicitudes/SolicitudesDeAdquisicion'
 import './NavUnidadGasto.css'
@@ -28,7 +26,7 @@ function NavUnidadGasto() {
                         <a className="nav-link" type="button" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" type="button" href="./PedidoMaterial.pdf" download>Descargar Formulario</a>
+                        <a className="nav-link" type="button" href="./SolicitudDeAdquisicion.pdf" download>Descargar Formulario</a>
                     </li>
                 </ul>
                 <Switch>

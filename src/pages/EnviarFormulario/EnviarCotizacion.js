@@ -1,13 +1,12 @@
 import React,{useState} from "react"
 import './EnviarCotizacion.css'
-import { FileEarmarkArrowUpFill, PrinterFill } from 'bootstrap-icons-react';
 import { useForm } from 'react-hook-form';
 import {sendEmail} from '../../services/http/QuotitationService' ;
 
 function EnviarCotizacion(){
-    const [respuestaAPI, setRespuestaAPI] = useState({ respuesta: 'KO' });
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
+    const [espera, setEspera] = useState("")
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -25,8 +24,13 @@ function EnviarCotizacion(){
         }
     };
     const saveEmail = async ( ) => {
-        console.log(emailMessage);
+        setEspera("Enviando....");
+        document.getElementById('btnIE').disabled=true;
         const result = await sendEmail(emailMessage);
+        alert(result.data.result);
+        setEmailMessage({email:"",description:""});
+        setEspera("");
+        document.getElementById('btnIE').disabled=false;
         reset();
     };
 
@@ -44,7 +48,6 @@ function EnviarCotizacion(){
     };
     return(
         <>
-       {/*  http://127.0.0.1:8000/api/sendEmail */}
         <div className="container" align="left">
             <div className="form-register">
                 <form onSubmit={handleSubmit(saveEmail)}>
@@ -67,11 +70,7 @@ function EnviarCotizacion(){
                                         minLength:{
                                             value:11,
                                             message:"Este campo debe tener mínimo 11 caracteres"
-                                        },
-                                        // pattern:{
-                                        //     value:/^[a-z0-9_-]+(?:\.[a-z0-9!_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-                                        //     message:"Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
-                                        // },
+                                        }
                                     })}
                                     value={emailMessage.email}
                                     type="text" 
@@ -87,7 +86,8 @@ function EnviarCotizacion(){
                         <div className="form-group col-md-6">
                             <label>Descripción:</label>
                             <div className="form-row" id="inputsEC">
-                                <textarea 
+                                <textarea
+                                    rows="7" 
                                     name="description"
                                     {...register("description",{
                                         required:"Campo requerido",
@@ -113,20 +113,15 @@ function EnviarCotizacion(){
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <div className="form-row">
-                                <label>Se adjunto el formulario de cotizacion</label>
+                                <label style={{color:"#28a745"}}>Se adjunto el formulario de cotizacion</label>
                             </div>
-                            {/* <div className="form-row" id="inputsEC">
-                                <button type="button" className="btn btn-secondary my-2 my-sm-0"> 
-                                <FileEarmarkArrowUpFill className="mb-1"/> Adjuntar Archivo </button>
-                            </div> */}
                         </div>
                     </div>
-                    <div className="form-row" align="right">
-                        <div className="form-group col">
-                            {/* <button type="button" className="btn btn-secondary my-2 my-sm-0">
-                                <PrinterFill className="mb-1"/> Imprimir </button> */}
+                    <div className="form-row  justify-content-end" align="right">
+                            <div style={{color:"red"}}>
+                                {espera}
+                            </div>
                             <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
-                        </div>
                     </div>
                 </form>
             </div>

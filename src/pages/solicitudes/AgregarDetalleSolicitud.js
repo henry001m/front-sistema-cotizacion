@@ -125,7 +125,7 @@ function AgregarDetalleSolictud(){
                                                     message:"Este campo debe tener entre 3 y 50 caracteres"
                                                 },
                                                 pattern:{
-                                                    value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
                                                     message:"El campo solo permite caracteres alfabeticos"
                                                 },
                                                 validate:{
@@ -158,7 +158,7 @@ function AgregarDetalleSolictud(){
                                                     message:"Este campo debe tener entre 3 y 50 caracteres"
                                                 },
                                                 pattern:{
-                                                    value: /^[Ññíóáéú a-zA-Z ]+$/,
+                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
                                                     message:"El campo solo permite caracteres alfabeticos"
                                                 },
                                                 validate:{

@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 function Home(){
     return(
-        <h1>pagina de Inicio</h1>
+        <Fragment>
+            <h1>Bienvenido</h1>
+            <img src="./logoumss.png"></img>
+        </Fragment>
     );
 }
 

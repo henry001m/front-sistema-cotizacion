@@ -75,7 +75,7 @@ function SolicitudesDeAdquisicion(){
                                 <th scope="col">#</th>
                                 <th scope="col">Unidad de Gasto</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">solicitud</th>
+                                <th scope="col">Solicitud</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Respuesta</th>
                                 </tr>

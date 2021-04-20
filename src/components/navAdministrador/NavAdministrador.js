@@ -6,6 +6,7 @@ import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
 import { PersonCircle } from 'bootstrap-icons-react';
 import DetalleSolicitud from '../../pages/solictudesVista/DetalleSolicutd';
+import './NavAdministrador.css';
 
 function NavAdministrador() {
     return(
@@ -27,10 +28,12 @@ function NavAdministrador() {
                         <a className="nav-link" href="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item dropdown">
-                        <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="/EnviarCotizacion" aria-haspopup="true" aria-expanded="true">Cotización</a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item" >Realizar Cotización</a>
-                            <a className="dropdown-item" href="">Enviar Cotizacion</a>
+                        <div class="dropdown">
+                                <button class="dropbtn nav-link ">Cotización</button>
+                                    <div class="dropdown-content">
+                                        <a className="dropdown-item" >Realizar Comparación</a>
+                                        <a className="dropdown-item" href="/EnviarCotizacion">Enviar Cotizacion</a>
+                                    </div>
                         </div>
                     </li>
                     <li className="nav-container--item">

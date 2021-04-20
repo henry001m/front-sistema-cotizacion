@@ -8,33 +8,17 @@ function ModalAgregarUsuario(props){
     const modalref = useRef();
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
+    const [message, setMessage] = useState("");
     const [user, setUser]  = useState({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
 
     const openModal = () => {
-        setUser({
-            name:"", 
-            lastName:"", 
-            ci:"", 
-            phone:"", 
-            direction:"", 
-            email:"",
-            userName:""
-        });
+        setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
         modalref.current.openModal()
     };
 
     const closeModal = () => {
         reset()
-        setUser({
-            name:"", 
-            lastName:"", 
-            ci:"", 
-            phone:"", 
-            direction:"", 
-            email:"",
-            userName:""
-        });
+        setMessage("");
         modalref.current.closeModal()
     };
     
@@ -69,8 +53,13 @@ function ModalAgregarUsuario(props){
 
     const SaveData = async ( ) => {
         const result = await createUser(user);
+        setMessage(result.data.message);
+        console.log(result);
         props.updateUsers();
-        closeModal();
+        if(!result.data.message){
+            setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
+            closeModal();
+        }
     };
 
     return(
@@ -282,6 +271,9 @@ function ModalAgregarUsuario(props){
                                 </div> */}
                             </div>
                             <div className="form-row">
+                                <span style={{color:"red"}}>
+                                {message}
+                                </span>
                                 <div className="form-group col" id="toolbar">
                                     <button type="button" className="btn btn-secondary" onClick={closeModal} id="btnV">Cancelar</button>
                                     <button type="submit" className="btn btn-primary" id="btnV">Guardar</button>

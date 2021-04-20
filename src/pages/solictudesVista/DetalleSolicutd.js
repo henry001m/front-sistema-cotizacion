@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { useHistory, useParams } from 'react-router-dom'
 import { getRequest } from '../../services/http/QuotitationService'
-import { updateStatus } from './../../services/http/QuotitationService'
+import { updateStatus } from '../../services/http/QuotitationService'
 
 function DetalleSolicitud(){
     const {id} = useParams();
