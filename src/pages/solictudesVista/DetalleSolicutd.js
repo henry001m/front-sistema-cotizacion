@@ -105,6 +105,11 @@ function DetalleSolicitud(){
                                     </div>
                                 </div>
                             </div>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Detalle de solicitud</label>
+                                </div>
+                            </div>
                             <div className="form-row" id="list">
                                 <table className="table table-striped">
                                     <thead>

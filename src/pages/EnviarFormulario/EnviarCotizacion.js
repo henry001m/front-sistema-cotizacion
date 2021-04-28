@@ -1,12 +1,26 @@
-import React,{useState} from "react"
+import React,{useState, useRef } from "react"
+import  Modal from '../../components/modal/Modal'
 import './EnviarCotizacion.css'
-import { useForm } from 'react-hook-form';
-import {sendEmail} from '../../services/http/QuotitationService' ;
+import { useForm } from 'react-hook-form'
+import {sendEmail} from '../../services/http/QuotitationService' 
+import { Envelope, PlusCircle} from 'bootstrap-icons-react'
 
-function EnviarCotizacion(){
+function EnviarCotizacion( props ){
+
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
     const [espera, setEspera] = useState("")
+
+    const modalref = useRef();
+
+    const openModal = () => {
+        modalref.current.openModal()
+    };
+
+    const closeModal = () => {
+        reset();
+        modalref.current.closeModal()
+    }
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -32,6 +46,7 @@ function EnviarCotizacion(){
         setEspera("");
         document.getElementById('btnIE').disabled=false;
         reset();
+        closeModal();
     };
 
     const validateAroba = (e) => {
@@ -46,86 +61,124 @@ function EnviarCotizacion(){
             return "Este campo debe tener el carácter @"
         }
     };
+
+    const EnableSendMailButton = () =>{
+        if(props.status=="aceptado"){
+            return(
+                <button className="dropdown-item" onClick={ openModal }>
+                    <Envelope/> Enviar correo
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Envelope/> Enviar correo
+                </button>
+            );
+        }
+    }
+
     return(
         <>
-        <div className="container" align="left">
-            <div className="form-register">
-                <form onSubmit={handleSubmit(saveEmail)}>
-                    <div>
-                        <br></br>
-                        <h1 align="left">Envio por correo</h1>
-                        <br></br>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <label>Correo de la Empresa:</label>
-                            <div className="form-row" id="inputsEC">
-                                <input
-                                    name="email" 
-                                    {...register("email",{
-                                        required:"Campo requerido",
-                                        validate:{
-                                            value:(value)=>validateAroba(value)
-                                        },
-                                        minLength:{
-                                            value:11,
-                                            message:"Este campo debe tener mínimo 11 caracteres"
-                                        }
-                                    })}
-                                    value={emailMessage.email}
-                                    type="text" 
-                                    className="form-control"
-                                    onChange={ handleInputChange }
-                                ></input>
-                                {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
+        {
+            EnableSendMailButton()
+        }
+            <Modal ref={ modalref }>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Envio por correo</h5>
+                            <button type="button" className="close" onClick={ closeModal}>
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="container" align="left">
+                                <div className="form-register">
+                                    <form onSubmit={handleSubmit(saveEmail)}>
+                                        <div className="form-row">
+                                            <div className="col-md-10">
+                                                <label>Correo de la Empresa:</label>
+                                            </div>
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="form-group col-md-10">
+                                                <div className="form-row">
+                                                    <input
+                                                        name="email" 
+                                                        {...register("email",{
+                                                            required:"Campo requerido",
+                                                            validate:{
+                                                                value:(value)=>validateAroba(value)
+                                                            },
+                                                            minLength:{
+                                                                value:11,
+                                                                message:"Este campo debe tener mínimo 11 caracteres"
+                                                            }
+                                                        })}
+                                                        value={emailMessage.email}
+                                                        type="text" 
+                                                        className="form-control"
+                                                        onChange={ handleInputChange }
+                                                    ></input>
+                                                    {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
 
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <label>Descripción:</label>
-                            <div className="form-row" id="inputsEC">
-                                <textarea
-                                    rows="7" 
-                                    name="description"
-                                    {...register("description",{
-                                        required:"Campo requerido",
-                                        minLength:{
-                                            value:10,
-                                            message:"Este campo debe tener entre 10 y 300 caracteres"
-                                        },
-                                        maxLength:{
-                                            value:300,
-                                            message:"Este campo debe tener entre 10 y 300 caracteres"
-                                        },
-                                    })}
-                                    value={emailMessage.description}
-                                    type="text" 
-                                    className="form-control" 
-                                    onChange={ handleInputChange }
-                                ></textarea>
-                                {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
+                                                </div>
+                                            </div>
+                                            <div className="form-group col-md-2">
+                                                <button type="button" className="btn btn-success">
+                                                    <PlusCircle className="mb-1"/>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="form-group col-md-10">
+                                                <label>Descripción:</label>
+                                                <div className="form-row">
+                                                    <textarea
+                                                        rows="7" 
+                                                        name="description"
+                                                        {...register("description",{
+                                                            required:"Campo requerido",
+                                                            minLength:{
+                                                                value:10,
+                                                                message:"Este campo debe tener entre 10 y 300 caracteres"
+                                                            },
+                                                            maxLength:{
+                                                                value:300,
+                                                                message:"Este campo debe tener entre 10 y 300 caracteres"
+                                                            },
+                                                        })}
+                                                        value={emailMessage.description}
+                                                        type="text" 
+                                                        className="form-control" 
+                                                        onChange={ handleInputChange }
+                                                    ></textarea>
+                                                    {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-row">
+                                            <div className="form-group col-md-10">
+                                                <div className="form-row">
+                                                    <label style={{color:"#28a745"}}>Se adjunto el formulario de cotizacion</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="form-row  justify-content-end" align="right">
+                                                <div style={{color:"red"}}>
+                                                    {espera}
+                                                </div>
+                                                <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-6">
-                            <div className="form-row">
-                                <label style={{color:"#28a745"}}>Se adjunto el formulario de cotizacion</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="form-row  justify-content-end" align="right">
-                            <div style={{color:"red"}}>
-                                {espera}
-                            </div>
-                            <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+            </Modal>
         </>
     );
 }
