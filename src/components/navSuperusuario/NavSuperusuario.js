@@ -5,6 +5,7 @@ import Home from '../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import Usuario from '../../pages/usuario/Usuario';
 import { PersonCircle } from 'bootstrap-icons-react';
+import UnidadesAdministrativas from '../../pages/registroUnidadAdministrativa/UnidadesAdministrativas';
 
 function NavSuperusuario() {
     return(
@@ -42,6 +43,9 @@ function NavSuperusuario() {
                         </div>
                     </li>
                     <li className="nav-container--item">
+                        <a className="nav-link" href="/UnidadesAdministrativas">Unidades Administrativas</a>
+                    </li>
+                    <li className="nav-container--item">
                         <a className="nav-link" href="">Unidad de Gasto</a>
                     </li>
                     <li className="nav-container--item">
@@ -55,6 +59,7 @@ function NavSuperusuario() {
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/usuarios" component={ Usuario }/>
+                    <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 </Switch>
             </Router>
         </>
