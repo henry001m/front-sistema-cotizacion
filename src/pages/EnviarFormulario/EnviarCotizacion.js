@@ -5,11 +5,53 @@ import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
 import { Envelope, PlusCircle} from 'bootstrap-icons-react'
 
+
+const Input = ({name,tabIndex,value,onChange}) => {
+    const {register, formState: { errors }, handleSubmit, reset} = useForm();
+
+    const validateAroba = (e) => {
+        const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
+        if(/@/.test(e)){
+            if (reg.exec(e)!=null) {
+                return true
+            }else{
+                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+            }
+        }else{
+            return "Este campo debe tener el carácter @"
+        }
+    };
+
+    return(
+        <form>
+            <div className="form-row">
+                <input
+                    name={name} 
+                    {...register(name,{
+                        required:"Campo requerido",
+                        minLength:{
+                            value:11,
+                            message:"Este campo debe tener mínimo 11 caracteres"
+                        }
+                    })}
+                    tabIndex={tabIndex}
+                    value={value}
+                    type="text" 
+                    className="form-control"
+                    onChange={(event)=>onChange(event)}
+                ></input>
+                {errors.name && <span className="text-danger text-small d-block mb-2">{errors.name.message}</span>}
+            </div>
+        </form>
+    );
+};
+
 function EnviarCotizacion( props ){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
     const [espera, setEspera] = useState("")
+    const [emails, setEmails] = useState([{name:"email1", correo:""}])
 
     const modalref = useRef();
 
@@ -20,7 +62,23 @@ function EnviarCotizacion( props ){
     const closeModal = () => {
         reset();
         modalref.current.closeModal()
-    }
+    };
+
+    const addEmail = () => {
+        setEmails([...emails,{name:"email"+(emails.length+1),correo:""}])
+    };
+
+    const onChangeEmail = (event) => {
+        console.log(event.target.tabIndex)
+        const newData = emails.map((d, index) => {
+            if (index === event.target.tabIndex) {
+              d[event.target.name] = event.target.value;
+            }
+            return d;
+          });
+          setEmails([...newData])
+        console.log(newData)
+    };
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -103,7 +161,17 @@ function EnviarCotizacion( props ){
                                         </div>
                                         <div className="form-row">
                                             <div className="form-group col-md-10">
-                                                <div className="form-row">
+                                                {emails.map((email,index) => {
+                                                    return(
+                                                        <Input
+                                                            name="correo"
+                                                            tabIndex={index}
+                                                            value={email.correo}
+                                                            onChange={onChangeEmail}
+                                                        />
+                                                    )
+                                                })}
+                                                {/* <div className="form-row">
                                                     <input
                                                         name="email" 
                                                         {...register("email",{
@@ -122,11 +190,10 @@ function EnviarCotizacion( props ){
                                                         onChange={ handleInputChange }
                                                     ></input>
                                                     {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
-
-                                                </div>
+                                                </div> */}
                                             </div>
                                             <div className="form-group col-md-2">
-                                                <button type="button" className="btn btn-success">
+                                                <button type="button" className="btn btn-success" onClick={ addEmail }>
                                                     <PlusCircle className="mb-1"/>
                                                 </button>
                                             </div>

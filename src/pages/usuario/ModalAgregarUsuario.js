@@ -262,13 +262,27 @@ function ModalAgregarUsuario(props){
                                     ></input>
                                     {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                                 </div>
-                                {/* <div className="form-group col-md-6">
-                                    <label>Rol de Usuario:</label>
-                                    <select id="inputState" className="form-control">
-                                        <option selected>Unidad Gasto</option>
-                                        <option>Administrador</option>
-                                    </select>
-                                </div> */}
+                                <div className="form-group col-md-6">
+                                        <label>Rol de Usuario:</label>
+                                        <select 
+                                        name="selectFacultad"
+                                        {...register("selectFacultad",{
+                                            required:"Seleccione facultad"
+                                        })}
+                                        className="form-control">
+                                            <option value="">Seleccione su Rol...</option>
+                                            {
+                                                /*facultades.map((facultad, index)=>{
+                                                    return(
+                                                        <option value={facultad}>{facultad}</option>   
+                                                    )
+                                                })*/
+                                            }
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Jefe Administrativo">Jefe Administrativo</option>
+                                        </select>
+                                        {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
+                                    </div>
                             </div>
                             <div className="form-row">
                                 <span style={{color:"red"}}>
