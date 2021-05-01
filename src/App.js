@@ -9,7 +9,7 @@ import Usuario from './pages/usuario/Usuario';
 function App() {
   return (
     <div className="App">
-      <NavAdministrador/>
+      <NavSuperusuario/>
     </div>
   );
 }

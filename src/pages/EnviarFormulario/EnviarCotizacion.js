@@ -10,6 +10,7 @@ function EnviarCotizacion( props ){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
     const [espera, setEspera] = useState("")
+    
 
     const modalref = useRef();
 
@@ -37,6 +38,7 @@ function EnviarCotizacion( props ){
             });
         }
     };
+
     const saveEmail = async ( ) => {
         setEspera("Enviando....");
         document.getElementById('btnIE').disabled=true;
@@ -48,6 +50,14 @@ function EnviarCotizacion( props ){
         reset();
         closeModal();
     };
+
+    const clearInput = () =>{
+
+    }
+
+
+  
+
 
     const validateAroba = (e) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
@@ -119,17 +129,22 @@ function EnviarCotizacion( props ){
                                                         value={emailMessage.email}
                                                         type="text" 
                                                         className="form-control"
-                                                        onChange={ handleInputChange }
+                                                        onChange={handleInputChange}
+                                                       
+                                                       
                                                     ></input>
                                                     {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
-
                                                 </div>
+
+
                                             </div>
                                             <div className="form-group col-md-2">
-                                                <button type="button" className="btn btn-success">
-                                                    <PlusCircle className="mb-1"/>
+                                                <button type="submit" className="btn btn-success" id="btnEmail">
+                                                <PlusCircle className="mb-1"/>
                                                 </button>
                                             </div>
+
+
                                         </div>
                                         <div className="form-row">
                                             <div className="form-group col-md-10">
