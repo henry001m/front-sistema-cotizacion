@@ -56,22 +56,25 @@ function AgregarDetalleSolictud(){
     }
     const onSubmit =async (id) =>{
         const formData = new FormData();
-        for(var i=0 ; i<fls.length ; i++){
-          let name = 'file'+i;
-          formData.append(name,fls[i],fls[i].name);
+        if(fls != null){
+            for(var i=0 ; i<fls.length ; i++){
+            let name = 'file'+i;
+            formData.append(name,fls[i],fls[i].name);
+            }
+            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
+            console.log("respuesta ",res);
         }
-        const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
-        console.log("respuesta ",res);
     }
 
     const sendData = async ( ) => {
-        const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
-        const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
-        const result = await createQuotitation(obj);
-        await onSubmit(result.success);
-        reset();
-        closePage();
-        
+        if(newDetails.length>0){
+            const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
+            const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
+            const result = await createQuotitation(obj);
+            await onSubmit(result.success);
+            reset();
+            closePage();
+        }
     };
 
     let history = useHistory();
@@ -103,7 +106,7 @@ function AgregarDetalleSolictud(){
         <>
             <div className="container" align="left">
                 <br></br>
-                <h1>Nueva Solicitud</h1>
+                <h1>Nueva solicitud</h1>
                 <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
@@ -143,7 +146,7 @@ function AgregarDetalleSolictud(){
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label>Nombre del Solicitante:</label>
+                                    <label>Nombre del solicitante:</label>
                                     <div className="form-row" id="inputs">
                                         <input 
                                             name ="aplicantName" 
@@ -176,12 +179,17 @@ function AgregarDetalleSolictud(){
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label>Fecha de Solicitud:</label>
+                                    <label>Fecha de solicitud:</label>
                                     <div className="form-row" id="inputs">
                                         <label className="col-form-label">{fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+fecha.getFullYear()}</label>
                                     </div>
                                 </div>
-                                <div className="form-group col-md-6" id="button">                                   
+                            </div>
+                            <div className="form-row">
+                                <div className="form-col">
+                                    <label>Detalle de solicitud</label>
+                                </div>
+                                <div className="form-group col" align="end">                                   
                                     <ModalAgregarAdquisicion
                                     updateDetails={updateDetails}/>                                 
                                 </div>
@@ -202,8 +210,10 @@ function AgregarDetalleSolictud(){
                                 </table>
                             </div>
                             <div className="form-row">
+                                    <label>Monto estimado:</label>
+                            </div>
+                            <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label>Monto Estimado:</label>
                                     <div className="form-row" id="inputs">
                                         <input
                                         name="amount"
@@ -222,19 +232,15 @@ function AgregarDetalleSolictud(){
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
-                                <div className="form-group col-md-6" id="button" align="flex-end">
+                                <div className="form-group col-md-6" align="end">
                                     <input 
                                     name="files"
-                                    {...register("files",{
-                                        required:"Se debe ajuntar un documento",
-                                    })}
                                     type="file" 
                                     id="files" 
                                     multiple 
                                     onChange = {fileSelectHandler}
                                     ></input>
                                     <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
-                                    {errors.files && <span className="text-danger text-small d-block mb-2">{errors.files.message}</span>}                                 
                                 </div>
                             </div>
                             <div className="form-row" >

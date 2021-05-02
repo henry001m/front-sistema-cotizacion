@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import {getQuotitation} from '../../services/http/QuotitationService';
 import { Link, useHistory  } from 'react-router-dom'
+import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
+import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 
 
 function SolicitudesVista(){
@@ -19,6 +21,21 @@ function SolicitudesVista(){
         //eslint-disable-next-line
     }, []);
 
+    const EnablebuttonAddReport = (quotitation) =>{
+        if(quotitation.status!="pendiente"){
+            return(
+                <button className="dropdown-item">
+                    <FileEarmarkText/> Agregar informe
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <FileEarmarkText/> Agregar informe
+                </button>
+            );
+        }
+    }
 
     const RequestSelect = (index) =>{
         setRequest(quotitations[index])
@@ -68,23 +85,34 @@ function SolicitudesVista(){
                                     <th scope="col">#</th>
                                     <th scope="col">Unidad de Gasto</th>
                                     <th scope="col">Fecha</th>
-                                    <th scope="col">Solicitud</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Informe</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                             {quotitations.map((quotitation,index) => {
                                 return(
                                     <tr key={quotitation.id}>
-                                        <th scope="row">{quotitation.id}</th>
+                                        <th scope="row">{index+1}</th>
                                         <td >{quotitation.nameUnidadGasto}</td>
                                         <td>{quotitation.requestDate}</td>
-                                        <td>
-                                            <Link className="link" to={`/DetalleSolicitud/${quotitation.id}`}>ver</Link>
-                                        </td>
                                         <td>{quotitation.status}</td>
-                                        <td>----</td>
+                                        <td>
+                                            <div className="dropdown">
+                                                <button className="dropbtn"><ChevronLeft/> Acciones</button>
+                                                <div className="dropdown-content dropdown-menu-right">
+                                                    <button className="dropdown-item"  onClick={() => history.push(`/DetalleSolicitud/${quotitation.id}`)}>
+                                                        <Eye/> Ver solicitud
+                                                    </button>
+                                                    {
+                                                        EnablebuttonAddReport(quotitation)
+                                                    }
+                                                    <EnviarCotizacion 
+                                                        status={quotitation.status}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 );
                             })}
