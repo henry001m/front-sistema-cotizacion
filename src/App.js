@@ -11,7 +11,7 @@ import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
 function App() {
   return (
     <div className="App">
-      <NavSuperusuario/>
+      <IngresoCodigo/>
     </div>
   );
 }

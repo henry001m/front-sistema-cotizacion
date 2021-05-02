@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../Home'
 import './respuestaCotizacion.css'
+import { useHistory, useParams } from 'react-router-dom'
 
 function respuestaCotizacion() {
 
