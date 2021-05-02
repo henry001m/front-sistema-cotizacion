@@ -8,3 +8,12 @@ export async function getRols() {
         console.log(error)
     }
 }
+
+export async function updateRolUser(idu,idr) {
+    try {
+        const res = await API.put(`users/update/${idu}/${idr}`);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

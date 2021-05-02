@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react'
 import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
 import { getRols } from '../../services/http/RolService'
-
+import { updateRolUser } from '../../services/http/RolService'
+import './Usuario.css'
 
 function ModalEditarUsuario( props ){
     const modalref = useRef();
@@ -10,6 +11,7 @@ function ModalEditarUsuario( props ){
     const {register, formState: { errors }, handleSubmit, reset } = useForm();
 
     const [rols, setRols ] = useState([])
+    const [ idRol, setIdRol ] = useState(props.user.userRol[0].id)
 
     const openModal = () => {
         modalref.current.openModal()
@@ -39,17 +41,20 @@ function ModalEditarUsuario( props ){
     fetchData();
     }, []);
 
-    /*const handleInputChange = (event) => {
-        if(event.target.value[0]==" "){
-            
-        }else{
-            
-        } 
-    };*/
+    const handleSelectChange = (event) => {
+        setIdRol(event.target.value)
+    };
 
-    const saveData = () => {
-
-    }
+    const saveData = async () => {
+        try{
+            const result = await updateRolUser(props.user.id,idRol);
+            props.CloseModalEditarU()
+            closeModal()
+            props.updateUsers()
+        }catch(error){
+            console.log( error )
+        }
+    };
 
     return(
         <>
@@ -71,72 +76,37 @@ function ModalEditarUsuario( props ){
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombres:</label>
-                                    <input
-                                    name="name" 
-                                    value={props.user.name}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.name}</label>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label>Apellidos:</label>
-                                    <input 
-                                    name="lastName"
-                                    value={props.user.lastName}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.lastName}</label>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Carnet de Identidad:</label>
-                                    <input 
-                                    name="ci"
-                                    value={props.user.ci}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.ci}</label>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label>Telefono:</label>
-                                    <input 
-                                    name="phone"
-                                    value={props.user.phone}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.phone}</label>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Direccion:</label>
-                                    <input
-                                    name="direction" 
-                                    value={props.user.direction}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.direction}</label>
                                 </div>
                                 <div className="form-group col-md-6">
                                     <label>Correo Electronico:</label>
-                                    <input 
-                                    name="email"
-                                    value={props.user.email}
-                                    type="text" 
-                                    className="form-control" 
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.email}</label>
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Nombre de usuario:</label>
-                                    <input
-                                    name="userName"
-                                    value={props.user.userName}
-                                    type="text" 
-                                    className="form-control"
-                                    ></input>
+                                    <label class="col-form-label"> {props.user.userName}</label>
                                 </div>
                                 <div className="form-group col-md-6">
                                         <label>Rol de Usuario:</label>
@@ -145,13 +115,15 @@ function ModalEditarUsuario( props ){
                                         {...register("selectFacultad",{
                                             required:"Seleccione facultad"
                                         })}
-                                        className="form-control">
-                                            <option value={props.user.userRol[0].nameRol}>{props.user.userRol[0].nameRol}</option>
+                                        defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
+                                        className="form-control"
+                                        onClick={handleSelectChange}>
+                                            <option value={props.user.userRol[0].id}>{props.user.userRol[0].nameRol}</option>
                                             {
                                                 rols.map((rol, index)=>{
-                                                    if(rol.nameRol!=props.user.userRol[0].nameRol){
+                                                    if(props.user.userRol[0].id != rol.id){
                                                         return(
-                                                            <option value={rol.nameRol} key={index}>{rol.nameRol}</option>   
+                                                            <option value={rol.id} key={index}>{rol.nameRol}</option>   
                                                         )
                                                     }
                                                 })

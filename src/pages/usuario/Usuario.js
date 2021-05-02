@@ -2,7 +2,7 @@ import React,{useEffect, useState} from  'react'
 import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
-import ModalEditarUsuario from './ModalEditarUsuario'
+import ModalEditarUsuario from './ModalEditarUsuario';
 
 
 function Usuario(){
@@ -10,7 +10,7 @@ function Usuario(){
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
-    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[""]})
+    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[{id:"",nameRol:""}]})
 
     const updateUsers = ()=>{
         setFlag(!flag);
@@ -95,6 +95,7 @@ function Usuario(){
             isShowModalEditarU={ isShowModalEditarU }
             user={ user }
             CloseModalEditarU = {CloseModalEditarU}
+            updateUsers={updateUsers}
             />
         </>
     );
