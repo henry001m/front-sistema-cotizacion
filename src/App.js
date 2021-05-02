@@ -12,6 +12,7 @@ import RegistroUnidad from './pages/regitroUnidadGasto/RegistroUnidad'
 function App() {
   return (
     <div className="App">
+      
       <NavSuperusuario/>
     </div>
   );
