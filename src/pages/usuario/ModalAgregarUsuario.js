@@ -1,8 +1,10 @@
-import React, { useState, useRef }from 'react'
+import React, { useState, useRef, useEffect }from 'react'
 import { PlusCircle } from 'bootstrap-icons-react';
 import  Modal from './../../components/modal/Modal';
 import { useForm } from 'react-hook-form';
 import { createUser } from '../../services/http/UserService' ;
+import { getRols } from '../../services/http/RolService'
+
 function ModalAgregarUsuario(props){
 
     const modalref = useRef();
@@ -10,6 +12,8 @@ function ModalAgregarUsuario(props){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [message, setMessage] = useState("");
     const [user, setUser]  = useState({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
+    const [idRolUSer, setIdRolUSer ] = useState("")
+    const [rols, setRols ] = useState([])
 
     const openModal = () => {
         setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
@@ -21,6 +25,19 @@ function ModalAgregarUsuario(props){
         setMessage("");
         modalref.current.closeModal()
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getRols();
+            setRols(response.rols);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchData();
+    }, []);
     
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -38,6 +55,10 @@ function ModalAgregarUsuario(props){
         }
     };
 
+    const handleSelectChange = (event) => {
+        setIdRolUSer(event.target.value)
+    }
+
     const validateEmail = (e) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
         if(/@/.test(e)){
@@ -52,12 +73,13 @@ function ModalAgregarUsuario(props){
     };
 
     const SaveData = async ( ) => {
-        const result = await createUser(user);
+        const result = await createUser(user,idRolUSer);
         setMessage(result.data.message);
         console.log(result);
         props.updateUsers();
         if(!result.data.message){
             setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
+            setIdRolUSer("")
             closeModal();
         }
     };
@@ -263,25 +285,24 @@ function ModalAgregarUsuario(props){
                                     {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                                 </div>
                                 <div className="form-group col-md-6">
-                                        <label>Rol de Usuario:</label>
+                                        <label for="selectRol">Rol de Usuario:</label>
                                         <select 
-                                        name="selectFacultad"
-                                        {...register("selectFacultad",{
-                                            required:"Seleccione facultad"
+                                        name="selectRol"
+                                        {...register("selectRol",{
+                                            required:"Seleccione su rol"
                                         })}
-                                        className="form-control">
+                                        className="form-control"
+                                        onChange={ handleSelectChange }>
                                             <option value="">Seleccione su Rol...</option>
                                             {
-                                                /*facultades.map((facultad, index)=>{
+                                                rols.map((rol, index)=>{
                                                     return(
-                                                        <option value={facultad}>{facultad}</option>   
+                                                        <option value={rol.id} key={index}>{rol.nameRol}</option>   
                                                     )
-                                                })*/
+                                                })
                                             }
-                                            <option value="Administrador">Administrador</option>
-                                            <option value="Jefe Administrativo">Jefe Administrativo</option>
                                         </select>
-                                        {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
+                                        {errors.selectRol && <span className="text-danger text-small d-block mb-2">{errors.selectRol.message}</span>}
                                     </div>
                             </div>
                             <div className="form-row">

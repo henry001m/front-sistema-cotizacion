@@ -10,7 +10,7 @@ function Usuario(){
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
-    const [user, setUser ] = useState()
+    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[""]})
 
     const updateUsers = ()=>{
         setFlag(!flag);
@@ -73,7 +73,7 @@ function Usuario(){
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
-                                                <td>.....</td>
+                                                <td>{user.userRol[0].nameRol}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setIsShowModalEditarU(true)

@@ -1,6 +1,7 @@
-import React, { useRef, useState} from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
+import { getRols } from '../../services/http/RolService'
 
 
 function ModalEditarUsuario( props ){
@@ -8,9 +9,7 @@ function ModalEditarUsuario( props ){
 
     const {register, formState: { errors }, handleSubmit, reset } = useForm();
 
-    const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
-
-    const [ facultades, setFacultades ] = useState(["derecho","economia","tecnologia","arquitectura"]);
+    const [rols, setRols ] = useState([])
 
     const openModal = () => {
         modalref.current.openModal()
@@ -24,22 +23,29 @@ function ModalEditarUsuario( props ){
         if(props.isShowModalEditarU==true){
             openModal();
             console.log(props.user.lastName)
-        }else{
-            closeModal();
         }
     };
 
-    const handleInputChange = (event) => {
-        if(event.target.value[0]==" "){
-            setNameUnidadAdministrativa(
-                event.target.value.substring(1)
-            );
-        }else{
-            setNameUnidadAdministrativa(
-                event.target.value
-            );
-        } 
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getRols();
+            setRols(response.rols);
+        } catch (error) {
+            console.log(error);
+        }
     };
+
+    fetchData();
+    }, []);
+
+    /*const handleInputChange = (event) => {
+        if(event.target.value[0]==" "){
+            
+        }else{
+            
+        } 
+    };*/
 
     const saveData = () => {
 
@@ -55,8 +61,9 @@ function ModalEditarUsuario( props ){
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad Administrativa</h5>
-                                <button type="button" className="close" onClick={() => props.CloseModalEditarU()}>
+                                <h5 className="modal-title" id="exampleModalLongTitle">Editar Usuario</h5>
+                                <button type="button" className="close" 
+                                onClick={() => {props.CloseModalEditarU(); closeModal()}}>
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -139,23 +146,25 @@ function ModalEditarUsuario( props ){
                                             required:"Seleccione facultad"
                                         })}
                                         className="form-control">
-                                            <option value="">Seleccione su Rol...</option>
+                                            <option value={props.user.userRol[0].nameRol}>{props.user.userRol[0].nameRol}</option>
                                             {
-                                                /*facultades.map((facultad, index)=>{
-                                                    return(
-                                                        <option value={facultad}>{facultad}</option>   
-                                                    )
-                                                })*/
+                                                rols.map((rol, index)=>{
+                                                    if(rol.nameRol!=props.user.userRol[0].nameRol){
+                                                        return(
+                                                            <option value={rol.nameRol} key={index}>{rol.nameRol}</option>   
+                                                        )
+                                                    }
+                                                })
                                             }
-                                            <option value="Administrador">Administrador</option>
-                                            <option value="Jefe Administrativo">Jefe Administrativo</option>
                                         </select>
                                         {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
                                     </div>
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-secondary btn-sm"
+                                onClick={() => {props.CloseModalEditarU(); closeModal()}}
+                                >Cancelar</button>
                                 <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                             </div>
                             </div>
