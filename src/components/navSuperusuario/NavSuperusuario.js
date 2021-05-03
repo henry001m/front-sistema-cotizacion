@@ -37,7 +37,7 @@ function NavSuperusuario() {
                         <div class="dropdown">
                             <button class="dropbtn nav-link ">Administrar accesos</button>
                                 <div class="dropdown-content">
-                                    <a className="dropdown-item" href="usuarios">Usuarios</a>
+                                    <a className="dropdown-item" href="/NavSuperusuario/usuarios">Usuarios</a>
                                     <a className="dropdown-item" href="/">Rol de Usuarios</a>
                                 </div>
                         </div>
@@ -58,7 +58,7 @@ function NavSuperusuario() {
                 <Switch>
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
-                    <Route exact path="/usuarios" component={ Usuario }/>
+                    <Route exact path="/NavSuperusuario/usuarios" component={ Usuario }/>
                     <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 </Switch>
             </Router>
