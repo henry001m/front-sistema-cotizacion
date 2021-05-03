@@ -32,27 +32,6 @@ function IngresoCodigo() {
                 </h1>
             </nav>
 
-            {/* <div className="container" align="left">
-               <img src="./logoumss.png"></img>
-            </div>
-           
-            <div className="container" align="right">
-                <form >
-                        <br></br>
-                        <h1>Ingrese Codigo</h1>
-                        <br></br>
-                        <input name="code" 
-                        {...register("code",
-                        {required:"El campo es requerido"})}
-                        value={newAccess.code} 
-                        type="text" 
-                        className="form-control" 
-                        onChange={handleChange}></input>
-                        <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button>     
-                </form>
-                    
-            </div> */}
-
             <div className="container-fluid" align="left">
                 <div class="row">
                     <div class="col-md-6">
@@ -61,15 +40,9 @@ function IngresoCodigo() {
                     <div class="col-md-4">
                        <form >
                         <br></br>
-                        <h1>Ingrese Codigo</h1>
+                        <h2 align="center">Ingrese Código</h2>
                         <br></br>
-                        <input name="code" 
-                        {...register("code",
-                        {required:"El campo es requerido"})}
-                        value={newAccess.code} 
-                        type="text" 
-                        className="form-control" 
-                        onChange={handleChange}></input>
+                              <input type="text" className="form-control"></input>
                         <br></br>
                         <div className="form-group col" align="center">
                           <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button> 

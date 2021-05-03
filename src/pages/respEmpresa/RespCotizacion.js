@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../Home'
-import './RespuestaCotizacion.css'
+import './RespCotizacion.css'
 import { useHistory, useParams } from 'react-router-dom'
 
-function RespuestaCotizacion() {
+function RespCotizacion() {
 
     return(
         <>
@@ -50,8 +50,8 @@ function RespuestaCotizacion() {
                                  */}
                                 <div className="form-group col-md-4">
                                     <label>Formas de Pago:</label>
-                                    <select className="form-control" class="form-select" aria-label="Default select example">
-                                        {/* <option selected>Efectivo</option> */}
+                                    <select className="form-control" aria-label="Default select example">
+                                        {/* <option selected>Seleccione forma de pago</option> */}
                                         <option value="1">Efectivo</option>
                                         <option value="2">Credito</option>
                                     </select>
@@ -87,8 +87,8 @@ function RespuestaCotizacion() {
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                <button type="button" className="btn btn-secondary"  id="btnCerrar">Cancelar</button>
-                                    <button type="button" className="btn btn-success" id="enviarCot"> Enviar </button>
+                                <button type="button" className="btn btn-secondary"  id="btnV">Cancelar</button>
+                                    <button type="button" className="btn btn-success" id="btnV"> Enviar </button>
                                 </div>
                             </div>
                         </form>
@@ -101,4 +101,4 @@ function RespuestaCotizacion() {
     );
 }
 
-export default RespuestaCotizacion;
+export default RespCotizacion;
