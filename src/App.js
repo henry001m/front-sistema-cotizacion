@@ -7,11 +7,13 @@ import DetalleSolicitud from './pages/solictudesVista/DetalleSolicutd'
 import Usuario from './pages/usuario/Usuario';
 import NavInicio from './components/navInicio/NavInicio';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
+import RespuestaCotizacion from './pages/respEmpresa/RespuestaCotizacion';
 
 function App() {
   return (
     <div className="App">
-      <IngresoCodigo/>
+      {/* <NavSuperusuario/> */}
+      <RespuestaCotizacion/>
     </div>
   );
 }
