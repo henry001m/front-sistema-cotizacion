@@ -51,10 +51,9 @@ function RespuestaCotizacion() {
                                 <div className="form-group col-md-4">
                                     <label>Formas de Pago:</label>
                                     <select className="form-control" class="form-select" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        {/* <option selected>Efectivo</option> */}
+                                        <option value="1">Efectivo</option>
+                                        <option value="2">Credito</option>
                                     </select>
                                 </div>
                                 <div className="form-group col-md-4">
@@ -88,6 +87,7 @@ function RespuestaCotizacion() {
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
+                                <button type="button" className="btn btn-secondary"  id="btnCerrar">Cancelar</button>
                                     <button type="button" className="btn btn-success" id="enviarCot"> Enviar </button>
                                 </div>
                             </div>
