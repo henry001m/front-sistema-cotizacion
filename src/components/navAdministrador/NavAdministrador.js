@@ -6,6 +6,7 @@ import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
 import { PersonCircle } from 'bootstrap-icons-react';
 import DetalleSolicitud from '../../pages/solictudesVista/DetalleSolicutd';
+import MontoLimite from '../../pages/montoLimite/MontoLimite'
 import './NavAdministrador.css';
 
 function NavAdministrador() {
@@ -45,12 +46,16 @@ function NavAdministrador() {
                     <li className="nav-container--item">
                         <a className="nav-link" href="./SolicitudDeCotización.pdf" download>Descargar Formulario</a>
                     </li>
+                    <li className="nav-container--item">
+                        <a className="nav-link" href="/montoLimite">Monto Limite</a>
+                    </li>
                 </ul>
                 <Switch>
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                     <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
+                    <Route exact path="/montoLimite" component={ MontoLimite }/>
                 </Switch>
             </Router>
         </>
