@@ -12,7 +12,7 @@ import RegistroUnidad from './pages/regitroUnidadGasto/RegistroUnidad'
 function App() {
   return (
     <div className="App">
-      <RegistroUnidad/>
+      <NavSuperusuario/>
     </div>
   );
 }
