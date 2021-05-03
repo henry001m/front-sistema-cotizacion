@@ -12,7 +12,7 @@ import RespCotizacion from './pages/respEmpresa/RespCotizacion.js';
 function App() {
   return (
     <div className="App">
-      {/* <NavSuperusuario/> */}
+      <NavSuperusuario/>
     </div>
   );
 }
