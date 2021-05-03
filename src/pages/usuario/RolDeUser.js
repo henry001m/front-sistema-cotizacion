@@ -1,20 +1,21 @@
 import React, {Component} from "react";
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label, InputGroupText} from 'reactstrap';
-import './RolDeUser.css'
+import './RolDeUser.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
+import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario';
 import { Route, Switch } from "react-router";
-
+import esNom from '../../validaciones';
 
 
 class RolDeUser extends Component{
-    state={
-        abierto:false
-    }
+    
+    
     abrirModal = () =>{
         this.setState({abierto: !this.state.abierto})
     }
+
+ 
 
     render (){
         const modalStyles={
@@ -35,8 +36,9 @@ class RolDeUser extends Component{
                         <h6>Nombre de Rol de Usuario:</h6>
                         <input
                         type="text"
-                        name="title"
+                        name="rol"
                         className ="form-control"
+                        validacion = {this.actualizarState}
                         />
                     </div>
                 </FormGroup>
