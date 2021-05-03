@@ -3,6 +3,8 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, La
 import './RolDeUser.css'
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
+import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
+import { Route, Switch } from "react-router";
 
 
 
@@ -21,12 +23,11 @@ class RolDeUser extends Component{
         }
         return(
             <>
-            <Button onClick={this.abrirModal}> Modal RolDeUser</Button>
             <div>
-            <Modal isOpen={this.state.abierto} style={modalStyles}>
+            <Modal isOpen={this.abrirModal} style={modalStyles}>
             <ModalHeader>
                 Agregar Nuevo Rol
-                <i class="bi bi-x"></i>
+                <a className="btnx" href="/vistaSuperusuario" type="button"><i className="bi bi-x" ></i></a>
             </ModalHeader>
             <ModalBody className="modalBody">
                 <FormGroup>
@@ -36,7 +37,6 @@ class RolDeUser extends Component{
                         type="text"
                         name="title"
                         className ="form-control"
-                        placeholder="Title"
                         />
                     </div>
                 </FormGroup>
@@ -47,14 +47,18 @@ class RolDeUser extends Component{
                         type="text"
                         name="responsible"
                         className ="form-control"
-                        placeholder="Responsible"
                        />
                     </div>
                 </FormGroup>
+                <Route>
                     <div className=" btnCancel mt-5">
-                        <div className="cancel"><Button  onClick={this.abrirModal} >Cancelar</Button></div>
+                        <div className="cancel"><Button  href="/vistaSuperusuario" >Cancelar</Button></div>
                         <div className="guardar"><Button color="primary">Guardar</Button></div>
                     </div>
+                    <Switch>
+                        <Route exact path="/vistaSuperusuario" component={ NavSuperusuario }/>
+                    </Switch>
+                </Route>
                 </ModalBody>
                  
             </Modal>

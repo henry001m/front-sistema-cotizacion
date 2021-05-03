@@ -13,7 +13,7 @@ import RolDeUser from './pages/usuario/RolDeUser'
 function App() {
   return (
     <div className="App">
-      <RolDeUser/>
+      <NavSuperusuario/>
     </div>
   );
 }

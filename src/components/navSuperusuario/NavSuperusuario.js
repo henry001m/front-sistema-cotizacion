@@ -5,6 +5,7 @@ import Home from '../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import Usuario from '../../pages/usuario/Usuario';
 import { PersonCircle } from 'bootstrap-icons-react';
+import RolDeUser from '../../pages/usuario/RolDeUser'
 
 function NavSuperusuario() {
     return(
@@ -37,7 +38,7 @@ function NavSuperusuario() {
                             <button class="dropbtn nav-link ">Administrar accesos</button>
                                 <div class="dropdown-content">
                                     <a className="dropdown-item" href="usuarios">Usuarios</a>
-                                    <a className="dropdown-item" href="/">Rol de Usuarios</a>
+                                    <a className="dropdown-item" href="/rolUser">Rol de Usuarios</a>
                                 </div>
                         </div>
                     </li>
@@ -55,6 +56,7 @@ function NavSuperusuario() {
                     <Route exact path="/" component={ Home }/>
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/usuarios" component={ Usuario }/>
+                    <Route exact path="/rolUser" component={ RolDeUser }/>
                 </Switch>
             </Router>
         </>

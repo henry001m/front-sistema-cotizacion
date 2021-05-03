@@ -21,8 +21,24 @@
     right: -380px;
 }
 
-.bi{
+.btnx{
+    color: #000;
     position: relative;
-    right: -270px;
+    right: -250px;
+    outline: none;
+    border: 0px;
+    background-color: white;
 }
+
+.btnx:hover {
+    color: rgb(168, 168, 168);
+}
+
+.bi{
+
+    left: 5px;
+    font-size: 30px;
+}
+
+
 
