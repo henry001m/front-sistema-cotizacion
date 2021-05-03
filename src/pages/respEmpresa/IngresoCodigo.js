@@ -31,24 +31,57 @@ function IngresoCodigo() {
                     Sistema de Cotizaciones
                 </h1>
             </nav>
-            <div className="container" align="left">
+
+            {/* <div className="container" align="left">
                <img src="./logoumss.png"></img>
             </div>
-            <form >
-                <div className="container" align="right">
+           
+            <div className="container" align="right">
+                <form >
                         <br></br>
                         <h1>Ingrese Codigo</h1>
                         <br></br>
-                    <input name="code" 
-                    {...register("code",
-                    {required:"El campo es requerido"})}
-                    value={newAccess.code} 
-                    type="text" 
-                    className="form-control" 
-                    onChange={handleChange}></input>
-                    <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button>
+                        <input name="code" 
+                        {...register("code",
+                        {required:"El campo es requerido"})}
+                        value={newAccess.code} 
+                        type="text" 
+                        className="form-control" 
+                        onChange={handleChange}></input>
+                        <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button>     
+                </form>
+                    
+            </div> */}
+
+            <div className="container-fluid" align="left">
+                <div class="row">
+                    <div class="col-md-6">
+                      <img src="./logoumss.png"></img>
+                    </div>
+                    <div class="col-md-4">
+                       <form >
+                        <br></br>
+                        <h1>Ingrese Codigo</h1>
+                        <br></br>
+                        <input name="code" 
+                        {...register("code",
+                        {required:"El campo es requerido"})}
+                        type="text" 
+                        value={newAccess.code} 
+                        className="form-control" 
+                        onChange={handleChange}
+                        ></input>
+                        <br></br>
+                        <div className="form-group col" align="center">
+                          <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button> 
+                        </div>
+                        </form>
+                    </div>
+
                 </div>
-            </form>
+               
+            </div>
+            
         </>
     );
 }

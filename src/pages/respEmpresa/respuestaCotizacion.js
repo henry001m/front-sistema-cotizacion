@@ -1,13 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../Home'
 import './respuestaCotizacion.css'
+import { useHistory, useParams } from 'react-router-dom'
 
-function respuestaCotizacion() {
-
-    const closePage = ( ) => {
-        history.replace("/IngresoCodigo")
-    };
+function RespuestaCotizacion() {
 
     return(
         <>
@@ -21,38 +18,51 @@ function respuestaCotizacion() {
                     <div className="col-md-6">
                         <h1>Responder Cotizacion</h1>   
                     </div>
-                    <div className="col-md-6" align="end">
-                        <button type="button" className="close" onClick={ closePage }>
+                    {/* <div className="col-md-6" align="end">
+                        <button type="button" className="close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div> */}
                 </div>
                 
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
                         <form>
-                        <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Empresa:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label class="col-form-label">empresa x</label>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Validez de la oferta:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label class="col-form-label">Validez</label>
+                                    <div className="form-group col-md-4">
+                                        <label>Empresa:</label>
+                                        <input type="text" className="form-control"></input>
                                     </div>
-                                </div>
-                            </div>
+                                    <div className="form-group col-md-4">
+                                            <label>Validez de la oferta:</label>
+                                            <input type="text" className="form-control"></input>
+                                    </div>
+                                    <div className="form-group col-md-4">
+                                        <label>Fecha de Solicitud:</label>
+                                        <input type="text" className="form-control"></input>
+                                    </div>      
+                            </div>     
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Fecha de Solicitud:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label class="col-form-label">dd/mm/aaaa</label>
-                                    </div>
+                                {/* <div className="form-group col-md-4">
+                                    <label>Formas de Pago:</label>
+                                    <input type="text" className="form-control"></input>
+                                </div>
+                                 */}
+                                <div className="form-group col-md-4">
+                                    <label>Formas de Pago:</label>
+                                    <select className="form-control" class="form-select" aria-label="Default select example">
+                                        {/* <option selected>Efectivo</option> */}
+                                        <option value="1">Efectivo</option>
+                                        <option value="2">Credito</option>
+                                    </select>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <label>Tiempo de Garantia:</label>
+                                    <input type="text" className="form-control"></input>
+                                </div>
+                                <div className="form-group col-md-4">
+                                    <label>Tiempo de Entrega:</label>
+                                    <input type="text" className="form-control"></input>
                                 </div>
                             </div>
                             <div className="form-row" id="list">
@@ -72,13 +82,12 @@ function respuestaCotizacion() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label class="col-form-label">extra</label>
-                                    </div>
+                                    <textarea type="text" className="form-control"></textarea>
                                 </div>
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
+                                <button type="button" className="btn btn-secondary"  id="btnCerrar">Cancelar</button>
                                     <button type="button" className="btn btn-success" id="enviarCot"> Enviar </button>
                                 </div>
                             </div>
@@ -92,4 +101,4 @@ function respuestaCotizacion() {
     );
 }
 
-export default respuestaCotizacion;
+export default RespuestaCotizacion;
