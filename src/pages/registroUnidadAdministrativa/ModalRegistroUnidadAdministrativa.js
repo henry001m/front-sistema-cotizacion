@@ -23,8 +23,6 @@ function ModalRegistroUnidadAdministrativa( props ){
     const OpenCloseModal = () => {
         if(props.isShowModalRegistroUA==true){
             openModal();
-        }else{
-            closeModal();
         }
     };
 
@@ -55,7 +53,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                             <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad Administrativa</h5>
-                                <button type="button" className="close" onClick={() => props.CloseModalRUA()}>
+                                <button type="button" className="close" onClick={() => {props.CloseModalRUA();closeModal()}}>
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -109,7 +107,8 @@ function ModalRegistroUnidadAdministrativa( props ){
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
+                                    onClick={() => {props.CloseModalRUA();closeModal()}}>Cancelar</button>
                                 <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                             </div>
                             </div>
