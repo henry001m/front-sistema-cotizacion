@@ -9,9 +9,9 @@ export async function getUsers() {
     }
 }
 
-export async function createUser(user) {
+export async function createUser(user,idrol) {
     try {
-        const token = await API.post('/register', user);
+        const token = await API.post(`/register/${idrol}`, user);
         return token;
     } catch (error) {
         console.log(error);
