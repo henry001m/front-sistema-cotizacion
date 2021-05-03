@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
-import './MontoLimite.css'
 
 function MontoLimite() {
 
