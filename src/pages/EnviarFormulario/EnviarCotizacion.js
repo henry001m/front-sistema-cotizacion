@@ -51,11 +51,7 @@ function EnviarCotizacion( props ){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
     const [espera, setEspera] = useState("")
-<<<<<<< HEAD
     const [emails, setEmails] = useState([{name:"email1", correo:""}])
-=======
-    
->>>>>>> master
 
     const modalref = useRef();
 
@@ -205,21 +201,11 @@ function EnviarCotizacion( props ){
                                                        
                                                     ></input>
                                                     {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
-<<<<<<< HEAD
                                                 </div> */}
                                             </div>
                                             <div className="form-group col-md-2">
                                                 <button type="button" className="btn btn-success" onClick={ addEmail }>
                                                     <PlusCircle className="mb-1"/>
-=======
-                                                </div>
-
-
-                                            </div>
-                                            <div className="form-group col-md-2">
-                                                <button type="submit" className="btn btn-success" id="btnEmail">
-                                                <PlusCircle className="mb-1"/>
->>>>>>> master
                                                 </button>
                                             </div>
 
