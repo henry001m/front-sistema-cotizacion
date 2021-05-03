@@ -55,7 +55,7 @@ function UnidadesAdministrativas() {
                                 <thead>
                                     <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Unidad de Gasto</th>
+                                    <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
                                     <th scope="col">Administrador</th>
                                     </tr>
