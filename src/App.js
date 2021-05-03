@@ -8,11 +8,12 @@ import Usuario from './pages/usuario/Usuario';
 import NavInicio from './components/navInicio/NavInicio';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
 import RegistroUnidad from './pages/regitroUnidadGasto/RegistroUnidad'
+import RolDeUser from './pages/usuario/RolDeUser'
 
 function App() {
   return (
     <div className="App">
-      <RegistroUnidad/>
+      <RolDeUser/>
     </div>
   );
 }

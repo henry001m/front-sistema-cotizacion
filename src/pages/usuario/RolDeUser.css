@@ -1,0 +1,28 @@
+.container{
+    background-color: black;
+}
+.row{
+    height: 30px;
+
+}
+
+.modalBody{
+    height: 300px;
+}
+
+.cancel{
+    position: relative;
+    right: -280px;
+}
+
+.guardar{
+    position: relative;
+    margin-top: -38px;
+    right: -380px;
+}
+
+.bi{
+    position: relative;
+    right: -270px;
+}
+
