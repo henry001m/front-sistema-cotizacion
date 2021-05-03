@@ -6,6 +6,7 @@ import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import Usuario from '../../pages/usuario/Usuario';
 import { PersonCircle } from 'bootstrap-icons-react';
 import UnidadesAdministrativas from '../../pages/registroUnidadAdministrativa/UnidadesAdministrativas';
+import unidadDeGasto from '../../pages/regitroUnidadGasto/MainRegistroUnidad';
 
 function NavSuperusuario() {
     return(
@@ -46,7 +47,7 @@ function NavSuperusuario() {
                         <a className="nav-link" href="/UnidadesAdministrativas">Unidades Administrativas</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="">Unidad de Gasto</a>
+                        <a className="nav-link" href="/unidadDeGasto">Unidad de Gasto</a>
                     </li>
                     <li className="nav-container--item">
                         <a className="nav-link" href="">Empresas</a>
@@ -60,6 +61,7 @@ function NavSuperusuario() {
                     <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
                     <Route exact path="/usuarios" component={ Usuario }/>
                     <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
+                    <Route exact path="/unidadDeGasto" component={unidadDeGasto}/>
                 </Switch>
             </Router>
         </>
