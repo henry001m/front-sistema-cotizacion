@@ -12,9 +12,7 @@ import RespuestaCotizacion from './pages/respEmpresa/RespuestaCotizacion';
 function App() {
   return (
     <div className="App">
-      {/* <NavSuperusuario/> */}
-      <RespuestaCotizacion/>
-      {/* <IngresoCodigo/> */}
+      <NavSuperusuario/>
     </div>
   );
 }
