@@ -51,6 +51,7 @@ function EnviarCotizacion( props ){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
     const [espera, setEspera] = useState("")
+    /**esta es la lista de los emails */
     const [emails, setEmails] = useState([{name:"email1", correo:""}])
 
     const modalref = useRef();
