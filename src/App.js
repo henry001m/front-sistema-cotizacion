@@ -14,6 +14,7 @@ function App() {
     <div className="App">
       {/* <NavSuperusuario/> */}
       <RespuestaCotizacion/>
+      {/* <IngresoCodigo/> */}
     </div>
   );
 }

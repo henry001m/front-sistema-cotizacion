@@ -29,30 +29,39 @@ function RespuestaCotizacion() {
                     <div className="form-register" id="formRegistro">
                         <form>
                             <div className="form-row">
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-4">
                                         <label>Empresa:</label>
                                         <input type="text" className="form-control"></input>
                                     </div>
-                                    <div className="form-group col-md-6">
+                                    <div className="form-group col-md-4">
                                             <label>Validez de la oferta:</label>
                                             <input type="text" className="form-control"></input>
                                     </div>
-                                    
+                                    <div className="form-group col-md-4">
+                                        <label>Fecha de Solicitud:</label>
+                                        <input type="text" className="form-control"></input>
+                                    </div>      
                             </div>     
                             <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Fecha de Solicitud:</label>
-                                    <input type="text" className="form-control"></input>
-                                </div>
-                                <div className="form-group col-md-6">
+                                {/* <div className="form-group col-md-4">
                                     <label>Formas de Pago:</label>
                                     <input type="text" className="form-control"></input>
                                 </div>
-                                <div className="form-group col-md-6">
+                                 */}
+                                <div className="form-group col-md-4">
+                                    <label>Formas de Pago:</label>
+                                    <select className="form-control" class="form-select" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div className="form-group col-md-4">
                                     <label>Tiempo de Garantia:</label>
                                     <input type="text" className="form-control"></input>
                                 </div>
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Tiempo de Entrega:</label>
                                     <input type="text" className="form-control"></input>
                                 </div>
@@ -74,7 +83,7 @@ function RespuestaCotizacion() {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <input type="text" className="form-control"></input>
+                                    <textarea type="text" className="form-control"></textarea>
                                 </div>
                             </div>
                             <div className="form-row" >
