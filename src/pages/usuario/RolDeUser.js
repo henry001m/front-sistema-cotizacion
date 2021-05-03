@@ -10,7 +10,13 @@ import esNom from '../../validaciones';
 
 class RolDeUser extends Component{
     
+    state ={
+        error:false,
+        mensajeError: "Campo resseed"
+    }
+
     
+
     abrirModal = () =>{
         this.setState({abierto: !this.state.abierto})
     }

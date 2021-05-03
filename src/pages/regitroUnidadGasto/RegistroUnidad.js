@@ -26,7 +26,7 @@ class RegistroUnidad extends Component{
 
             <div className="principal col md-8 mt-8">
            
-            <Modal isOpen={this.state.abierto} style={modalStyles}>
+            <Modal isOpen={this.abrirModal} style={modalStyles}>
                 <ModalHeader>
                     Agregar Unidad de Gasto        
                     <i class="bi bi-x"></i>
