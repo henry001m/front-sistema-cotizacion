@@ -12,7 +12,10 @@ import RegistroUnidad from './pages/regitroUnidadGasto/RegistroUnidad'
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
       
+=======
+>>>>>>> Edson-Rosas
       <NavSuperusuario/>
     </div>
   );
