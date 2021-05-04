@@ -7,6 +7,7 @@ import Usuario from '../../pages/usuario/Usuario';
 import { PersonCircle } from 'bootstrap-icons-react';
 import UnidadesAdministrativas from '../../pages/registroUnidadAdministrativa/UnidadesAdministrativas';
 import unidadDeGasto from '../../pages/regitroUnidadGasto/MainRegistroUnidad';
+import RolDeUser from '../../pages/Rol/RolDeUser'
 
 function NavSuperusuario() {
     return(
@@ -38,7 +39,7 @@ function NavSuperusuario() {
                             <button className="dropbtn nav-link ">Administrar accesos</button>
                                 <div className="dropdown-content">
                                     <a className="dropdown-item" href="/NavSuperusuario/usuarios">Usuarios</a>
-                                    <a className="dropdown-item" href="">Rol de Usuarios</a>
+                                    <a className="dropdown-item"><RolDeUser/></a>
                                 </div>
                         </div>
                     </li>
