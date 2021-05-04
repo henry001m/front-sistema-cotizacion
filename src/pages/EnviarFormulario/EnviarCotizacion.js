@@ -99,10 +99,15 @@ function EnviarCotizacion( props ){
     };
 
     const saveEmail = async ( ) => {
+        const corre = []
+        for(var i=0; i<emails.length;i++){
+            corre.push(emails[i].correo)
+        }
+        const aux = {emails:corre, description:emailMessage.description}
         setEspera("Enviando....");
         document.getElementById('btnIE').disabled=true;
-        console.log(emailMessage);
-        const result = await sendEmail(emailMessage);
+        console.log(aux);
+        const result = await sendEmail(aux);
         alert(result.data.result);
         setEmailMessage({email:"",description:""});
         setEspera("");
