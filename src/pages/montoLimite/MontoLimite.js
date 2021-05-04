@@ -1,31 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import {getMontoLomite} from '../../services/http/MontoLimiteService'
 
 function MontoLimite() {
 
-    const [ amounts, setAmounts ] = useState([])
-
-    const Amounts = amounts.map((amount,index)=>{
+    const [limiteAmouts, setLimiteAmouts] = useState([]);
+    const [flag, setFlag] = useState(false);
+    const [final, setFinal] = useState({})
+    const updateLimitAmout = ()=>{
+        setFlag(!flag);
+    }
+    const Amounts = limiteAmouts.map((amount,index)=>{
         return(
-            <tr key={index}>
+            <tr key={amount.id}>
                 <th scope="row">
                     {index+1}         
                 </th>
                 <td >
-                    {amount.gestion}         
+                    {amount.steps}         
                 </td>
                 <td >
-                    {amount.amountlimite}         
+                    {amount.monto}         
                 </td>
                 <td >
-                    {amount.date}         
+                    {amount.dateStamp}         
                 </td>
             </tr>
         );
     });
+    const sacarUltimo = ()=>{
+        var fin = limiteAmouts.length;
+        console.log(limiteAmouts.length)
+        setFinal(limiteAmouts[fin-1]);
+    }
     const [abierto, setAbierto] = useState(false);
     const abrirModal =()=>{
         setAbierto(true);
@@ -33,6 +43,20 @@ function MontoLimite() {
     const cerrarModal=()=>{
         setAbierto(false);
     }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getMontoLomite();
+            console.log(response.limit_amout)
+            setFinal(response.limit_amout[response.limit_amout.length-1]);
+            console.log(response.limit_amout[response.limit_amout.length-1])
+            setLimiteAmouts(response.limit_amout);
+        } catch (error) {
+            console.log(error);
+        }
+        };
+        fetchData();
+    }, [setLimiteAmouts,flag]);
 
     return(
         <>
@@ -44,13 +68,13 @@ function MontoLimite() {
                         <div className="col-6">
                             <div className="form-inline">
                                     <strong>Gestion Actual</strong>
-                                    <input className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}}></input>
+                                    <input value="2021" className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}} readonly></input>
                             </div>
                         </div>
                         <div className="col-6" align="right">
                             <div className="form-inline" align="right">
                                     <strong>Monto Limite Actual</strong>
-                                    <input className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}}></input>
+                                    <input value={final.monto} className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}} readonly></input>
                             </div>
                         </div>
                     </div>
@@ -65,7 +89,7 @@ function MontoLimite() {
                         </div>
                     </div>
                     {/* Modal para agregar un nuevo limite */}
-                    <MontoLimiteModal abierto={abierto} cerrarModal={cerrarModal}/>
+                    <MontoLimiteModal abierto={abierto} cerrarModal={cerrarModal} updateLimitAmout={updateLimitAmout}/>
                     <br></br>
                     <div className="form-register">             
                         <div className="form-row">

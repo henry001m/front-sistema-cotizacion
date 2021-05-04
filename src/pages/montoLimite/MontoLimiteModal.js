@@ -12,9 +12,14 @@ const MontoLimiteModal = (props) => {
     }
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         setMonto(data.monto)
-        console.log(data.monto)
+        const fecha = new Date();
+        const newFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
+        const res = await createMontoLimite({monto:data.monto,dateStamp:newFecha,steps:'2021'});
+        props.updateLimitAmout();
+        props.cerrarModal();
+        console.log(res);
     }
     return (
     <Modal isOpen={props.abierto} style={modalStyles}>
