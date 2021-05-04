@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
+import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 
 function UnidadesAdministrativas() {
 
@@ -33,6 +34,7 @@ function UnidadesAdministrativas() {
 
     return(
         <>
+            <NavSuperusuario/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Unidades Administrativas</h1>

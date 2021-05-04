@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
+import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 
 function MontoLimite() {
 
@@ -26,6 +27,7 @@ function MontoLimite() {
 
     return(
         <>
+            <NavAdministrador/>
             <div className="container" align="left">
                         <br></br>
                         <br></br>
