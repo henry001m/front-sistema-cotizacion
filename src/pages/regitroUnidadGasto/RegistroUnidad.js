@@ -1,32 +1,19 @@
 
-import React, {Component} from 'react';
+import React from 'react';
 import './RegistroUnidad.css';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 
-class RegistroUnidad extends Component{
-    state={
-        abierto: false,
+const RegistroUnidad = (props) => {
+    const modalStyles={
+        top:"20%",
+        transfrom: 'translate(-50%, -50%)'
     }
-    abrirModal=() => {
-        this.setState({abierto: !this.state.abierto})
-    }
-
-    render (){
-
-        const modalStyles={
-            top:"20%",
-            transfrom: 'translate(-50%, -50%)'
-        }
-        return(
-            <>
-        <Button color="success" onClick={this.abrirModal}>Modal-UnidadGasto</Button>
-
-            <div className="principal col md-8 mt-8">
-           
-            <Modal isOpen={this.abrirModal} style={modalStyles}>
+    return (
+        <>
+            <Modal isOpen={props.abierto} style={modalStyles}>
                 <ModalHeader>
                     Agregar Unidad de Gasto        
                     <i class="bi bi-x"></i>
@@ -59,16 +46,14 @@ class RegistroUnidad extends Component{
 
                 
                    <ModalFooter>
-                    <Button  onClick={this.abrirModal} >Cancelar</Button>
+                    <Button  onClick={props.cerrarModal} >Cancelar</Button>
                     <Button color="primary">Guardar</Button>
                     </ModalFooter> 
               
 
             </Modal> 
-            </div> 
-            </>
-        )
-    }
+        </>
+    )
 }
 
 export default RegistroUnidad

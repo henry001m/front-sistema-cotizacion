@@ -8,13 +8,13 @@ import Usuario from './pages/usuario/Usuario';
 import NavInicio from './components/navInicio/NavInicio';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
 import RespuestaCotizacion from './pages/respEmpresa/RespuestaCotizacion';
-
+import VerArchivos from './pages/verArchivos/VerArchivos'
 
 function App() {
   return (
     <div className="App">
       {/* <NavSuperusuario/> */}
-      <IngresoCodigo />
+      <VerArchivos />
       {/* <IngresoCodigo/> */}
     </div>
   );

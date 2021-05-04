@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from '../Home'
-import './respuestaCotizacion.css'
-import { useHistory, useParams } from 'react-router-dom'
+import './RespuestaCotizacion.css'
 
 function RespuestaCotizacion() {
+
+    const closePage = ( ) => {
+       // history.replace("/IngresoCodigo")
+    };
 
     return(
         <>

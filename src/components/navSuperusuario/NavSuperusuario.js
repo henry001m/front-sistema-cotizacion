@@ -45,6 +45,9 @@ function NavSuperusuario() {
                         </div>
                     </li>
                     <li className="nav-container--item">
+                        <a className="nav-link" href="/UnidadesAdministrativas">Unidades Administrativas</a>
+                    </li>
+                    <li className="nav-container--item">
                         <a className="nav-link" href="/unidadDeGasto">Unidad de Gasto</a>
                     </li>
                     <li className="nav-container--item">

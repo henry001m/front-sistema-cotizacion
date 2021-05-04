@@ -1,28 +1,37 @@
 import React,{useEffect, useState} from  'react'
-import { PlusCircle } from 'bootstrap-icons-react';
+import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
+import ModalEditarUsuario from './ModalEditarUsuario';
 
 
 function Usuario(){
 
-const [users, setUsers] = useState([]);
-const [flag, setFlag] = useState(false);
-const updateUsers = ()=>{
-    setFlag(!flag);
-}
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getUsers();
-        setUsers(response.users);
-      } catch (error) {
-        console.log(error);
-      }
+    const [users, setUsers] = useState([]);
+    const [flag, setFlag] = useState(false);
+    const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
+    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[{id:"",nameRol:""}]})
+
+    const updateUsers = ()=>{
+        setFlag(!flag);
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getUsers();
+            setUsers(response.users);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     fetchData();
-  }, [setUsers,flag]);
+    }, [setUsers,flag]);
+
+    const CloseModalEditarU = () => {
+        setIsShowModalEditarU( false );
+    };
+
     return(
         <>
             <div className="container" align="left">
@@ -51,6 +60,7 @@ const updateUsers = ()=>{
                                 <th scope="col">Telefono</th>
                                 <th scope="col">Correo</th>
                                 <th scope="col">Rol de Usuario</th>
+                                <th scope="col">Modificar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,7 +73,15 @@ const updateUsers = ()=>{
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
-                                                <td>.....</td>
+                                                <td>{user.userRol[0].nameRol}</td>
+                                                <td><button className="btn  btn-warning" 
+                                                        onClick={()=>{
+                                                            setIsShowModalEditarU(true)
+                                                            setUser(user)
+                                                        }}
+                                                        style={{color:'white', backgroundColor:'orange'}}
+                                                    ><PencilSquare/></button>
+                                                </td>
                                             </tr>
                                         );
                                    })
@@ -72,7 +90,13 @@ const updateUsers = ()=>{
                         </table>
                     </div>
                 </div>
-        </div>
+            </div>
+            <ModalEditarUsuario
+            isShowModalEditarU={ isShowModalEditarU }
+            user={ user }
+            CloseModalEditarU = {CloseModalEditarU}
+            updateUsers={updateUsers}
+            />
         </>
     );
 }

@@ -24,7 +24,7 @@ const Modal = forwardRef((props,ref) => {
 
         return ReactDOM.createPortal(
             <div className="modal-wrapper" id="wrap">
-                <div onClick={ close } className="modal-backdrop" id="backd"/>
+                <div className="modal-backdrop" id="backd"/>
                 <div className="modal-box" id="box">
                      {props.children}
                 </div>
