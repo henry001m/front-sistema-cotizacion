@@ -9,6 +9,10 @@ import SolicitudesVista from './pages/solictudesVista/SolicitudesVista';
 import EnviarCotizacion from './pages/enviarFormulario/EnviarCotizacion'
 import Home from './pages/Home'
 import Usuario from './pages/usuario/Usuario';
+import NavInicio from './components/navInicio/NavInicio';
+import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
+import RespuestaCotizacion from './pages/respEmpresa/RespuestaCotizacion';
+import RespCotizacion from './pages/respEmpresa/RespCotizacion.js';
 
 import UnidadesAdministrativas from './pages/registroUnidadAdministrativa/UnidadesAdministrativas'
 

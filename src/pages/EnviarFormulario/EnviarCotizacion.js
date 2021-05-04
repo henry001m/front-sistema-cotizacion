@@ -1,7 +1,7 @@
 import React,{useState, useRef } from "react"
 import  Modal from '../../components/modal/Modal'
 import './EnviarCotizacion.css'
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
 import { Envelope, PlusCircle} from 'bootstrap-icons-react'
 
@@ -49,8 +49,9 @@ const Input = ({name,tabIndex,value,onChange}) => {
 function EnviarCotizacion( props ){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [emailMessage, setEmailMessage]  = useState({email:"", description:""});
+    const [emailMessage, setEmailMessage]  = useState({emails:"", description:""});
     const [espera, setEspera] = useState("")
+    /**esta es la lista de los emails */
     const [emails, setEmails] = useState([{name:"email1", correo:""}])
 
     const modalref = useRef();
@@ -65,11 +66,12 @@ function EnviarCotizacion( props ){
     };
 
     const addEmail = () => {
-        setEmails([...emails,{name:"email"+(emails.length+1),correo:""}])
+        setEmails([...emails,{name:"email"+(emails.length+1),correo:""}]);
+        setEmailMessage({...emailMessage,emails:emails});
     };
 
     const onChangeEmail = (event) => {
-        console.log(event.target.tabIndex)
+        //console.log(event.target.tabIndex)
         const newData = emails.map((d, index) => {
             if (index === event.target.tabIndex) {
               d[event.target.name] = event.target.value;
@@ -77,13 +79,13 @@ function EnviarCotizacion( props ){
             return d;
           });
           setEmails([...newData])
-        console.log(newData)
+        //console.log(newData)
     };
 
     const handleInputChange = (event) => {
-        console.log("cambio",event.target.value[0])
+        //console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
-            console.log("primer",event.target.value[0])
+            //console.log("primer",event.target.value[0])
             setEmailMessage({
                 ...emailMessage,
                 [event.target.name] : event.target.value.substring(1)
@@ -95,9 +97,11 @@ function EnviarCotizacion( props ){
             });
         }
     };
+
     const saveEmail = async ( ) => {
         setEspera("Enviando....");
         document.getElementById('btnIE').disabled=true;
+        console.log(emailMessage);
         const result = await sendEmail(emailMessage);
         alert(result.data.result);
         setEmailMessage({email:"",description:""});
@@ -107,6 +111,9 @@ function EnviarCotizacion( props ){
         closeModal();
     };
 
+    const clearInput = () =>{
+
+    }
     const validateAroba = (e) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
         if(/@/.test(e)){
@@ -171,32 +178,14 @@ function EnviarCotizacion( props ){
                                                         />
                                                     )
                                                 })}
-                                                {/* <div className="form-row">
-                                                    <input
-                                                        name="email" 
-                                                        {...register("email",{
-                                                            required:"Campo requerido",
-                                                            validate:{
-                                                                value:(value)=>validateAroba(value)
-                                                            },
-                                                            minLength:{
-                                                                value:11,
-                                                                message:"Este campo debe tener mínimo 11 caracteres"
-                                                            }
-                                                        })}
-                                                        value={emailMessage.email}
-                                                        type="text" 
-                                                        className="form-control"
-                                                        onChange={ handleInputChange }
-                                                    ></input>
-                                                    {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
-                                                </div> */}
                                             </div>
                                             <div className="form-group col-md-2">
                                                 <button type="button" className="btn btn-success" onClick={ addEmail }>
                                                     <PlusCircle className="mb-1"/>
                                                 </button>
                                             </div>
+
+
                                         </div>
                                         <div className="form-row">
                                             <div className="form-group col-md-10">

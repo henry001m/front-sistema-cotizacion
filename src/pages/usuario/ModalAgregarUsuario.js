@@ -73,8 +73,11 @@ function ModalAgregarUsuario(props){
     };
 
     const SaveData = async ( ) => {
-        const result = await createUser(user,idRolUSer);
-        setMessage(result.data.message);
+        const result = await createUser(user);
+        console.log(result)
+        if(result.data){
+            setMessage(result.data.message);
+        }
         console.log(result);
         props.updateUsers();
         if(!result.data.message){
