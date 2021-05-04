@@ -79,7 +79,7 @@ function DetalleSolicitud(){
                         </button>
                     </div>
                 </div>
-                
+                <br></br>
                 <div className="col" id="registro">
                     <div className="form-register" id="formRegistro">
                         <form>
