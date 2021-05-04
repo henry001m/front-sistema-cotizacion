@@ -8,7 +8,14 @@ export async function getRols() {
         console.log(error)
     }
 }
-
+export async function createRol(newRol){
+    try {
+        const response = await API.post('rols/new',newRol);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
 export async function updateRolUser(idu,idr) {
     try {
         const res = await API.put(`users/update/${idu}/${idr}`);
