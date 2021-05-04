@@ -9,11 +9,14 @@ import RespCotizacion from './RespCotizacion'
 function IngresoCodigo() {
     let history = useHistory();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [message, setMessage] = useState("")
     const onSubmit = async(data) => {
         const res = await searchCode({code:data.code});
         console.log(res);
         if(res.status){
             history.push("/respuestaCotizacion")
+        }else{
+            setMessage("código invalido");
         }
     };
 
@@ -35,10 +38,10 @@ function IngresoCodigo() {
                         <br></br>
                         <h2 align="center">Ingrese Código</h2>
                         <br></br>
+
                         <input className="form-control" name="code" {...register("code", { required: true })} />
-                            {/* errors will return when field validation fails  */}
-                             <br></br>
-                            {errors.exampleRequired && <span>This field is required</span>}
+                            <span style={{color:"red"}}>{message}</span>
+                        <br></br>
                         <br></br>
                         <div className="form-group col" align="center">
                           <button type="submit" className="btn btn-success my-2 my-sm-0">Acceder a Cotizacion </button> 

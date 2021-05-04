@@ -9,9 +9,9 @@ export async function getUnidadesAdministrativas() {
     }
 }
 
-export async function createUnidadAdministrativa(quotitation) {
+export async function createUnidadAdministrativa(newAdministrativa) {
     try {
-        const res = await API.post('/administrativeUnit/new', quotitation);
+        const res = await API.post('/administrativeUnit/new', newAdministrativa);
         return res.data;
     } catch (error) {
         console.log(error);

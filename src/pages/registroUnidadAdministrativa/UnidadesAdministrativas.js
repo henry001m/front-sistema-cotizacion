@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
+import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
+import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
 
 function UnidadesAdministrativas() {
 
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
-
+    const [flag, setFlag] = useState(false);
     const CloseModalRUA = () => {
         setIsShowModalRegistroUA( false );
     };
@@ -19,20 +20,34 @@ function UnidadesAdministrativas() {
                     {index+1}         
                 </th>
                 <td >
-                    {administrativeUnit.nameUnidadGasto}         
+                    {administrativeUnit.name}         
                 </td>
                 <td >
                     {administrativeUnit.facultad}         
                 </td>
-                <td >
-                    {administrativeUnit.administrator}         
-                </td>
             </tr>
         );
     });
+    const updateAdministrativas = ()=>{
+        setFlag(!flag);
+    }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getUnidadesAdministrativas();
+            setAdministrativeUnits(response.Administrative_unit);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
+        };
+    fetchData();
+    }, [setAdministrativeUnits,flag]);
+
 
     return(
         <>
+            <NavSuperusuario/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Unidades Administrativas</h1>
@@ -57,7 +72,6 @@ function UnidadesAdministrativas() {
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
-                                    <th scope="col">Administrador</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,7 +83,9 @@ function UnidadesAdministrativas() {
             </div>
             <ModalRegistroUnidadAdministrativa
             isShowModalRegistroUA={ isShowModalRegistroUA }
-            CloseModalRUA = {CloseModalRUA}/>
+            CloseModalRUA = {CloseModalRUA}
+            updateAdministrativas={updateAdministrativas}
+            />
         </>
     );
 };

@@ -2,16 +2,16 @@ import API from '../Service';
 
 export async function getUnidadesGastos() {
     try {
-        const response = await API.get('/quotitations');
+        const response = await API.get('/spendingUnits');
         return response.data;
     } catch (error) {
         console.log(error)
     }
 }
 
-export async function createUnidadGasto(quotitation) {
+export async function createUnidadGasto(newUndidadGasto) {
     try {
-        const res = await API.post('/quotitation', quotitation);
+        const res = await API.post('/spendingUnits/new', newUndidadGasto);
         return res.data;
     } catch (error) {
         console.log(error);

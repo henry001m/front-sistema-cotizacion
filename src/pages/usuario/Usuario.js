@@ -3,7 +3,7 @@ import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
-
+import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 
 function Usuario(){
 
@@ -34,6 +34,7 @@ function Usuario(){
 
     return(
         <>
+            <NavSuperusuario/>
             <div className="container" align="left">
                     <br></br>
                     <h1>Usuarios</h1>
