@@ -1,6 +1,7 @@
-import React, { useRef, useState} from 'react'
+import React, { useRef, useState,useEffect} from 'react'
 import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
+import {getFaculties} from '../../services/http/FacultyService';
 
 
 function ModalRegistroUnidadAdministrativa( props ){
@@ -38,10 +39,22 @@ function ModalRegistroUnidadAdministrativa( props ){
         } 
     };
 
-    const saveData = () => {
-
+    const saveData = (data) => {
+        console.log(data);
     }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getFaculties();
+            setFacultades(response.facultades);
+            console.log(response.facultades)
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+        fetchData();
+    }, []);
     return(
         <>
             {
@@ -95,9 +108,9 @@ function ModalRegistroUnidadAdministrativa( props ){
                                         className="form-control">
                                             <option value="">Seleccione la facultad</option>
                                             {
-                                                facultades.map((facultad, index)=>{
+                                                facultades.map((facultad)=>{
                                                     return(
-                                                        <option value={facultad}>{facultad}</option>   
+                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
                                                     )
                                                 })
                                             }

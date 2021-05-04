@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
+import {Button} from 'reactstrap';
+import MontoLimiteModal from './MontoLimiteModal'
 
 function MontoLimite() {
 
@@ -23,12 +25,19 @@ function MontoLimite() {
             </tr>
         );
     });
+    const [abierto, setAbierto] = useState(false);
+    const abrirModal =()=>{
+        setAbierto(true);
+    }
+    const cerrarModal=()=>{
+        setAbierto(false);
+    }
 
     return(
         <>
             <div className="container" align="left">
-                        <br></br>
-                        <br></br>
+                <br></br>
+                <br></br>
                     <div className="row">
                         <div className="col-6">
                             <div className="form-inline">
@@ -49,10 +58,12 @@ function MontoLimite() {
                             
                         </div>
                         <div className="col-6" align="right">
-                            <button type="button" className="btn btn-success my-2 my-sm-0"> 
-                            <PlusCircle  className="mb-1"/> Actualizar Monto </button>
+                            <Button type="button" className="btn btn-success my-2 my-sm-0" onClick={abrirModal}> 
+                            <PlusCircle  className="mb-1"/> Actualizar Monto </Button>
                         </div>
                     </div>
+                    {/* Modal para agregar un nuevo limite */}
+                    <MontoLimiteModal abierto={abierto} cerrarModal={cerrarModal}/>
                     <br></br>
                     <div className="form-register">             
                         <div className="form-row">

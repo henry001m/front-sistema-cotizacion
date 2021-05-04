@@ -7,16 +7,12 @@ import DetalleSolicitud from './pages/solictudesVista/DetalleSolicutd'
 import Usuario from './pages/usuario/Usuario';
 import NavInicio from './components/navInicio/NavInicio';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
-<<<<<<< HEAD
-import RespuestaCotizacion from './pages/respEmpresa/RespuestaCotizacion';
-=======
 import RespCotizacion from './pages/respEmpresa/RespCotizacion.js';
->>>>>>> Jasiel-Renteria
 
 function App() {
   return (
     <div className="App">
-      <NavAdministrador/>
+      <NavSuperusuario/>
     </div>
   );
 }

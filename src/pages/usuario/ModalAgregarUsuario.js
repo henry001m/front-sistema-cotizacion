@@ -3,7 +3,7 @@ import { PlusCircle } from 'bootstrap-icons-react';
 import  Modal from './../../components/modal/Modal';
 import { useForm } from 'react-hook-form';
 import { createUser } from '../../services/http/UserService' ;
-import { getRols } from '../../services/http/RolService'
+import { getRols } from '../../services/http/RolService';
 
 function ModalAgregarUsuario(props){
 
