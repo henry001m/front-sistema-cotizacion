@@ -52,7 +52,7 @@ const RegistroUnidad = (props) => {
                         <div className="modal-dialog" role="document">
                             <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad Administrativa</h5>
+                                <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad de Gasto</h5>
                                 <button type="button" className="close" onClick={() => {props.cerrarModal()}}>
                                 <span aria-hidden="true">&times;</span>
                                 </button>
@@ -60,7 +60,7 @@ const RegistroUnidad = (props) => {
                             <div className="modal-body">
                                 <div className="form-rom">
                                     <div className="form-group col-md-10">
-                                        <label>Nombre de Unidad:</label>
+                                        <label>Nombre de Unidad Gasto:</label>
                                             <input
                                                 name="nameUnidadGasto"
                                                 {...register("nameUnidadGasto",{
@@ -86,14 +86,14 @@ const RegistroUnidad = (props) => {
                                             {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
                                     </div>
                                     <div className="form-group col-md-10">
-                                        <label>Facultad:</label>
+                                        <label>Unidad Administrativa Correspondiente:</label>
                                     <select 
                                         name="administrative_units_id"
                                         {...register("administrative_units_id",{
-                                            required:"Seleccione facultad"
+                                            required:"Seleccione la unidad administrativa"
                                         })}
                                         className="form-control">
-                                            <option value="">Seleccione la facultad</option>
+                                            <option value="">Seleccione la Unidad Administrativa</option>
                                             {
                                                 unidadesAdministrativas.map((administrativa)=>{
                                                     return(
@@ -102,7 +102,7 @@ const RegistroUnidad = (props) => {
                                                 })
                                             }
                                         </select>
-                                        {errors.unidadesAdministrativas && <span className="text-danger text-small d-block mb-2">{errors.unidadesAdministrativas.message}</span>}
+                                        {errors.administrative_units_id && <span className="text-danger text-small d-block mb-2">{errors.administrative_units_id.message}</span>}
                                     </div>
                                 </div>
                             </div>
