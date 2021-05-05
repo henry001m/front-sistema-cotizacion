@@ -1,0 +1,38 @@
+.row{
+    height: 30px;
+
+}
+
+.modalBody{
+    height: 300px;
+}
+
+.cancel{
+    position: relative;
+    right: -280px;
+}
+
+.guardar{
+    position: relative;
+    margin-top: -38px;
+    right: -380px;
+}
+
+.btnx{
+    color: #000;
+    position: relative;
+    right: -250px;
+    outline: none;
+    border: 0px;
+    background-color: white;
+}
+
+.btnx:hover {
+    color: rgb(168, 168, 168);
+}
+
+.bi{
+
+    left: 5px;
+    font-size: 30px;
+}

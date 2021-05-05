@@ -1,6 +1,8 @@
-import React, { useRef, useState} from 'react'
+import React, { useRef, useState,useEffect} from 'react'
 import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
+import {getFaculties} from '../../services/http/FacultyService';
+import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService'
 
 
 function ModalRegistroUnidadAdministrativa( props ){
@@ -38,10 +40,26 @@ function ModalRegistroUnidadAdministrativa( props ){
         } 
     };
 
-    const saveData = () => {
-
+    const saveData = async(data) => {
+        const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
+        console.log(res);
+        props.CloseModalRUA();
+        props.updateAdministrativas();
+        closeModal();
+        alert(res.message);
     }
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getFaculties();
+            setFacultades(response.facultades);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+        fetchData();
+    }, []);
     return(
         <>
             {
@@ -87,7 +105,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                     </div>
                                     <div className="form-group col-md-10">
                                         <label>Facultad:</label>
-                                        <select 
+                                    <select 
                                         name="selectFacultad"
                                         {...register("selectFacultad",{
                                             required:"Seleccione facultad"
@@ -95,9 +113,9 @@ function ModalRegistroUnidadAdministrativa( props ){
                                         className="form-control">
                                             <option value="">Seleccione la facultad</option>
                                             {
-                                                facultades.map((facultad, index)=>{
+                                                facultades.map((facultad)=>{
                                                     return(
-                                                        <option value={facultad}>{facultad}</option>   
+                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
                                                     )
                                                 })
                                             }

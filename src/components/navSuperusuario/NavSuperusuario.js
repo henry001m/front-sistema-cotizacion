@@ -19,13 +19,12 @@ function NavSuperusuario() {
                     <PersonCircle height={45} width={45}/>   Superusuario
                 </button>
             </nav>
-            <Router>
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     <li className="nav-container--item">
                         <a className="nav-link" href="/">Home</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</a>
+                        <a className="nav-link" href="">Solicitudes De Adquisicion</a>
                     </li>
                     <li className="nav-container--item dropdown">
                         <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="" aria-haspopup="true" aria-expanded="true">Cotización</a>
@@ -35,11 +34,11 @@ function NavSuperusuario() {
                         </div>
                     </li>
                     <li className="nav-container--item dropdown">
-                        <div class="dropdown">
-                            <button class="dropbtn nav-link ">Administrar accesos</button>
-                                <div class="dropdown-content">
-                                    <a className="dropdown-item" href="usuarios">Usuarios</a>
-                                    <a className="dropdown-item" href="/">Rol de Usuarios</a>
+                        <div className="dropdown">
+                            <button className="dropbtn nav-link ">Administrar accesos</button>
+                                <div className="dropdown-content">
+                                    <a className="dropdown-item" href="/NavSuperusuario/usuarios">Usuarios</a>
+                                    <a className="dropdown-item" href="">Rol de Usuarios</a>
                                 </div>
                         </div>
                     </li>
@@ -56,14 +55,6 @@ function NavSuperusuario() {
                         <a className="nav-link" href="">Descargar Formulario</a>
                     </li>
                 </ul>
-                <Switch>
-                    <Route exact path="/" component={ Home }/>
-                    <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
-                    <Route exact path="/usuarios" component={ Usuario }/>
-                    <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
-                    <Route exact path="/unidadDeGasto" component={unidadDeGasto}/>
-                </Switch>
-            </Router>
         </>
     );
 }

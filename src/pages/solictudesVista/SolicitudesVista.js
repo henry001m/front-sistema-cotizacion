@@ -4,7 +4,7 @@ import {getQuotitation} from '../../services/http/QuotitationService';
 import { Link, useHistory  } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
-
+import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
@@ -65,63 +65,66 @@ function SolicitudesVista(){
         );
     })
     return(
-        <div className="container" align="left">
-                    <br></br>
-                    <h1>Solicitudes</h1>
-                    <br></br>
-                <div className="row">
-                    <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+        <>
+            <NavAdministrador/>
+            <div className="container" align="left">
+                        <br></br>
+                        <h1>Solicitudes</h1>
+                        <br></br>
+                    <div className="row">
+                        <div className="col-6">
+                            <form className="form-inline">
+                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <br></br>
-                <div className="form-register">             
-                    <div className="form-row">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Unidad de Gasto</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {quotitations.map((quotitation,index) => {
-                                return(
-                                    <tr key={quotitation.id}>
-                                        <th scope="row">{index+1}</th>
-                                        <td >{quotitation.nameUnidadGasto}</td>
-                                        <td>{quotitation.requestDate}</td>
-                                        <td>{quotitation.status}</td>
-                                        <td>
-                                            <div className="dropdown">
-                                                <button className="dropbtn"><ChevronLeft/> Acciones</button>
-                                                <div className="dropdown-content dropdown-menu-right">
-                                                    <button className="dropdown-item"  onClick={() => history.push(`/DetalleSolicitud/${quotitation.id}`)}>
-                                                        <Eye/> Ver solicitud
-                                                    </button>
-                                                    {
-                                                        EnablebuttonAddReport(quotitation)
-                                                    }
-                                                    <EnviarCotizacion 
-                                                        status={quotitation.status}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </td>
+                    <br></br>
+                    <div className="form-register">             
+                        <div className="form-row">
+                            <table className="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Unidad de Gasto</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Acciones</th>
                                     </tr>
-                                );
-                            })}
-                                
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {quotitations.map((quotitation,index) => {
+                                    return(
+                                        <tr key={quotitation.id}>
+                                            <th scope="row">{index+1}</th>
+                                            <td >{quotitation.nameUnidadGasto}</td>
+                                            <td>{quotitation.requestDate}</td>
+                                            <td>{quotitation.status}</td>
+                                            <td>
+                                                <div className="dropdown">
+                                                    <button className="dropbtn"><ChevronLeft/> Acciones</button>
+                                                    <div className="dropdown-content dropdown-menu-right">
+                                                        <button className="dropdown-item"  onClick={() => history.push(`/DetalleSolicitud/${quotitation.id}`)}>
+                                                            <Eye/> Ver solicitud
+                                                        </button>
+                                                        {
+                                                            EnablebuttonAddReport(quotitation)
+                                                        }
+                                                        <EnviarCotizacion 
+                                                            status={quotitation.status}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                                    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-        </div>
+            </div>
+        </>
     );
 }
 
