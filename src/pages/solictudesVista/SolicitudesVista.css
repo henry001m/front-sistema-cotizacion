@@ -37,3 +37,18 @@ label.col-form-label{
   border-radius: 5px;
   width: 100%;
 }
+#input{
+  margin-left: 5%;
+  margin-right: 5px;
+}
+#formData{
+  margin-right: 15%;
+}
+#lista{
+  margin-right: 20%;
+  margin-left: 2%;
+}
+
+#toolbar{
+  text-align:end;
+}

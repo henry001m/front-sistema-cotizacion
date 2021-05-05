@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { getRequest } from '../../services/http/QuotitationService'
 import { updateStatus } from '../../services/http/QuotitationService'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import './SolicitudesVista.css'
 
 function DetalleSolicitud(){
     const {id} = useParams();
@@ -73,7 +74,7 @@ function DetalleSolicitud(){
                     <div className="col-md-6">
                         <h1>Solicitud # {id}</h1>   
                     </div>
-                    <div className="col-md-6" align="end">
+                    <div className="col-md-6" align="right">
                         <button type="button" className="close" onClick={ closePage }>
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -81,38 +82,34 @@ function DetalleSolicitud(){
                 </div>
                 <br></br>
                 <div className="col" id="registro">
-                    <div className="form-register" id="formRegistro">
+                    <div className="form-register">
                         <form>
-                        <div className="form-row">
-                                <div className="form-group col-md-6">
+                        <div className="form-row" id="formData">
+                                <div className="form-group col-md-4" >
                                     <label>Unidad de gasto:</label>
-                                    <div className="form-row" id="inputs">
+                                    <div className="form-row" id="input">
                                         <label class="col-form-label">{nameUnidadGasto}</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Nombre del Solicitante:</label>
-                                    <div className="form-row" id="inputs">
+                                    <div className="form-row" id="input">
                                         <label class="col-form-label">{aplicantName}</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Fecha de Solicitud:</label>
-                                    <div className="form-row" id="inputs">
+                                    <div className="form-row" id="input">
                                         <label class="col-form-label">{requestDate}</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="form-row">
-                                <div className="form-col">
+                                <div className="form-group col-md">
                                     <label>Detalle de solicitud</label>
                                 </div>
                             </div>
-                            <div className="form-row" id="list">
+                            <div className="form-row" id="lista">
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
@@ -130,7 +127,7 @@ function DetalleSolicitud(){
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Monto Estimado:</label>
-                                    <div className="form-row" id="inputs">
+                                    <div className="form-row" id="input">
                                         <label class="col-form-label">{amount}</label>
                                     </div>
                                 </div>
