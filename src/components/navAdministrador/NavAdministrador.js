@@ -20,7 +20,6 @@ function NavAdministrador() {
                     <PersonCircle height={45} width={45} />  Unidad Administrativa
                 </button>
             </nav>
-            <Router>
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     <li className="nav-container--item">
                         <a className="nav-link" href="/">Home</a>
@@ -33,7 +32,6 @@ function NavAdministrador() {
                                 <button class="dropbtn nav-link ">Cotización</button>
                                     <div class="dropdown-content">
                                         <a className="dropdown-item" >Realizar Comparación</a>
-                                        <a className="dropdown-item" href="/EnviarCotizacion">Enviar Cotizacion</a>
                                     </div>
                         </div>
                     </li>
@@ -50,14 +48,6 @@ function NavAdministrador() {
                         <a className="nav-link" href="/montoLimite">Monto Limite</a>
                     </li>
                 </ul>
-                <Switch>
-                    <Route exact path="/" component={ Home }/>
-                    <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
-                    <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
-                    <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
-                    <Route exact path="/montoLimite" component={ MontoLimite }/>
-                </Switch>
-            </Router>
         </>
     );
 }

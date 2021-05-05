@@ -6,6 +6,7 @@ import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation } from '../../services/http/QuotitationService';
 import axios from 'axios';
+import NavUnidadGasto from '../../components/navUnidadGasto/NavUnidadGasto'
 
 function AgregarDetalleSolictud(){
 
@@ -104,6 +105,7 @@ function AgregarDetalleSolictud(){
 
     return(
         <>
+            <NavUnidadGasto/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Nueva solicitud</h1>
