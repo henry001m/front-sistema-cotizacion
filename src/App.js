@@ -6,7 +6,7 @@ import NavAdministrador from './components/navAdministrador/NavAdministrador'
 import NavSuperusuario from './components/navSuperusuario/NavSuperusuario';
 import DetalleSolicitud from './pages/solictudesVista/DetalleSolicutd';
 import SolicitudesVista from './pages/solictudesVista/SolicitudesVista';
-import EnviarCotizacion from './pages/enviarFormulario/EnviarCotizacion'
+import EnviarCotizacion from './pages/enviarFormulario/EnviarCotizacion';
 import Home from './pages/Home'
 import Usuario from './pages/usuario/Usuario';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
