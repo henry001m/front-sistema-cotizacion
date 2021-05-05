@@ -111,6 +111,7 @@ function SolicitudesVista(){
                                                         }
                                                         <EnviarCotizacion 
                                                             status={quotitation.status}
+                                                            id={quotitation.id}
                                                         />
                                                     </div>
                                                 </div>

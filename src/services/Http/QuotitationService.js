@@ -21,7 +21,7 @@ export async function createQuotitation(quotitation) {
 
 export async function sendEmail(desciptionEmail,id) {
     try {
-        const res = await API.post('/sendEmail/'+id, desciptionEmail);
+        const res = await API.post(`/sendEmail/${id}`, desciptionEmail);
         return res;
     } catch (error) {
         console.log(error);

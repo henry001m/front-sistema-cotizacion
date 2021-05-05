@@ -107,7 +107,7 @@ function EnviarCotizacion( props ){
         setEspera("Enviando....");
         document.getElementById('btnIE').disabled=true;
         console.log(aux);
-        const result = await sendEmail(aux);
+        const result = await sendEmail(aux,props.id);
         alert(result.data.result);
         setEmailMessage({email:"",description:""});
         setEspera("");
