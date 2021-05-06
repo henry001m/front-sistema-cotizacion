@@ -7,16 +7,13 @@
     text-indent: -9999px;
 }
 
-.icon {
+ 
+
+.bi{
     position: relative;
-    top: -28px;
-    height: 10px;
-    width: 2588px;
-    padding-top: 5px;
-}
-.icon i{
-    font-size: 30px;
-    text-align: right;
+    left: 1240px;
+    top: -51px;
+    font-size: 35px;
 }
 button{
     outline: none;
