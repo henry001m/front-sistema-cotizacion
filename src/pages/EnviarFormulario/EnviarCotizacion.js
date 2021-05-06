@@ -1,9 +1,9 @@
-import React,{useState, useRef } from "react"
-import  Modal from '../../components/modal/Modal'
+import React,{useState} from "react" 
 import './EnviarCotizacion.css'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
-import { Envelope, PlusCircle} from 'bootstrap-icons-react'
+import { PlusCircle} from 'bootstrap-icons-react'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 const Input = ({name,tabIndex,value,onChange}) => {
@@ -54,17 +54,6 @@ function EnviarCotizacion( props ){
     /**esta es la lista de los emails */
     const [emails, setEmails] = useState([{name:"email1", correo:""}])
 
-    const modalref = useRef();
-
-    const openModal = () => {
-        modalref.current.openModal()
-    };
-
-    const closeModal = () => {
-        reset();
-        modalref.current.closeModal()
-    };
-
     const addEmail = () => {
         setEmails([...emails,{name:"email"+(emails.length+1),correo:""}]);
         setEmailMessage({...emailMessage,emails:emails});
@@ -98,6 +87,13 @@ function EnviarCotizacion( props ){
         }
     };
 
+    const closeModal=()=>{
+        props.cerrarModal()
+        setEmailMessage({emails:"", description:""})
+        setEmails([{name:"email1", correo:""}])
+        reset()
+    }
+
     const saveEmail = async ( ) => {
         const corre = []
         for(var i=0; i<emails.length;i++){
@@ -116,9 +112,6 @@ function EnviarCotizacion( props ){
         closeModal();
     };
 
-    const clearInput = () =>{
-
-    }
     const validateAroba = (e) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
         if(/@/.test(e)){
@@ -132,40 +125,18 @@ function EnviarCotizacion( props ){
         }
     };
 
-    const EnableSendMailButton = () =>{
-        if(props.status=="aceptado"){
-            return(
-                <button className="dropdown-item" onClick={ openModal }>
-                    <Envelope/> Enviar correo
-                </button>                                    
-            );
-        }else{
-            return(
-                <button className="dropdown-item" disabled>
-                    <Envelope/> Enviar correo
-                </button>
-            );
-        }
-    }
 
     return(
         <>
-        {
-            EnableSendMailButton()
-        }
-            <Modal ref={ modalref }>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Envio por correo</h5>
-                            <button type="button" className="close" onClick={ closeModal}>
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="container" align="left">
+            <Modal isOpen={props.abiertoEmail}>
+            <form onSubmit={handleSubmit(saveEmail)}>
+                <ModalHeader>
+                    Envio por correo
+                    <a className="btnx" type="button" onClick={closeModal}><i className="bi bi-x" ></i></a>
+                </ModalHeader>
+                <ModalBody>
+                <div className="container" align="left">
                                 <div className="form-register">
-                                    <form onSubmit={handleSubmit(saveEmail)}>
                                         <div className="form-row">
                                             <div className="col-md-10">
                                                 <label>Correo de la Empresa:</label>
@@ -233,12 +204,10 @@ function EnviarCotizacion( props ){
                                                 </div>
                                                 <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                </ModalBody>
+                </form>
             </Modal>
         </>
     );
