@@ -11,7 +11,6 @@ import Home from './pages/Home'
 import Usuario from './pages/usuario/Usuario';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
 import RespCotizacion from './pages/respEmpresa/RespCotizacion.js';
-
 import UnidadesAdministrativas from './pages/registroUnidadAdministrativa/UnidadesAdministrativas'
 import MainRegistroUnidad from './pages/regitroUnidadGasto/MainRegistroUnidad'
 import MontoLimite from './pages/montoLimite/MontoLimite'
