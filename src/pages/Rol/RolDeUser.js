@@ -12,7 +12,7 @@ function RolDeUser(){
 
     const [newRol, setNewRol ] = useState({nameRol:"",description:""})
     
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     
     const modalStyles={
         top:"20%",
@@ -27,6 +27,7 @@ function RolDeUser(){
             setNewRol({nameRol:"",description:""});
             setAbierto(true)
         }
+        reset();
     }
 
     const handleInputChange = (event) => {
@@ -45,10 +46,8 @@ function RolDeUser(){
     
     const onSubmit = async ( )  => {
         const result = await createRol(newRol);
-        if(result.message!=null){
-            abrirModal()
-            setNewRol({nameRol:"",description:""});
-        }
+        setNewRol({nameRol:"",description:""});
+        reset()
 
     }
         return(
