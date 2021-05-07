@@ -24,7 +24,7 @@ class RolDeUser extends Component{
             <Modal isOpen={this.abrirModal} style={modalStyles}>
             <ModalHeader>
                 Agregar Nuevo Rol
-                <a className="btnx" href="/vistaSuperusuario" type="button"><i className="bi bi-x" ></i></a>
+                {/* <a className="btnx" href="/vistaSuperusuario" type="button"><i className="bi bi-x" ></i></a> */}
             </ModalHeader>
             <ModalBody className="modalBody">
                 <FormGroup>

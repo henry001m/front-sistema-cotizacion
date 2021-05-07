@@ -2,18 +2,25 @@ import React,{useEffect, useState} from  'react'
 import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
 import RolDeUser from './RolDeUser';
 import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
-import {getRoles, getRols} from '../../services/http/RolService'
+import {getRols} from '../../services/http/RolService'
+import {Button} from 'reactstrap';
+import RegistroUnidad from '../regitroUnidadGasto/RegistroUnidad'
 
 function ListaRoles(){
 
-    const [ roles, setRoles ] =useState([])
-    const [ isShowModalRegistroRol, setIsShowModalRegistroRol ] = useState(false)
-    const [flag, setFlag] = useState(false);
+    const [ abierto, setAbierto ] = useState(false);
+    const [ roles, setRoles ] =useState([]);
+    const [ flag, setFlag] = useState(false);
     
-    const CloseModalRR = () => {
-        setIsShowModalRegistroRol( false );
+    const OpenModalRR = () => {
+        setAbierto(true);
     };
-   
+    const CloseModalRR = () => {
+        setAbierto(false);
+    };
+    const updateRoles = ()=>{
+        setFlag(!flag);
+    }
     const Roles = roles.map((rols,index)=>{
         return(
             <tr key={index}>
@@ -30,9 +37,7 @@ function ListaRoles(){
         );
     });
     
-    const updateRoles = ()=>{
-        setFlag(!flag);
-    }
+    
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -54,17 +59,19 @@ function ListaRoles(){
                     <br></br>
                     <h1>Roles</h1>
                     <br></br>
-                <div className="row">
-                    <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                    <div className="row">
+                        <div className="col-6">
+                            <form className="form-inline">
+                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                            </form>
+                        </div>
+                        <div className="col-6" align="right">
+                        {/* <button type="button" className="btn btn-success my-2 my-sm-0" onClick={OpenModalRR}> 
+                        <PlusCircle  className="mb-1"/> Nuevo </button> */}
+                        <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
+                         </div>
                     </div>
-                    <div className="col-6" align="right">
-                        <button type="button" className="btn btn-success my-2 my-sm-0" onClick={() => setIsShowModalRegistroRol(true)}> 
-                        <PlusCircle  className="mb-1"/> Nuevo </button>
-                    </div>
-                </div>
+                <RolDeUser abierto={ abierto } CloseModalRR={CloseModalRR} updateRoles={updateRoles} /> 
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
@@ -83,11 +90,7 @@ function ListaRoles(){
                     </div>
                 </div>
             </div>
-            <RolDeUser
-            isShowModalRegistroRol={ isShowModalRegistroRol }
-            CloseModalRR = {CloseModalRR}
-            updateRoles={updateRoles}
-            />
+            
         </>
     );
 }
