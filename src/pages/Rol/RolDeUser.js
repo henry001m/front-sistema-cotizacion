@@ -8,7 +8,6 @@ import { createRol } from '../../services/http/RolService'
 
 
 function RolDeUser(props){
-    const [abierto, setAbierto] = useState()
 
     const [newRol, setNewRol ] = useState({nameRol:"",description:""})
     
@@ -17,17 +16,6 @@ function RolDeUser(props){
     const modalStyles={
         top:"20%",
         transfrom: 'translate(-50%, -50%)'
-    }
-
-    const abrirModal = () =>{
-        if(abierto){
-            setNewRol({nameRol:"",description:""});
-            setAbierto(false)
-        }else{
-            setNewRol({nameRol:"",description:""});
-            setAbierto(true)
-        }
-        reset();
     }
 
     const closeModal = () => {
