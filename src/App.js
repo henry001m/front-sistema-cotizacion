@@ -16,6 +16,7 @@ import MainRegistroUnidad from './pages/regitroUnidadGasto/MainRegistroUnidad'
 import MontoLimite from './pages/montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
+import ListaRoles from './pages/Rol/ListaRoles';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route exact path="/NavSuperusuario" component={ NavSuperusuario }/>
           <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
           <Route exact path="/NavSuperusuario/usuarios" component={ Usuario }/>
+          <Route exact path="/NavSuperusuario/roles" component={ ListaRoles }/>
           <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
           <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
           <Route exact path='/ingresoCodigo' component={ IngresoCodigo }/>
