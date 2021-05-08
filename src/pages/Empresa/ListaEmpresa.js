@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador';
+import ModalRegistroEmpresa from './ModalRegistroEmpresa';
 
 function ListaEmpresa(){
     const [abierto, setAbierto] = useState(false);
@@ -49,6 +50,7 @@ function ListaEmpresa(){
                     </div>
                 </div>
                 {/* Modal de registro de empresa */}
+                <ModalRegistroEmpresa abierto={ abierto } cerrarModal={ cerrarModal }/>
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">

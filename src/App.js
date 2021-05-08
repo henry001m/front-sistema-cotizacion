@@ -17,7 +17,7 @@ import MontoLimite from './pages/montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
 import ListaRoles from './pages/Rol/ListaRoles';
-import ListaEmpresa from './pages/Empresa/ListaEmpresa';
+import ListaEmpresa from './pages/empresa/ListaEmpresa';
 
 function App() {
   return (
