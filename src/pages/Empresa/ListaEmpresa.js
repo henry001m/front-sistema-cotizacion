@@ -1,8 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {PlusCircle} from 'bootstrap-icons-react';
-import {getUnidadesGastos} from '../../services/http/UniGastoService'
+import NavAdministrador from '../../components/navAdministrador/NavAdministrador';
 
 function ListaEmpresa(){
     const [abierto, setAbierto] = useState(false);
@@ -33,7 +32,7 @@ function ListaEmpresa(){
     }, [setEmpresas,flag]);
     return (
         <>
-            <NavSuperusuario/>
+            <NavAdministrador/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Empresas</h1>
