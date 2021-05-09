@@ -9,48 +9,33 @@ import RegistroUnidad from '../regitroUnidadGasto/RegistroUnidad'
 function ListaRoles(){
 
     const [ abierto, setAbierto ] = useState(false);
-    const [ roles, setRoles ] =useState([]);
+    const [ rols, setRols ] =useState([]);
     const [ flag, setFlag] = useState(false);
-    
+    const [ rol, setRol ] = useState({nameRol:"",description:""})
+
     const OpenModalRR = () => {
         setAbierto(true);
     };
     const CloseModalRR = () => {
         setAbierto(false);
     };
-    const updateRoles = ()=>{
+
+    const updateRols = ()=>{
         setFlag(!flag);
     }
-    const Roles = roles.map((rols,index)=>{
-        return(
-            <tr key={index}>
-                <th scope="row">
-                    {index+1}         
-                </th>
-                <td >
-                    {rols.nameRol}         
-                </td>
-                <td >
-                    {rols.description}         
-                </td>
-            </tr>
-        );
-    });
-    
     
     useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getRols();
-            setRoles(response.roles);
+            setRols(response.rols);
             console.log(response);
         } catch (error) {
             console.log(error);
         }
-        };
+    };
     fetchData();
-    }, [setRoles,flag]);
-
+    }, [setRols,flag]);
 
     return(
         <>
@@ -66,31 +51,44 @@ function ListaRoles(){
                             </form>
                         </div>
                         <div className="col-6" align="right">
-                        {/* <button type="button" className="btn btn-success my-2 my-sm-0" onClick={OpenModalRR}> 
-                        <PlusCircle  className="mb-1"/> Nuevo </button> */}
-                        <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
+                             <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
+                             <RolDeUser updateRols={updateRols} /> 
                          </div>
                     </div>
-                <RolDeUser abierto={ abierto } CloseModalRR={CloseModalRR} updateRoles={updateRoles} /> 
+                
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Rol</th>
-                                <th scope="col">Descripcion</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col">Descripcion</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {Roles}
+                                {
+                                    rols.map((rols,index)=>{
+                                        return (
+                                            <tr key={index}>
+                                                <td scope="row">{index+1}</td>
+                                                <td>{rols.nameRol}</td>
+                                                <td>{rols.description}</td>
+                                            </tr>
+                                        );
+                                   })
+                                }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            
+            <RolDeUser 
+            abierto={ abierto } 
+            rol = {rol} 
+            CloseModalRR={CloseModalRR} 
+            updateRols={updateRols} /> 
         </>
     );
 }
