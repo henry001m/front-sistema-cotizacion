@@ -33,7 +33,6 @@ const MainRegistroUnidad = () => {
     }, [setUnidadesGasto,flag]);
     return (
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Unidades de Gasto</h1>

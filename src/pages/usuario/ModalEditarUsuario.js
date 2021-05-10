@@ -108,7 +108,7 @@ function ModalEditarUsuario( props ){
                                     <label>Nombre de usuario:</label>
                                     <label class="col-form-label"> {props.user.userName}</label>
                                 </div>
-                                <div className="form-group col-md-6">
+                                {/* <div className="form-group col-md-6">
                                         <label>Rol de Usuario:</label>
                                         <select 
                                         name="selectFacultad"
@@ -116,7 +116,7 @@ function ModalEditarUsuario( props ){
                                             required:"Seleccione facultad"
                                         })}
                                         defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
-                                        className="form-control"
+                                        className="form-Scontrol"
                                         onClick={handleSelectChange}>
                                             <option value={props.user.userRol[0].id}>{props.user.userRol[0].nameRol}</option>
                                             {
@@ -130,7 +130,7 @@ function ModalEditarUsuario( props ){
                                             }
                                         </select>
                                         {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             <div className="modal-footer">

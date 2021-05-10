@@ -105,7 +105,6 @@ function AgregarDetalleSolictud(){
 
     return(
         <>
-            <NavUnidadGasto/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Nueva solicitud</h1>
