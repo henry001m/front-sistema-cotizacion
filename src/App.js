@@ -18,6 +18,7 @@ import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisici
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
 import ListaRoles from './pages/Rol/ListaRoles';
 import ListaEmpresa from './pages/empresa/ListaEmpresa';
+import MenuNavegacion from './components/menuNavegacion/MenuNavegacion';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
           <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
           <Route exact path='/empresas' component={ ListaEmpresa }/>
+          <Route exact path='/menuNavegacion' component={ MenuNavegacion }/>
         </Switch>
       </Router>
   );

@@ -24,7 +24,6 @@ const RegistroUnidad = (props) => {
 
     const onSubmit = async (data) => {
         const res = await createUnidadGasto(data);
-        console.log(res);
         setNameUnidadGasto("");
         props.updateGastos();
         props.cerrarModal();
@@ -91,8 +90,8 @@ const RegistroUnidad = (props) => {
                 <div className="form-group col-md-10">
                     <h5>Facultad:</h5>
                 <select 
-                    name="faculties"
-                    {...register("faculties",{
+                    name="faculties_id"
+                    {...register("faculties_id",{
                         required:"Seleccione facultad"
                     })}
                     className="form-control">
@@ -105,7 +104,7 @@ const RegistroUnidad = (props) => {
                             })
                         }
                     </select>
-                    {errors.faculties && <span className="text-danger text-small d-block mb-2">{errors.faculties}</span>}
+                    {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
                 </div>
             </div>
             </ModalBody>
