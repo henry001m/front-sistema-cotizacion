@@ -39,7 +39,7 @@ function NavSuperusuario() {
                             <button className="dropbtn nav-link ">Administrar accesos</button>
                                 <div className="dropdown-content">
                                     <a className="dropdown-item" href="/NavSuperusuario/usuarios">Usuarios</a>
-                                    <a className="dropdown-item"><RolDeUser/></a>
+                                    <a className="dropdown-item" href="/NavSuperusuario/roles">Rol de Usuarios</a>
                                 </div>
                         </div>
                     </li>

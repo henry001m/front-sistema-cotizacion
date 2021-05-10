@@ -113,10 +113,10 @@ function AgregarDetalleSolictud(){
                     <div className="form-register" id="formRegistro">
                         <form onSubmit={handleSubmit(sendData)}>
                         <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Unidad de gasto:</label>
                                     <div className="form-row" id="inputs">
-                                        <input 
+                                        {/* <input 
                                             name ="nameUnidadGasto" 
                                             {...register("nameUnidadGasto",{
                                                 required:"El campo es requerido",
@@ -141,15 +141,14 @@ function AgregarDetalleSolictud(){
                                             className="form-control" 
                                             onChange={ handleInputChange }
                                         ></input>
-                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
+                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>} */}
+                                         <label className="col-form-label">Centro de Aguas</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Nombre del solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        <input 
+                                        {/* <input 
                                             name ="aplicantName" 
                                             {...register("aplicantName",{
                                                 required:"El campo es requerido",
@@ -174,18 +173,17 @@ function AgregarDetalleSolictud(){
                                             className="form-control" 
                                             onChange={ handleInputChange }
                                         ></input>
-                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>}
+                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>} */}
+                                        <label className="col-form-label">Pedro Perez</label>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
+                                <div className="form-group col-md-4">
                                     <label>Fecha de solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{fecha.getDate()+"-"+(fecha.getMonth()+1)+"-"+fecha.getFullYear()}</label>
+                                        <label className="col-form-label">{fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate())}</label>
                                     </div>
                                 </div>
-                            </div>
+                            </div>                     
                             <div className="form-row">
                                 <div className="form-col">
                                     <label>Detalle de solicitud</label>

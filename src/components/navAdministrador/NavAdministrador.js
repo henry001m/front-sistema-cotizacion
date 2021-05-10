@@ -39,7 +39,7 @@ function NavAdministrador() {
                         <a className="nav-link" href="">Unidad de Gasto</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="">Empresas</a>
+                        <a className="nav-link" href="/empresas">Empresas</a>
                     </li>
                     <li className="nav-container--item">
                         <a className="nav-link" href="./SolicitudDeCotización.pdf" download>Descargar Formulario</a>

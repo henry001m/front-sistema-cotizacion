@@ -3,6 +3,7 @@ import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
 import {getFaculties} from '../../services/http/FacultyService';
 import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService'
+import UnidadesAdministrativas from './UnidadesAdministrativas';
 
 
 function ModalRegistroUnidadAdministrativa( props ){
@@ -12,14 +13,21 @@ function ModalRegistroUnidadAdministrativa( props ){
 
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
 
-    const [ facultades, setFacultades ] = useState(["derecho","economia","tecnologia","arquitectura"]);
+    const [ facultades, setFacultades ] = useState([{nameFacultad:"derecho",id:1},{nameFacultad:"economía",id:2},{nameFacultad:"humanidades",id:3},{nameFacultad:"arquitectura",id:4}]);
 
+    const clearForm = () => {
+        setNameUnidadAdministrativa("");
+        reset();
+    };
+    
     const openModal = () => {
+        
         modalref.current.openModal()
     };
 
     const closeModal = () => {
-        modalref.current.closeModal()
+        clearForm();
+        modalref.current.closeModal();
     };
 
     const OpenCloseModal = () => {
@@ -40,13 +48,15 @@ function ModalRegistroUnidadAdministrativa( props ){
         } 
     };
 
-    const saveData = async(data) => {
-        const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
+    const saveData = async(data, e) => {
+        /* const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
         console.log(res);
+        alert(res.message); */
         props.CloseModalRUA();
         props.updateAdministrativas();
         closeModal();
-        alert(res.message);
+        clearForm();
+
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -58,7 +68,7 @@ function ModalRegistroUnidadAdministrativa( props ){
         }
     };
 
-        fetchData();
+       // fetchData();
     }, []);
     return(
         <>
@@ -71,7 +81,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                             <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad Administrativa</h5>
-                                <button type="button" className="close" onClick={() => {props.CloseModalRUA();closeModal()}}>
+                                <button type="button" className="close" onClick={() => {props.CloseModalRUA();closeModal(); clearForm()}}>
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -114,6 +124,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                             <option value="">Seleccione la facultad</option>
                                             {
                                                 facultades.map((facultad)=>{
+                                                    console.log(facultad)
                                                     return(
                                                         <option value={facultad.id}>{facultad.nameFacultad}</option>   
                                                     )
@@ -125,7 +136,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
+                                <button type="reset" className="btn btn-secondary btn-sm" data-dismiss="modal"
                                     onClick={() => {props.CloseModalRUA();closeModal()}}>Cancelar</button>
                                 <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                             </div>

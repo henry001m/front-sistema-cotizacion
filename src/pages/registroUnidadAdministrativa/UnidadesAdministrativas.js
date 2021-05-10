@@ -1,16 +1,23 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
+import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
 import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
 
 function UnidadesAdministrativas() {
-
+    const modalref = useRef();
+    const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [flag, setFlag] = useState(false);
     const CloseModalRUA = () => {
         setIsShowModalRegistroUA( false );
+    };
+
+    const closeModal = () => {
+        reset()
+        modalref.current.closeModal()
     };
 
     const AdministrativeUnits = administrativeUnits.map((administrativeUnit,index)=>{
