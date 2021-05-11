@@ -1,12 +1,23 @@
-
 import './App.css';
+// import Navbar from './components/navbar/Navbar';
+// import Main from './pages/Main';
+
+// function App() {
+//   return (
+//     <Router>
+//         <Navbar/>
+//         <Main/>
+//     </Router>
+//   );
+// }
+// export default App;
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
 import NavUnidadGasto from './components/navUnidadGasto/NavUnidadGasto'
 import NavAdministrador from './components/navAdministrador/NavAdministrador'
 import NavSuperusuario from './components/navSuperusuario/NavSuperusuario';
 import DetalleSolicitud from './pages/solictudesVista/DetalleSolicutd';
 import SolicitudesVista from './pages/solictudesVista/SolicitudesVista';
-import EnviarCotizacion from './pages/enviarFormulario/EnviarCotizacion';
+import EnviarCotizacion from './pages/enviarFormulario/EnviarCotizacion'
 import Home from './pages/Home'
 import Usuario from './pages/usuario/Usuario';
 import IngresoCodigo from './pages/respEmpresa/IngresoCodigo';
@@ -16,9 +27,7 @@ import MainRegistroUnidad from './pages/regitroUnidadGasto/MainRegistroUnidad'
 import MontoLimite from './pages/montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
-import ListaRoles from './pages/Rol/ListaRoles';
-// import ListaEmpresa from './pages/Empresa/ListaEmpresa';
-
+import ListaRoles from './pages/Rol/ListaRoles'
 function App() {
   return (
     <Router>
@@ -40,7 +49,6 @@ function App() {
           <Route exact path='/montoLimite' component={ MontoLimite }/>
           <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
           <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
-          {/* <Route exact path='/empresas' component={ ListaEmpresa }/> */}
         </Switch>
       </Router>
   );
