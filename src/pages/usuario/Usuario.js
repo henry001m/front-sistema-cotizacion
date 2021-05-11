@@ -34,7 +34,6 @@ function Usuario(){
 
     return(
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                     <br></br>
                     <h1>Usuarios</h1>
@@ -46,7 +45,7 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <ModalAgregarUsuario updateUsers={updateUsers}/>
+                        {/* <ModalAgregarUsuario updateUsers={updateUsers}/> */}
                     </div>
                 </div>
                 <br></br>
@@ -74,7 +73,6 @@ function Usuario(){
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
-                                                <td>{user.userRol[0].nameRol}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setIsShowModalEditarU(true)
@@ -93,10 +91,10 @@ function Usuario(){
                 </div>
             </div>
             <ModalEditarUsuario
-            isShowModalEditarU={ isShowModalEditarU }
-            user={ user }
-            CloseModalEditarU = {CloseModalEditarU}
-            updateUsers={updateUsers}
+                isShowModalEditarU={ isShowModalEditarU }
+                user={ user }
+                CloseModalEditarU = {CloseModalEditarU}
+                updateUsers={updateUsers}
             />
         </>
     );

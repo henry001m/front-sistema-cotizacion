@@ -92,7 +92,6 @@ function SolicitudesVista(){
     })
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Solicitudes</h1>

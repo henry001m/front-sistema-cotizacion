@@ -30,7 +30,7 @@ const MontoLimiteModal = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}> 
         <ModalBody>
             <FormGroup className="col-md-8">
-               <Label for="unidadGasto">
+               <Label for="monto">
                     Monto Limite:
                </Label>
                 <input name="monto" 

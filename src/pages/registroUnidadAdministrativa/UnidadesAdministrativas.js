@@ -54,7 +54,6 @@ function UnidadesAdministrativas() {
 
     return(
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Unidades Administrativas</h1>

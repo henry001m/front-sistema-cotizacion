@@ -60,7 +60,6 @@ function MontoLimite() {
 
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                 <br></br>
                 <br></br>
