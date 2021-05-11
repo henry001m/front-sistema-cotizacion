@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-
 import { useHistory, useParams } from 'react-router-dom'
 import { getRequest } from '../../services/http/QuotitationService'
 import { updateStatus } from '../../services/http/QuotitationService'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import './SolicitudesVista.css'
+import VerArchivos from '../verArchivos/VerArchivos'
 
 function DetalleSolicitud(){
     const {id} = useParams();
@@ -14,8 +14,23 @@ function DetalleSolicitud(){
     const [ requestDate, setRequestDate ] = useState();
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
+    const [abierto, setAbierto] = useState(false);
 
     let history = useHistory();
+
+    const abrirModal = () =>{
+        if(abierto){
+            setAbierto(false)
+        }else{
+
+            setAbierto(true)
+        }
+    }
+
+  
+    const cerrarModal=()=>{
+        setAbierto(false);
+    }
 
     useEffect(() => {
         async function getRequestId() {
@@ -134,10 +149,13 @@ function DetalleSolicitud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
+                                    <button type="button" className="btn btn-secondary"  onClick={abrirModal}> Ver Archivos </button>
                                     <button type="button" className="btn btn-danger" id="btnV" onClick={ rejectRequest }> Rechazar solicitud </button>
                                     <button type="button" className="btn btn-success" id="btnV" onClick={ acceptRequest }> Aceptar Solicitud </button>
                                 </div>
+                                <VerArchivos abierto={abierto} cerrarModal={cerrarModal} className="modalArchivos"/>
                             </div>
+                           
                         </form>
                                 
                     </div>

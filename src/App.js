@@ -16,6 +16,7 @@ import MainRegistroUnidad from './pages/regitroUnidadGasto/MainRegistroUnidad'
 import MontoLimite from './pages/montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
+import VerArchivos from './pages/verArchivos/VerArchivos'
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Switch>
           <Route exact path="/NavAdministrador" component={ NavAdministrador }/>
           <Route exact path="/" component={ Home }/>
-          <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
+          <Route exact path="c" component={ SolicitudesVista }/>
           <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
           <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
           <Route exact path="/NavUnidadGAsto" component={ NavUnidadGasto }/>
@@ -37,6 +38,7 @@ function App() {
           <Route exact path='/montoLimite' component={ MontoLimite }/>
           <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
           <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
+          <Route exact path='/VerArchivos' component={ VerArchivos }/>
         </Switch>
       </Router>
   );

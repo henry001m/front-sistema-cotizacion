@@ -45,3 +45,12 @@ export async function updateStatus(id,status) {
         console.log(error);
     }
 }
+
+export async function getFiles(id) {
+    try {
+        const response = await API.get('requestQuotitation/files/'+ id);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

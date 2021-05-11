@@ -52,3 +52,11 @@ label.col-form-label{
 #toolbar{
   text-align:end;
 }
+
+.modalArchivos{
+
+  width: 100%;
+  min-width: 320px;
+  max-width: 800px;
+  
+}
