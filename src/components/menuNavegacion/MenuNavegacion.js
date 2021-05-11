@@ -1,18 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PersonCircle } from 'bootstrap-icons-react';
 
 function MenuNavegacion() {
-    const [permisos, setPermisos] = useState(["adminitrarUsuario","administrarRoles","administarUnidadesDeGasto"])
-    const [home, setHome] = useState(false)
-    const [solicitudes, setSolicitudes] = useState(true)
+
+    const [userName, setUserName] = useState("")
+
+    const [home, setHome] = useState(true)
+    const [realizarSolicitudesAdqui, setRealizarSolicitudesAdqui] = useState(false)
+    const [verSolicitudesAdqui, setVerSolicitudesAdqui] = useState(false)
     const [enviarCotizacion, setEnviarCotizacion] = useState(false)
     const [realizarCotizacion, setRealizarCotizacion] = useState(false)
-    const [adminitrarUsuario, setAdministarUsuario] = useState(true)
-    const [administrarRoles , setAdimnistrarRoles] = useState(true)
-    const [administrarUnidadesdeGasto, setUnit] = useState(true)
-    const [UnidadesAdministrativas, setUnidadesAdministrativas] = useState(true)
+    const [realizarComparacion,setRealizarComparacion] = useState(false)
+    const [adminitrarUsuario, setAdministarUsuario] = useState(false)
+    const [administrarRoles , setAdimnistrarRoles] = useState(false)
+    const [administrarUnidadesdeGasto, setUnidadesGasto] = useState(false)
+    const [UnidadesAdministrativas, setUnidadesAdministrativas] = useState(false)
     const [Empresa, setEmpresa] = useState(false)
-    const [decargaFormulario, setDescargaEmpresa] = useState(false)
+    const [decargaFormularioCoti, setDecargaFormularioCoti] = useState(false)
+    const [decargaFormularioAdqui, setDecargaFormularioAdqui] = useState(false)
+    const [admiMontoLimite, setAdmiMontoLimite] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const user = JSON.parse(window.localStorage.getItem("userDetails"));
+                setUserName(user.user.name)
+                user.user.permissions.forEach(permission=>{
+                    if(permission=="Ver las solicitudes de adquisición"){
+                        setVerSolicitudesAdqui(true)
+                    }
+                    if(permission=="Solicitu de aquicición"){
+                        setRealizarSolicitudesAdqui(true)
+                    }
+                    if(permission=="Enviar el correo de contización"){
+                        setEnviarCotizacion(true)
+                    }
+                    if(permission=="Enviar el correo de contización"){
+                        setEnviarCotizacion(true)
+                    }
+                    if(permission=="Todo sobre monte límite"){
+                        setAdmiMontoLimite(true)
+                    }
+                    if(permission=="Registrar unidades administrativas"){
+                        setUnidadesAdministrativas(true)
+                    }
+                    if(permission=="Registrar unidades de gasto"){
+                        setUnidadesGasto(true)
+                    }
+                    if(permission=="Registrar usuarios"){
+                        setAdministarUsuario(true)
+                    }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    })
 
     return(
         <>
@@ -21,7 +65,7 @@ function MenuNavegacion() {
                     Sistema de Cotizaciones
                 </h1>
                 <button type="button" className="btn btn-default" id="userImg">
-                    <PersonCircle height={45} width={45}/>   Superusuario
+                    <PersonCircle height={45} width={45}/>   {userName}
                 </button>
             </nav>
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
@@ -30,9 +74,14 @@ function MenuNavegacion() {
                             <a className="nav-link" href="/">Home</a>
                         </li>
                     }
-                    {solicitudes &&
+                    {realizarSolicitudesAdqui &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="">Solicitudes De Adquisicion</a>
+                            <a className="nav-link" type="button" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
+                        </li>
+                    }
+                    {verSolicitudesAdqui &&
+                        <li className="nav-container--item">
+                            <a className="nav-link" href="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</a>
                         </li>
                     }
                     {(realizarCotizacion||enviarCotizacion) &&
@@ -45,6 +94,9 @@ function MenuNavegacion() {
                                 {enviarCotizacion &&
                                     <a className="dropdown-item" href="">Enviar Cotizacion</a>
                                 }
+                                {realizarComparacion &&
+                                    <a className="dropdown-item" href="">Realizar Comparacion</a>
+                                }
                             </div>
                         </li>
                     }
@@ -54,7 +106,7 @@ function MenuNavegacion() {
                                 <button className="dropbtn nav-link dropdown-toggle">Administrar accesos</button>
                                     <div className="dropdown-content">
                                         {adminitrarUsuario &&
-                                        <a className="dropdown-item" href="/NavSuperusuario/usuarios">Usuarios</a>
+                                        <a className="dropdown-item" href="/user">Usuarios</a>
                                         }
                                         {administrarRoles &&
                                         <a className="dropdown-item" href="/NavSuperusuario/roles">Rol de Usuarios</a>
@@ -70,17 +122,27 @@ function MenuNavegacion() {
                     }
                     { administrarUnidadesdeGasto ? (
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/unidadDeGasto">Unidad de Gasto</a>
+                            <a className="nav-link" href="/unidadesDeGasto">Unidad de Gasto</a>
                         </li>):(<div/>)
                     }
                     { Empresa &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="">Empresas</a>
+                            <a className="nav-link" href="/empresas">Empresas</a>
                         </li>
                     }
-                    { decargaFormulario &&
+                    { decargaFormularioCoti &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="">Descargar Formulario</a>
+                            <a className="nav-link" href="./SolicitudDeCotización.pdf" download>Descargar Formulario</a>
+                        </li>
+                    }
+                    { decargaFormularioAdqui &&
+                        <li className="nav-container--item">
+                            <a className="nav-link" type="button" href="./SolicitudDeAdquisicion.pdf" download>Descargar Formulario</a>
+                        </li>
+                    }
+                    { admiMontoLimite &&
+                        <li className="nav-container--item">
+                            <a className="nav-link" href="/montoLimite">Monto Limite</a>
                         </li>
                     }
                 </ul>

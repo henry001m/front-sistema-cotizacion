@@ -2,11 +2,12 @@ import React,{useState,useEffect} from 'react'
 import { PersonCircle } from 'bootstrap-icons-react';
 import LoginModal from '../../pages/IniciarSesion/IniciarSesionModal';
 import {Button} from 'reactstrap'
+import MenuNavegacion from '../menuNavegacion/MenuNavegacion'
 import './Navbar.css'
 
 function Navbar() {
     const [abierto, setAbierto] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [permissions, setPermissions] = useState([]);
     const abrirModal =()=>{
         setAbierto(true);
@@ -29,7 +30,9 @@ function Navbar() {
         fetchData();
     }, [])
     return(
-        <>
+        <> 
+            {(user === null) ? 
+            (<div>
             <nav className="navbar navbar-info justify-content-between" id="cabecera">
                 <h1>
                     Sistema de Cotizaciones
@@ -43,12 +46,14 @@ function Navbar() {
                     {permissions.map((permission)=>{
                             return(
                                 <li className="nav-container--item">
-                                    <a className="nav-link" href={permission.url}>{permission.namePermission}</a>
+                                    <a className="nav-link" href={permission.url}>{permission}</a>
                                 </li>
                             );
                         }
                     )}
             </ul>
+            </div>):(<MenuNavegacion/>)
+            }
         </>
     );
 }

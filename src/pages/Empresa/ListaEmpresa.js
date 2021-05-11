@@ -3,6 +3,7 @@ import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador';
 import ModalRegistroEmpresa from './ModalRegistroEmpresa';
+import { getEmpresas } from '../../services/http/BussinessService'
 
 function ListaEmpresa(){
     const [abierto, setAbierto] = useState(false);
@@ -14,18 +15,17 @@ function ListaEmpresa(){
     const cerrarModal=()=>{
         setAbierto(false);
     }
-    const updateGastos = ()=>{
+    const updateEmpresas = ()=>{
         setFlag(!flag);
     }
     useEffect(() => {
         const fetchData = async () => {
         try {
-            {/*consulta para cargar la lista de empresas template
-                const response = await getEmpresas();
-            console.log(response.spending_units)
-            setEmpresas(response.spending_units);*/}
+            const response = await getEmpresas();
+            console.log(response.business)
+            setEmpresas(response.business);
         } catch (error) {
-            //console.log(error);
+            console.log(error);
         }
         };
 
@@ -50,7 +50,7 @@ function ListaEmpresa(){
                     </div>
                 </div>
                 {/* Modal de registro de empresa */}
-                <ModalRegistroEmpresa abierto={ abierto } cerrarModal={ cerrarModal }/>
+                <ModalRegistroEmpresa abierto={ abierto } cerrarModal={ cerrarModal } updateEmpresas={ updateEmpresas }/>
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
@@ -67,11 +67,10 @@ function ListaEmpresa(){
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                   /* empresas.map((empresa,index)=>{
+                                {empresas.map((empresa,index) => {
                                         return(
-                                            <tr>
-                                                <td>{index+1}</td>
+                                            <tr key={empresa.id}>
+                                                <td scope="row">{index+1}</td>
                                                 <td>{empresa.nameEmpresa}</td>
                                                 <td>{empresa.nit}</td>
                                                 <td>{empresa.direction}</td>
@@ -79,9 +78,8 @@ function ListaEmpresa(){
                                                 <td>{empresa.email}</td>
                                                 <td>{empresa.rubro}</td>
                                             </tr>
-                                        )
-                                    })*/
-                                }
+                                        );
+                                })}
                             </tbody>
                         </table>
                     </div>
