@@ -45,7 +45,7 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        {/* <ModalAgregarUsuario updateUsers={updateUsers}/> */}
+                        <ModalAgregarUsuario updateUsers={updateUsers}/>
                     </div>
                 </div>
                 <br></br>

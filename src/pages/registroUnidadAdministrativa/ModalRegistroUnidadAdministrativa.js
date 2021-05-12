@@ -13,7 +13,8 @@ function ModalRegistroUnidadAdministrativa( props ){
 
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
 
-    const [ facultades, setFacultades ] = useState([{nameFacultad:"derecho",id:1},{nameFacultad:"economía",id:2},{nameFacultad:"humanidades",id:3},{nameFacultad:"arquitectura",id:4}]);
+    const [ facultades, setFacultades ] = useState([]);
+    //useState([{nameFacultad:"derecho",id:1},{nameFacultad:"economía",id:2},{nameFacultad:"humanidades",id:3},{nameFacultad:"arquitectura",id:4}]);
 
     const clearForm = () => {
         setNameUnidadAdministrativa("");
@@ -124,7 +125,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                             <option value="">Seleccione la facultad</option>
                                             {
                                                 facultades.map((facultad)=>{
-                                                    console.log(facultad)
+                                                    // console.log(facultad)
                                                     return(
                                                         <option value={facultad.id}>{facultad.nameFacultad}</option>   
                                                     )

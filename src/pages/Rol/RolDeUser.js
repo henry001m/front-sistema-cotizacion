@@ -26,6 +26,7 @@ function RolDeUser(props){
         console.log(res);
         setRol({nameRol:"",description:""});
         props.updateRols();
+        props.CloseModalRR();
         reset()
     }
     // const SaveData = async ( ) => {
@@ -77,10 +78,10 @@ function RolDeUser(props){
                     <ModalHeader toggle={closeModal}>
                         Agregar Nuevo Rol
                     </ModalHeader>
-                    <div className="modal-body">
-                        <FormGroup>
-                            <div className="form-group mt-2">
-                                <h6>Nombre de Rol de Usuario:</h6>
+                    <ModalBody>
+                    <div className="form-rom">
+                        <div className="form-group col-md-10">
+                            <h6>Nombre de Rol de Usuario:</h6>
                                 <input
                                 type="text"
                                 name="nameRol"
@@ -104,11 +105,10 @@ function RolDeUser(props){
                                 className ="form-control"
                                 />
                                 {errors.nameRol && <span className="text-danger text-small d-block mb-2">{errors.nameRol.message}</span>}
-                            </div>
-                        </FormGroup>
-                        <FormGroup>
-                            <div className="form-group mt-2">
-                                <h6>Descripción de Rol:</h6>
+                        </div>
+                       
+                        <div className="form-group col-md-10">
+                            <h6>Descripción de Rol:</h6>
                                 <textarea
                                 type="text"
                                 name="description"
@@ -128,18 +128,20 @@ function RolDeUser(props){
                                 className ="form-control"
                                 />
                                 {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
-                            </div>
-                        </FormGroup>
-                        < div  className = "btnCancel mt-5" >
+                        </div>
+                    </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
+                            onClick={closeModal}>Cancelar</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
+                    </ModalFooter>  
+                        {/* < div  className = "btnCancel mt-5" >
                             < div  className = "cancel" > < Button  onClick={closeModal}> Cancelar </Button > </div>
                             < div  className = "guardar" > < Button  type = "submit"  color = "primary" > Guardar </Button > </div>
                         </div >
-                        {/* <ModalFooter>
-                            < Button className="btn btn-secondary btn-sm" onClick={closeModal}> Cancelar </Button >
-                            < Button className="btn btn-primary btn-sm" type = "submit"  color = "primary" > Guardar </Button >
-                        </ModalFooter> */}
-                    </div>
-                </form>
+                         */}
+               </form>
             </Modal>
         </>
     )
