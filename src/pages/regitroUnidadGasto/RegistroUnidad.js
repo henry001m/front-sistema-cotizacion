@@ -1,13 +1,13 @@
 
 import React,{useState,useEffect} from 'react';
 import './RegistroUnidad.css';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label} from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {getFaculties} from '../../services/http/FacultyService';
 import {createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 
 const RegistroUnidad = (props) => {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
@@ -15,6 +15,13 @@ const RegistroUnidad = (props) => {
         top:"20%",
         transfrom: 'translate(-50%, -50%)'
     }
+
+    const closeModal = () => {
+        props.cerrarModal()
+        setNameUnidadGasto("")
+        reset()
+    }
+
     const onSubmit = async (data) => {
         const res = await createUnidadGasto(data);
         console.log(res);
@@ -50,14 +57,13 @@ const RegistroUnidad = (props) => {
         <>
         <Modal isOpen={props.abierto} style={modalStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <ModalHeader>
-            Agregar Nuevo Rol
-                <a className="btnx" type="button" onClick={()=>props.cerrarModal()}><i className="bi bi-x" ></i></a>
+            <ModalHeader toggle={closeModal}>
+            Agregar Unidad de Gasto
             </ModalHeader>  
             <ModalBody>
             <div className="form-rom">
                 <div className="form-group col-md-10">
-                    <h5>Nombre de Unidad Gasto:</h5>
+                    <h5>Nombre de Unidad de Gasto:</h5>
                         <input
                             name="nameUnidadGasto"
                             {...register("nameUnidadGasto",{
@@ -105,7 +111,7 @@ const RegistroUnidad = (props) => {
             </ModalBody>
             <ModalFooter>
                 <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
-                    onClick={() => {props.cerrarModal();}}>Cancelar</button>
+                    onClick={closeModal}>Cancelar</button>
                 <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
             </ModalFooter>  
         </form>

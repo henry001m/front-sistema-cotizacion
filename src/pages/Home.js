@@ -1,10 +1,13 @@
-import React, { Fragment } from 'react'
-
+import React, { Fragment,useState } from 'react'
+import LoginModal from './iniciarSesion/IniciarSesionModal';
+import {Button} from 'reactstrap'
 function Home(){
     return(
         <Fragment>
-            <h1>Bienvenido</h1>
-            <img src="./logoumss.png"></img>
+            <div className="text-center">
+                <h1>Bienvenido</h1>
+                <img src="./logoumss.png"></img>
+            </div>
         </Fragment>
     );
 }

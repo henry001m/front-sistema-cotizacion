@@ -18,6 +18,7 @@ function SolicitudesDeAdquisicion(){
     useEffect(() => {
         async function getAllQuotitations() {
             const result = await getQuotitation();
+            console.log(result);
             const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
         }
@@ -52,7 +53,6 @@ function SolicitudesDeAdquisicion(){
 
     return(
         <>
-        <NavUnidadGasto/>
         <div className="container" align="left">
                     <br></br>
                     <h1>Solicitudes</h1>

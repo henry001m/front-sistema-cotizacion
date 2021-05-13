@@ -17,6 +17,7 @@ import MontoLimite from './pages/montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './pages/solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './pages/solicitudes/AgregarDetalleSolicitud'
 import VerArchivos from './pages/verArchivos/VerArchivos'
+import Login from './pages/iniciarSesion/IniciarSesionModal'
 
 function App() {
   return (

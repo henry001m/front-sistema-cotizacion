@@ -24,7 +24,9 @@ function ModalArchivos  (props){
                     {index+1}         
                 </th>
                 <td >
-                    {archivos}         
+                    <a href="#">
+                    {archivos}  
+                    </a>       
                 </td>
                
             </tr>
@@ -43,7 +45,6 @@ function ModalArchivos  (props){
    
     return(    
             <Modal isOpen={props.abierto} className="modal-body" style={modalStyles}>
-            <form className ="modal-body">
                 <ModalHeader>
                     <div className="title">
                         <h1>Archivos</h1>
@@ -52,23 +53,27 @@ function ModalArchivos  (props){
                         <i className="bi bi-x" ></i>
                     </a>
                 </ModalHeader>
-                
+                <div className="fileDocs">
                 <ModalBody className="modal-body">
-                    <form>
+                 
                         <table className="table table-files">
                             <thead>
+                               
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Documento</th>
                                 </tr>
-                                <tr>
+                                <tr >
+                                    
                                     {verArchivos}
+                
                                 </tr> 
+                                
                             </thead>
                         </table>
-                    </form>
+                 
                 </ModalBody>
-                </form>
+                </div>
             </Modal>
     );
 }

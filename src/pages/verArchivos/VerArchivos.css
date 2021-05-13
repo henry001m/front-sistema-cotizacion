@@ -58,9 +58,7 @@ hr{
     top: -18px;
     font-size: 35px;
 }
-.table-files tr{
-    background-color:#dfdddd;
-}
+
 
 .title {
     padding-top: 8px;
@@ -72,7 +70,12 @@ hr{
 .modal-body{
 
     width: 100%;
-    min-width: 320px;
-    max-width: 800px;
+    min-width: 460px;
+    max-width: 900px;
     
+}
+
+.fileDocs{
+    min-width: 460px;
+    max-width: 900px;
 }

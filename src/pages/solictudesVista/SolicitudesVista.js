@@ -8,6 +8,8 @@ import NavAdministrador from '../../components/navAdministrador/NavAdministrador
 
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
+    const [abiertoEmail, setAbiertoEmail] = useState(false);
+    const [quotitationId, setQuotitationID ] = useState("")
     let history = useHistory();
     const [request, setRequest ] = useState({});
 
@@ -35,6 +37,30 @@ function SolicitudesVista(){
                 </button>
             );
         }
+    }
+
+    const EnableSendMailButton = (quotitation) =>{
+        if(quotitation.status=="aceptado"){
+            return(
+                <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
+                    <Envelope/> Enviar correo
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Envelope/> Enviar correo
+                </button>
+            );
+        }
+    }
+
+    const abrirModalEmail =(id)=>{
+        setQuotitationID(id);
+        setAbiertoEmail(true);
+    }
+    const cerrarModalEmail=()=>{
+        setAbiertoEmail(false);
     }
 
     const RequestSelect = (index) =>{
@@ -66,7 +92,6 @@ function SolicitudesVista(){
     })
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Solicitudes</h1>
@@ -109,10 +134,9 @@ function SolicitudesVista(){
                                                         {
                                                             EnablebuttonAddReport(quotitation)
                                                         }
-                                                        <EnviarCotizacion 
-                                                            status={quotitation.status}
-                                                            id={quotitation.id}
-                                                        />
+                                                        {
+                                                            EnableSendMailButton(quotitation)
+                                                        }
                                                     </div>
                                                 </div>
                                             </td>
@@ -124,6 +148,11 @@ function SolicitudesVista(){
                             </table>
                         </div>
                     </div>
+                    <EnviarCotizacion
+                        id={quotitationId}
+                        abiertoEmail={abiertoEmail} 
+                        cerrarModal={cerrarModalEmail}
+                    />
             </div>
         </>
     );
