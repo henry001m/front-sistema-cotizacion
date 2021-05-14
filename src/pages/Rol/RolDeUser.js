@@ -2,24 +2,24 @@ import React, {useState, useEffect} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
 import { createRol } from '../../services/http/RolService'
-// import '../bootstrap/dist/css/bootstrap.min.css'
 import './RolDeUser.css';
-//import { getPermisos } from '../../services/http/PermisosService'
+import { getPermissions } from '../../services/http/PermissionService'
 function RolDeUser(props){
 
     const { register, formState: { errors },handleSubmit, reset } = useForm();
-    const [ rol, setRol ] = useState({nameRol:"",description:""})
-    const [ permisos, setPermisos ] = useState([
-        {id:1 , namePermission:"Solicitud de Adquisicion" },
-        {id:2 , namePermission:"Agregar detalle Solicitud" },
-        {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
-        {id:4 , namePermission:"Enviar cotizacion"},
-        {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
-        {id:6 , namePermission:"Actualizacion de montos limite" },
-        {id:7 , namePermission:"Registro Unidades Administrativas" },
-        {id:8 , namePermission:"Registro Unidades de Gasto"  },
-        {id:9 , namePermission:"Registro Usuarios" },
-    ]);
+    const [ rol, setRol ] = useState({nameRol:"",description:""});
+    const [ permissions, setPermissions ] = useState([]);
+    // const [ permisos, setPermisos ] = useState([
+    //     {id:1 , namePermission:"Solicitud de Adquisicion" },
+    //     {id:2 , namePermission:"Agregar detalle Solicitud" },
+    //     {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
+    //     {id:4 , namePermission:"Enviar cotizacion"},
+    //     {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
+    //     {id:6 , namePermission:"Actualizacion de montos limite" },
+    //     {id:7 , namePermission:"Registro Unidades Administrativas" },
+    //     {id:8 , namePermission:"Registro Unidades de Gasto"  },
+    //     {id:9 , namePermission:"Registro Usuarios" },
+    // ]);
     const [checkBoxSelected,setCheckBoxSelected]=useState([]);
     const handleChangeCheckBox=e=>{
         console.log(e.target.value)
@@ -57,17 +57,17 @@ function RolDeUser(props){
     //     }
     // };
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //     try {
-    //         const response = await getPermisos();
-    //         setPermisos(response.permisos);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-    // fetchData();
-    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getPermissions();
+            setPermissions(response.permissions);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchData();
+    }, []);
 
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
@@ -134,7 +134,7 @@ function RolDeUser(props){
                                     },
                                     maxLength:{
                                         value:200,
-                                        message:"Este campo debe tener entre 15 y 200caracteres"
+                                        message:"Este campo debe tener entre 15 y 200 caracteres"
                                     }
                                 })}
                                 value={rol.description}
@@ -157,11 +157,11 @@ function RolDeUser(props){
                               </thead> 
                               <tbody>
                                   {
-                                    permisos.map((permiso)=>{
+                                    permissions.map((permission)=>{
                                         return (
                                             <tr>
-                                                <td scope="row"><input type="checkbox" value={permiso.id} onChange={handleChangeCheckBox}/></td>
-                                                <td>{permiso.namePermission}</td>
+                                                <td scope="row"><input type="checkbox" value={permission.id} onChange={handleChangeCheckBox}/></td>
+                                                <td>{permission.namePermission}</td>
                                             </tr>
                                         );
                                    })

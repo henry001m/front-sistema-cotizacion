@@ -109,7 +109,7 @@ function MenuNavegacion() {
                                         <a className="dropdown-item" href="/user">Usuarios</a>
                                         }
                                         {administrarRoles &&
-                                        <a className="dropdown-item" href="/NavSuperusuario/roles">Rol de Usuarios</a>
+                                        <a className="dropdown-item" href="/roles">Rol de Usuarios</a>
                                         }
                                     </div>
                             </div>
