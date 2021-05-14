@@ -1,10 +1,9 @@
 import React,{useEffect, useState} from  'react'
-import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
+import { PlusCircle } from 'bootstrap-icons-react';
 import RolDeUser from './RolDeUser';
 import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {getRols} from '../../services/http/RolService'
 import {Button} from 'reactstrap';
-import RegistroUnidad from '../regitroUnidadGasto/RegistroUnidad'
 
 function ListaRoles(){
 
@@ -28,15 +27,15 @@ function ListaRoles(){
         const fetchData = async () => {
         try {
             const response = await getRols();
-            setRols(response.rols);
-            console.log(response);
+            setRols(response.roles);
+            // console.log(response);
         } catch (error) {
             console.log(error);
         }
     };
     fetchData();
-    }, [setRols,flag]);
-
+    }, [] );
+    
     return(
         <>
             <NavSuperusuario/>

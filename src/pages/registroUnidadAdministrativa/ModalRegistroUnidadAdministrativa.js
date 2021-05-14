@@ -5,15 +5,13 @@ import {getFaculties} from '../../services/http/FacultyService';
 import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService'
 import UnidadesAdministrativas from './UnidadesAdministrativas';
 
-
 function ModalRegistroUnidadAdministrativa( props ){
     const modalref = useRef();
 
     const {register, formState: { errors }, handleSubmit, reset } = useForm();
-
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
-
-    const [ facultades, setFacultades ] = useState([]);
+    const [ faculties, setFaculties] = useState([]);
+    const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
     //useState([{nameFacultad:"derecho",id:1},{nameFacultad:"economía",id:2},{nameFacultad:"humanidades",id:3},{nameFacultad:"arquitectura",id:4}]);
 
     const clearForm = () => {
@@ -22,7 +20,6 @@ function ModalRegistroUnidadAdministrativa( props ){
     };
     
     const openModal = () => {
-        
         modalref.current.openModal()
     };
 
@@ -59,18 +56,20 @@ function ModalRegistroUnidadAdministrativa( props ){
         clearForm();
 
     }
+   
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await getFaculties();
-            setFacultades(response.facultades);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            try {
+                const response = await getFaculties();
+                setFaculties(response.facultades);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+        }, []
+    );
 
-       // fetchData();
-    }, []);
     return(
         <>
             {
@@ -117,22 +116,22 @@ function ModalRegistroUnidadAdministrativa( props ){
                                     <div className="form-group col-md-10">
                                         <label>Facultad:</label>
                                     <select 
-                                        name="selectFacultad"
-                                        {...register("selectFacultad",{
+                                        name="faculties_id"
+                                        {...register("faculties_id",{
                                             required:"Seleccione facultad"
                                         })}
                                         className="form-control">
-                                            <option value="">Seleccione la facultad</option>
-                                            {
-                                                facultades.map((facultad)=>{
-                                                    // console.log(facultad)
-                                                    return(
-                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
-                                                    )
-                                                })
-                                            }
+                                            <option value={selectDefaul.value}>{selectDefaul.label}</option>
+                                                {
+                                                    faculties.map((faculty)=>{
+                                                        return(
+                                                            <option value={faculty.id}>{faculty.nameFacultad}</option>   
+                                                        )
+                                                    })
+                                                }
                                         </select>
-                                        {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
+                                        {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
+                                        {/* {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>} */}
                                     </div>
                                 </div>
                             </div>

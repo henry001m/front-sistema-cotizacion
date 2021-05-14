@@ -7,6 +7,11 @@
     height: 300px;
 }
 
+.modal-table{
+    max-height:150px;
+    overflow:auto;
+  }
+
 .cancel{
     position: relative;
     right: -280px;

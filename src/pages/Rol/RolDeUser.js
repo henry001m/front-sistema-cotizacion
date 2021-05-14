@@ -1,19 +1,33 @@
 import React, {useState, useEffect} from "react";
-import {Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Button} from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
 import { createRol } from '../../services/http/RolService'
+// import '../bootstrap/dist/css/bootstrap.min.css'
 import './RolDeUser.css';
 //import { getPermisos } from '../../services/http/PermisosService'
 function RolDeUser(props){
 
     const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [ rol, setRol ] = useState({nameRol:"",description:""})
-    // const [ permisos, setPermisos ] = useState([])
-    
-    const modalStyles={
-        top:"20%",
-        transfrom: 'translate(-50%, -50%)'
+    const [ permisos, setPermisos ] = useState([
+        {id:1 , namePermission:"Solicitud de Adquisicion" },
+        {id:2 , namePermission:"Agregar detalle Solicitud" },
+        {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
+        {id:4 , namePermission:"Enviar cotizacion"},
+        {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
+        {id:6 , namePermission:"Actualizacion de montos limite" },
+        {id:7 , namePermission:"Registro Unidades Administrativas" },
+        {id:8 , namePermission:"Registro Unidades de Gasto"  },
+        {id:9 , namePermission:"Registro Usuarios" },
+    ]);
+    const [checkBoxSelected,setCheckBoxSelected]=useState([]);
+    const handleChangeCheckBox=e=>{
+        console.log(e.target.value)
     }
+    // const modalStyles={
+    //     top:"20%",
+    //     transfrom: 'translate(-50%, -50%)'
+    // }
 
     const closeModal = () => {
         reset()
@@ -73,7 +87,7 @@ function RolDeUser(props){
     
     return(
         <>
-            <Modal isOpen={props.abierto} ref={modalStyles}>
+            <Modal isOpen={props.abierto} >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <ModalHeader toggle={closeModal}>
                         Agregar Nuevo Rol
@@ -129,6 +143,34 @@ function RolDeUser(props){
                                 />
                                 {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                         </div>
+                        
+                        <div className="form-group col-md-10">
+                        
+                            <h6>Permisos:</h6>
+                            <div class="modal-table">
+                            <Table bordered>
+                              <thead>
+                                  <tr>
+                                      <th></th>
+                                      <th>Permiso</th>
+                                  </tr>
+                              </thead> 
+                              <tbody>
+                                  {
+                                    permisos.map((permiso)=>{
+                                        return (
+                                            <tr>
+                                                <td scope="row"><input type="checkbox" value={permiso.id} onChange={handleChangeCheckBox}/></td>
+                                                <td>{permiso.namePermission}</td>
+                                            </tr>
+                                        );
+                                   })
+                                 }
+                              </tbody> 
+                            </Table>
+                            
+                            </div>
+                        </div>
                     </div>
                     </ModalBody>
                     <ModalFooter>
@@ -142,6 +184,7 @@ function RolDeUser(props){
                         </div >
                          */}
                </form>
+               
             </Modal>
         </>
     )
