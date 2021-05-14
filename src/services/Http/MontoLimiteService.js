@@ -1,6 +1,7 @@
 import API from '../Service';
 
 export async function getMontoLomite() {
+
     try {
         const response = await API.get('/limiteAmout');
         return response.data;
