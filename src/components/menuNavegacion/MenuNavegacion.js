@@ -35,9 +35,6 @@ function MenuNavegacion() {
                     if(permission=="Enviar el correo de contización"){
                         setEnviarCotizacion(true)
                     }
-                    if(permission=="Enviar el correo de contización"){
-                        setEnviarCotizacion(true)
-                    }
                     if(permission=="Todo sobre monte límite"){
                         setAdmiMontoLimite(true)
                     }
@@ -49,6 +46,12 @@ function MenuNavegacion() {
                     }
                     if(permission=="Registrar usuarios"){
                         setAdministarUsuario(true)
+                    }
+                    if(permission=="Registro de empresas"){
+                        setEmpresa(true)
+                    }
+                    if(permission=="Administar roles"){
+                        setAdimnistrarRoles(true)
                     }
                 })
             } catch (error) {

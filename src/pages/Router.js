@@ -13,6 +13,7 @@ import SolicitudesDeAdquisicion from './solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './solicitudes/AgregarDetalleSolicitud'
 import DetalleSolicitud from './solictudesVista/DetalleSolicutd'
 import ListaEmpresa from './empresa/ListaEmpresa'
+import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 
 const Router = () => {
     return (
@@ -34,6 +35,7 @@ const Router = () => {
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
                 <Route exact path='/empresas' component={ListaEmpresa}/>
+                <Route exact path='/showFile' component={VentanaVerArchivo}/>
             </Switch>
         </div>
     )
