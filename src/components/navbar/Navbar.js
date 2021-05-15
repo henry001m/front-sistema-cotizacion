@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { useForm } from "react-hook-form";
 import { PersonCircle } from 'bootstrap-icons-react';
 import LoginModal from '../../pages/IniciarSesion/IniciarSesionModal';
 import {Button} from 'reactstrap'
@@ -9,11 +10,15 @@ function Navbar() {
     const [abierto, setAbierto] = useState(false);
     const [user, setUser] = useState(null);
     const [permissions, setPermissions] = useState([]);
+    const { register, handleSubmit, formState: { errors }, reset} = useForm();
+
     const abrirModal =()=>{
         setAbierto(true);
+        
     }
     const cerrarModal=()=>{
         setAbierto(false);
+        reset()
     }
     useEffect(() => {
         const fetchData = async () => {

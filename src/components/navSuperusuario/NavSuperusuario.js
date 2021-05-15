@@ -7,7 +7,7 @@ import Usuario from '../../pages/usuario/Usuario';
 import { PersonCircle } from 'bootstrap-icons-react';
 import UnidadesAdministrativas from '../../pages/registroUnidadAdministrativa/UnidadesAdministrativas';
 import unidadDeGasto from '../../pages/regitroUnidadGasto/MainRegistroUnidad';
-import RolDeUser from '../../pages/Rol/RolDeUser'
+import RolDeUser from '../../pages/rol/RolDeUser'
 
 function NavSuperusuario() {
     return(
