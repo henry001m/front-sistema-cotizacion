@@ -1,5 +1,5 @@
 import React, { Fragment,useState } from 'react'
-import LoginModal from './IniciarSesion/IniciarSesionModal';
+import LoginModal from './iniciarSesion/IniciarSesionModal';
 import {Button} from 'reactstrap'
 function Home(){
     return(

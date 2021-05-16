@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useForm } from "react-hook-form";
 import { PersonCircle } from 'bootstrap-icons-react';
-import LoginModal from '../../pages/IniciarSesion/IniciarSesionModal';
+import LoginModal from '../../pages/iniciarSesion/IniciarSesionModal';
 import {Button} from 'reactstrap'
 import MenuNavegacion from '../menuNavegacion/MenuNavegacion'
 import './Navbar.css'
@@ -46,7 +46,7 @@ function Navbar() {
                     Iniciar Sesión
                 </Button>
             </nav>
-            <LoginModal abierto={abierto} cerrarModal={cerrarModal}/>
+        {/*     <LoginModal abierto={abierto} cerrarModal={cerrarModal}/> */}
             <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {permissions.map((permission)=>{
                             return(
