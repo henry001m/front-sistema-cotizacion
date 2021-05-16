@@ -5,40 +5,91 @@ import { createRol } from '../../services/http/RolService'
 import './RolDeUser.css';
 import { getPermissions } from '../../services/http/PermissionService'
 function RolDeUser(props){
-
+  
     const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [ rol, setRol ] = useState({nameRol:"",description:""});
     const [ permissions, setPermissions ] = useState([]);
-    // const [ permisos, setPermisos ] = useState([
-    //     {id:1 , namePermission:"Solicitud de Adquisicion" },
-    //     {id:2 , namePermission:"Agregar detalle Solicitud" },
-    //     {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
-    //     {id:4 , namePermission:"Enviar cotizacion"},
-    //     {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
-    //     {id:6 , namePermission:"Actualizacion de montos limite" },
-    //     {id:7 , namePermission:"Registro Unidades Administrativas" },
-    //     {id:8 , namePermission:"Registro Unidades de Gasto"  },
-    //     {id:9 , namePermission:"Registro Usuarios" },
-    // ]);
-    const [checkBoxSelected,setCheckBoxSelected]=useState([]);
-    const handleChangeCheckBox=e=>{
-        console.log(e.target.value)
+    const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
+    const [message, setMessage] = useState("");
+    const [ permisos, setPermisos ] = useState([
+        {id:1 , namePermission:"Solicitud de Adquisicion" },
+        {id:2 , namePermission:"Agregar detalle Solicitud" },
+        {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
+        {id:4 , namePermission:"Enviar cotizacion"},
+        {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
+        {id:6 , namePermission:"Actualizacion de montos limite" },
+        {id:7 , namePermission:"Registro Unidades Administrativas" },
+        {id:8 , namePermission:"Registro Unidades de Gasto"  },
+        {id:9 , namePermission:"Registro Usuarios" },
+    ]);
+    var seleccionados =[];
+    
+    //Cargar permisos desde BD
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //     try {
+    //         const response = await getPermissions();
+    //         setPermissions(response.permissions);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+    // fetchData();
+    // }, []);
+   
+     //Pedir nombre rol / descripcion
+     const handleInputChange = (event) => {
+        if(event.target.value[0]==" "){
+            setRol({
+                ...rol,
+                [event.target.name] : event.target.value.substring(1)
+            });
+        }else{
+            setRol({
+                ...rol,
+                [event.target.name] : event.target.value
+            });
+        }
+    };
+    // Pedir arreglo de permisos
+    const handleChangeCheckBox = (e) => {
+        let auxiliar = [];
+        if(selectedCheckboxes.includes(e.target.value)){ //elimina repetidos
+            auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
+        }else{
+            auxiliar=selectedCheckboxes.concat(e.target.value) //agrega nuevos
+        }
+        for (const per of auxiliar) { //convertimos a numeros
+            seleccionados.push(parseInt(per));
+        }
+        setSelectedCheckboxes(auxiliar);
+        console.log(seleccionados);
+        // if(auxiliar.length == 0){
+        //     setMessage("Seleccione una opcion");
+        //     return false;
+        // }
     }
-    // const modalStyles={
-    //     top:"20%",
-    //     transfrom: 'translate(-50%, -50%)'
-    // }
 
     const closeModal = () => {
-        reset()
+        reset();
+        setMessage("");
+        setSelectedCheckboxes("");
         setRol({nameRol:"",description:""});
-        props.CloseModalRR()
+        props.CloseModalRR();
     }
 
     const onSubmit = async ( )  => {
-        const res = await createRol(rol);
-        console.log(res);
+        for (const per of selectedCheckboxes) { 
+            seleccionados.push(parseInt(per));
+        }
+        // if(seleccionados.length==0){
+        //     alert('seleccione un permiso');
+        // }
+        const res = await createRol(rol,seleccionados);
+        console.log(rol.nameRol, rol.description, seleccionados);
         setRol({nameRol:"",description:""});
+        setSelectedCheckboxes("");
+        setMessage("");
         props.updateRols();
         props.CloseModalRR();
         reset()
@@ -56,35 +107,13 @@ function RolDeUser(props){
     //         closeModal();
     //     }
     // };
+    // const grabarDatos = () => {   
+    //     for (const per of selectedCheckboxes) { 
+    //         seleccionados.push(parseInt(per));
+    //     }
+    //     console.log(rol.nameRol, rol.description, seleccionados);
+    // }
 
-    useEffect(() => {
-        const fetchData = async () => {
-        try {
-            const response = await getPermissions();
-            setPermissions(response.permissions);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    fetchData();
-    }, []);
-
-    const handleInputChange = (event) => {
-        if(event.target.value[0]==" "){
-            setRol({
-                ...rol,
-                [event.target.name] : event.target.value.substring(1)
-            });
-        }else{
-            setRol({
-                ...rol,
-                [event.target.name] : event.target.value
-            });
-        }
-    };
-    
-    
-    
     return(
         <>
             <Modal isOpen={props.abierto} >
@@ -94,7 +123,7 @@ function RolDeUser(props){
                     </ModalHeader>
                     <ModalBody>
                     <div className="form-rom">
-                        <div className="form-group col-md-10">
+                        <div className="form-group col-md-12">
                             <h6>Nombre de Rol de Usuario:</h6>
                                 <input
                                 type="text"
@@ -121,7 +150,7 @@ function RolDeUser(props){
                                 {errors.nameRol && <span className="text-danger text-small d-block mb-2">{errors.nameRol.message}</span>}
                         </div>
                        
-                        <div className="form-group col-md-10">
+                        <div className="form-group col-md-12">
                             <h6>Descripción de Rol:</h6>
                                 <textarea
                                 type="text"
@@ -144,9 +173,9 @@ function RolDeUser(props){
                                 {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                         </div>
                         
-                        <div className="form-group col-md-10">
+                        <div className="form-group col-md-12">
                         
-                            <h6>Permisos:</h6>
+                            <h6>Asignar Permisos:</h6>
                             <div class="modal-table">
                             <Table bordered>
                               <thead>
@@ -157,10 +186,18 @@ function RolDeUser(props){
                               </thead> 
                               <tbody>
                                   {
-                                    permissions.map((permission)=>{
+                                    permisos.map((permission)=>{
+                                    //permissions.map((permission)=>{
                                         return (
                                             <tr>
-                                                <td scope="row"><input type="checkbox" value={permission.id} onChange={handleChangeCheckBox}/></td>
+                                                <td scope="row"><input 
+                                                                type="checkbox" 
+                                                                name="permissions"
+                                                                {...register("permissions",{
+                                                                    required:"Seleccione al menos 1 permiso"
+                                                                })}
+                                                                value={permission.id} 
+                                                                onChange={handleChangeCheckBox}/></td>
                                                 <td>{permission.namePermission}</td>
                                             </tr>
                                         );
@@ -168,8 +205,8 @@ function RolDeUser(props){
                                  }
                               </tbody> 
                             </Table>
-                            
                             </div>
+                            {errors.permissions && <span className="text-danger text-small d-block mb-2">{errors.permissions.message}</span>} 
                         </div>
                     </div>
                     </ModalBody>
