@@ -83,20 +83,27 @@ function AgregarDetalleSolictud(){
             let name = 'file'+i;
             formData.append(name,fls[i],fls[i].name);
             }
-            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
+            const token=window.localStorage.getItem("tokenContizacion");
+            const headers = { headers: {'Authorization': `Bearer ${token}`}};
+            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
             console.log("respuesta ",res);
         }
     }
 
     const sendData = async ( ) => {
         if(newDetails.length>0){
-            const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
-            const obj = {nameUnidadGasto: "Sistemas",aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
-            const result = await createQuotitation(obj);
-            console.log(obj);
-            await onSubmit(result.success);
-            reset();
-            closePage();
+            try {
+                const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
+                const obj = {nameUnidadGasto: "Sistemas",aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
+                const result = await createQuotitation(obj);
+                console.log(obj);
+                console.log("resultado ",result);
+                await onSubmit(result.success);
+                reset();
+                closePage();
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 
