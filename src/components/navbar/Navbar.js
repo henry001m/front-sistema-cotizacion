@@ -46,7 +46,7 @@ function Navbar() {
                     Iniciar Sesión
                 </Button>
             </nav>
-        {/*     <LoginModal abierto={abierto} cerrarModal={cerrarModal}/> */}
+          <LoginModal abierto={abierto} cerrarModal={cerrarModal}/> 
             <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {permissions.map((permission)=>{
                             return(
