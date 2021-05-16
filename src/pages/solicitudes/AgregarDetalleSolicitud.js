@@ -1,19 +1,41 @@
 import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
-import React, { useState } from  'react'
+import React, { useState, useEffect } from  'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/http/QuotitationService';
+import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
 
 function AgregarDetalleSolictud(){
 
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null,spending_units_id:""})
     const [ newDetails, setNewDetails] = useState([])
     const [fecha , setFecha ] = useState(new Date())
-    
+
+    useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const fetchData = async () => {
+        try {
+            const response = await getInform(user.user.id);
+            console.log("esto es el response",response)
+            setAdquisicion({
+                ...adquisicion,
+                nameUnidadGasto : user.user.spending_units_id,
+                aplicantName : user.user.name+" "+user.user.lastName,
+                requestDate : fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate()),
+                spending_units_id: user.user.spending_units_id
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchData();
+    }, []);    
+
+
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
@@ -69,7 +91,7 @@ function AgregarDetalleSolictud(){
     const sendData = async ( ) => {
         if(newDetails.length>0){
             const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
-            const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
+            const obj = {nameUnidadGasto: "Sistemas",aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
             const result = await createQuotitation(obj);
             console.log(obj);
             await onSubmit(result.success);
@@ -142,7 +164,7 @@ function AgregarDetalleSolictud(){
                                             onChange={ handleInputChange }
                                         ></input>
                                         {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>} */}
-                                         <label className="col-form-label">Centro de Aguas</label>
+                                         <label className="col-form-label">{adquisicion.nameUnidadGasto}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-4">
@@ -174,13 +196,13 @@ function AgregarDetalleSolictud(){
                                             onChange={ handleInputChange }
                                         ></input>
                                         {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>} */}
-                                        <label className="col-form-label">Pedro Perez</label>
+                                        <label className="col-form-label">{adquisicion.aplicantName}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <label>Fecha de solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate())}</label>
+                                        <label className="col-form-label">{adquisicion.requestDate}</label>
                                     </div>
                                 </div>
                             </div>                     

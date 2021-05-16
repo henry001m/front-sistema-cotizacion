@@ -1,5 +1,6 @@
 import API from '../Service';
 
+/**Devuelve la lista de todas las unidades administrativas */
 export async function getUnidadesAdministrativas() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -11,6 +12,7 @@ export async function getUnidadesAdministrativas() {
     }
 }
 
+/**Registra una unidad administrativa*/
 export async function createUnidadAdministrativa(newAdministrativa) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};

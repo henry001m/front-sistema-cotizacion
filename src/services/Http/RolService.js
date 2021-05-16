@@ -1,5 +1,6 @@
 import API from '../Service';
 
+/**devuelve la lista de todos los roles*/
 export async function getRols() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -10,6 +11,10 @@ export async function getRols() {
         console.log(error)
     }
 }
+
+/**crear nuevo rol
+ * se le envia los datos en un json
+*/
 export async function createRol(newRol){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -20,6 +25,7 @@ export async function createRol(newRol){
         console.log(error)
     }
 }
+/**modifica el rol del usuario */
 export async function updateRolUser(idu,idr) {
     try {
         const res = await API.put(`users/update/${idu}/${idr}`);

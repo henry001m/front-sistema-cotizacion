@@ -1,4 +1,6 @@
 import API from '../Service';
+
+/**devuelve los nombres de los archivos */
 export async function getFileNames(id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};

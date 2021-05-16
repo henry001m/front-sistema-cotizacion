@@ -1,5 +1,7 @@
 
 import API from '../Service';
+
+/**lista de todas las cotizaciones existente */
 export async function getQuotitation() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -11,6 +13,31 @@ export async function getQuotitation() {
     }
 }
 
+/**devuelve las cotizaciones de una unidad de gasto */
+export async function getQuotitationSpendingUnit(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`quotitations/spending/${idUnit}`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/**devuelve las cotizaciones de una unidad Aministrativa*/
+export async function getQuotitationAdministrativeUnit(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`quotitations/${idUnit}`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+/**Crea una nueva cotizacion */
 export async function createQuotitation(quotitation) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -22,6 +49,7 @@ export async function createQuotitation(quotitation) {
     }
 }
 
+/**envia los correos y la descripcion de con el id de la solicitud asociada */
 export async function sendEmail(desciptionEmail,id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -33,6 +61,7 @@ export async function sendEmail(desciptionEmail,id) {
     }
 }
 
+/**devuelve los detalles de una solicitud enviandole su id */
 export async function getRequest(id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -44,6 +73,7 @@ export async function getRequest(id) {
     }
 }
 
+/**actualiza el estado de un solicitud "aceptado, rechazado" */
 export async function updateStatus(id,status) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -52,5 +82,17 @@ export async function updateStatus(id,status) {
         return res.data;
     } catch (error) {
         console.log(error);
+    }
+}
+
+/**devuelve los datos del usuario que realizara una solicitud */
+export async function getInform() {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`/getInform`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
     }
 }

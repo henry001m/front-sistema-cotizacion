@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
-import {getMontoLomite} from '../../services/http/MontoLimiteService'
+import {getMontoLomite, getMontoLimiteAdminUnit} from '../../services/http/MontoLimiteService'
 
 function MontoLimite() {
 
@@ -43,13 +43,17 @@ function MontoLimite() {
         setAbierto(false);
     }
     useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const idUnit = user.user.administrative_units_id
+        console.log(idUnit)
         const fetchData = async () => {
         try {
-            const response = await getMontoLomite();
-            console.log(response.limit_amout)
-            setFinal(response.limit_amout[response.limit_amout.length-1]);
-            console.log(response.limit_amout[response.limit_amout.length-1])
-            setLimiteAmouts(response.limit_amout);
+            const response = await getMontoLimiteAdminUnit(idUnit);
+            console.log(response)
+            console.log(response.Limite_Amounts)
+            setFinal(response.Limite_Amounts[response.Limite_Amounts.length-1]);
+            console.log(response.Limite_Amounts[response.Limite_Amounts.length-1])
+            setLimiteAmouts(response.Limite_Amounts);
         } catch (error) {
             console.log(error);
         }
