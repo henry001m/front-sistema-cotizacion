@@ -86,11 +86,11 @@ export async function updateStatus(id,status) {
 }
 
 /**devuelve los datos del usuario que realizara una solicitud */
-export async function getInform() {
+export async function getInform(id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/getInform`,headers);
+        const response = await API.get(`/getInform/${id}`,headers);
         return response.data;
     } catch (error) {
         console.log(error)
