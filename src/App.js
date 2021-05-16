@@ -8,9 +8,9 @@ import VentanaVerArchivo from './pages/verArchivos/VentanaVerArchivo';
 function App() {
   return (
     <Router>
-       {/*  <Navbar/>
-        <Main/> */}
-        <VentanaVerArchivo/>
+       <Navbar/>
+        <Main/> 
+  
     </Router>
   );
 }
