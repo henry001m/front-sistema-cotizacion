@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { PlusCircle} from 'bootstrap-icons-react'
 import { getQuotitation } from '../../services/http/QuotitationService';
-import NavUnidadGasto from '../../components/navUnidadGasto/NavUnidadGasto'
 
 function SolicitudesDeAdquisicion(){
 

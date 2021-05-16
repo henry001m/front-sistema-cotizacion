@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador';
 import ModalRegistroEmpresa from './ModalRegistroEmpresa';
 import { getEmpresas } from '../../services/http/BussinessService'
 
@@ -33,7 +32,6 @@ function ListaEmpresa(){
     }, [setEmpresas,flag]);
     return (
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Empresas</h1>

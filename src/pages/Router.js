@@ -35,7 +35,7 @@ const Router = () => {
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
                 <Route exact path='/empresas' component={ListaEmpresa}/>
-                <Route exact path='/showFile' component={VentanaVerArchivo}/>
+                <Route exact path='/showFile/:fl' component={VentanaVerArchivo}/>
             </Switch>
         </div>
     )

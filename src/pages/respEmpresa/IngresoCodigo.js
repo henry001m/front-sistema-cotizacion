@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom'
 import './IngresoCodigo.css'
 import { useHistory } from 'react-router-dom'
-import { PlusCircle} from 'bootstrap-icons-react'
 import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
 import {searchCode} from '../../services/http/CompanyCodeService'

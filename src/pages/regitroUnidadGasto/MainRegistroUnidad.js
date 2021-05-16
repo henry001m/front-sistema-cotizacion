@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {PlusCircle} from 'bootstrap-icons-react';
 import {getUnidadesGastos} from '../../services/http/UniGastoService'
 

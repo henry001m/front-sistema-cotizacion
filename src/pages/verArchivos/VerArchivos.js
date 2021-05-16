@@ -1,35 +1,53 @@
 
-import React from "react"
-import './VerArchivos.css'
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+import React, { useState, useEffect } from "react"
+import {Modal, ModalHeader, ModalBody} from 'reactstrap'
+import {getFileNames} from '../../services/http/FileService'
 
+export default function VerArchivos(props){
 
+    const [files, setFiles] = useState([]);
 
-export default function VerArchivos(){
+    useEffect(() => {
+        async function getAllFiles() {
+            const result = await getFileNames(props.id);
+            if(result){
+                setFiles(result);
+            }
+        }
+        getAllFiles();
+    }, []);
+
+    const closeModal = () => {
+        props.closeModal()
+    }
 
     return(
     <>
-        <div className="title-files">
-            <div className="title">
-                <h2>Archivos</h2>
-                <h2>Archivos</h2>
-                <button ><i className="bi bi-x" ></i></button>
-            </div>
-        </div>
-        <hr/>
-        <div className="form-row" id="list">
-            <form className="files">
-            <table className="table table-files">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Documento</th>
-                    </tr>
-                </thead>
-            </table>
-          </form>
-        </div>
+        <Modal isOpen={props.isShowModalFile}>
+            <ModalHeader toggle={closeModal}>
+                <h4>Archivos</h4>
+            </ModalHeader>
+            <ModalBody>
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Documento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {files.map((file,index) => {
+                                    return(
+                                        <tr key={index+1}>
+                                            <th scope="row">{index+1}</th>
+                                            <td ><a href={"/showFile/"+file} target="_blank">{file}</a></td>
+                                        </tr>
+                                    );
+                                })}
+                        </tbody>
+                    </table>
+            </ModalBody>
+        </Modal>
     </>);
     
 }

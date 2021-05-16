@@ -24,8 +24,10 @@ export async function createUnidadGasto(newUndidadGasto) {
 
 
 export async function getUnidadGasto(id) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/quotitation/${id}`);
+        const response = await API.get(`/quotitation/${id}`,headers);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -33,8 +35,10 @@ export async function getUnidadGasto(id) {
 }
 
 export async function updateUnidadGasto(id,status) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.put(`/quotitation/status/${id}`,status);
+        const res = await API.put(`/quotitation/status/${id}`,status,headers);
         return res.data;
     } catch (error) {
         console.log(error);

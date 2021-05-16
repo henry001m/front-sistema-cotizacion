@@ -2,7 +2,6 @@ import React, { useState,useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import {getMontoLomite} from '../../services/http/MontoLimiteService'
 
 function MontoLimite() {

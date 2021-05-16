@@ -13,7 +13,7 @@ function ModalRegistroUnidadAdministrativa( props ){
 
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
 
-    const [ facultades, setFacultades ] = useState([{nameFacultad:"derecho",id:1},{nameFacultad:"economía",id:2},{nameFacultad:"humanidades",id:3},{nameFacultad:"arquitectura",id:4}]);
+    const [ facultades, setFacultades ] = useState([]);
 
     const clearForm = () => {
         setNameUnidadAdministrativa("");
@@ -49,9 +49,9 @@ function ModalRegistroUnidadAdministrativa( props ){
     };
 
     const saveData = async(data, e) => {
-        /* const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
+        const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
         console.log(res);
-        alert(res.message); */
+        alert(res.message);
         props.CloseModalRUA();
         props.updateAdministrativas();
         closeModal();
@@ -60,15 +60,15 @@ function ModalRegistroUnidadAdministrativa( props ){
     }
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await getFaculties();
-            setFacultades(response.facultades);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+            try {
+                const response = await getFaculties();
+                setFacultades(response.facultades);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-       // fetchData();
+        fetchData();
     }, []);
     return(
         <>

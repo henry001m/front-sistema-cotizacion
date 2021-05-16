@@ -6,7 +6,6 @@ import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation } from '../../services/http/QuotitationService';
 import axios from 'axios';
-import NavUnidadGasto from '../../components/navUnidadGasto/NavUnidadGasto'
 
 function AgregarDetalleSolictud(){
 
@@ -72,6 +71,7 @@ function AgregarDetalleSolictud(){
             const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
             const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
             const result = await createQuotitation(obj);
+            console.log(obj);
             await onSubmit(result.success);
             reset();
             closePage();
@@ -88,7 +88,7 @@ function AgregarDetalleSolictud(){
         return(
             <tr key={index}>
                 <th scope="row">
-                    {index}         
+                    {index+1}         
                 </th>
                 <td>
                     {detail.amount}         

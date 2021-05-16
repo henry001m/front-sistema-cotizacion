@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { PlusCircle } from 'bootstrap-icons-react'
 import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
 
 function UnidadesAdministrativas() {
@@ -35,9 +34,11 @@ function UnidadesAdministrativas() {
             </tr>
         );
     });
+
     const updateAdministrativas = ()=>{
         setFlag(!flag);
     }
+    
     useEffect(() => {
         const fetchData = async () => {
         try {

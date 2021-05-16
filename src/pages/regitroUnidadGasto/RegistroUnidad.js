@@ -24,6 +24,7 @@ const RegistroUnidad = (props) => {
 
     const onSubmit = async (data) => {
         const res = await createUnidadGasto(data);
+        console.log(data)
         setNameUnidadGasto("");
         props.updateGastos();
         props.cerrarModal();

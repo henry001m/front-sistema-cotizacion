@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import {getQuotitation} from '../../services/http/QuotitationService';
-import { Link, useHistory  } from 'react-router-dom'
+import { useHistory  } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
@@ -68,31 +68,9 @@ function SolicitudesVista(){
         console.log("solicitud",quotitations[index])
     }
 
-    const Quotitations = quotitations.map((quotitation,index)=>{
-        return(
-            <tr key={index}>
-                <td className="col-1">
-                    {index+1}         
-                </td>
-                <td className="col-2">
-                    {/limpieza/}         
-                </td>
-                <td className="col-2">
-                    {/fecha/}         
-                </td>
-                <td className="col-2">
-                    <a className="link">ver</a>
-                </td>
-                <td className="col-3">
-                    {/pendiente/}         
-                </td>
-                <td className="col-2">----</td>
-            </tr>
-        );
-    })
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" style={{marginBottom:"100px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
