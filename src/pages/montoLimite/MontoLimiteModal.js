@@ -1,10 +1,10 @@
 import React,{useState} from 'react'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label} from 'reactstrap';
 import { useForm } from "react-hook-form";
-import {createMontoLimite} from '../../services/http/MontoLimiteService';
+import {createMontoLimite, updateMontoLimite} from '../../services/http/MontoLimiteService';
 
 const MontoLimiteModal = (props) => {
-    const [monto, setMonto] = useState(0);
+
     const modalStyles={
         top:"20%",
         transfrom: 'translate(-50%, -50%)',
@@ -18,10 +18,12 @@ const MontoLimiteModal = (props) => {
     }
     
     const onSubmit = async (data) => {
-        setMonto(data.monto)
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const idUnit = user.user.administrative_units_id
         const fecha = new Date();
         const newFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-        const res = await createMontoLimite({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear()});
+        const res = await updateMontoLimite({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit});
+        console.log({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit})
         props.updateLimitAmout();
         closeModal()
         console.log(res);
