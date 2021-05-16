@@ -1,6 +1,8 @@
 import API from '../Service';
 
 export async function getRols() {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
         const response = await API.get('/rols');
         return response.data;
@@ -9,6 +11,8 @@ export async function getRols() {
     }
 }
 export async function createRol(newRol){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
         const response = await API.post('rols/new',newRol);
         return response.data;

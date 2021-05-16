@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from  'react'
 import { PlusCircle } from 'bootstrap-icons-react';
 import RolDeUser from './RolDeUser';
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {getRols} from '../../services/http/RolService'
 import {Button} from 'reactstrap';
 
@@ -38,7 +37,6 @@ function ListaRoles(){
     
     return(
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                     <br></br>
                     <h1>Roles</h1>

@@ -21,7 +21,7 @@ const MontoLimiteModal = (props) => {
         setMonto(data.monto)
         const fecha = new Date();
         const newFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-        const res = await createMontoLimite({monto:data.monto,dateStamp:newFecha,steps:'2021'});
+        const res = await createMontoLimite({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear()});
         props.updateLimitAmout();
         closeModal()
         console.log(res);

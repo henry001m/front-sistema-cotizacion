@@ -23,8 +23,10 @@ export async function createQuotitation(quotitation) {
 }
 
 export async function sendEmail(desciptionEmail,id) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.post(`/sendEmail/${id}`, desciptionEmail);
+        const res = await API.post(`/sendEmail/${id}`, desciptionEmail,headers);
         return res;
     } catch (error) {
         console.log(error);
@@ -32,8 +34,10 @@ export async function sendEmail(desciptionEmail,id) {
 }
 
 export async function getRequest(id) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/quotitation/${id}`);
+        const response = await API.get(`/quotitation/${id}`,headers);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -41,8 +45,10 @@ export async function getRequest(id) {
 }
 
 export async function updateStatus(id,status) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.put(`/quotitation/status/${id}`,status);
+        const res = await API.put(`/quotitation/status/${id}`,status,headers);
         return res.data;
     } catch (error) {
         console.log(error);

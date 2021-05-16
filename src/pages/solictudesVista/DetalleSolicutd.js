@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { getRequest } from '../../services/http/QuotitationService'
-import { updateStatus } from '../../services/http/QuotitationService'
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import { getRequest,updateStatus } from '../../services/http/QuotitationService'
+import VerArchivos from '../verArchivos/VerArchivos'
 import './SolicitudesVista.css'
 
 function DetalleSolicitud(){
@@ -14,6 +13,7 @@ function DetalleSolicitud(){
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
     const [ btnActivo, setBtnActivo ] = useState(false); 
+    const [ isShowModalFile, setIsShowModalFile ] = useState(false)
 
     let history = useHistory();
 
@@ -53,11 +53,15 @@ function DetalleSolicitud(){
         history.replace("/SolicitudesDeAdquisicionAdmin")
     };
 
+    const closeModal = () => {
+        setIsShowModalFile(false)
+    }
+
     const Details = details.map((detail,index)=>{
         return(
             <tr key={index}>
                 <th scope="row">
-                    {index}         
+                    {index+1}         
                 </th>
                 <td>
                     {detail.amount}         
@@ -74,7 +78,6 @@ function DetalleSolicitud(){
 
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                 <div className="row">
                     <div className="col-md-6">
@@ -137,6 +140,11 @@ function DetalleSolicitud(){
                                         <label class="col-form-label">{amount}</label>
                                     </div>
                                 </div>
+                                <div className="form-group col-md-6" style={{marginTop:"33px"}}>
+                                    <button type="button" className="btn btn-secondary"
+                                        onClick={()=>setIsShowModalFile(true)}
+                                    >Ver Archivos</button>
+                                </div>
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
@@ -148,6 +156,11 @@ function DetalleSolicitud(){
                                 
                     </div>
                 </div>
+                <VerArchivos
+                    isShowModalFile={isShowModalFile}
+                    closeModal={closeModal}
+                    id={id}    
+                />
             </div>
         </>
     );

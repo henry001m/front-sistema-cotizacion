@@ -62,7 +62,7 @@ function ModalAgregarAdquisicion(props){
 
     return(
         <div>
-            <button className="btn btn-success" onClick={ openModal }>
+            <button className="btn btn-success" type="button" onClick={ openModal }>
                 < PlusCircle className="mb-1"/> Agregar
             </button>
             <Modal ref={modalref}>

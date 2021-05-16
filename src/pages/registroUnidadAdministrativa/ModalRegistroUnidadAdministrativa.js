@@ -47,9 +47,9 @@ function ModalRegistroUnidadAdministrativa( props ){
     };
 
     const saveData = async(data, e) => {
-        /* const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
+        const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
         console.log(res);
-        alert(res.message); */
+        alert(res.message);
         props.CloseModalRUA();
         props.updateAdministrativas();
         closeModal();

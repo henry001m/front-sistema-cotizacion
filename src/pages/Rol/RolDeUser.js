@@ -7,35 +7,35 @@ import { getPermissions } from '../../services/http/PermissionService'
 function RolDeUser(props){
   
     const { register, formState: { errors },handleSubmit, reset } = useForm();
-    const [ rol, setRol ] = useState({nameRol:"",description:""});
+    const [ rol, setRol ] = useState({nameRol:"",description:"",permissions:[]});
     const [ permissions, setPermissions ] = useState([]);
     const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
     const [message, setMessage] = useState("");
-    const [ permisos, setPermisos ] = useState([
-        {id:1 , namePermission:"Solicitud de Adquisicion" },
-        {id:2 , namePermission:"Agregar detalle Solicitud" },
-        {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
-        {id:4 , namePermission:"Enviar cotizacion"},
-        {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
-        {id:6 , namePermission:"Actualizacion de montos limite" },
-        {id:7 , namePermission:"Registro Unidades Administrativas" },
-        {id:8 , namePermission:"Registro Unidades de Gasto"  },
-        {id:9 , namePermission:"Registro Usuarios" },
-    ]);
+    // const [ permisos, setPermisos ] = useState([
+    //     {id:1 , namePermission:"Solicitud de Adquisicion" },
+    //     {id:2 , namePermission:"Agregar detalle Solicitud" },
+    //     {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
+    //     {id:4 , namePermission:"Enviar cotizacion"},
+    //     {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
+    //     {id:6 , namePermission:"Actualizacion de montos limite" },
+    //     {id:7 , namePermission:"Registro Unidades Administrativas" },
+    //     {id:8 , namePermission:"Registro Unidades de Gasto"  },
+    //     {id:9 , namePermission:"Registro Usuarios" },
+    // ]);
     var seleccionados =[];
     
     //Cargar permisos desde BD
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //     try {
-    //         const response = await getPermissions();
-    //         setPermissions(response.permissions);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-    // fetchData();
-    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+        try {
+            const response = await getPermissions();
+            setPermissions(response.permissions);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchData();
+    }, []);
    
      //Pedir nombre rol / descripcion
      const handleInputChange = (event) => {
@@ -64,17 +64,13 @@ function RolDeUser(props){
         }
         setSelectedCheckboxes(auxiliar);
         console.log(seleccionados);
-        // if(auxiliar.length == 0){
-        //     setMessage("Seleccione una opcion");
-        //     return false;
-        // }
     }
 
     const closeModal = () => {
         reset();
         setMessage("");
         setSelectedCheckboxes("");
-        setRol({nameRol:"",description:""});
+        setRol({nameRol:"",description:"",permissions:[]});
         props.CloseModalRR();
     }
 
@@ -82,37 +78,16 @@ function RolDeUser(props){
         for (const per of selectedCheckboxes) { 
             seleccionados.push(parseInt(per));
         }
-        // if(seleccionados.length==0){
-        //     alert('seleccione un permiso');
-        // }
-        const res = await createRol(rol,seleccionados);
+        setRol(rol.nameRol,rol.description,seleccionados);
+        const res = await createRol(rol);
         console.log(rol.nameRol, rol.description, seleccionados);
-        setRol({nameRol:"",description:""});
+        setRol({nameRol:"",description:"",permissions:[]});
         setSelectedCheckboxes("");
         setMessage("");
         props.updateRols();
         props.CloseModalRR();
         reset()
     }
-    // const SaveData = async ( ) => {
-    //     const result = await createRol(rol);
-    //     console.log(result)
-    //     if(result.data){
-    //         setMessage(result.data.message);
-    //     }
-    //     console.log(result);
-    //     props.updateRols();
-    //     if(!result.data.message){
-    //         setRol({nameRol:"",description:""});
-    //         closeModal();
-    //     }
-    // };
-    // const grabarDatos = () => {   
-    //     for (const per of selectedCheckboxes) { 
-    //         seleccionados.push(parseInt(per));
-    //     }
-    //     console.log(rol.nameRol, rol.description, seleccionados);
-    // }
 
     return(
         <>
@@ -165,7 +140,7 @@ function RolDeUser(props){
                                         value:200,
                                         message:"Este campo debe tener entre 15 y 200 caracteres"
                                     }
-                                })}
+                                })}s
                                 value={rol.description}
                                 onChange={ handleInputChange }
                                 className ="form-control"
@@ -186,8 +161,8 @@ function RolDeUser(props){
                               </thead> 
                               <tbody>
                                   {
-                                    permisos.map((permission)=>{
-                                    //permissions.map((permission)=>{
+                                    // permisos.map((permission)=>{
+                                    permissions.map((permission)=>{
                                         return (
                                             <tr>
                                                 <td scope="row"><input 
