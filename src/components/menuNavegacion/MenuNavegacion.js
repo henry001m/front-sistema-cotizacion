@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
-import {Link} from 'react-router-dom';
 import './MenuNavegacion.css';
 
 function MenuNavegacion() {
