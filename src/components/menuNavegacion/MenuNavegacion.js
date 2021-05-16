@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { PersonCircle } from 'bootstrap-icons-react'
-import './MenuNavegacion.css'
+import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
+import './MenuNavegacion.css';
 
 function MenuNavegacion() {
 
@@ -20,12 +20,19 @@ function MenuNavegacion() {
     const [decargaFormularioCoti, setDecargaFormularioCoti] = useState(false)
     const [decargaFormularioAdqui, setDecargaFormularioAdqui] = useState(false)
     const [admiMontoLimite, setAdmiMontoLimite] = useState(false)
+    const [login, setLogin] = useState(false)
 
+    const cerrarSesion = () =>{
+        window.localStorage.removeItem("tokenContizacion");
+        window.localStorage.removeItem("userDetails");
+        window.location = '/';
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
-                setUserName(user.user.name)
+                setUserName(user.user.name);
+                setLogin(true);
                 user.user.permissions.forEach(permission=>{
                     if(permission=="Ver las solicitudes de adquisición"){
                         setVerSolicitudesAdqui(true)
@@ -60,17 +67,25 @@ function MenuNavegacion() {
             }
         };
         fetchData();
-    })
-
+    },[])
     return(
         <>
             <nav className="navbar navbar-light justify-content-between" id="cabecera">
                 <h1>
                     Sistema de Cotizaciones
                 </h1>
+                <div>
                 <button type="button" className="btn btn-default" id="userImg">
                     <PersonCircle height={45} width={45}/>   {userName}
                 </button>
+                {login && 
+                    <span className="d-inline-block" tabindex="0" data-toggle="tooltip" title="Salir del Sistema">
+                        <button onClick={cerrarSesion} type="button" className="btn btn-default" id="userImg">
+                            <BoxArrowRight height={30} width={30}/>
+                        </button>
+                    </span>
+                }
+                </div>
             </nav>
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {home &&

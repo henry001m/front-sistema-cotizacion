@@ -22,9 +22,9 @@ function AgregarDetalleSolictud(){
             console.log("esto es el response",response)
             setAdquisicion({
                 ...adquisicion,
-                nameUnidadGasto : user.user.spending_units_id,
+                nameUnidadGasto : user.user.spending_units_id.nameUnidadGasto,
                 aplicantName : user.user.name+" "+user.user.lastName,
-                requestDate : fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate()),
+                requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
                 spending_units_id: user.user.spending_units_id
             });
         } catch (error) {
@@ -138,64 +138,12 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-4">
                                     <label>Unidad de gasto:</label>
                                     <div className="form-row" id="inputs">
-                                        {/* <input 
-                                            name ="nameUnidadGasto" 
-                                            {...register("nameUnidadGasto",{
-                                                required:"El campo es requerido",
-                                                minLength:{
-                                                    value:3,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                maxLength:{
-                                                    value:50,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                pattern:{
-                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                                    message:"El campo solo permite caracteres alfabeticos"
-                                                },
-                                                validate:{
-                                                    value:(value)=>invalidateSpace(value)
-                                                }
-                                            })}
-                                            value={adquisicion.nameUnidadGasto}
-                                            type="text" 
-                                            className="form-control" 
-                                            onChange={ handleInputChange }
-                                        ></input>
-                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>} */}
                                          <label className="col-form-label">{adquisicion.nameUnidadGasto}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <label>Nombre del solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        {/* <input 
-                                            name ="aplicantName" 
-                                            {...register("aplicantName",{
-                                                required:"El campo es requerido",
-                                                minLength:{
-                                                    value:3,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                maxLength:{
-                                                    value:50,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                pattern:{
-                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                                    message:"El campo solo permite caracteres alfabeticos"
-                                                },
-                                                validate:{
-                                                    value:(value)=>invalidateSpace(value)
-                                                }
-                                            })}
-                                            value={adquisicion.aplicantName}
-                                            type="text" 
-                                            className="form-control" 
-                                            onChange={ handleInputChange }
-                                        ></input>
-                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>} */}
                                         <label className="col-form-label">{adquisicion.aplicantName}</label>
                                     </div>
                                 </div>
