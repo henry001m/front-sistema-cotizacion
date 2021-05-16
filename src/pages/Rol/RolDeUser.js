@@ -64,29 +64,30 @@ function RolDeUser(props){
         }
         setSelectedCheckboxes(auxiliar);
         console.log(seleccionados);
+        rol.permissions = seleccionados;
     }
 
     const closeModal = () => {
-        reset();
-        setMessage("");
-        setSelectedCheckboxes("");
-        setRol({nameRol:"",description:"",permissions:[]});
+        clearForm();
         props.CloseModalRR();
     }
 
-    const onSubmit = async ( )  => {
-        for (const per of selectedCheckboxes) { 
-            seleccionados.push(parseInt(per));
-        }
-        setRol(rol.nameRol,rol.description,seleccionados);
-        const res = await createRol(rol);
-        console.log(rol.nameRol, rol.description, seleccionados);
-        setRol({nameRol:"",description:"",permissions:[]});
-        setSelectedCheckboxes("");
+    const clearForm = () => {
         setMessage("");
-        props.updateRols();
+        setSelectedCheckboxes("");
+        setRol({nameRol:"",description:"",permissions:[]});
+        reset();
+    };
+
+    const onSubmit = async (data)  => {
+        setRol(rol.nameRol,rol.description,rol.permissions);
+        const res = await createRol(rol);
+        alert(res.message);
+        console.log("Esto se envia",rol);
         props.CloseModalRR();
-        reset()
+        props.updateRols();
+        closeModal();
+        clearForm();
     }
 
     return(
@@ -161,7 +162,7 @@ function RolDeUser(props){
                               </thead> 
                               <tbody>
                                   {
-                                    // permisos.map((permission)=>{
+                                    //permisos.map((permission)=>{
                                     permissions.map((permission)=>{
                                         return (
                                             <tr>

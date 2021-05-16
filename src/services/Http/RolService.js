@@ -4,7 +4,7 @@ export async function getRols() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get('/rols');
+        const response = await API.get('/rols',headers);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -14,7 +14,7 @@ export async function createRol(newRol){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.post('rols/new',newRol);
+        const response = await API.post('roles/new',newRol,headers);
         return response.data;
     } catch (error) {
         console.log(error)

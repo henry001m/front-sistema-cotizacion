@@ -7,7 +7,6 @@ import VentanaVerArchivo from './pages/verArchivos/VentanaVerArchivo';
 function App() {
   return (
     <Router>
-       
         <Navbar/> 
         <Main/>
     </Router>

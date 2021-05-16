@@ -27,13 +27,13 @@ function ListaRoles(){
         try {
             const response = await getRols();
             setRols(response.roles);
-            // console.log(response);
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
     };
     fetchData();
-    }, [] );
+    }, [setRols,flag] );
     
     return(
         <>
@@ -49,7 +49,6 @@ function ListaRoles(){
                         </div>
                         <div className="col-6" align="right">
                              <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
-                             <RolDeUser updateRols={updateRols} /> 
                          </div>
                     </div>
                 
@@ -83,7 +82,6 @@ function ListaRoles(){
             </div>
             <RolDeUser 
             abierto={ abierto } 
-            rol = {rol} 
             CloseModalRR={CloseModalRR} 
             updateRols={updateRols} /> 
         </>
