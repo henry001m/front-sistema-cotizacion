@@ -2,8 +2,10 @@ import API from '../Service';
 
 /**devuelve la lista de todos los roles*/
 export async function getRols() {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get('/rols');
+        const response = await API.get('/rols',headers);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -14,8 +16,10 @@ export async function getRols() {
  * se le envia los datos en un json
 */
 export async function createRol(newRol){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.post('rols/new',newRol);
+        const response = await API.post('rols/new',newRol,headers);
         return response.data;
     } catch (error) {
         console.log(error)
@@ -23,8 +27,10 @@ export async function createRol(newRol){
 }
 /**modifica el rol del usuario */
 export async function updateRolUser(idu,idr) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.put(`users/update/${idu}/${idr}`);
+        const res = await API.put(`users/update/${idu}/${idr}`,{},headers);
         return res.data;
     } catch (error) {
         console.log(error);

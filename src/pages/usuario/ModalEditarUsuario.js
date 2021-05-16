@@ -23,7 +23,7 @@ function ModalEditarUsuario( props ){
         const fetchData = async () => {
         try {
             const response = await getRols();
-            setRols(response.rols);
+            setRols(response.roles);
         } catch (error) {
             console.log(error);
         }
