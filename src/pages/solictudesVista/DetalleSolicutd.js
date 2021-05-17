@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import { useHistory, useParams } from 'react-router-dom'
 import { getRequest,updateStatus } from '../../services/http/QuotitationService'
 import VerArchivos from '../verArchivos/VerArchivos'
@@ -13,6 +12,7 @@ function DetalleSolicitud(){
     const [ requestDate, setRequestDate ] = useState();
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
+    const [ btnActivo, setBtnActivo ] = useState(false); 
     const [ isShowModalFile, setIsShowModalFile ] = useState(false)
 
     let history = useHistory();
@@ -27,10 +27,16 @@ function DetalleSolicitud(){
             setRequestDate(resultQuotitations.requestDate)
             setDetails(resultQuotitations.details)
             setAmount(resultQuotitations.amount)
+            if(resultQuotitations.status=="pendiente"){
+                setBtnActivo(true);
+            }else{
+                setBtnActivo(false);
+            }
         }
         getRequestId();
     }, []);
-
+    
+  
     const acceptRequest = async ( ) => {
         const aux = {status:"aceptado"}
         const result = await updateStatus(id,aux);
@@ -142,8 +148,8 @@ function DetalleSolicitud(){
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ rejectRequest }> Rechazar solicitud </button>
-                                    <button type="button" className="btn btn-success" id="btnV" onClick={ acceptRequest }> Aceptar Solicitud </button>
+                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ rejectRequest } disabled={ !btnActivo }> Rechazar solicitud </button>
+                                    <button type="button" className="btn btn-success" id="btnV" onClick={ acceptRequest } disabled={ !btnActivo }> Aceptar Solicitud </button>
                                 </div>
                             </div>
                         </form>
