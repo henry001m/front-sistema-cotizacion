@@ -11,35 +11,13 @@ function DetalleSolicitud(){
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState();
     const [ aplicantName, setAplicantName ] = useState();
     const [ requestDate, setRequestDate ] = useState();
+    const [messageAmount, setMessageAmount] = useState("");
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
     const [ isShowModalFile, setIsShowModalFile ] = useState(false)
     const [btnActivo, setBtnActivo]=useState(false)
 
     let history = useHistory();
-
-
-    useEffect(() => {
-        async function getRequestId() {
-            const result = await getRequest(id);
-            const resultQuotitations=result;
-            setRequest(resultQuotitations);
-            setNameUnidadGasto(resultQuotitations.nameUnidadGasto)
-            setAplicantName(resultQuotitations.aplicantName)
-            setRequestDate(resultQuotitations.requestDate)
-            setDetails(resultQuotitations.details)
-            setAmount(resultQuotitations.amount)
-            if((resultQuotitations.status == "pendiente")){
-                    setBtnActivo(true);
-               }else{
-                    setBtnActivo(false);
-               }
-            
-        }
-        getRequestId();
-    }, []);
-
-
     const acceptRequest = async ( ) => {
         const aux = {status:"aceptado"}
         const result = await updateStatus(id,aux);
@@ -80,7 +58,26 @@ function DetalleSolicitud(){
             </tr>
         );
     })
-
+    useEffect(() => {
+        async function getRequestId() {
+            const result = await getRequest(id);
+            const resultQuotitations=result;
+            setRequest(resultQuotitations);
+            setNameUnidadGasto(resultQuotitations.nameUnidadGasto)
+            setAplicantName(resultQuotitations.aplicantName)
+            setRequestDate(resultQuotitations.requestDate)
+            setDetails(resultQuotitations.details)
+            setAmount(resultQuotitations.amount)
+            setMessageAmount(resultQuotitations.message);
+            if((resultQuotitations.status == "pendiente")){
+                    setBtnActivo(true);
+               }else{
+                    setBtnActivo(false);
+               }
+            
+        }
+        getRequestId();
+    }, []);
     return(
         <>
             <div className="container" align="left">
@@ -151,6 +148,7 @@ function DetalleSolicitud(){
                                     >Ver Archivos</button>
                                 </div>
                             </div>
+                            <div style={{color:'red'}}>{messageAmount}</div>
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
                                     <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ rejectRequest}> Rechazar solicitud </button>

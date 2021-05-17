@@ -104,7 +104,7 @@ const IniciarSesion = (props) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button  onClick={closeModal} >Cancelar</Button>
-                    <Button type="submit" color="primary">Iniciar</Button>
+                    <Button type="submit" color="primary">Ingresar</Button>
                 </ModalFooter>
                 </form>
             </Modal>
