@@ -12,8 +12,8 @@ import MontoLimite from './montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './solicitudes/AgregarDetalleSolicitud'
 import DetalleSolicitud from './solictudesVista/DetalleSolicutd'
-import ListaEmpresa from './Empresa/ListaEmpresa'
-import ListaRoles from './Rol/ListaRoles'
+import ListaEmpresa from './empresa/ListaEmpresa'
+import ListaRoles from './rol/ListaRoles'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 
 const Router = () => {
