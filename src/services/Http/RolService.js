@@ -19,7 +19,7 @@ export async function createRol(newRol){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.post('rols/new',newRol,headers);
+        const response = await API.post('roles/new',newRol,headers);
         return response.data;
     } catch (error) {
         console.log(error)

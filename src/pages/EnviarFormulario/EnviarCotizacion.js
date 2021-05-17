@@ -95,9 +95,8 @@ function EnviarCotizacion( props ){
         <>
             <Modal isOpen={props.abiertoEmail}>
             <form onSubmit={handleSubmit(saveEmail)}>
-                <ModalHeader>
+                <ModalHeader toggle={closeModal}>
                     Envio por correo
-                    <a className="btnx" type="button" onClick={closeModal}><i className="bi bi-x" ></i></a>
                 </ModalHeader>
                 <ModalBody>
                 <div className="container" align="left">

@@ -24,7 +24,7 @@ function AgregarDetalleSolictud(){
                 ...adquisicion,
                 nameUnidadGasto : response.User.nameUnidadGasto,
                 aplicantName : user.user.name+" "+user.user.lastName,
-                requestDate : fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate()),
+                requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
                 spending_units_id: user.user.spending_units_id
             });
         } catch (error) {
