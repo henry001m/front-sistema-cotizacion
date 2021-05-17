@@ -12,7 +12,7 @@ export async function getFaculties() {
         console.log(error)
     }
 }
-
+/**devuelve las facultades sin unidad admin */
 export async function getFacultyAdmin() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};

@@ -1,7 +1,7 @@
 import React, { useRef, useState,useEffect} from 'react'
 import Modal from '../../components/modal/Modal'
 import { useForm } from 'react-hook-form';
-import {getFaculties} from '../../services/http/FacultyService';
+import {getFacultyAdmin} from '../../services/http/FacultyService';
 import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService'
 import UnidadesAdministrativas from './UnidadesAdministrativas';
 
@@ -14,9 +14,14 @@ function ModalRegistroUnidadAdministrativa( props ){
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
 
     const [ facultades, setFacultades ] = useState([]);
+    const [flag, setFlag] = useState(false);
 
+    const updateFacultades = ()=>{
+        setFlag(!flag);
+    }
     const clearForm = () => {
         setNameUnidadAdministrativa("");
+        updateFacultades();
         reset();
     };
     
@@ -58,10 +63,12 @@ function ModalRegistroUnidadAdministrativa( props ){
         clearForm();
 
     }
+   
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getFaculties();
+                const response = await getFacultyAdmin();
                 setFacultades(response.facultades);
             } catch (error) {
                 console.log(error);
@@ -69,7 +76,8 @@ function ModalRegistroUnidadAdministrativa( props ){
         };
 
         fetchData();
-    }, []);
+    }, [setFacultades,flag]);
+
     return(
         <>
             {

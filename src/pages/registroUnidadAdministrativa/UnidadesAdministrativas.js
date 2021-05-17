@@ -29,7 +29,7 @@ function UnidadesAdministrativas() {
                     {administrativeUnit.name}         
                 </td>
                 <td >
-                    {administrativeUnit.facultad}         
+                    {administrativeUnit.faculty}         
                 </td>
             </tr>
         );
@@ -38,7 +38,7 @@ function UnidadesAdministrativas() {
     const updateAdministrativas = ()=>{
         setFlag(!flag);
     }
-    
+    // Unit admin de BD
     useEffect(() => {
         const fetchData = async () => {
         try {
