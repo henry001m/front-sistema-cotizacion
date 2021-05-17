@@ -6,19 +6,27 @@ const IniciarSesion = (props) => {
     const { register, handleSubmit, formState: { errors }, reset} = useForm();
     const [ userName, setUserName ] = useState("");
     const [ passwd, setPassword ] = useState("");
+    const [messageLogin, setMessageLogin] = useState("");
 
     const closeModal = () => {
         props.cerrarModal()
+        setMessageLogin("");
         setUserName("")
         setPassword(" ")
         reset()
     }
 
     const onSubmit = async (data) => {
-        console.log(data)
-        const res = await login(data);
-        window.localStorage.setItem("tokenContizacion",res.data.success.token);
-        userDetails();
+        try {
+            console.log(data)
+            const res = await login(data);
+            window.localStorage.setItem("tokenContizacion",res.data.success.token);
+            setMessageLogin("");
+            userDetails();
+        } catch (error) {
+            setMessageLogin("Por favor revise su nombre de usuario y contraseña");
+            console.log(error);
+        }
     };
     const userDetails =async()=>{
         const res = await detailsUser();
@@ -44,6 +52,7 @@ const IniciarSesion = (props) => {
                 </ModalHeader>
                 <form onSubmit={handleSubmit(onSubmit)}>
                 <ModalBody>
+                    <div style={{color:'red'}}>{messageLogin}</div>
                     <Label for="username">
                         Usuario
                     </Label>
@@ -95,7 +104,7 @@ const IniciarSesion = (props) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button  onClick={closeModal} >Cancelar</Button>
-                    <Button type="submit" color="primary">Guardar</Button>
+                    <Button type="submit" color="primary">Iniciar</Button>
                 </ModalFooter>
                 </form>
             </Modal>
