@@ -2,7 +2,7 @@
 import React,{useState,useEffect} from 'react';
 import './RegistroUnidad.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {getFaculties} from '../../services/http/FacultyService';
+import {getFacultyInUse} from '../../services/http/FacultyService';
 import {createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 
@@ -24,7 +24,7 @@ const RegistroUnidad = (props) => {
 
     const onSubmit = async (data) => {
         const res = await createUnidadGasto(data);
-        console.log(data)
+        alert(res.message);
         setNameUnidadGasto("");
         props.updateGastos();
         props.cerrarModal();
@@ -44,7 +44,7 @@ const RegistroUnidad = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getFaculties();
+                const response = await getFacultyInUse();
                 setFaculties(response.facultades);
             } catch (error) {
                 console.log(error);

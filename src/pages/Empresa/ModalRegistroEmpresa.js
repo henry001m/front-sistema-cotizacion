@@ -10,9 +10,10 @@ const ModalRegistroEmpresa = (props) => {
     const [message, setMessage] = useState("");
     
     const onSubmit = async (data) => {
-        console.log("objeto",empresa)
-        console.log("data",data)
         const res = await createBusiness(empresa);
+        if(res.message){
+            alert(res.message);
+        }
         console.log(res)
         props.updateEmpresas()
         closeModal()

@@ -13,6 +13,9 @@ function AgregarDetalleSolictud(){
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null,spending_units_id:""})
     const [ newDetails, setNewDetails] = useState([])
     const [fecha , setFecha ] = useState(new Date())
+    const [namefile, setNamefile] = useState([])
+    const [fileValidate, setFileValidate] = useState(false);
+
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -74,6 +77,29 @@ function AgregarDetalleSolictud(){
     const [fls, setFls] = useState(null);
 
     const fileSelectHandler =(e)=>{
+        let namefileAux =[];
+        let extenciones = [];
+        for (let index = 0; index <e.target.files.length; index++) {
+            const name = e.target.files[index].name;
+            let extension = name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2);
+            namefileAux.push(name);
+            extenciones.push(extension);
+        }
+        let noEsValido = true;
+        let flag = false;
+        extenciones.forEach(exten => {
+            if(!flag){
+                if(exten === 'pdf' || exten === 'docx' || exten=== 'jpg'){
+                    noEsValido =false;
+                }else{
+                    noEsValido=true;
+                    flag = true;
+                    
+                }
+            }
+        });
+        setFileValidate(noEsValido);
+        setNamefile(namefileAux);
         setFls(e.target.files);   
     }
     const onSubmit =async (id) =>{
@@ -91,7 +117,7 @@ function AgregarDetalleSolictud(){
     }
 
     const sendData = async ( ) => {
-        if(newDetails.length>0){
+        if(newDetails.length>0 && !fileValidate){
             try {
                 const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
                 const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
@@ -208,6 +234,15 @@ function AgregarDetalleSolictud(){
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
+                                    <ol>
+                                        {namefile.map((name)=>{
+                                            return(
+                                                <li>{name}</li>
+                                            )
+                                        })}
+                                    </ol>
+                                        
+                                        {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, docx y jpg</label>}
                                 <div className="form-group col-md-6" align="end">
                                     <input 
                                     name="files"

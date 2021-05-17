@@ -21,7 +21,6 @@ const MainRegistroUnidad = () => {
         const fetchData = async () => {
         try {
             const response = await getUnidadesGastos();
-            console.log(response.spending_units)
             setUnidadesGasto(response.spending_units);
         } catch (error) {
             console.log(error);

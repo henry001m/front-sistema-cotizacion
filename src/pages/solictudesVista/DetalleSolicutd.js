@@ -16,6 +16,7 @@ function DetalleSolicitud(){
     const [ details, setDetails ] = useState([])
     const [ isShowModalFile, setIsShowModalFile ] = useState(false)
     const [btnActivo, setBtnActivo]=useState(false)
+    const [disabledVerArchivos, setDisabledVerArchivos] = useState(true)
 
     let history = useHistory();
     const acceptRequest = async ( ) => {
@@ -69,6 +70,10 @@ function DetalleSolicitud(){
             setDetails(resultQuotitations.details)
             setAmount(resultQuotitations.amount)
             setMessageAmount(resultQuotitations.message);
+            const files = await getFileNames(id);   
+            if ( files ){
+                setDisabledVerArchivos(false)
+            }    
             if((resultQuotitations.status == "pendiente")){
                     setBtnActivo(true);
                }else{
@@ -143,7 +148,8 @@ function DetalleSolicitud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" style={{marginTop:"33px"}}>
-                                    <button type="button" className="btn btn-secondary" 
+                                    <button type="button" className="btn btn-secondary"
+                                        disabled={disabledVerArchivos}
                                         onClick={()=>setIsShowModalFile(true)}
                                     >Ver Archivos</button>
                                 </div>

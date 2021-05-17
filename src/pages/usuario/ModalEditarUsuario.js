@@ -82,7 +82,7 @@ function ModalEditarUsuario( props ){
                     </div>
                     <div className="form-group col-md-6">
                         <label>Correo Electronico:</label>
-                        <label class="col-form-label"> {props.user.email}</label>
+                        <label class="col-form-label ml-1"> {props.user.email}</label>
                     </div>
                 </div>
                 <div className="form-row">
@@ -95,7 +95,7 @@ function ModalEditarUsuario( props ){
                             <select 
                             name="selectFacultad"
                             {...register("selectFacultad",{
-                                required:"Seleccione facultad"
+                                required:"Seleccione un rol"
                             })}
                             defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
                             className="form-control"
