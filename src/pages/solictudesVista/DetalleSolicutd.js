@@ -13,7 +13,6 @@ function DetalleSolicitud(){
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
     const [ isShowModalFile, setIsShowModalFile ] = useState(false)
-    const [status, setStatus]= useState(" ")
     const [btnActivo, setBtnActivo]=useState(false)
 
     let history = useHistory();
@@ -29,7 +28,6 @@ function DetalleSolicitud(){
             setRequestDate(resultQuotitations.requestDate)
             setDetails(resultQuotitations.details)
             setAmount(resultQuotitations.amount)
-            setStatus(resultQuotitations.status)
             if((resultQuotitations.status == "pendiente")){
                     setBtnActivo(true);
                }else{
@@ -40,14 +38,6 @@ function DetalleSolicitud(){
         getRequestId();
     }, []);
 
-    const btnDisabled = (status) => {
-        if(status == "rechazado"){
-            <button type="button" className="btn btn-danger"  disabled> Rechazar solicitud </button>
-
-           }else{
-            <button type="button" className="btn btn-danger"  id="btnV"  onClick={ rejectRequest}> Rechazar solicitud </button>
-           }
-    } 
 
     const acceptRequest = async ( ) => {
         const aux = {status:"aceptado"}

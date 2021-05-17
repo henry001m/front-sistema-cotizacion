@@ -15,6 +15,7 @@ import DetalleSolicitud from './solictudesVista/DetalleSolicutd'
 import ListaEmpresa from './empresa/ListaEmpresa'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 
+
 const Router = () => {
     return (
         <div>
