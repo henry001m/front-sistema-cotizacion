@@ -45,7 +45,7 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        {/* <ModalAgregarUsuario updateUsers={updateUsers}/> */}
+                        <ModalAgregarUsuario updateUsers={updateUsers}/>
                     </div>
                 </div>
                 <br></br>
@@ -73,6 +73,7 @@ function Usuario(){
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
+                                                <td>{user.userRol}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setIsShowModalEditarU(true)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { getRequest,updateStatus } from '../../services/http/QuotitationService'
+import { getFileNames } from '../../services/http/FileService'
 import VerArchivos from '../verArchivos/VerArchivos'
 import './SolicitudesVista.css'
 
@@ -145,7 +146,7 @@ function DetalleSolicitud(){
                                     </div>
                                 </div>
                                 <div className="form-group col-md-6" style={{marginTop:"33px"}}>
-                                    <button type="button" className="btn btn-secondary"
+                                    <button type="button" className="btn btn-secondary" 
                                         onClick={()=>setIsShowModalFile(true)}
                                     >Ver Archivos</button>
                                 </div>

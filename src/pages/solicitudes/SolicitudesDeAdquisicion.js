@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { PlusCircle} from 'bootstrap-icons-react'
-import { getQuotitation } from '../../services/http/QuotitationService';
+import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
+
 
 function SolicitudesDeAdquisicion(){
 
@@ -15,8 +16,10 @@ function SolicitudesDeAdquisicion(){
     const [quotitations, setQuotitations] = useState([]);
 
     useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const idUnit = user.user.spending_units_id
         async function getAllQuotitations() {
-            const result = await getQuotitation();
+            const result = await getQuotitationSpendingUnit(idUnit);
             console.log(result);
             const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);

@@ -12,7 +12,8 @@ import MontoLimite from './montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './solicitudes/AgregarDetalleSolicitud'
 import DetalleSolicitud from './solictudesVista/DetalleSolicutd'
-import ListaEmpresa from './empresa/ListaEmpresa'
+import ListaEmpresa from './Empresa/ListaEmpresa'
+import ListaRoles from './Rol/ListaRoles'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 
 
@@ -36,6 +37,7 @@ const Router = () => {
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
                 <Route exact path='/empresas' component={ListaEmpresa}/>
+                <Route exact path='/roles' component={ListaRoles}/>
                 <Route exact path='/showFile/:fl' component={VentanaVerArchivo}/>
             </Switch>
         </div>

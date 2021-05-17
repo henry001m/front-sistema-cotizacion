@@ -1,5 +1,7 @@
 import API from '../Service';
 
+/**Lista de Usuarios
+ * Obtiene los datos de todos los usario */
 export async function getUsers() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -10,7 +12,8 @@ export async function getUsers() {
         console.log(error)
     }
 }
-
+/*Crear nuevo usuario
+se envia los datos en un json y en la url el id del rol del usuario */
 export async function createUser(user,idrol) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};

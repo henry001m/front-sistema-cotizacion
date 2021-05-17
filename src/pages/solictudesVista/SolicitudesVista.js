@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
-import {getQuotitation} from '../../services/http/QuotitationService';
+import {getQuotitation, getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
 import { useHistory  } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
@@ -14,8 +14,10 @@ function SolicitudesVista(){
     const [request, setRequest ] = useState({});
 
     useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const idUnit = user.user.administrative_units_id
         async function getAllQuotitations() {
-            const result = await getQuotitation();
+            const result = await getQuotitationAdministrativeUnit(idUnit);
             const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
         }
