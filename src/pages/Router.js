@@ -12,8 +12,8 @@ import MontoLimite from './montoLimite/MontoLimite'
 import SolicitudesDeAdquisicion from './solicitudes/SolicitudesDeAdquisicion'
 import AgregarDetalleSolictud from './solicitudes/AgregarDetalleSolicitud'
 import DetalleSolicitud from './solictudesVista/DetalleSolicutd'
-import ListaEmpresa from './Empresa/ListaEmpresa'
-import ListaRoles from './Rol/ListaRoles'
+import ListaEmpresa from './empresa/ListaEmpresa'
+import ListaRoles from './rol/ListaRoles'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 
 
@@ -38,7 +38,7 @@ const Router = () => {
                 <Route exact path='/user' component={Usuario}/>
                 <Route exact path='/empresas' component={ListaEmpresa}/>
                 <Route exact path='/roles' component={ListaRoles}/>
-                <Route exact path='/showFile/:fl' component={VentanaVerArchivo}/>
+                <Route exact path='/showFile/:id/:fl' component={VentanaVerArchivo}/>
             </Switch>
         </div>
     )

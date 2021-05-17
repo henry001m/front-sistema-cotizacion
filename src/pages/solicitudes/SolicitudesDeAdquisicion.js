@@ -19,10 +19,14 @@ function SolicitudesDeAdquisicion(){
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
         const idUnit = user.user.spending_units_id
         async function getAllQuotitations() {
-            const result = await getQuotitationSpendingUnit(idUnit);
-            console.log(result);
-            const resultQuotitations=result.request_quotitations;
+            try {
+                const result = await getQuotitationSpendingUnit(idUnit);
+                console.log(result);
+                const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
+            } catch (error) {
+                console.log(error)
+            }
         }
         getAllQuotitations();
         //eslint-disable-next-line

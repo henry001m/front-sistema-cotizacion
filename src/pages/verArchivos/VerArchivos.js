@@ -40,7 +40,7 @@ export default function VerArchivos(props){
                                     return(
                                         <tr key={index+1}>
                                             <th scope="row">{index+1}</th>
-                                            <td ><a href={"/showFile/"+file} target="_blank">{file}</a></td>
+                                            <td ><a href={"/showFile/"+props.id+"/"+file} target="_blank">{file}</a></td>
                                         </tr>
                                     );
                                 })}

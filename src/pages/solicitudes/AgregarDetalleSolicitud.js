@@ -22,7 +22,7 @@ function AgregarDetalleSolictud(){
             console.log("esto es el response",response)
             setAdquisicion({
                 ...adquisicion,
-                nameUnidadGasto : user.user.spending_units_id.nameUnidadGasto,
+                nameUnidadGasto : response.User.nameUnidadGasto,
                 aplicantName : user.user.name+" "+user.user.lastName,
                 requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
                 spending_units_id: user.user.spending_units_id
@@ -94,7 +94,7 @@ function AgregarDetalleSolictud(){
         if(newDetails.length>0){
             try {
                 const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
-                const obj = {nameUnidadGasto: "Sistemas",aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
+                const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
                 const result = await createQuotitation(obj);
                 console.log(obj);
                 console.log("resultado ",result);

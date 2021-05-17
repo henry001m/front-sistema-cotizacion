@@ -59,17 +59,22 @@ function EnviarCotizacion( props ){
     }
 
     const saveEmail = async ( ) => {
-        const aux = {emails:correos, description:emailMessage.description}
-        setEspera("Enviando....");
-        console.log(aux)
-        document.getElementById('btnIE').disabled=true;
-        const result = await sendEmail(aux,props.id);
-        alert(result.data.result);
-        setEmailMessage({email:"",description:""});
-        setEspera("");
-        document.getElementById('btnIE').disabled=false;
-        reset();
-        closeModal();
+        try {
+            const aux = {emails:correos, description:emailMessage.description}
+            setEspera("Enviando....");
+            console.log(aux,props.id);
+            document.getElementById('btnIE').disabled=true;
+            const result = await sendEmail(aux,props.id);
+            console.log("este es el resultado ",result);
+            alert(result.data.result);
+            setEmailMessage({email:"",description:""});
+            setEspera("");
+            document.getElementById('btnIE').disabled=false;
+            reset();
+            closeModal();
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     const validateEmail = (e) => {
@@ -143,7 +148,7 @@ function EnviarCotizacion( props ){
                                                 <label>Descripción:</label>
                                                 <div className="form-row">
                                                     <textarea
-                                                        rows="7" 
+                                                        rows="6" 
                                                         name="description"
                                                         {...register("description",{
                                                             required:"Campo requerido",
@@ -163,13 +168,6 @@ function EnviarCotizacion( props ){
                                                     ></textarea>
                                                     {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-10">
-                                                <div className="form-row">
-                                                    <label style={{color:"#28a745"}}>Se adjunto el formulario de cotizacion</label>
                                                 </div>
                                             </div>
                                         </div>
