@@ -102,10 +102,10 @@ function ModalEditarUsuario( props ){
                             onClick={handleSelectChange}>
                                 <option value={props.user.userRol[0].id}>{props.user.userRol[0].nameRol}</option>
                                 {
-                                    rols.map((rol, index)=>{
-                                        if(props.user.userRol[0].id != rol.id){
+                                    rols.map((role, index)=>{
+                                        if(props.user.userRol[0].id != role.id){
                                             return(
-                                                <option value={rol.id} key={index}>{rol.nameRol}</option>   
+                                                <option value={role.id} key={index}>{role.nameRol}</option>   
                                             )
                                         }
                                     })
