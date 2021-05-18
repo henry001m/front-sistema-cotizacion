@@ -17,6 +17,7 @@ function DetalleSolicitud(){
     const [ isShowModalFile, setIsShowModalFile ] = useState(false)
     const [btnActivo, setBtnActivo]=useState(false)
     const [disabledVerArchivos, setDisabledVerArchivos] = useState(true)
+    const [montoTope, setMontoTope] = useState(0)
 
     let history = useHistory();
     const acceptRequest = async ( ) => {
@@ -69,6 +70,7 @@ function DetalleSolicitud(){
             setRequestDate(resultQuotitations.requestDate)
             setDetails(resultQuotitations.details)
             setAmount(resultQuotitations.amount)
+            setMontoTope(resultQuotitations.limite.monto)
             setMessageAmount(resultQuotitations.message);
             const files = await getFileNames(id);   
             if ( files ){
@@ -155,6 +157,9 @@ function DetalleSolicitud(){
                                 </div>
                             </div>
                             <div style={{color:'red'}}>{messageAmount}</div>
+                            {
+                                messageAmount&&<div style={{color:'red'}}>Monto tope: {montoTope}</div>
+                            }
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
                                     <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ rejectRequest}> Rechazar solicitud </button>
