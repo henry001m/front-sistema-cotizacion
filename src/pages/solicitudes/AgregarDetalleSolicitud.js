@@ -1,4 +1,4 @@
-import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
 import React, { useState, useEffect } from  'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'
@@ -16,6 +16,7 @@ function AgregarDetalleSolictud(){
     const [namefile, setNamefile] = useState([])
     const [fileValidate, setFileValidate] = useState(false);
 
+    const [abierto, setAbierto] = useState(false);
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -38,6 +39,12 @@ function AgregarDetalleSolictud(){
     fetchData();
     }, []);    
 
+    const abrirModal =()=>{
+        setAbierto(true);
+    }
+    const cerrarModal=()=>{
+        setAbierto(false);
+    }
 
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
@@ -191,9 +198,10 @@ function AgregarDetalleSolictud(){
                                 <div className="form-col">
                                     <label>Detalle de solicitud</label>
                                 </div>
-                                <div className="form-group col" align="end">                                   
-                                    <ModalAgregarAdquisicion
-                                    updateDetails={updateDetails}/>                                 
+                                <div className="form-group col" align="end">
+                                <button className="btn btn-success" type="button" onClick={ abrirModal }>
+                                    < PlusCircle className="mb-1"/> Agregar
+                                </button>                                                                    
                                 </div>
                             </div>
                             <div className="form-row" id="list">
@@ -263,6 +271,11 @@ function AgregarDetalleSolictud(){
                         </form>
                                 
                     </div>
+                    <ModalAgregarAdquisicion
+                        abierto={abierto}
+                        cerrarModal={cerrarModal}
+                        updateDetails={updateDetails}
+                    />
                 </div>
             </div>
         </>
