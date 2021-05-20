@@ -97,13 +97,13 @@ function ModalEditarUsuario( props ){
                             {...register("selectFacultad",{
                                 required:"Seleccione un rol"
                             })}
-                            defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
+                            // defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
                             className="form-control"
                             onClick={handleSelectChange}>
-                                <option value={props.user.userRol[0].id}>{props.user.userRol[0].nameRol}</option>
+                                <option value="">{props.user.userRol}</option>
                                 {
                                     rols.map((role, index)=>{
-                                        if(props.user.userRol[0].id != role.id){
+                                         if(role.nameRol != props.user.userRol){
                                             return(
                                                 <option value={role.id} key={index}>{role.nameRol}</option>   
                                             )
