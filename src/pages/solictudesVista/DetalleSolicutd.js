@@ -21,8 +21,12 @@ function DetalleSolicitud(){
 
     let history = useHistory();
     const acceptRequest = async ( ) => {
-        const aux = {status:"aceptado"}
-        const result = await updateStatus(id,aux);
+        if(amount > montoTope){
+            alert("Monto excedido");
+        }else{
+            const aux = {status:"aceptado"}
+            const result = await updateStatus(id,aux);
+        }
         history.replace("/SolicitudesDeAdquisicionAdmin")
     };
 
