@@ -5,6 +5,7 @@ import { useHistory  } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import CrearInforme from '../informe/CrearInforme';
 
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
@@ -12,6 +13,7 @@ function SolicitudesVista(){
     const [quotitationId, setQuotitationID ] = useState("")
     let history = useHistory();
     const [request, setRequest ] = useState({});
+    const [abiertoInforme, setAbiertoInforme] = useState(false);
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -28,7 +30,7 @@ function SolicitudesVista(){
     const EnablebuttonAddReport = (quotitation) =>{
         if(quotitation.status!="pendiente"){
             return(
-                <button className="dropdown-item">
+                <button className="dropdown-item" onClick={abrirModalInforme}>
                     <FileEarmarkText/> Agregar informe
                 </button>                                    
             );
@@ -63,6 +65,14 @@ function SolicitudesVista(){
     }
     const cerrarModalEmail=()=>{
         setAbiertoEmail(false);
+    }
+
+    const abrirModalInforme =(id)=>{
+        setQuotitationID(id);
+        setAbiertoInforme(true);
+    }
+    const cerrarModalInforme=()=>{
+        setAbiertoInforme(false);
     }
 
     const RequestSelect = (index) =>{
@@ -132,6 +142,11 @@ function SolicitudesVista(){
                         id={quotitationId}
                         abiertoEmail={abiertoEmail} 
                         cerrarModal={cerrarModalEmail}
+                    />
+                    <CrearInforme
+                        id={quotitationId}
+                        abierto={abiertoInforme} 
+                        cerrarModal={cerrarModalInforme}
                     />
             </div>
         </>
