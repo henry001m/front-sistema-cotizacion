@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
 import './MenuNavegacion.css';
-import {Link, NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 function MenuNavegacion() {
 
@@ -91,7 +91,7 @@ function MenuNavegacion() {
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {home &&
                         <li className="nav-container--item">
-                            <Link className="nav-link" to="/">Home</Link>
+                            <NavLink className="nav-link" to="/home">Home</NavLink>
                         </li>
                     }
                     {realizarSolicitudesAdqui &&
@@ -104,7 +104,7 @@ function MenuNavegacion() {
                             <NavLink className="nav-link" to="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</NavLink>
                         </li>
                     }
-                    {(realizarCotizacion||enviarCotizacion) &&
+                    {/* {(realizarCotizacion||enviarCotizacion) &&
                         <li className="nav-container--item dropdown">
                             <Link className="nav-link dropdown-toggle" data-toggle="dropdown" to="" aria-haspopup="true" aria-expanded="true">Cotización</Link>
                             <div className="dropdown-content">
@@ -119,7 +119,7 @@ function MenuNavegacion() {
                                 }
                             </div>
                         </li>
-                    }
+                    } */}
                     {(adminitrarUsuario || administrarRoles) &&
                         <li className="nav-container--item dropdown">
                             <div className="dropdown">
