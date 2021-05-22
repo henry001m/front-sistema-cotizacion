@@ -123,7 +123,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                     </div>
                                     <div className="form-group col-md-10">
                                         <label>Facultad:</label>
-                                    <select 
+                                       <select 
                                         name="selectFacultad"
                                         {...register("selectFacultad",{
                                             required:"Seleccione facultad"
@@ -140,6 +140,22 @@ function ModalRegistroUnidadAdministrativa( props ){
                                             }
                                         </select>
                                         {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
+                                    </div>
+                                    <div className="form-group col-md-10">
+                                        <label>Administrador de Unidad: (opcional)</label>
+                                       <select 
+                                        name="selectAdmin"
+                                        className="form-control">
+                                            <option value="">Seleccione Administrador</option>
+                                            {
+                                                facultades.map((facultad)=>{
+                                                    console.log(facultad)
+                                                    return(
+                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
+                                                    )
+                                                })
+                                            }
+                                        </select>
                                     </div>
                                 </div>
                             </div>

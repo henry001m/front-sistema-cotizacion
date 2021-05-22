@@ -10,13 +10,14 @@ const RegistroUnidad = (props) => {
     const [ faculties, setFaculties] = useState([]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
+
     const modalStyles={
         top:"20%",
         transfrom: 'translate(-50%, -50%)'
     }
 
     const closeModal = () => {
-        props.cerrarModal()
+        props.cerrarEditor()
         setNameUnidadGasto("")
         reset()
     }
@@ -29,17 +30,18 @@ const RegistroUnidad = (props) => {
         props.cerrarModal();
         reset()
     };
-    const handleInputChange = (event) => {
-        if(event.target.value[0]==" "){
-            setNameUnidadGasto(
-                event.target.value.substring(1)
-            );
-        }else{
-            setNameUnidadGasto(
-                event.target.value
-            );
-        } 
-    };
+
+    // const handleInputChange = (event) => {
+    //     if(event.target.value[0]==" "){
+    //         setNameUnidadGasto(
+    //             event.target.value.substring(1)
+    //         );
+    //     }else{
+    //         setNameUnidadGasto(
+    //             event.target.value
+    //         );
+    //     } 
+    // };
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -57,7 +59,7 @@ const RegistroUnidad = (props) => {
         <Modal isOpen={props.abierto} style={modalStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader toggle={closeModal}>
-            Agregar Unidad de Gasto
+            Editar Unidad de Gasto
             </ModalHeader>  
             <ModalBody>
             <div className="form-rom">
@@ -65,49 +67,21 @@ const RegistroUnidad = (props) => {
                     <h5>Nombre de Unidad de Gasto:</h5>
                         <input
                             name="nameUnidadGasto"
-                            {...register("nameUnidadGasto",{
-                                required:"Campo requerido",
-                                minLength:{
-                                    value:3,
-                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                },
-                                maxLength:{
-                                    value:50,
-                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                },
-                                pattern:{
-                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                    message:"El campo solo permite caracteres alfabeticos"
-                                }
-                            })}
                             className="form-control"
                             type="text"
-                            value={nameUnidadGasto}
-                            onChange={ handleInputChange }
+                            value={props.unidadGasto.name}
                         ></input>
-                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
                 </div>
                 <div className="form-group col-md-10">
                     <h5>Facultad:</h5>
                 <select 
                     name="faculties_id"
-                    {...register("faculties_id",{
-                        required:"Seleccione facultad"
-                    })}
                     className="form-control">
                         <option value={selectDefaul.value}>{selectDefaul.label}</option>
-                        {
-                            faculties.map((faculty)=>{
-                                return(
-                                    <option value={faculty.id}>{faculty.nameFacultad}</option>   
-                                )
-                            })
-                        }
                     </select>
-                    {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
                 </div>
                 <div className="form-group col-md-10">
-                    <h5>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h5>
+                    <h5>Administrador de Unidad:</h5>
                     <select 
                     name="selectAdmin"
                     className="form-control">

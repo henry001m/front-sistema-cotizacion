@@ -1,13 +1,17 @@
 import React,{useState,useEffect} from 'react'
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
-import {PlusCircle} from 'bootstrap-icons-react';
+import {PlusCircle, PencilSquare} from 'bootstrap-icons-react';
 import {getUnidadesGastos} from '../../services/http/UniGastoService'
+import {ModalEditarUG} from './ModalEditarUG';
 
 const MainRegistroUnidad = () => {
     const [abierto, setAbierto] = useState(false);
+    cosnt [abrirEditor, setAbrirEditor] = useState(false);
     const [unidadesGasto, setUnidadesGasto] = useState([]);
+    const [unidadGasto, setUnidadGasto] = useState({name:"",nameFacultad:"",administrativeUnit:""});
     const [flag, setFlag] = useState(false);
+
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -16,6 +20,9 @@ const MainRegistroUnidad = () => {
     }
     const updateGastos = ()=>{
         setFlag(!flag);
+    }
+    const cerrarEditor = () => {
+        setAbrirEditor( false );
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -69,6 +76,14 @@ const MainRegistroUnidad = () => {
                                                 <td>{gasto.nameUnidadGasto}</td>
                                                 <td>{gasto.faculty.nameFacultad}</td>
                                                 <td>{gasto.administrativeUnit.name}</td>
+                                                <td><button className="btn  btn-warning" 
+                                                        onClick={()=>{
+                                                            setAbrirEditor(true)
+                                                            setUnidadGasto(unidadGasto)
+                                                        }}
+                                                        style={{color:'white', backgroundColor:'orange'}}
+                                                    ><PencilSquare/></button>
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -78,6 +93,12 @@ const MainRegistroUnidad = () => {
                     </div>
                 </div>
             </div>
+            <ModalEditarUG
+                abrirEditor={ abrirEditor }
+                unidadGasto={ unidadGasto }
+                cerrarEditor = {cerrarEditor}
+                updateGastos= {updateGastos}
+            />
         </>
     )
 }
