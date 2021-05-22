@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
 import './MenuNavegacion.css';
+import {Link, NavLink} from 'react-router-dom'
 
 function MenuNavegacion() {
 
@@ -90,31 +91,31 @@ function MenuNavegacion() {
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {home &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/">Home</a>
+                            <Link className="nav-link" to="/">Home</Link>
                         </li>
                     }
                     {realizarSolicitudesAdqui &&
                         <li className="nav-container--item">
-                            <a className="nav-link" type="button" href="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</a>
+                            <NavLink className="nav-link" type="button" to="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</NavLink>
                         </li>
                     }
                     {verSolicitudesAdqui &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</a>
+                            <NavLink className="nav-link" to="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</NavLink>
                         </li>
                     }
                     {(realizarCotizacion||enviarCotizacion) &&
                         <li className="nav-container--item dropdown">
-                            <a className="nav-link dropdown-toggle" data-toggle="dropdown" href="" aria-haspopup="true" aria-expanded="true">Cotización</a>
+                            <Link className="nav-link dropdown-toggle" data-toggle="dropdown" to="" aria-haspopup="true" aria-expanded="true">Cotización</Link>
                             <div className="dropdown-content">
                                 {realizarCotizacion &&
-                                    <a className="dropdown-item" >Realizar Cotización</a>
+                                    <NavLink className="dropdown-item" >Realizar Cotización</NavLink>
                                 }
                                 {enviarCotizacion &&
-                                    <a className="dropdown-item" href="">Enviar Cotizacion</a>
+                                    <NavLink className="dropdown-item" to="">Enviar Cotizacion</NavLink>
                                 }
                                 {realizarComparacion &&
-                                    <a className="dropdown-item" href="">Realizar Comparacion</a>
+                                    <NavLink className="dropdown-item" to="">Realizar Comparacion</NavLink>
                                 }
                             </div>
                         </li>
@@ -125,10 +126,10 @@ function MenuNavegacion() {
                                 <button className="dropbtn nav-link dropdown-toggle">Administrar accesos</button>
                                     <div className="dropdown-content">
                                         {adminitrarUsuario &&
-                                        <a className="dropdown-item" href="/user">Usuarios</a>
+                                        <NavLink className="dropdown-item" to="/user">Usuarios</NavLink>
                                         }
                                         {administrarRoles &&
-                                        <a className="dropdown-item" href="/roles">Rol de Usuarios</a>
+                                        <NavLink className="dropdown-item" to="/roles">Rol de Usuarios</NavLink>
                                         }
                                     </div>
                             </div>
@@ -136,32 +137,32 @@ function MenuNavegacion() {
                     }
                     { UnidadesAdministrativas &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/UnidadesAdministrativas">Unidades Administrativas</a>
+                            <NavLink className="nav-link" to="/UnidadesAdministrativas">Unidades Administrativas</NavLink>
                         </li>
                     }
                     { administrarUnidadesdeGasto ? (
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/unidadesDeGasto">Unidad de Gasto</a>
+                            <NavLink className="nav-link" to="/unidadesDeGasto">Unidad de Gasto</NavLink>
                         </li>):(<div/>)
                     }
                     { Empresa &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/empresas">Empresas</a>
+                            <NavLink className="nav-link" to="/empresas">Empresas</NavLink>
                         </li>
                     }
                     { decargaFormularioCoti &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="./SolicitudDeCotización.pdf" download>Descargar Formulario</a>
+                            <NavLink className="nav-link" to="./SolicitudDeCotización.pdf" download>Descargar Formulario</NavLink>
                         </li>
                     }
                     { decargaFormularioAdqui &&
                         <li className="nav-container--item">
-                            <a className="nav-link" type="button" href="./SolicitudDeAdquisicion.pdf" download>Descargar Formulario</a>
+                            <NavLink className="nav-link" type="button" to="./SolicitudDeAdquisicion.pdf" download>Descargar Formulario</NavLink>
                         </li>
                     }
                     { admiMontoLimite &&
                         <li className="nav-container--item">
-                            <a className="nav-link" href="/montoLimite">Monto Limite</a>
+                            <NavLink className="nav-link" to="/montoLimite">Monto Limite</NavLink>
                         </li>
                     }
                 </ul>

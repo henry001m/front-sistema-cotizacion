@@ -4,7 +4,7 @@ export async function getMontoLomite() {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get('/limiteAmout',headers);
+        const response = await API.get('/informations/',headers);
         return response.data;
     } catch (error) {
         console.log(error)

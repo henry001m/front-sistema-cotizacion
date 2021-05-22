@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import {getQuotitation, getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
 import { useHistory  } from 'react-router-dom'
-import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
+import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 
@@ -52,6 +52,24 @@ function SolicitudesVista(){
             return(
                 <button className="dropdown-item" disabled>
                     <Envelope/> Enviar correo
+                </button>
+            );
+        }
+    }
+
+    const EnablebuttonImprimir=(quotitation)=>{
+        if(quotitation.status=="aceptado"){
+            console.log(quotitation)
+            const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
+            return(
+                <button className="dropdown-item">
+                    <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir</a>
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Printer/> Imprimir
                 </button>
             );
         }
@@ -116,6 +134,9 @@ function SolicitudesVista(){
                                                         }
                                                         {
                                                             EnableSendMailButton(quotitation)
+                                                        }
+                                                        {
+                                                            EnablebuttonImprimir(quotitation)
                                                         }
                                                     </div>
                                                 </div>
