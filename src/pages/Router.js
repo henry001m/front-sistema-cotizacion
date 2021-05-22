@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch,Redirect } from 'react-router-dom';
 import SolicitudesVista from './solictudesVista/SolicitudesVista';
 import EnviarCotizacion from './enviarFormulario/EnviarCotizacion'
 import Home from './Home'
@@ -21,7 +21,8 @@ const Router = () => {
     return (
         <div>
             <Switch>
-                <Route exact path="/" component={ Home }/>
+                <Redirect exact from="/" to="/home" />
+                <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
                 <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
                 <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
@@ -39,6 +40,7 @@ const Router = () => {
                 <Route exact path='/empresas' component={ListaEmpresa}/>
                 <Route exact path='/roles' component={ListaRoles}/>
                 <Route exact path='/showFile/:id/:fl' component={VentanaVerArchivo}/>
+
             </Switch>
         </div>
     )
