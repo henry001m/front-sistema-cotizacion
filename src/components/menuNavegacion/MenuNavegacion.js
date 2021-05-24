@@ -22,7 +22,7 @@ function MenuNavegacion() {
     const [decargaFormularioAdqui, setDecargaFormularioAdqui] = useState(false)
     const [admiMontoLimite, setAdmiMontoLimite] = useState(false)
     const [login, setLogin] = useState(false)
-
+    const [personal, setPersonal] = useState(false)
     const cerrarSesion = () =>{
         window.localStorage.removeItem("tokenContizacion");
         window.localStorage.removeItem("userDetails");
@@ -61,6 +61,9 @@ function MenuNavegacion() {
                     }
                     if(permission=="Administar roles"){
                         setAdimnistrarRoles(true)
+                    }
+                    if(permission=="Personal"){
+                        setPersonal(true)
                     }
                 })
             } catch (error) {
