@@ -1,45 +1,33 @@
 import React, { useRef, useState,useEffect} from 'react'
-import Modal from '../../components/modal/Modal'
+import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import { getFacultyAdmin } from '../../services/http/FacultyService';
+import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService';
 import { useForm } from 'react-hook-form';
-import {getFacultyAdmin} from '../../services/http/FacultyService';
-import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService'
-import UnidadesAdministrativas from './UnidadesAdministrativas';
-
 
 function ModalRegistroUnidadAdministrativa( props ){
-    const modalref = useRef();
 
     const {register, formState: { errors }, handleSubmit, reset } = useForm();
-
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
-
     const [ facultades, setFacultades ] = useState([]);
-    const [flag, setFlag] = useState(false);
-
+    const [ flag, setFlag] = useState(false);
+    const [ admins, setAdmins] = useState([
+        {id:1 , nameAdmin:"Rodrigo Cespedes"},
+        {id:2 , nameAdmin:"Yurguen Pariente"},
+        {id:3 , nameAdmin:"Ramiro Saavedra"},
+    ]);
+    const modalStyles={
+        top:"10%",
+        transfrom: 'translate(-50%, -50%)'
+    }
+    const closeModal = () => {
+        props.closeModalRUA()
+        setNameUnidadAdministrativa("")
+        updateFacultades()
+        reset()
+    };
     const updateFacultades = ()=>{
         setFlag(!flag);
     }
-    const clearForm = () => {
-        setNameUnidadAdministrativa("");
-        updateFacultades();
-        reset();
-    };
-    
-    const openModal = () => {
-        
-        modalref.current.openModal()
-    };
-
-    const closeModal = () => {
-        clearForm();
-        modalref.current.closeModal();
-    };
-
-    const OpenCloseModal = () => {
-        if(props.isShowModalRegistroUA==true){
-            openModal();
-        }
-    };
 
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
@@ -57,11 +45,9 @@ function ModalRegistroUnidadAdministrativa( props ){
         const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
         console.log(res);
         alert(res.message);
-        props.CloseModalRUA();
+        props.closeModalRUA();
         props.updateAdministrativas();
         closeModal();
-        clearForm();
-
     }
    
 
@@ -80,92 +66,81 @@ function ModalRegistroUnidadAdministrativa( props ){
 
     return(
         <>
-            {
-                OpenCloseModal()
-            }
-            <Modal ref={ modalref }>
+            <Modal isOpen={props.isShowModalRegistroUA} style={modalStyles}>
                 <form onSubmit={handleSubmit(saveData)}>
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">Agregar Unidad Administrativa</h5>
-                                <button type="button" className="close" onClick={() => {props.CloseModalRUA();closeModal(); clearForm()}}>
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="form-rom">
-                                    <div className="form-group col-md-12">
-                                        <label>Nombre de Unidad:</label>
-                                            <input
-                                                name="nameUnidadAdministrativa"
-                                                {...register("nameUnidadAdministrativa",{
-                                                    required:"Campo requerido",
-                                                    minLength:{
-                                                        value:3,
-                                                        message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                    },
-                                                    maxLength:{
-                                                        value:50,
-                                                        message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                    },
-                                                    pattern:{
-                                                        value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                                        message:"El campo solo permite caracteres alfabeticos"
-                                                    }
-                                                })}
-                                                className="form-control"
-                                                type="text"
-                                                value={nameUnidadAdministrativa}
-                                                onChange={ handleInputChange }
-                                            ></input>
-                                            {errors.nameUnidadAdministrativa && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadAdministrativa.message}</span>}
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label>Facultad:</label>
-                                       <select 
-                                        name="selectFacultad"
-                                        {...register("selectFacultad",{
-                                            required:"Seleccione facultad"
-                                        })}
-                                        className="form-control">
-                                            <option value="">Seleccione la facultad</option>
-                                            {
-                                                facultades.map((facultad)=>{
-                                                    console.log(facultad)
-                                                    return(
-                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                        {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
-                                    </div>
-                                    <div className="form-group col-md-12">
-                                        <label>Administrador de Unidad: (opcional)</label>
-                                       <select 
-                                        name="selectAdmin"
-                                        className="form-control">
-                                            <option value="">Seleccione Administrador</option>
-                                            {
-                                                facultades.map((facultad)=>{
-                                                    console.log(facultad)
-                                                    return(
-                                                        <option value={facultad.id}>{facultad.nameFacultad}</option>   
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="reset" className="btn btn-secondary btn-sm" data-dismiss="modal"
-                                    onClick={() => {props.CloseModalRUA();closeModal()}}>Cancelar</button>
-                                <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
-                            </div>
-                            </div>
+                    <ModalHeader toggle={closeModal}>
+                    Agregar Unidad Administrativa
+                    </ModalHeader> 
+                    <div className="modal-body">
+                    <div className="form-rom">
+                        <div className="form-group col-md-12">
+                            <h6>Nombre de Unidad:</h6>
+                                <input
+                                    name="nameUnidadAdministrativa"
+                                    {...register("nameUnidadAdministrativa",{
+                                        required:"Campo requerido",
+                                        minLength:{
+                                            value:3,
+                                            message:"Este campo debe tener entre 3 y 50 caracteres"
+                                        },
+                                        maxLength:{
+                                            value:50,
+                                            message:"Este campo debe tener entre 3 y 50 caracteres"
+                                        },
+                                        pattern:{
+                                            value: /^[Ññíóáéú. a-zA-Z ]+$/,
+                                            message:"El campo solo permite caracteres alfabeticos"
+                                        }
+                                    })}
+                                    className="form-control"
+                                    type="text"
+                                    value={nameUnidadAdministrativa}
+                                    onChange={ handleInputChange }
+                                ></input>
+                                {errors.nameUnidadAdministrativa && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadAdministrativa.message}</span>}
                         </div>
+                        <div className="form-group col-md-12">
+                            <h6>Facultad:</h6>
+                            <select 
+                            name="selectFacultad"
+                            {...register("selectFacultad",{
+                                required:"Seleccione facultad"
+                            })}
+                            className="form-control">
+                                <option value="">Seleccione la facultad</option>
+                                {
+                                    facultades.map((facultad)=>{
+                                        console.log(facultad)
+                                        return(
+                                            <option value={facultad.id}>{facultad.nameFacultad}</option>   
+                                        )
+                                    })
+                                }
+                            </select>
+                            {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
+                        </div>
+                        <div className="form-group col-md-12">
+                            <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
+                                <select 
+                                name="admin_id"
+                                className="form-control">
+                                    <option value="">Seleccione Administrador</option>
+                                    {
+                                        admins.map((administrador)=>{
+                                            return(
+                                                <option value={administrador.id}>{administrador.nameAdmin}</option>   
+                                            )
+                                        })
+                                            }
+                                </select>
+                        </div>
+                    </div>
+                    </div>
+                    <ModalFooter>
+                        <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
+                            onClick={closeModal}>Cancelar</button>
+                        <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
+                    </ModalFooter>  
                 </form>
             </Modal>
         </>

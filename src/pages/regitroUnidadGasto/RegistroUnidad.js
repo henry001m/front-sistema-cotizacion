@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react';
-import './RegistroUnidad.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { getFacultyInUse } from '../../services/http/FacultyService';
 import { getAdmins } from '../../services/http/UniGastoService';
 import { createUnidadGasto } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
+import './RegistroUnidad.css';
 
 const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();

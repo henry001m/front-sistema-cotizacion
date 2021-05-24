@@ -1,9 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 
-function ModalEditarUG (props){
+function ModalEditarUA (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     //const [ admins, setAdmins] = useState([]);
     //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
@@ -29,7 +28,7 @@ function ModalEditarUG (props){
             console.log("entro aca en editor");
             props.cerrarEditor();
             closeModal()
-            props.updateGastos();
+            props.updateAdministrativas();
         }catch(error){
             console.log( error )
         }
@@ -40,17 +39,17 @@ function ModalEditarUG (props){
         <Modal isOpen={props.abrirEditor} style={modalStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader toggle={closeModal}>
-            Editar Unidad de Gasto
+            Editar Unidad Administrativa
             </ModalHeader>  
             <ModalBody>
             <div className="form-rom">
                 <div className="form-group col-md-12">
-                    <h6>Nombre de Unidad de Gasto:</h6>
+                    <h6>Nombre de Unidad Administrativa:</h6>
                         <input
                             name="nameUnidadGasto"
                             className="form-control"
                             type="text"
-                            value={props.gasto.nameUnidadGasto}
+                            value={props.administrativeUnit.name}
                             disabled
                         ></input>
                 </div>
@@ -60,7 +59,7 @@ function ModalEditarUG (props){
                     name="faculties_id"
                     className="form-control"
                     disabled>
-                        <option value="">{props.gasto.faculty.nameFacultad}</option>
+                        <option value="">{props.administrativeUnit.faculty}</option>
                     </select>
                 </div>
                 <div className="form-group col-md-12">
@@ -91,4 +90,4 @@ function ModalEditarUG (props){
     )
 }
 
-export default ModalEditarUG
+export default ModalEditarUA
