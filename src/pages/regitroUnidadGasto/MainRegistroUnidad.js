@@ -2,14 +2,14 @@ import React,{useState,useEffect} from 'react'
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
 import {PlusCircle, PencilSquare} from 'bootstrap-icons-react';
-import {getUnidadesGastos} from '../../services/http/UniGastoService'
-import {ModalEditarUG} from './ModalEditarUG';
+import {getUnidadesGastos} from '../../services/http/UniGastoService';
+import ModalEditarUG from './ModalEditarUG'
 
 const MainRegistroUnidad = () => {
     const [abierto, setAbierto] = useState(false);
-    cosnt [abrirEditor, setAbrirEditor] = useState(false);
+    const [abrirEditor, setAbrirEditor] = useState(false);
     const [unidadesGasto, setUnidadesGasto] = useState([]);
-    const [unidadGasto, setUnidadGasto] = useState({name:"",nameFacultad:"",administrativeUnit:""});
+    const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",nameAdmin:""}]});
     const [flag, setFlag] = useState(false);
 
     const abrirModal =()=>{
@@ -64,7 +64,8 @@ const MainRegistroUnidad = () => {
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
-                                    <th scope="col">Unidad Administrativa</th>
+                                    <th scope="col">Encargado</th>
+                                    <th scope="col">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,7 +80,7 @@ const MainRegistroUnidad = () => {
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
-                                                            setUnidadGasto(unidadGasto)
+                                                            setGasto(gasto)
                                                         }}
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
@@ -95,7 +96,7 @@ const MainRegistroUnidad = () => {
             </div>
             <ModalEditarUG
                 abrirEditor={ abrirEditor }
-                unidadGasto={ unidadGasto }
+                gasto={ gasto }
                 cerrarEditor = {cerrarEditor}
                 updateGastos= {updateGastos}
             />

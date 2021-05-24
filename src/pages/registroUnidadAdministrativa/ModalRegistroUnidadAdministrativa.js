@@ -95,7 +95,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                             </div>
                             <div className="modal-body">
                                 <div className="form-rom">
-                                    <div className="form-group col-md-10">
+                                    <div className="form-group col-md-12">
                                         <label>Nombre de Unidad:</label>
                                             <input
                                                 name="nameUnidadAdministrativa"
@@ -121,7 +121,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                             ></input>
                                             {errors.nameUnidadAdministrativa && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadAdministrativa.message}</span>}
                                     </div>
-                                    <div className="form-group col-md-10">
+                                    <div className="form-group col-md-12">
                                         <label>Facultad:</label>
                                        <select 
                                         name="selectFacultad"
@@ -141,7 +141,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                         </select>
                                         {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
                                     </div>
-                                    <div className="form-group col-md-10">
+                                    <div className="form-group col-md-12">
                                         <label>Administrador de Unidad: (opcional)</label>
                                        <select 
                                         name="selectAdmin"

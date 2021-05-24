@@ -1,62 +1,43 @@
 import React,{useState,useEffect} from 'react';
-import './RegistroUnidad.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {getFacultyInUse} from '../../services/http/FacultyService';
 import {createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 
-const RegistroUnidad = (props) => {
+function ModalEditarUG (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [ faculties, setFaculties] = useState([]);
-    const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
-    const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
-
+    //const [ admins, setAdmins] = useState([]);
+    //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
+    const [ admins, setAdmins] = useState([
+        {id:1 , nameAdmin:"Rodrigo Cespedes"},
+        {id:2 , nameAdmin:"Yurguen Pariente"},
+        {id:3 , nameAdmin:"Ramiro Saavedra"},
+    ]);
     const modalStyles={
-        top:"20%",
+        top:"10%",
         transfrom: 'translate(-50%, -50%)'
     }
 
     const closeModal = () => {
         props.cerrarEditor()
-        setNameUnidadGasto("")
         reset()
     }
 
-    const onSubmit = async (data) => {
-        const res = await createUnidadGasto(data);
-        alert(res.message);
-        setNameUnidadGasto("");
-        props.updateGastos();
-        props.cerrarModal();
-        reset()
+    const onSubmit = async () => {
+        try{
+            // const res = await updateAdmin(props.gasto.id,idAdmin);
+            // alert(res.message);
+            console.log("entro aca en editor");
+            props.cerrarEditor();
+            closeModal()
+            props.updateGastos();
+        }catch(error){
+            console.log( error )
+        }
     };
 
-    // const handleInputChange = (event) => {
-    //     if(event.target.value[0]==" "){
-    //         setNameUnidadGasto(
-    //             event.target.value.substring(1)
-    //         );
-    //     }else{
-    //         setNameUnidadGasto(
-    //             event.target.value
-    //         );
-    //     } 
-    // };
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await getFacultyInUse();
-                setFaculties(response.facultades);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchData();
-    }, []);
     return (
         <>
-        <Modal isOpen={props.abierto} style={modalStyles}>
+        <Modal isOpen={props.abrirEditor} style={modalStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
             <ModalHeader toggle={closeModal}>
             Editar Unidad de Gasto
@@ -69,15 +50,17 @@ const RegistroUnidad = (props) => {
                             name="nameUnidadGasto"
                             className="form-control"
                             type="text"
-                            value={props.unidadGasto.name}
+                            value={props.gasto.nameUnidadGasto}
+                            disabled
                         ></input>
                 </div>
                 <div className="form-group col-md-10">
                     <h5>Facultad:</h5>
                 <select 
                     name="faculties_id"
-                    className="form-control">
-                        <option value={selectDefaul.value}>{selectDefaul.label}</option>
+                    className="form-control"
+                    disabled>
+                        <option value="">{props.gasto.faculty.nameFacultad}</option>
                     </select>
                 </div>
                 <div className="form-group col-md-10">
@@ -87,10 +70,9 @@ const RegistroUnidad = (props) => {
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {
-                            faculties.map((facultad)=>{
-                                console.log(facultad)
+                            admins.map((administrador)=>{
                                 return(
-                                    <option value={facultad.id}>{facultad.nameFacultad}</option>   
+                                    <option value={administrador.id}>{administrador.nameAdmin}</option>   
                                 )
                             })
                         }
@@ -109,4 +91,4 @@ const RegistroUnidad = (props) => {
     )
 }
 
-export default RegistroUnidad
+export default ModalEditarUG

@@ -1,17 +1,23 @@
 import React,{useState,useEffect} from 'react';
 import './RegistroUnidad.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {getFacultyInUse} from '../../services/http/FacultyService';
-import {createUnidadGasto} from '../../services/http/UniGastoService';
+import { getFacultyInUse } from '../../services/http/FacultyService';
+import { getAdmins } from '../../services/http/UniGastoService';
+import { createUnidadGasto } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 
 const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
+    const [ admins, setAdmins] = useState([
+        {id:1 , nameAdmin:"Rodrigo Cespedes"},
+        {id:2 , nameAdmin:"Yurguen Pariente"},
+        {id:3 , nameAdmin:"Ramiro Saavedra"},
+    ]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
     const modalStyles={
-        top:"20%",
+        top:"10%",
         transfrom: 'translate(-50%, -50%)'
     }
 
@@ -23,6 +29,7 @@ const RegistroUnidad = (props) => {
 
     const onSubmit = async (data) => {
         const res = await createUnidadGasto(data);
+        console.log(data);
         alert(res.message);
         setNameUnidadGasto("");
         props.updateGastos();
@@ -52,6 +59,19 @@ const RegistroUnidad = (props) => {
 
         fetchData();
     }, []);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await getAdmins();
+    //             setAdmins(response.administradores);
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     return (
         <>
         <Modal isOpen={props.abierto} style={modalStyles}>
@@ -59,10 +79,10 @@ const RegistroUnidad = (props) => {
             <ModalHeader toggle={closeModal}>
             Agregar Unidad de Gasto
             </ModalHeader>  
-            <ModalBody>
+            <div className="modal-body">
             <div className="form-rom">
-                <div className="form-group col-md-10">
-                    <h5>Nombre de Unidad de Gasto:</h5>
+                <div className="form-group col-md-12">
+                    <h6>Nombre de Unidad de Gasto:</h6>
                         <input
                             name="nameUnidadGasto"
                             {...register("nameUnidadGasto",{
@@ -87,8 +107,8 @@ const RegistroUnidad = (props) => {
                         ></input>
                         {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
                 </div>
-                <div className="form-group col-md-10">
-                    <h5>Facultad:</h5>
+                <div className="form-group col-md-12">
+                    <h6>Facultad:</h6>
                 <select 
                     name="faculties_id"
                     {...register("faculties_id",{
@@ -106,24 +126,23 @@ const RegistroUnidad = (props) => {
                     </select>
                     {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
                 </div>
-                <div className="form-group col-md-10">
-                    <h5>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h5>
+                <div className="form-group col-md-12">
+                    <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
                     <select 
-                    name="selectAdmin"
+                    name="admin_id"
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {
-                            faculties.map((facultad)=>{
-                                console.log(facultad)
+                            admins.map((administrador)=>{
                                 return(
-                                    <option value={facultad.id}>{facultad.nameFacultad}</option>   
+                                    <option value={administrador.id}>{administrador.nameAdmin}</option>   
                                 )
                             })
                         }
                     </select>
                 </div>
             </div>
-            </ModalBody>
+            </div>
             <ModalFooter>
                 <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
                     onClick={closeModal}>Cancelar</button>
