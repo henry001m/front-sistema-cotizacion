@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
-import {getQuotitation, getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
+import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
 import { useHistory  } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer } from 'bootstrap-icons-react'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import CrearInforme from '../informe/CrearInforme';
+import { getReport } from '../../services/http/ReportService';
 
 function SolicitudesVista(){
     const [quotitations, setQuotitations] = useState([]);
@@ -14,6 +15,7 @@ function SolicitudesVista(){
     let history = useHistory();
     const [request, setRequest ] = useState({});
     const [abiertoInforme, setAbiertoInforme] = useState(false);
+    const [ report, setReport ] = useState(null)
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -30,7 +32,7 @@ function SolicitudesVista(){
     const EnablebuttonAddReport = (quotitation) =>{
         if(quotitation.status!="pendiente"){
             return(
-                <button className="dropdown-item" onClick={abrirModalInforme}>
+                <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
                     <FileEarmarkText/> Agregar informe
                 </button>                                    
             );
@@ -61,7 +63,6 @@ function SolicitudesVista(){
 
     const EnablebuttonImprimir=(quotitation)=>{
         if(quotitation.status=="aceptado"){
-            console.log(quotitation)
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
@@ -86,16 +87,33 @@ function SolicitudesVista(){
     }
 
     const abrirModalInforme =(id)=>{
+        getInforme(id)
         setQuotitationID(id);
         setAbiertoInforme(true);
     }
     const cerrarModalInforme=()=>{
+        setReport(null)
         setAbiertoInforme(false);
     }
 
     const RequestSelect = (index) =>{
         setRequest(quotitations[index])
         console.log("solicitud",quotitations[index])
+    }
+
+    async function getInforme(id) {
+        console.log("id",id)
+        try {
+            const result = await getReport(id);
+            console.log(result)
+            if(result){
+                setReport(result);
+            }else{
+                setReport(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return(
@@ -168,6 +186,7 @@ function SolicitudesVista(){
                         id={quotitationId}
                         abierto={abiertoInforme} 
                         cerrarModal={cerrarModalInforme}
+                        report={report}
                     />
             </div>
         </>
