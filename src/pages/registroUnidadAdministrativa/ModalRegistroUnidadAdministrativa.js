@@ -1,6 +1,7 @@
 import React, { useRef, useState,useEffect} from 'react'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { getFacultyAdmin } from '../../services/http/FacultyService';
+import { getAdmins } from '../../services/http/UserService';
 import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService';
 import { useForm } from 'react-hook-form';
 
@@ -10,11 +11,12 @@ function ModalRegistroUnidadAdministrativa( props ){
     const [ nameUnidadAdministrativa, setNameUnidadAdministrativa ] = useState("");
     const [ facultades, setFacultades ] = useState([]);
     const [ flag, setFlag] = useState(false);
-    const [ admins, setAdmins] = useState([
-        {id:1 , nameAdmin:"Rodrigo Cespedes"},
-        {id:2 , nameAdmin:"Yurguen Pariente"},
-        {id:3 , nameAdmin:"Ramiro Saavedra"},
-    ]);
+    const [ admins, setAdmins] = useState([]);
+    // const [ admins, setAdmins] = useState([
+    //     {id:1 , nameAdmin:"Rodrigo Cespedes"},
+    //     {id:2 , nameAdmin:"Yurguen Pariente"},
+    //     {id:3 , nameAdmin:"Ramiro Saavedra"},
+    // ]);
     const modalStyles={
         top:"10%",
         transfrom: 'translate(-50%, -50%)'
@@ -63,6 +65,19 @@ function ModalRegistroUnidadAdministrativa( props ){
 
         fetchData();
     }, [setFacultades,flag]);
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdmins();
+                setAdmins(response.users);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [setAdmins,flag]);
 
     return(
         <>
@@ -128,7 +143,7 @@ function ModalRegistroUnidadAdministrativa( props ){
                                     {
                                         admins.map((administrador)=>{
                                             return(
-                                                <option value={administrador.id}>{administrador.nameAdmin}</option>   
+                                                <option value={administrador.id}>{administrador.name}</option>   
                                             )
                                         })
                                             }

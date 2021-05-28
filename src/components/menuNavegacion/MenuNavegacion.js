@@ -62,7 +62,7 @@ function MenuNavegacion() {
                     if(permission=="Administar roles"){
                         setAdimnistrarRoles(true)
                     }
-                    if(permission=="Personal"){
+                    if(permission=="Ver Personal"){
                         setPersonal(true)
                     }
                 })
@@ -166,6 +166,11 @@ function MenuNavegacion() {
                     { admiMontoLimite &&
                         <li className="nav-container--item">
                             <NavLink className="nav-link" to="/montoLimite">Monto Limite</NavLink>
+                        </li>
+                    }
+                    { personal &&
+                        <li className="nav-container--item">
+                            <NavLink className="nav-link" to="/personal">Personal</NavLink>
                         </li>
                     }
                 </ul>

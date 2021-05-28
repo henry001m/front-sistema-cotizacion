@@ -2,21 +2,46 @@ import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
 import ModalSeleccionPersonal from './ModalSeleccionPersonal';
+import {getPersonal} from '../../services/http/UserService'
 
 function ListaPersonal(){
     const [abierto, setAbierto] = useState(false);
     const [flag, setFlag] = useState(false);
-    const [personal, setPersonal] = useState([
-        {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
-        {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
-        {id:3 , name:"Enrique Saavedra", ci:998547, phone:68686868, nameRol:"Responsable de correos"},
-    ]);
+    const [personalUA, setPersonalUA] =useState([]);
+    // const [personal, setPersonal] = useState([
+    //     {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
+    //     {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
+    //     {id:3 , name:"Enrique Saavedra", ci:998547, phone:68686868, nameRol:"Responsable de correos"},
+    // ]);
     const abrirModal =()=>{
         setAbierto(true);
     }
     const cerrarModal=()=>{
         setAbierto(false);
     }
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //     try {
+    //         const response = await getPersonal();
+    //         setPersonalUA(response.users);
+    //         console.log(response);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+    // fetchData();
+    // }, [setPersonalUA,flag] );
+    
+    useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const idUnit = user.user.administrative_units_id
+        async function getAllUsers() {
+            const response = await getPersonal(idUnit);
+            setPersonalUA(response.users);
+        }
+        getAllUsers();
+    }, []);
 
     return (
         <>
@@ -49,14 +74,14 @@ function ListaPersonal(){
                                 </tr>
                             </thead>
                             <tbody>
-                                {personal.map((user,index) => {
+                                {personalUA.map((user,index) => {
                                         return(
                                             <tr key={user.id}>
                                                 <td scope="row">{index+1}</td>
-                                                <td>{user.name}</td>
+                                                <td>{user.name} {user.lastName}</td>
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
-                                                <td>{user.nameRol}</td>
+                                                <td>{user.userRol}</td>
                                             </tr>
                                         );
                                 })}

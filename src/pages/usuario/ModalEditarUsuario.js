@@ -57,38 +57,80 @@ function ModalEditarUsuario( props ){
                 <ModalBody>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label>Nombres:</label>
-                        <label class="col-form-label"> {props.user.name}</label>
+                        <h6>Nombres:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.name}
+                            disabled
+                        ></input>   
                     </div>
                     <div className="form-group col-md-6">
-                        <label>Apellidos:</label>
-                        <label class="col-form-label"> {props.user.lastName}</label>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <label>Carnet de Identidad:</label>
-                        <label class="col-form-label"> {props.user.ci}</label>
-                    </div>
-                    <div className="form-group col-md-6">
-                        <label>Telefono:</label>
-                        <label class="col-form-label"> {props.user.phone}</label>
-                    </div>
-                </div>
-                <div className="form-row">
-                    <div className="form-group col-md-6">
-                        <label>Direccion:</label>
-                        <label class="col-form-label"> {props.user.direction}</label>
-                    </div>
-                    <div className="form-group col-md-6">
-                        <label>Correo Electronico:</label>
-                        <label class="col-form-label ml-1"> {props.user.email}</label>
+                        <h6>Apellidos:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.lastName}
+                            disabled
+                        ></input>   
                     </div>
                 </div>
                 <div className="form-row">
                     <div className="form-group col-md-6">
-                        <label>Nombre de usuario:</label>
-                        <label class="col-form-label"> {props.user.userName}</label>
+                        <h6>Carnet de Identidad:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.ci}
+                            disabled
+                        ></input>
+                    </div>
+                    <div className="form-group col-md-6">
+                        <h6>Telefono:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.phone}
+                            disabled
+                        ></input> 
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <h6>Direccion:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.direction}
+                            disabled
+                        ></input> 
+                    </div>
+                    <div className="form-group col-md-6">
+                        <h6>Correo Electronico:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.email}
+                            disabled
+                        ></input> 
+                    </div>
+                </div>
+                <div className="form-row">
+                    <div className="form-group col-md-6">
+                        <h6>Nombre de usuario:</h6>
+                        <input
+                            name="nameUnidadGasto"
+                            className="form-control"
+                            type="text"
+                            value={props.user.userName}
+                            disabled
+                        ></input> 
                     </div>
                     <div className="form-group col-md-6">
                             <label>Rol de Usuario:</label>
