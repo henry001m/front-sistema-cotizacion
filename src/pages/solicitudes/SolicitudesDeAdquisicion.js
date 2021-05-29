@@ -66,9 +66,8 @@ function SolicitudesDeAdquisicion(){
         return res
     }
 
-    const EnablebuttonReport = (id) =>{
-        const res = true
-        if(res){
+    const EnablebuttonReport = (id,statusReport) =>{
+        if(statusReport){
             return(
                 <button className="dropdown-item" onClick={()=>AbrirModal(id)}>
                     <FileEarmarkText/> Ver informe
@@ -106,9 +105,6 @@ function SolicitudesDeAdquisicion(){
                 <td >
                     {quotitation.requestDate}         
                 </td>
-                <td  align="center">
-                    <a className="link">ver</a>
-                </td>
                 <td>
                     {quotitation.status}         
                 </td>
@@ -121,7 +117,7 @@ function SolicitudesDeAdquisicion(){
                                         <Eye/> Ver solicitud
                                     </button>
                                     {
-                                        EnablebuttonReport(quotitation.id)
+                                        EnablebuttonReport(quotitation.id,quotitation.statusReport)
                                     }                                   
                                 </div>
                         </div>
@@ -159,7 +155,6 @@ function SolicitudesDeAdquisicion(){
                                 <th scope="col">#</th>
                                 <th scope="col">Unidad de Gasto</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">Solicitud</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                                 </tr>

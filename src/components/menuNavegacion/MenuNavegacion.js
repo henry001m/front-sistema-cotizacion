@@ -35,31 +35,31 @@ function MenuNavegacion() {
                 setUserName(user.user.name);
                 setLogin(true);
                 user.user.permissions.forEach(permission=>{
-                    if(permission=="Ver las solicitudes de adquisición"){
+                    if(permission==="Ver las solicitudes de adquisición"){
                         setVerSolicitudesAdqui(true)
                     }
-                    if(permission=="Solicitu de aquicición"){
+                    if(permission==="Solicitu de aquicición"){
                         setRealizarSolicitudesAdqui(true)
                     }
-                    if(permission=="Enviar el correo de contización"){
+                    if(permission==="Enviar el correo de contización"){
                         setEnviarCotizacion(true)
                     }
-                    if(permission=="Todo sobre monte límite"){
+                    if(permission==="Todo sobre monte límite"){
                         setAdmiMontoLimite(true)
                     }
-                    if(permission=="Registrar unidades administrativas"){
+                    if(permission==="Registrar unidades administrativas"){
                         setUnidadesAdministrativas(true)
                     }
-                    if(permission=="Registrar unidades de gasto"){
+                    if(permission==="Registrar unidades de gasto"){
                         setUnidadesGasto(true)
                     }
-                    if(permission=="Registrar usuarios"){
+                    if(permission==="Registrar usuarios"){
                         setAdministarUsuario(true)
                     }
-                    if(permission=="Registro de empresas"){
+                    if(permission==="Registro de empresas"){
                         setEmpresa(true)
                     }
-                    if(permission=="Administar roles"){
+                    if(permission==="Administar roles"){
                         setAdimnistrarRoles(true)
                     }
                 })
