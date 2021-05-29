@@ -13,9 +13,9 @@ function ModalRegistroUnidadAdministrativa( props ){
     const [ flag, setFlag] = useState(false);
     const [ admins, setAdmins] = useState([]);
     // const [ admins, setAdmins] = useState([
-    //     {id:1 , nameAdmin:"Rodrigo Cespedes"},
-    //     {id:2 , nameAdmin:"Yurguen Pariente"},
-    //     {id:3 , nameAdmin:"Ramiro Saavedra"},
+    //     {id:1 , name:"Rodrigo Cespedes"},
+    //     {id:2 , name:"Yurguen Pariente"},
+    //     {id:3 , name:"Ramiro Saavedra"},
     // ]);
     const modalStyles={
         top:"10%",
@@ -51,8 +51,6 @@ function ModalRegistroUnidadAdministrativa( props ){
         props.updateAdministrativas();
         closeModal();
     }
-   
-
     useEffect(() => {
         const fetchData = async () => {
             try {

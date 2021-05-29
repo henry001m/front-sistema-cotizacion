@@ -1,16 +1,18 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useForm } from "react-hook-form";
-
+import { getAdmins } from '../../services/http/UserService';
 function ModalEditarUA (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    //const [ admins, setAdmins] = useState([]);
+    const [ admins, setAdmins] = useState([]);
+    const [ flag, setFlag] = useState(false);
+    // const [ admins, setAdmins] = useState([
+    //     {id:1 , name:"Rodrigo Cespedes"},
+    //     {id:2 , name:"Yurguen Pariente"},
+    //     {id:3 , name:"Ramiro Saavedra"},
+    // ]);
     //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
-    const [ admins, setAdmins] = useState([
-        {id:1 , nameAdmin:"Rodrigo Cespedes"},
-        {id:2 , nameAdmin:"Yurguen Pariente"},
-        {id:3 , nameAdmin:"Ramiro Saavedra"},
-    ]);
+    
     const modalStyles={
         top:"10%",
         transfrom: 'translate(-50%, -50%)'
@@ -18,7 +20,11 @@ function ModalEditarUA (props){
 
     const closeModal = () => {
         props.cerrarEditor()
+        updateAdmins()
         reset()
+    }
+    const updateAdmins = ()=>{
+        setFlag(!flag);
     }
 
     const onSubmit = async () => {
@@ -33,6 +39,18 @@ function ModalEditarUA (props){
             console.log( error )
         }
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdmins();
+                setAdmins(response.users);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [setAdmins,flag]);
 
     return (
         <>
@@ -71,7 +89,7 @@ function ModalEditarUA (props){
                         {
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.nameAdmin}</option>   
+                                    <option value={administrador.id}>{administrador.name}</option>   
                                 )
                             })
                         }

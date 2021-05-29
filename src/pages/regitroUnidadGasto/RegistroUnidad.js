@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { getFacultyInUse } from '../../services/http/FacultyService';
-import { getAdmins } from '../../services/http/UniGastoService';
+import { getAdminsUG } from '../../services/http/UserService';
 import { createUnidadGasto } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import './RegistroUnidad.css';
@@ -9,11 +9,13 @@ import './RegistroUnidad.css';
 const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
-    const [ admins, setAdmins] = useState([
-        {id:1 , nameAdmin:"Rodrigo Cespedes"},
-        {id:2 , nameAdmin:"Yurguen Pariente"},
-        {id:3 , nameAdmin:"Ramiro Saavedra"},
-    ]);
+    const [ admins, setAdmins] = useState([]);
+    const [ flag, setFlag] = useState(false);
+    // const [ admins, setAdmins] = useState([
+    //     {id:1 , name:"Rodrigo Cespedes"},
+    //     {id:2 , name:"Yurguen Pariente"},
+    //     {id:3 , name:"Ramiro Saavedra"},
+    // ]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
     const modalStyles={
@@ -24,7 +26,11 @@ const RegistroUnidad = (props) => {
     const closeModal = () => {
         props.cerrarModal()
         setNameUnidadGasto("")
+        updateAdmins()
         reset()
+    }
+    const updateAdmins = ()=>{
+        setFlag(!flag);
     }
 
     const onSubmit = async (data) => {
@@ -59,18 +65,18 @@ const RegistroUnidad = (props) => {
 
         fetchData();
     }, []);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await getAdmins();
-    //             setAdmins(response.administradores);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdminsUG();
+                setAdmins(response.users);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-    //     fetchData();
-    // }, []);
+        fetchData();
+    }, [setAdmins,flag]);
 
     return (
         <>
@@ -135,7 +141,7 @@ const RegistroUnidad = (props) => {
                         {
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.nameAdmin}</option>   
+                                    <option value={administrador.id}>{administrador.name}</option>   
                                 )
                             })
                         }

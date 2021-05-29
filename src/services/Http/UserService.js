@@ -46,5 +46,16 @@ export async function getAdmins() {
         console.log(error);
     }
 }
+/**usuarios que tienen el rol de jefe de unidad de gasto y no estan asignados*/
+export async function getAdminsUG() {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.get(`usersSpending/WithoutDrives`,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 

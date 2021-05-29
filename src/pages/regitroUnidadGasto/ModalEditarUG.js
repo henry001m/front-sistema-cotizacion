@@ -2,16 +2,17 @@ import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
-
+import { getAdminsUG } from '../../services/http/UserService';
 function ModalEditarUG (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    //const [ admins, setAdmins] = useState([]);
+    const [ admins, setAdmins] = useState([]);
+    const [ flag, setFlag] = useState(false);
     //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
-    const [ admins, setAdmins] = useState([
-        {id:1 , nameAdmin:"Rodrigo Cespedes"},
-        {id:2 , nameAdmin:"Yurguen Pariente"},
-        {id:3 , nameAdmin:"Ramiro Saavedra"},
-    ]);
+    // const [ admins, setAdmins] = useState([
+    //     {id:1 , name:"Rodrigo Cespedes"},
+    //     {id:2 , name:"Yurguen Pariente"},
+    //     {id:3 , name:"Ramiro Saavedra"},
+    // ]);
     const modalStyles={
         top:"10%",
         transfrom: 'translate(-50%, -50%)'
@@ -19,9 +20,13 @@ function ModalEditarUG (props){
 
     const closeModal = () => {
         props.cerrarEditor()
+        updateAdmins()
         reset()
     }
-
+    const updateAdmins = ()=>{
+        setFlag(!flag);
+    }
+    
     const onSubmit = async () => {
         try{
             // const res = await updateAdmin(props.gasto.id,idAdmin);
@@ -34,7 +39,19 @@ function ModalEditarUG (props){
             console.log( error )
         }
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdminsUG();
+                setAdmins(response.users);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
+        fetchData();
+    }, [setAdmins,flag]);
+    
     return (
         <>
         <Modal isOpen={props.abrirEditor} style={modalStyles}>
@@ -72,7 +89,7 @@ function ModalEditarUG (props){
                         {
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.nameAdmin}</option>   
+                                    <option value={administrador.id}>{administrador.name}</option>   
                                 )
                             })
                         }
