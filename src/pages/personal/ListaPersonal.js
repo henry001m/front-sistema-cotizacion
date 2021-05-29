@@ -3,11 +3,11 @@ import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
 import ModalSeleccionPersonal from './ModalSeleccionPersonal';
 import {getPersonal} from '../../services/http/UserService'
-
+import {getPersonalUG} from '../../services/http/UserService'
 function ListaPersonal(){
     const [abierto, setAbierto] = useState(false);
     const [flag, setFlag] = useState(false);
-    const [personalUA, setPersonalUA] =useState([]);
+    const [personal, setPersonal] =useState([]);
     // const [personal, setPersonal] = useState([
     //     {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
     //     {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
@@ -19,29 +19,21 @@ function ListaPersonal(){
     const cerrarModal=()=>{
         setAbierto(false);
     }
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //     try {
-    //         const response = await getPersonal();
-    //         setPersonalUA(response.users);
-    //         console.log(response);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-    // fetchData();
-    // }, [setPersonalUA,flag] );
-    
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.administrative_units_id
+        const idUnitA = user.user.administrative_units_id;
+        const idUnitS = user.user.spending_units_id;
         async function getAllUsers() {
-            const response = await getPersonal(idUnit);
-            setPersonalUA(response.users);
+            if (idUnitA != null){
+                const response = await getPersonal(idUnitA);
+                setPersonal(response.users);
+            }else{
+                const resp = await getPersonalUG(idUnitS);
+                setPersonal(resp.users);
+            }
         }
         getAllUsers();
-    }, []);
+    }, [setPersonal,flag]);
 
     return (
         <>
@@ -74,7 +66,7 @@ function ListaPersonal(){
                                 </tr>
                             </thead>
                             <tbody>
-                                {personalUA.map((user,index) => {
+                                {personal.map((user,index) => {
                                         return(
                                             <tr key={user.id}>
                                                 <td scope="row">{index+1}</td>

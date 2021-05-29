@@ -24,12 +24,23 @@ export async function createUser(user,idrol) {
         console.log(error);
     }
 }
-/**Devuelve los usuarios de una unidad*/
+/**Devuelve los usuarios de una unidad administrativa*/
 export async function getPersonal(idUnit) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
         const res = await API.get(`users/unit/administrative/${idUnit}`,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+/**Devuelve los usuarios de una unidad e gasto*/
+export async function getPersonalUG(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.get(`users/unit/spending/${idUnit}`,headers);
         return res.data;
     } catch (error) {
         console.log(error);
