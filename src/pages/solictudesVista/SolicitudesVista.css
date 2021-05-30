@@ -52,3 +52,10 @@ label.col-form-label{
 #toolbar{
   text-align:end;
 }
+
+#containerInforme{
+  height: 300px;
+  border-collapse: collapse;
+  border: 1px solid darkgrey;
+  overflow-y:auto;
+}

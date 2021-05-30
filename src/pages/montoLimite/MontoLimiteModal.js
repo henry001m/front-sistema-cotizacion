@@ -22,8 +22,8 @@ const MontoLimiteModal = (props) => {
         const idUnit = user.user.administrative_units_id
         const fecha = new Date();
         const newFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-        const res = await updateMontoLimite({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit});
-        console.log({monto:data.monto,dateStamp:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit})
+        const res = await updateMontoLimite({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit});
+        console.log({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit})
         props.updateLimitAmout();
         closeModal()
         console.log(res);

@@ -1,12 +1,5 @@
-import React from 'react'
-import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom'
-import UserImg from './../../resources/user.jpg'
-import Home from './../../pages/Home'
-import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
-import EnviarCotizacion from '../../pages/enviarFormulario/EnviarCotizacion';
+import React from 'react';
 import { PersonCircle } from 'bootstrap-icons-react';
-import DetalleSolicitud from '../../pages/solictudesVista/DetalleSolicutd';
-import MontoLimite from '../../pages/montoLimite/MontoLimite'
 import './NavAdministrador.css';
 
 function NavAdministrador() {
