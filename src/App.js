@@ -9,7 +9,7 @@ function App() {
     <Router>
        <Navbar/>
         <Main/> 
-  
+
     </Router>
   );
 }

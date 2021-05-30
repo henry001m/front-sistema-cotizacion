@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
+import { PersonCircle,BoxArrowRight, HouseDoorFill } from 'bootstrap-icons-react';
 import './MenuNavegacion.css';
 import {NavLink} from 'react-router-dom'
 
@@ -91,7 +91,7 @@ function MenuNavegacion() {
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {home &&
                         <li className="nav-container--item">
-                            <NavLink className="nav-link" to="/home">Home</NavLink>
+                            <NavLink className="nav-link" to="/home"><HouseDoorFill style={{height:'23px',width:'23px'}}/></NavLink>
                         </li>
                     }
                     {realizarSolicitudesAdqui &&
