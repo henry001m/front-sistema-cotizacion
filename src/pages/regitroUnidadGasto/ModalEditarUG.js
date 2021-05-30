@@ -1,13 +1,14 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {createUnidadGasto} from '../../services/http/UniGastoService';
+import { updateBossUG } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import { getAdminsUG } from '../../services/http/UserService';
+
 function ModalEditarUG (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ admins, setAdmins] = useState([]);
     const [ flag, setFlag] = useState(false);
-    //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
+    const [ idAdmin, setIdAdmin ] = useState("");
     // const [ admins, setAdmins] = useState([
     //     {id:1 , name:"Rodrigo Cespedes"},
     //     {id:2 , name:"Yurguen Pariente"},
@@ -27,14 +28,14 @@ function ModalEditarUG (props){
         setFlag(!flag);
     }
     
-    const onSubmit = async () => {
+    const onSubmit = async (data) => {
         try{
-            // const res = await updateAdmin(props.gasto.id,idAdmin);
-            // alert(res.message);
-            console.log("entro aca en editor");
+            console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.gasto.id);
+            const res = await updateBossUG(data.admin_id,props.gasto.id);
+            alert(res.message);
+            props.updateGastos();
             props.cerrarEditor();
             closeModal()
-            props.updateGastos();
         }catch(error){
             console.log( error )
         }
@@ -83,13 +84,14 @@ function ModalEditarUG (props){
                 <div className="form-group col-md-12">
                     <h6>Administrador de Unidad:</h6>
                     <select 
-                    name="selectAdmin"
+                    name="admin_id"
+                    {...register("admin_id")}
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.name}</option>   
+                                    <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                 )
                             })
                         }

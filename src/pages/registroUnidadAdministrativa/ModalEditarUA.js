@@ -2,22 +2,21 @@ import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useForm } from "react-hook-form";
 import { getAdmins } from '../../services/http/UserService';
+import { updateBossUA } from '../../services/http/UniAdministrativaService';
 function ModalEditarUA (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ admins, setAdmins] = useState([]);
     const [ flag, setFlag] = useState(false);
+    const [ idAdmin, setIdAdmin ] = useState("");
     // const [ admins, setAdmins] = useState([
     //     {id:1 , name:"Rodrigo Cespedes"},
     //     {id:2 , name:"Yurguen Pariente"},
     //     {id:3 , name:"Ramiro Saavedra"},
     // ]);
-    //const [ idAdmin, setIdAdmin ] = useState(props.gasto.admin[0].id)
-    
     const modalStyles={
         top:"10%",
         transfrom: 'translate(-50%, -50%)'
     }
-
     const closeModal = () => {
         props.cerrarEditor()
         updateAdmins()
@@ -26,15 +25,14 @@ function ModalEditarUA (props){
     const updateAdmins = ()=>{
         setFlag(!flag);
     }
-
-    const onSubmit = async () => {
+    const onSubmit = async (data) => {
         try{
-            // const res = await updateAdmin(props.gasto.id,idAdmin);
-            // alert(res.message);
-            console.log("entro aca en editor");
+            console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.administrativeUnit.id);
+            const res = await updateBossUA(data.admin_id,props.administrativeUnit.id);
+            alert(res.message);
+            props.updateAdministrativas();
             props.cerrarEditor();
             closeModal()
-            props.updateAdministrativas();
         }catch(error){
             console.log( error )
         }

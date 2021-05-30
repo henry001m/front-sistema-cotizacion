@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { getFacultyInUse } from '../../services/http/FacultyService';
 import { getAdminsUG } from '../../services/http/UserService';
-import { createUnidadGasto } from '../../services/http/UniGastoService';
+import { createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import './RegistroUnidad.css';
 
@@ -10,6 +10,7 @@ const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
     const [ admins, setAdmins] = useState([]);
+    const [ idAdmin, setIdAdmin ] = useState("");
     const [ flag, setFlag] = useState(false);
     // const [ admins, setAdmins] = useState([
     //     {id:1 , name:"Rodrigo Cespedes"},
@@ -26,21 +27,20 @@ const RegistroUnidad = (props) => {
     const closeModal = () => {
         props.cerrarModal()
         setNameUnidadGasto("")
+        setIdAdmin("")
         updateAdmins()
         reset()
     }
     const updateAdmins = ()=>{
         setFlag(!flag);
     }
-
     const onSubmit = async (data) => {
+        console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.admin_id);
         const res = await createUnidadGasto(data);
-        console.log(data);
         alert(res.message);
-        setNameUnidadGasto("");
         props.updateGastos();
         props.cerrarModal();
-        reset()
+        closeModal();
     };
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
@@ -53,6 +53,7 @@ const RegistroUnidad = (props) => {
             );
         } 
     };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -129,19 +130,20 @@ const RegistroUnidad = (props) => {
                                 )
                             })
                         }
-                    </select>
+                </select>
                     {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
                 </div>
                 <div className="form-group col-md-12">
                     <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
                     <select 
                     name="admin_id"
+                    {...register("admin_id")}
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
-                        {
+                        {  
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.name}</option>   
+                                    <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                 )
                             })
                         }

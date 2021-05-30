@@ -68,6 +68,7 @@ function UnidadesAdministrativas() {
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
+                                    <th scope="col">Encargado</th>
                                     <th scope="col">Editar</th>
                                     </tr>
                                 </thead>
@@ -80,6 +81,7 @@ function UnidadesAdministrativas() {
                                                 <th scope="row">{index+1}</th> */}
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
+                                                <td>{administrativeUnit.faculty}</td>
                                                 <td>{administrativeUnit.faculty}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{

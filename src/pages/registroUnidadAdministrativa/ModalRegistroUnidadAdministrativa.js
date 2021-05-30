@@ -2,7 +2,7 @@ import React, { useRef, useState,useEffect} from 'react'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { getFacultyAdmin } from '../../services/http/FacultyService';
 import { getAdmins } from '../../services/http/UserService';
-import {createUnidadAdministrativa} from '../../services/http/UniAdministrativaService';
+import { createUnidadAdministrativa } from '../../services/http/UniAdministrativaService';
 import { useForm } from 'react-hook-form';
 
 function ModalRegistroUnidadAdministrativa( props ){
@@ -12,6 +12,7 @@ function ModalRegistroUnidadAdministrativa( props ){
     const [ facultades, setFacultades ] = useState([]);
     const [ flag, setFlag] = useState(false);
     const [ admins, setAdmins] = useState([]);
+    const [ idAdmin, setIdAdmin ] = useState("");
     // const [ admins, setAdmins] = useState([
     //     {id:1 , name:"Rodrigo Cespedes"},
     //     {id:2 , name:"Yurguen Pariente"},
@@ -24,9 +25,14 @@ function ModalRegistroUnidadAdministrativa( props ){
     const closeModal = () => {
         props.closeModalRUA()
         setNameUnidadAdministrativa("")
+        setIdAdmin("")
         updateFacultades()
+        updateAdmins()
         reset()
     };
+    const updateAdmins = ()=>{
+        setFlag(!flag);
+    }
     const updateFacultades = ()=>{
         setFlag(!flag);
     }
@@ -44,8 +50,8 @@ function ModalRegistroUnidadAdministrativa( props ){
     };
 
     const saveData = async(data, e) => {
+        console.log("Unidad:",data.nameUnidadAdministrativa,"Facultad:",data.selectFacultad,"IdAdmin:",data.admin_id);
         const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
-        console.log(res);
         alert(res.message);
         props.closeModalRUA();
         props.updateAdministrativas();
@@ -123,7 +129,6 @@ function ModalRegistroUnidadAdministrativa( props ){
                                 <option value="">Seleccione la facultad</option>
                                 {
                                     facultades.map((facultad)=>{
-                                        console.log(facultad)
                                         return(
                                             <option value={facultad.id}>{facultad.nameFacultad}</option>   
                                         )
@@ -136,12 +141,13 @@ function ModalRegistroUnidadAdministrativa( props ){
                             <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
                                 <select 
                                 name="admin_id"
+                                {...register("admin_id")}
                                 className="form-control">
                                     <option value="">Seleccione Administrador</option>
                                     {
                                         admins.map((administrador)=>{
                                             return(
-                                                <option value={administrador.id}>{administrador.name}</option>   
+                                                <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                             )
                                         })
                                             }
