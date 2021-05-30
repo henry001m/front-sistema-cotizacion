@@ -3,6 +3,7 @@ import { PlusCircle, PencilSquare } from 'bootstrap-icons-react'
 import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
+import {getAdminUA} from '../../services/http/UserService'
 import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
     const modalref = useRef();
@@ -10,6 +11,7 @@ function UnidadesAdministrativas() {
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
     const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",nameAdmin:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
+    const [ admin,setAdmin] = useState({id:"",name:"",lastName:""})
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
 
@@ -39,7 +41,6 @@ function UnidadesAdministrativas() {
         };
     fetchData();
     }, [setAdministrativeUnits,flag]);
-
 
     return(
         <>
@@ -82,7 +83,8 @@ function UnidadesAdministrativas() {
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>
-                                                <td>{administrativeUnit.faculty}</td>
+                                                {/* getAdminUA(administrativeUnit.id) */}
+                                                <td>{administrativeUnit.id}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

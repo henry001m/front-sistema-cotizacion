@@ -68,5 +68,15 @@ export async function getAdminsUG() {
         console.log(error);
     }
 }
-
+/**Devuelve el admin de una unidad*/
+export async function getAdminUA(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.get(`getInfoAdmi/${idUnit}`,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
