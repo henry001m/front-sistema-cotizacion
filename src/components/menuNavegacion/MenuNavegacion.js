@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonCircle,BoxArrowRight } from 'bootstrap-icons-react';
+import { PersonCircle,BoxArrowRight, HouseDoorFill } from 'bootstrap-icons-react';
 import './MenuNavegacion.css';
 import {NavLink} from 'react-router-dom'
 
@@ -22,7 +22,7 @@ function MenuNavegacion() {
     const [decargaFormularioAdqui, setDecargaFormularioAdqui] = useState(false)
     const [admiMontoLimite, setAdmiMontoLimite] = useState(false)
     const [login, setLogin] = useState(false)
-
+    const [personal, setPersonal] = useState(false)
     const cerrarSesion = () =>{
         window.localStorage.removeItem("tokenContizacion");
         window.localStorage.removeItem("userDetails");
@@ -35,32 +35,35 @@ function MenuNavegacion() {
                 setUserName(user.user.name);
                 setLogin(true);
                 user.user.permissions.forEach(permission=>{
-                    if(permission=="Ver las solicitudes de adquisición"){
+                    if(permission==="Ver las solicitudes de adquisición"){
                         setVerSolicitudesAdqui(true)
                     }
-                    if(permission=="Solicitu de aquicición"){
+                    if(permission==="Solicitu de aquicición"){
                         setRealizarSolicitudesAdqui(true)
                     }
-                    if(permission=="Enviar el correo de contización"){
+                    if(permission==="Enviar el correo de contización"){
                         setEnviarCotizacion(true)
                     }
-                    if(permission=="Todo sobre monte límite"){
+                    if(permission==="Todo sobre monte límite"){
                         setAdmiMontoLimite(true)
                     }
-                    if(permission=="Registrar unidades administrativas"){
+                    if(permission==="Registrar unidades administrativas"){
                         setUnidadesAdministrativas(true)
                     }
-                    if(permission=="Registrar unidades de gasto"){
+                    if(permission==="Registrar unidades de gasto"){
                         setUnidadesGasto(true)
                     }
-                    if(permission=="Registrar usuarios"){
+                    if(permission==="Registrar usuarios"){
                         setAdministarUsuario(true)
                     }
-                    if(permission=="Registro de empresas"){
+                    if(permission==="Registro de empresas"){
                         setEmpresa(true)
                     }
-                    if(permission=="Administar roles"){
+                    if(permission==="Administar roles"){
                         setAdimnistrarRoles(true)
+                    }
+                    if(permission=="Ver Personal"){
+                        setPersonal(true)
                     }
                 })
             } catch (error) {
@@ -91,7 +94,7 @@ function MenuNavegacion() {
                 <ul className="nav nav-pills justify-content-center" id="navmenu">
                     {home &&
                         <li className="nav-container--item">
-                            <NavLink className="nav-link" to="/home">Home</NavLink>
+                            <NavLink className="nav-link" to="/home"><HouseDoorFill style={{height:'23px',width:'23px'}}/></NavLink>
                         </li>
                     }
                     {realizarSolicitudesAdqui &&
@@ -163,6 +166,11 @@ function MenuNavegacion() {
                     { admiMontoLimite &&
                         <li className="nav-container--item">
                             <NavLink className="nav-link" to="/montoLimite">Monto Limite</NavLink>
+                        </li>
+                    }
+                    { personal &&
+                        <li className="nav-container--item">
+                            <NavLink className="nav-link" to="/personal">Personal</NavLink>
                         </li>
                     }
                 </ul>

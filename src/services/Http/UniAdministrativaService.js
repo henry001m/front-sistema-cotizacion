@@ -42,3 +42,14 @@ export async function updateUnidadAdministrativa(id,status) {
         console.log(error);
     }
 }
+/**asignacion de administrador a una unidad de adminisrativa*/
+export async function updateBossUA(idUser,idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.put(`/assignBossesAdmin/${idUser}/${idUnit}`,{},headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
