@@ -25,7 +25,10 @@ function MontoLimite() {
                     {amount.monto}         
                 </td>
                 <td >
-                    {amount.dateStamp}         
+                    {amount.starDate}         
+                </td>
+                <td >
+                    {amount.endDate}         
                 </td>
             </tr>
         );
@@ -99,7 +102,8 @@ function MontoLimite() {
                                     <th scope="col">#</th>
                                     <th scope="col">Gestiones</th>
                                     <th scope="col">Montos limites</th>
-                                    <th scope="col">Fecha de actualización</th>
+                                    <th scope="col">Fecha de inicio</th>
+                                    <th scope="col">Fecha de finalización</th>
                                     </tr>
                                 </thead>
                                 <tbody>
