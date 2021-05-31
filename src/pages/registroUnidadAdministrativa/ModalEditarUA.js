@@ -30,6 +30,17 @@ function ModalEditarUA (props){
     const handleSelectChange = (event) => {
         setIdAdmin(event.target.value)
     };
+    // window.onload = function() {
+    //     var select = document.getElementById("admi");
+    //     var conAdmin = document.getElementById("conAdmin");
+    //     var sinAdmin = document.getElementById("sinAdmin");
+    //     if(props.administrativeUnit.admin.id == ""){
+    //         select.value = sinAdmin.innerHTML;
+    //     }else{
+    //         select.value = conAdmin.innerHTML;
+    //     }
+        
+    // };
     const onSubmit = async (data) => {
         try{
             if(idAdmin != ""){  
@@ -93,7 +104,7 @@ function ModalEditarUA (props){
                     {...register("admin_id")}
                     className="form-control"
                     onClick={handleSelectChange}>
-                        <option value="">{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option>
+                        <option id="admi" value="">{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option>
                         {
                             admins.map((administrador)=>{
                                 return(
@@ -102,6 +113,8 @@ function ModalEditarUA (props){
                             })
                         }
                     </select>
+                    {/* <option id="sinAdmin" style={{visibility:"hidden"}}>Seleccione Administrador</option>
+                    <option id="conAdmin" style={{visibility:"hidden"}}>{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option> */}
                 </div>
             </div>
             </ModalBody>

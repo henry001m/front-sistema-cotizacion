@@ -39,7 +39,7 @@ function ModalEditarUsuario( props ){
     const handleSelectChange = (event) => {
         setIdRol(event.target.value)
     };
-
+ 
     const saveData = async () => {
         try{ 
             if(idRol != 0 & idRol != ""){

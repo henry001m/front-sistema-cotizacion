@@ -39,7 +39,7 @@ function ListaEmpresa(){
                 <div className="row">
                     <div className="col-6">
                         <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                                <input className="form-control mr-sm-2" type="search" placeholder="Ingrese rubro" aria-label="Search"/>
                         </form>
                     </div>
                     <div className="col-6" align="right">

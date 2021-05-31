@@ -18,6 +18,10 @@ function ListaPersonal(){
     }
     const cerrarModal=()=>{
         setAbierto(false);
+        updatePersonal()
+    }
+    const updatePersonal = ()=>{
+        setFlag(!flag);
     }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -67,7 +71,7 @@ function ListaPersonal(){
                                     <th scope="col">Nombre</th>
                                     <th scope="col">CI</th>
                                     <th scope="col">Telefono</th>
-                                    <th scope="col">Rol</th>
+                                    {/* <th scope="col">Rol</th> */}
                                 </tr>
                             </thead>
                             <tbody>
