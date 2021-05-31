@@ -124,13 +124,13 @@ function EnviarCotizacion( props ){
                                                                     }
                                                                 })}
                                                                 value={correo}
-                                                                id={index}
+                                                                id="email"
                                                                 tabIndex={index}
-                                                                type="text" 
+                                                                type="email" 
                                                                 className="form-control"
                                                                 onChange={ onChangeEmail }
                                                             ></input>
-                                                            {errors.email && <span className="text-danger text-small d-block mb-2">{errors.email.message}</span>}
+                                                            {errors.email && <alert className="text-danger text-small d-block mb-2">{errors.email.message}</alert>}
                                                         </>
                                                     )
                                                 })}

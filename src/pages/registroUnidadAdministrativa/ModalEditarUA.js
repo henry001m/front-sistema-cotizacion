@@ -19,20 +19,28 @@ function ModalEditarUA (props){
     }
     const closeModal = () => {
         props.cerrarEditor()
+        props.updateAdministrativas()
+        setIdAdmin("")
         updateAdmins()
         reset()
     }
     const updateAdmins = ()=>{
         setFlag(!flag);
     }
+    const handleSelectChange = (event) => {
+        setIdAdmin(event.target.value)
+    };
     const onSubmit = async (data) => {
         try{
-            console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.administrativeUnit.id);
-            const res = await updateBossUA(data.admin_id,props.administrativeUnit.id);
-            alert(res.message);
-            props.updateAdministrativas();
-            props.cerrarEditor();
-            closeModal()
+            if(idAdmin != ""){  
+                console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.administrativeUnit.id);
+                const res = await updateBossUA(data.admin_id,props.administrativeUnit.id);
+                alert("Se realizo el cambio exitosamente")
+                closeModal()
+            }else{
+                alert("No selecciono un administrador diferente")
+                console.log("es el mismo id:",idAdmin)
+            }
         }catch(error){
             console.log( error )
         }
@@ -81,13 +89,15 @@ function ModalEditarUA (props){
                 <div className="form-group col-md-12">
                     <h6>Administrador de Unidad:</h6>
                     <select 
-                    name="selectAdmin"
-                    className="form-control">
-                        <option value="">Seleccione Administrador</option>
+                    name="admin_id"
+                    {...register("admin_id")}
+                    className="form-control"
+                    onClick={handleSelectChange}>
+                        <option value="">{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option>
                         {
                             admins.map((administrador)=>{
                                 return(
-                                    <option value={administrador.id}>{administrador.name}</option>   
+                                    <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                 )
                             })
                         }

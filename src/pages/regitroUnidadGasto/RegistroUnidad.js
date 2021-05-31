@@ -38,13 +38,15 @@ const RegistroUnidad = (props) => {
     const onSubmit = async (data) => {
         try{ 
             console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.idUser);
-            if(data.idUser == ""){
-                const res = await createUnidadGasto(data);
-                alert(res.message);
-            }else{
-                const res = await createUnidadGasto(data);
-                alert(res.message);
-            }
+            // if(data.idUser == ""){
+            //     const res = await createUnidadGasto(data);
+            //     alert(res.message);
+            // }else{
+            //     const res = await createUnidadGasto(data);
+            //     alert(res.message);
+            // }
+            const res = await createUnidadGasto(data);
+            alert(res.message);
             closeModal();
         }catch(error){
             console.log( error )

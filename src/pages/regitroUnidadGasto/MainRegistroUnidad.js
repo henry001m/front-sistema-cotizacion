@@ -11,6 +11,7 @@ const MainRegistroUnidad = () => {
     const [unidadesGasto, setUnidadesGasto] = useState([]);
     const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
     const [flag, setFlag] = useState(false);
+    const [administrador, setAdministrador] = useState({id:"",name:"",lastName:""})
 
     const abrirModal =()=>{
         setAbierto(true);
@@ -29,6 +30,7 @@ const MainRegistroUnidad = () => {
         try {
             const response = await getUnidadesGastos();
             setUnidadesGasto(response.spending_units);
+            console.log(unidadesGasto);
         } catch (error) {
             console.log(error);
         }
@@ -76,7 +78,7 @@ const MainRegistroUnidad = () => {
                                                 <td>{index+1}</td>
                                                 <td>{gasto.nameUnidadGasto}</td>
                                                 <td>{gasto.faculty.nameFacultad}</td>
-                                                <td>{gasto.faculty.id}</td>
+                                                <td>{gasto.admin.name} {gasto.admin.lastName}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
