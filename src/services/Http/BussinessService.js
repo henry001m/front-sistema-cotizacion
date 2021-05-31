@@ -21,3 +21,15 @@ export async function createBusiness(business) {
         console.log(error);
     }
 }
+
+/**Devuelve las empresas segun el "rubro" que se quiere buscar */
+export async function getRubro(rubro) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.post('/business/searchRubro',rubro, headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
