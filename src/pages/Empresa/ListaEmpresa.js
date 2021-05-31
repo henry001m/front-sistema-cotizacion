@@ -43,9 +43,6 @@ function ListaEmpresa(){
             fetchData();
     }, [empresas]);
 
-    /* let x = empresas.filter((a)=> {if (a.rubro=="Venta de libros"){return empresas}});
-    console.log(x)
-     */
     useEffect(() => {
         setFilteredBusniss(
             empresas.filter((empresa) =>empresa.rubro.toLowerCase().includes(search.toLowerCase())) 
