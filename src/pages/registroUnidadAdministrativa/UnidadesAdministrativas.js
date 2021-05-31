@@ -8,7 +8,7 @@ import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
     const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-    const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",nameAdmin:""}]});
+    const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
@@ -78,7 +78,7 @@ function UnidadesAdministrativas() {
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>
-                                                <td>{administrativeUnit.faculty}</td>
+                                                <td>{administrativeUnit.admin.name} {administrativeUnit.admin.lastName}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

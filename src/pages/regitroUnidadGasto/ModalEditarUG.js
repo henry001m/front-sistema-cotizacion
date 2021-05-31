@@ -9,6 +9,7 @@ function ModalEditarUG (props){
     const [ admins, setAdmins] = useState([]);
     const [ flag, setFlag] = useState(false);
     const [ idAdmin, setIdAdmin ] = useState("");
+    const [ admin, setAdmin] = useState({id:"",name:"",lastName:""})
     // const [ admins, setAdmins] = useState([
     //     {id:1 , name:"Rodrigo Cespedes"},
     //     {id:2 , name:"Yurguen Pariente"},
@@ -18,24 +19,38 @@ function ModalEditarUG (props){
         top:"10%",
         transfrom: 'translate(-50%, -50%)'
     }
-
     const closeModal = () => {
         props.cerrarEditor()
+        props.updateGastos()
         updateAdmins()
+        setIdAdmin("")
         reset()
     }
     const updateAdmins = ()=>{
         setFlag(!flag);
     }
-    
+    const handleSelectChange = (event) => {
+        setIdAdmin(event.target.value)
+    };
+    const mostrarAdmin = () =>{
+        if(props.gasto.admin.id = ""){
+            setAdmin("Seleccione Administrador")
+        }else{
+            setAdmin(props.gasto.admin)
+        }
+        return admin;
+    }
     const onSubmit = async (data) => {
         try{
-            console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.gasto.id);
-            const res = await updateBossUG(data.admin_id,props.gasto.id);
-            alert(res.message);
-            props.updateGastos();
-            props.cerrarEditor();
-            closeModal()
+            if(idAdmin != ""){  
+                console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.gasto.id);
+                const res = await updateBossUG(data.admin_id,props.gasto.id);
+                alert("Se realizo el cambio exitosamente")
+                closeModal()
+            }else{
+                alert("No selecciono un administrador diferente")
+                console.log("es el mismo id:",idAdmin)
+            }
         }catch(error){
             console.log( error )
         }
@@ -49,7 +64,6 @@ function ModalEditarUG (props){
                 console.log(error);
             }
         };
-
         fetchData();
     }, [setAdmins,flag]);
     
@@ -86,8 +100,10 @@ function ModalEditarUG (props){
                     <select 
                     name="admin_id"
                     {...register("admin_id")}
-                    className="form-control">
-                        <option value="">Seleccione Administrador</option>
+                    className="form-control"
+                    onClick={handleSelectChange}>
+                        <option value="">{props.gasto.admin.name} {props.gasto.admin.lastName}</option>
+                        {/* <option value="" > </option> */}
                         {
                             admins.map((administrador)=>{
                                 return(
