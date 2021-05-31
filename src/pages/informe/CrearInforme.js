@@ -20,9 +20,11 @@ function CrearInforme (props) {
     const[ date, setDate] = useState(new Date())
     const[ editorState, setEditorState ] = useState(EditorState.createEmpty())
     const[json, setJson] = useState(null)
+    const [message, setMessage] = useState("");
 
     const closeModal = () => {
         setDate(new Date())
+        setMessage("");
         setEditorState(EditorState.createEmpty())
         props.cerrarModal()
     }
@@ -103,7 +105,7 @@ function CrearInforme (props) {
                 console.log(error);
             }
         }else{
-            console.log("no se envio")
+            setMessage("El campo es requerido");
         }    
     }
 
@@ -137,6 +139,7 @@ function CrearInforme (props) {
                     {
                         InformeState()
                     }
+                    <span style={{color:'red'}}>{message}</span>
                     <br></br>
                     <div className="form-col" style={{textAlign:"right"}}>
                         <button className="btn btn-secondary" style={{marginRight:"5px"}} onClick={closeModal}>Cancelar</button>

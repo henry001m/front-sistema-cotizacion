@@ -24,8 +24,12 @@ const DetalleFila = (props) => {
     }
     const onSubmit = () =>{
         var error = false;
-        if(precUnit<1){
+        if(precUnit<0){
             alert("No se permite números negativos");
+            error=true;
+        }
+        if(precUnit===0){
+            alert("Cotización no valida");
             error=true;
         }
         if(!error){

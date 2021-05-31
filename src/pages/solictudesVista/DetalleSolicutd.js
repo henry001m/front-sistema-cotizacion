@@ -26,8 +26,8 @@ function DetalleSolicitud(){
         }else{
             const aux = {status:"aceptado"}
             const result = await updateStatus(id,aux);
+            history.replace("/SolicitudesDeAdquisicionAdmin")
         }
-        history.replace("/SolicitudesDeAdquisicionAdmin")
     };
 
     const rejectRequest = async ( ) => {
