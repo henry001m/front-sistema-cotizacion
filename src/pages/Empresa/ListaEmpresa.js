@@ -53,86 +53,61 @@ function ListaEmpresa(){
     }, [search,empresas]);
       
     return (
-            <div className="container" align="left">
-                <br></br>
+        <div className="container" align="left">
+            <br></br>
                 <h1>Empresas</h1>
-                <br></br>
-                <div className="row">
-                    <div className="col-6">                                
-                        <input {...register("rubro", { required: true })}
-                            className="form-control"
-                            placeholder="Search" 
-                            aria-label="Search"
-                            type="search"
-                            id = "search"
-                            onChange = {(e) => setSearch(e.target.value)}                                    
-                            />
-                                  
+            <br></br>
+            <div className="form-row">
+                <div className="col-6">                                
+                    <input {...register("rubro", { required: true })}
+                        className="form-control"
+                        placeholder="Search" 
+                        aria-label="Search"
+                        type="search"
+                        id = "search"
+                        onChange = {(e) => setSearch(e.target.value)}                                    
+                        />
+                </div>
+                <div className="col-6" align="right">
+                {/*  Boton para abrir el modal*/}
+                <Button color="success" onClick={abrirModal}><PlusCircle className="mr-1"/> Agregar Empresa</Button>
+                </div>
+            </div>
+            <br></br>
+            <div className="form-row">
+                <table className="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Empresa</th>
+                            <th scope="col">NIT</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Rubro</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
                         {filteredBusniss.map((busine, idx) => (
-                                <TableBusiness key={idx} {...busine} />
+                            <tr key={busine.id}>
+                                <td scope="row">{idx+1}</td>
+                                <td>{busine.nameEmpresa}</td>
+                                <td>{busine.nit}</td>
+                                <td>{busine.direction}</td>
+                                <td>{busine.phone}</td>
+                                <td>{busine.email}</td>
+                                <td>{busine.rubro}</td>
+                            </tr> 
                         ))}
-                
-                    </div>
-                    <div className="col-6" align="right">
-                    {/*  Boton para abrir el modal*/}
-                    <Button color="success" onClick={abrirModal}><PlusCircle className="mr-1"/> Agregar Empresa</Button>
-                    </div>
-                </div>
-                {/* Modal de registro de empresa */}
-                <ModalRegistroEmpresa abierto={ abierto } cerrarModal={ cerrarModal } updateEmpresas={ updateEmpresas }/>
-                <br></br>
-                </div>
-                );
-                }
-        
-    const TableBusiness = (props) => {
-        const [count, setCount] = useState(0);
-            return(
-                <div className="form-register">             
-                    <div className="form-row">
-                        <table className="table table-striped" >
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Empresa</th>
-                                    <th scope="col">NIT</th>
-                                    <th scope="col">Dirección</th>
-                                    <th scope="col">Telefono</th>
-                                    <th scope="col">Correo</th>
-                                    <th scope="col">Rubro</th>
-                                </tr>
-                            </thead>
-                            
-                            <tbody>
-                                
-                               {/*  {props.empresas.map((empresa,index) => {
-                                        return(
-                                            <tr key={empresa.id}>
-                                                <td scope="row">{index+1}</td>
-                                                <td>{empresa.nameEmpresa}</td>
-                                                <td>{empresa.nit}</td>
-                                                <td>{empresa.direction}</td>
-                                                <td>{empresa.phone}</td>
-                                                <td>{empresa.email}</td>
-                                                <td>{empresa.rubro}</td>
-                                            </tr>
-                                        );
-                                })} */}
-                                <tr key={props.id}>
-                                        <td scope="row">{count+1}</td>
-                                        <td>{props.nameEmpresa}</td>
-                                        <td>{props.nit}</td>
-                                        <td>{props.direction}</td>
-                                        <td>{props.phone}</td>
-                                        <td>{props.email}</td>
-                                        <td>{props.rubro}</td>
-                                  </tr> 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                )
-        }
-
+                    </tbody>
+                </table>
+            </div>
+            {/* Modal de registro de empresa */}
+            <ModalRegistroEmpresa abierto={ abierto } cerrarModal={ cerrarModal } updateEmpresas={ updateEmpresas }/>
+            <br></br>
+        </div>
+    );
+}
 
 export default ListaEmpresa
