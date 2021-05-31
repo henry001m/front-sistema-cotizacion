@@ -28,7 +28,6 @@ function DetalleSolicitud(){
             const result = await updateStatus(id,aux);
             history.replace("/SolicitudesDeAdquisicionAdmin")
         }
-        
     };
 
     const rejectRequest = async ( ) => {

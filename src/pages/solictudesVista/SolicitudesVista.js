@@ -21,9 +21,13 @@ function SolicitudesVista(){
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
         const idUnit = user.user.administrative_units_id
         async function getAllQuotitations() {
-            const result = await getQuotitationAdministrativeUnit(idUnit);
-            const resultQuotitations=result.request_quotitations;
-            setQuotitations(resultQuotitations);
+            try {
+                const result = await getQuotitationAdministrativeUnit(idUnit);
+                const resultQuotitations=result.request_quotitations;
+                setQuotitations(resultQuotitations);
+            } catch (error) {
+                console.log(error)
+            }
         }
         getAllQuotitations();
         //eslint-disable-next-line
@@ -66,13 +70,13 @@ function SolicitudesVista(){
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
-                    <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir</a>
+                    <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir cotización</a>
                 </button>                                    
             );
         }else{
             return(
                 <button className="dropdown-item" disabled>
-                    <Printer/> Imprimir
+                    <Printer/> Imprimir cotización
                 </button>
             );
         }

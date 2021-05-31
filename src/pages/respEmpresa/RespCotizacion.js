@@ -38,7 +38,7 @@ function RespCotizacion(props) {
         setCotizados(cotizados);
     }
     const salirHome = ()=>{
-        history.push("/");
+        history.push("/ingresoCodigo");
     }
     const onSubmit = async (data) =>{
         data.detalles=cotizados;

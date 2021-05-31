@@ -50,7 +50,7 @@ function NavSuperusuario() {
                         <a className="nav-link" href="/unidadDeGasto">Unidad de Gasto</a>
                     </li>
                     <li className="nav-container--item">
-                        <a className="nav-link" href="">Empresas</a>
+                        <a className="nav-link" type="button" href="/empresas">Empresas</a>
                     </li>
                     <li className="nav-container--item">
                         <a className="nav-link" href="">Descargar Formulario</a>
