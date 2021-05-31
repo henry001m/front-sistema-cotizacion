@@ -9,7 +9,7 @@ const MainRegistroUnidad = () => {
     const [abierto, setAbierto] = useState(false);
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [unidadesGasto, setUnidadesGasto] = useState([]);
-    const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",nameAdmin:""}]});
+    const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
     const [flag, setFlag] = useState(false);
 
     const abrirModal =()=>{
@@ -76,7 +76,7 @@ const MainRegistroUnidad = () => {
                                                 <td>{index+1}</td>
                                                 <td>{gasto.nameUnidadGasto}</td>
                                                 <td>{gasto.faculty.nameFacultad}</td>
-                                                <td>{gasto.administrativeUnit.name}</td>
+                                                <td>{gasto.faculty.id}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

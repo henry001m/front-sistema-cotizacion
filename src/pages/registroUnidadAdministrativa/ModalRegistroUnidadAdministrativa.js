@@ -24,6 +24,7 @@ function ModalRegistroUnidadAdministrativa( props ){
     }
     const closeModal = () => {
         props.closeModalRUA()
+        props.updateAdministrativas();
         setNameUnidadAdministrativa("")
         setIdAdmin("")
         updateFacultades()
@@ -50,12 +51,20 @@ function ModalRegistroUnidadAdministrativa( props ){
     };
 
     const saveData = async(data, e) => {
-        console.log("Unidad:",data.nameUnidadAdministrativa,"Facultad:",data.selectFacultad,"IdAdmin:",data.admin_id);
-        const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad});
-        alert(res.message);
-        props.closeModalRUA();
-        props.updateAdministrativas();
-        closeModal();
+        try{ 
+            console.log("Unidad:",data.nameUnidadAdministrativa,"Facultad:",data.selectFacultad,"IdAdmin:",data.idUser);
+            if(data.idUser == ""){
+                const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
+                alert("Registro Exitoso")
+            }else{
+                const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
+                alert(res.message);
+            }
+            closeModal();
+        }catch(error){
+            console.log( error )
+        }
+
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -140,8 +149,8 @@ function ModalRegistroUnidadAdministrativa( props ){
                         <div className="form-group col-md-12">
                             <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
                                 <select 
-                                name="admin_id"
-                                {...register("admin_id")}
+                                name="idUser"
+                                {...register("idUser")}
                                 className="form-control">
                                     <option value="">Seleccione Administrador</option>
                                     {

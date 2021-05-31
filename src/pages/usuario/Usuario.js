@@ -3,16 +3,26 @@ import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
-
+import {Button} from 'reactstrap';
 function Usuario(){
 
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
-    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[{id:"",nameRol:""}]})
+    const [ isShowModalAgregarU, setIsShowModalAgregarU ] = useState(false)
+    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:""})
 
     const updateUsers = ()=>{
         setFlag(!flag);
+    }
+    const openModalAgregarU= () => {
+        setIsShowModalAgregarU( true );
+    }
+    const CloseModalEditarU = () => {
+        setIsShowModalEditarU( false );
+    };
+    const CloseModalAgregarU = () => {
+        setIsShowModalAgregarU( false );
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -26,11 +36,7 @@ function Usuario(){
     };
 
     fetchData();
-    }, [setUsers,flag]);
-
-    const CloseModalEditarU = () => {
-        setIsShowModalEditarU( false );
-    };
+    }, [setUsers,flag]);;
 
     return(
         <>
@@ -45,9 +51,10 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <ModalAgregarUsuario updateUsers={updateUsers}/>
+                    <Button color="success" onClick={openModalAgregarU}><PlusCircle className="mr-1"/>Nuevo</Button>
                     </div>
                 </div>
+                <ModalAgregarUsuario isShowModalAgregarU={ isShowModalAgregarU } CloseModalAgregarU={ CloseModalAgregarU } updateUsers={ updateUsers }/>
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">

@@ -26,6 +26,7 @@ const RegistroUnidad = (props) => {
 
     const closeModal = () => {
         props.cerrarModal()
+        props.updateGastos();
         setNameUnidadGasto("")
         setIdAdmin("")
         updateAdmins()
@@ -35,12 +36,19 @@ const RegistroUnidad = (props) => {
         setFlag(!flag);
     }
     const onSubmit = async (data) => {
-        console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.admin_id);
-        const res = await createUnidadGasto(data);
-        alert(res.message);
-        props.updateGastos();
-        props.cerrarModal();
-        closeModal();
+        try{ 
+            console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.idUser);
+            if(data.idUser == ""){
+                const res = await createUnidadGasto(data);
+                alert("Registro Exitoso")
+            }else{
+                const res = await createUnidadGasto(data);
+                alert(res.message);
+            }
+            closeModal();
+        }catch(error){
+            console.log( error )
+        }
     };
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
@@ -136,8 +144,8 @@ const RegistroUnidad = (props) => {
                 <div className="form-group col-md-12">
                     <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
                     <select 
-                    name="admin_id"
-                    {...register("admin_id")}
+                    name="idUser"
+                    {...register("idUser")}
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {  

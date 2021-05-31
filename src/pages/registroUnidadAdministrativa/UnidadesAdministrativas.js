@@ -1,26 +1,20 @@
+  
 import React, { useState, useRef, useEffect } from 'react'
 import { PlusCircle, PencilSquare } from 'bootstrap-icons-react'
 import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
-import {getAdminUA} from '../../services/http/UserService'
 import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
-    const modalref = useRef();
     const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
     const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",nameAdmin:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
-    const [ admin,setAdmin] = useState({id:"",name:"",lastName:""})
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
 
     const closeModalRUA = () => {
         setIsShowModalRegistroUA( false );
-    };
-    const closeModal = () => {
-        reset()
-        modalref.current.closeModal()
     };
    const cerrarEditor = () => {
         setAbrirEditor( false );
@@ -41,6 +35,7 @@ function UnidadesAdministrativas() {
         };
     fetchData();
     }, [setAdministrativeUnits,flag]);
+
 
     return(
         <>
@@ -83,8 +78,7 @@ function UnidadesAdministrativas() {
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>
-                                                {/* getAdminUA(administrativeUnit.id) */}
-                                                <td>{administrativeUnit.id}</td>
+                                                <td>{administrativeUnit.faculty}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

@@ -31,10 +31,15 @@ function ListaPersonal(){
                 const resp = await getPersonalUG(idUnitS);
                 setPersonal(resp.users);
             }
+            // if(idUnitA != null && idUnitS != null){
+            //     const response = await getPersonal(idUnitA);
+            //     setPersonal(response.users);
+            //     const resp = await getPersonalUG(idUnitS);
+            //     setPersonal(resp.users);
+            // }
         }
         getAllUsers();
     }, [setPersonal,flag]);
-
     return (
         <>
             <div className="container" align="left">
@@ -67,15 +72,15 @@ function ListaPersonal(){
                             </thead>
                             <tbody>
                                 {personal.map((user,index) => {
-                                        return(
-                                            <tr key={user.id}>
-                                                <td scope="row">{index+1}</td>
-                                                <td>{user.name} {user.lastName}</td>
-                                                <td>{user.ci}</td>
-                                                <td>{user.phone}</td>
-                                                <td>{user.userRol}</td>
-                                            </tr>
-                                        );
+                                    return(
+                                        <tr key={user.id}>
+                                            <td scope="row">{index+1}</td>
+                                            <td>{user.name} {user.lastName}</td>
+                                            <td>{user.ci}</td>
+                                            <td>{user.phone}</td>
+                                            <td>{user.userRol}</td>
+                                        </tr>
+                                    );
                                 })}
                             </tbody>
                         </table>

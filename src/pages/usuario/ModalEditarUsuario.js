@@ -8,17 +8,22 @@ import './Usuario.css'
 
 function ModalEditarUsuario( props ){
 
-    const {register, formState: { errors }, handleSubmit, reset } = useForm();
-
-    const [rols, setRols ] = useState([])
-    const [ idRol, setIdRol ] = useState(props.user.userRol[0].id)
-    const [ rolUser, setRolUser ] = useState({value:props.user.userRol[0].id, nameRol:props.user.userRol[0].nameRol})
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const [ rols, setRols ] = useState([])
+    const [ idRol, setIdRol ] = useState("")
+    // const [ rolUser, setRolUser ] = useState({value:props.user.userRol[0].id, nameRol:props.user.userRol[0].nameRol})
+    const [flag, setFlag] = useState(false);
 
     const closeModal = () => {
         reset()
+        updateRoles()
+        setIdRol("")
+        props.updateUsers()
         props.CloseModalEditarU()
     };
-
+    const updateRoles = ()=>{
+        setFlag(!flag);
+    }
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -28,20 +33,24 @@ function ModalEditarUsuario( props ){
             console.log(error);
         }
     };
-
     fetchData();
-    }, []);
+    }, [setRols,flag]);
 
     const handleSelectChange = (event) => {
         setIdRol(event.target.value)
     };
 
     const saveData = async () => {
-        try{
-            const result = await updateRolUser(props.user.id,idRol);
-            props.CloseModalEditarU()
+        try{ 
+            if(idRol != 0 & idRol != ""){
+                const result = await updateRolUser(props.user.id,idRol);
+                alert("Se realizo el cambio exitosamente");
+                console.log("entra al registrar el id",idRol)  
+            }else{
+                alert("No selecciono un rol diferente")
+                console.log("es el mismo id:",idRol)
+            }
             closeModal()
-            props.updateUsers()
         }catch(error){
             console.log( error )
         }
@@ -133,27 +142,23 @@ function ModalEditarUsuario( props ){
                         ></input> 
                     </div>
                     <div className="form-group col-md-6">
-                            <label>Rol de Usuario:</label>
+                        <h6>Rol de Usuario:</h6>
                             <select 
-                            name="selectFacultad"
-                            {...register("selectFacultad",{
-                                required:"Seleccione un rol"
-                            })}
-                            // defaultValue={{value:props.user.userRol[0].id, label:props.user.userRol[0].nameRol}}
+                            name="selectRol"
+                            {...register("selectRol",{})}
                             className="form-control"
                             onClick={handleSelectChange}>
-                                <option value="">{props.user.userRol}</option>
+                                <option value="0">{props.user.userRol}</option>
                                 {
                                     rols.map((role, index)=>{
                                          if(role.nameRol != props.user.userRol){
                                             return(
                                                 <option value={role.id} key={index}>{role.nameRol}</option>   
                                             )
-                                        }
+                                         }
                                     })
                                 }
                             </select>
-                            {errors.selectFacultad && <span className="text-danger text-small d-block mb-2">{errors.selectFacultad.message}</span>}
                         </div>
                     </div>
                 </ModalBody>
