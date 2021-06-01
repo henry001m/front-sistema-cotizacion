@@ -3,55 +3,59 @@ import { BagPlusFill } from 'bootstrap-icons-react';
 import OfertaModal from './OfertaModal';
 
 const DetalleFila = (props) => {
-
-    const [disponible, setDisponible] = useState(false);
     const [total, setTotal] = useState(0);
     const [precUnit, setPrecUnit] = useState(0);
     const [abierto, setAbierto] = useState(false);
-
+    const [flagCotizar, setFlagCotizar] = useState(true);
+    const [filaCotizada, setFilaCotizada] = useState("");
     const abrirModal =()=>{
         setAbierto(true);
     }
     const cerrarModal=()=>{
         setAbierto(false);
     }
-    const disponibleItem = ()=>{
-        setDisponible(!disponible);
-    }
     const calcularTotal = (e)=>{
-        setPrecUnit(e.target.value*1);
+        setPrecUnit(e.target.value);
         setTotal(e.target.value*props.detalle.amount);
     }
     const onSubmit = () =>{
         var error = false;
         if(precUnit<0){
-            alert("No se permite números negativos");
             error=true;
         }
         if(precUnit===0){
-            alert("Cotización no valida");
+            error=true;
+        }
+        if(precUnit===""){
             error=true;
         }
         if(!error){
-            const data = {request_details_id:props.detalle.id,unitPrice:precUnit,totalPrice:total,amount:props.detalle.amount,unitMeasure:props.detalle.unitMeasure,description:props.detalle.description,disponible:disponible}
+            const data = {request_details_id:props.detalle.id,unitPrice:parseFloat(precUnit),totalPrice:total}
             props.detallesCotizado(data);
+            setFilaCotizada("table-success")
+            setFlagCotizar(!flagCotizar);
         }
     };
+    const calcelarCotizado = ()=>{
+        setPrecUnit(0);
+        setTotal(0);
+        props.elimiarCotizado(props.detalle.id);
+        setFilaCotizada("")
+        setFlagCotizar(!flagCotizar);
+    }
     return (
         <>
             <OfertaModal abierto={abierto} cerrarModal={cerrarModal}/>
-            <tr>
+            <tr className={filaCotizada}>
                 <td>{props.index+1}</td>
-                <td><input onChange={disponibleItem} type="checkbox" style={{width:'20px',height:'20px'}}/></td>
-                <td>{props.detalle.amount}</td>
+                <td style={{textAlign:'center'}}>{props.detalle.amount}</td>
                 <td>{props.detalle.unitMeasure}</td>
                 <td>{props.detalle.description}</td>
-                {disponible && <td><input className="form-control" min="0" type="number" onChange={calcularTotal}/></td>}
-                {disponible && <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>}
-                {!disponible && <td><input className="form-control" disabled /></td>}
-                {!disponible && <td><input className="form-control" disabled/> </td>}
-                <td><button style={{border:"none",}} onClick={abrirModal}><BagPlusFill style={{color:'orange', fontSize:'25px'}}/></button></td>
-                <td><button type="submit" style={{border:"none",}} className="btn btn-primary" onClick={onSubmit}>Agregar</button></td>
+                <td><input className="form-control"  value={precUnit} type="number" onChange={calcularTotal}/></td>
+                <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>
+                <td style={{textAlign:'center'}}><BagPlusFill style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>
+                {flagCotizar &&<td><button style={{border:"none",}} className="btn btn-primary btn-sm" onClick={onSubmit}>Guardar</button></td>}
+                {!flagCotizar&&<td><button style={{border:"none",}} className="btn btn-danger btn-sm" onClick={calcelarCotizado}>Cancelar</button></td>}
             </tr>
         </>
     )

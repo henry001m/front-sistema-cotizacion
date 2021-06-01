@@ -3,7 +3,9 @@ import { useHistory, useParams } from 'react-router-dom'
 import { getRequest,updateStatus } from '../../services/http/QuotitationService'
 import { getFileNames } from '../../services/http/FileService'
 import VerArchivos from '../verArchivos/VerArchivos'
+import swal from 'sweetalert'
 import './SolicitudesVista.css'
+import CrearInforme from '../informe/CrearInforme'
 
 function DetalleSolicitud(){
     const {id} = useParams();
@@ -18,6 +20,7 @@ function DetalleSolicitud(){
     const [btnActivo, setBtnActivo]=useState(false)
     const [disabledVerArchivos, setDisabledVerArchivos] = useState(true)
     const [montoTope, setMontoTope] = useState(0)
+    const [isShowModalInforme, setIsShowModalInforme] = useState(false)
 
     let history = useHistory();
     const acceptRequest = async ( ) => {
@@ -40,6 +43,28 @@ function DetalleSolicitud(){
         history.replace("/SolicitudesDeAdquisicionAdmin")
 
     };
+
+    const alertMessgeInforme = () => {
+        swal({
+            title: "¿Estas seguro?",
+            text: "Para cambiar el estado de una solicitud se debera agregar un informe",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                console.log("se debe abrir el modal")
+                setIsShowModalInforme(true)
+            } else {
+                console.log("no pasa nada")
+            }
+          });
+    };
+
+    const cerrarModalInforme=()=>{
+        setIsShowModalInforme(false);
+    }
 
     const closeModal = () => {
         setIsShowModalFile(false)
@@ -166,7 +191,7 @@ function DetalleSolicitud(){
                             }
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ rejectRequest}> Rechazar solicitud </button>
+                                    <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ alertMessgeInforme }> Rechazar solicitud </button>
                                     <button type="button" className="btn btn-success"  id="btnV" disabled={!btnActivo} onClick={ acceptRequest}> Aceptar Solicitud </button>
                                 </div>
                             </div>
@@ -178,6 +203,13 @@ function DetalleSolicitud(){
                     isShowModalFile={isShowModalFile}
                     closeModal={closeModal}
                     id={id}    
+                />
+                <CrearInforme
+                        id={id}
+                        abierto={isShowModalInforme} 
+                        cerrarModal={cerrarModalInforme}
+                        report={null}
+                        rejectRequest={rejectRequest}
                 />
             </div>
         </>

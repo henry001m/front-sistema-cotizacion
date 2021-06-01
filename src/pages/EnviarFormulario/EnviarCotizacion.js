@@ -3,7 +3,7 @@ import './EnviarCotizacion.css'
 import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
 import { PlusCircle} from 'bootstrap-icons-react'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 
 function EnviarCotizacion( props ){
@@ -13,11 +13,13 @@ function EnviarCotizacion( props ){
     const [espera, setEspera] = useState("")
     /**esta es la lista de los emails */
     const [correos, setCorreos ] = useState([""])
+    const [errorsCorreos, setErrorsCorreos] = useState([""])
 
     const addEmail = () => {
         if(correos.length<5){
             setCorreos([...correos,""])
             setEmailMessage({...emailMessage,emails:correos});
+            setErrorsCorreos([...errorsCorreos,""])
         }
     };
 
@@ -55,6 +57,8 @@ function EnviarCotizacion( props ){
         props.cerrarModal()
         setEmailMessage({emails:"", description:""})
         setCorreos([""])
+        setErrorsCorreos([""])
+        setEspera("")
         reset()
     }
 
@@ -77,16 +81,40 @@ function EnviarCotizacion( props ){
         }
     };
 
-    const validateEmail = (e) => {
+    const validateEmail = (e, index) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-        if(/@/.test(e)){
-            if (reg.exec(e)!=null) {
-                return true
+        if(e!=""){
+            console.log(/@/.test(e))
+            if(e.length>10){
+                if(/@/.test(e)){
+                    if (reg.exec(e)!=null) {
+                        const aux = errorsCorreos
+                        aux[index]=""
+                        setErrorsCorreos(aux)
+                        return true
+                    }else{
+                        const aux = errorsCorreos
+                        aux[index]="Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                        setErrorsCorreos(aux)
+                        return false
+                    }
+                }else{
+                    const aux = errorsCorreos
+                    aux[index]="Este campo debe tener el carácter @"
+                    setErrorsCorreos(aux)
+                    return false
+                }
             }else{
-                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                const aux = errorsCorreos
+                aux[index]="Este campo debe tener mínimo 11 caracteres"
+                setErrorsCorreos(aux)
+                return false
             }
         }else{
-            return "Este campo debe tener el carácter @"
+            const aux = errorsCorreos
+            aux[index]="Este campo es requerido"
+            setErrorsCorreos(aux)
+            return false
         }
     };
 
@@ -114,23 +142,18 @@ function EnviarCotizacion( props ){
                                                             <input
                                                                 name={`correo[${index}]`}
                                                                 {...register(`correo[${index}]`,{
-                                                                    required:"Campo requerido",
                                                                     validate:{
-                                                                        value:(value)=>validateEmail(value)
-                                                                    },
-                                                                    minLength:{
-                                                                        value:11,
-                                                                        message:"Este campo debe tener mínimo 11 caracteres"
+                                                                        value:(value)=>validateEmail(value, index)
                                                                     }
                                                                 })}
                                                                 value={correo}
                                                                 id="email"
                                                                 tabIndex={index}
-                                                                type="email" 
+                                                                type="text" 
                                                                 className="form-control"
                                                                 onChange={ onChangeEmail }
                                                             ></input>
-                                                            {errors.email && <alert className="text-danger text-small d-block mb-2">{errors.email.message}</alert>}
+                                                            <span style={{color:"#dc3545"}}>{ errorsCorreos[index] }</span>
                                                         </>
                                                     )
                                                 })}
