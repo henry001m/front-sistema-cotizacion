@@ -36,16 +36,19 @@ function ListaEmpresa(){
             try {
                 const response = await getEmpresas();
                 setEmpresas(response.business);
+                
             } catch (error) {
                 console.log(error);
             }
             };
             fetchData();
-    }, [empresas]);
+    }, []);
 
     useEffect(() => {
         setFilteredBusniss(
-            empresas.filter((empresa) =>empresa.rubro.toLowerCase().includes(search.toLowerCase())) 
+            empresas.filter((empresa) =>
+                empresa.rubro.toLowerCase().includes(search.toLowerCase())
+            ) 
         );
     }, [search,empresas]);
       
