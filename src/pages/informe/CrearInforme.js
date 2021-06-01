@@ -94,8 +94,10 @@ function CrearInforme (props) {
         setJson(editorState.getCurrentContent())
         const text = convertToRaw(editorState.getCurrentContent()).blocks[0].text
         if(text.length>0){
-            console.log("se envio")
             try {
+                if(props.rejectRequest){
+                    props.rejectRequest()
+                }
                 const result = await createReport(htm);
                 console.log(result);
                 alert(result.message)
