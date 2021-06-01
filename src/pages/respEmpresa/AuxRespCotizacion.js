@@ -9,18 +9,14 @@ import { useHistory } from 'react-router-dom';
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
-    const [empresa, setEmpresa] = useState("");
+    const [empresa, setEmpresa] = useState({nameEmpresa:"Sin nombre"});
     const [detalles, setDetalles] = useState([]);
     const [fechaSolic, setFechaSolic] = useState("");
     const [fechaMin, setFechaMin] = useState("");
     const [cotizados, setCotizados] = useState([]);
     const [companyCode, setCompanyCode] = useState({});
-    const [message, setMessage] = useState("");
-    const [empresaId, setEmpresaId] = useState(0);
-    const [flag, setFlag] = useState(false);
 
     const detallesCotizado =(dato)=>{
-        setMessage("");
         var yaExiste = false;
         cotizados.forEach(detalle => {
             if(detalle.request_details_id===dato.request_details_id){
@@ -33,45 +29,29 @@ function RespCotizacion(props) {
             }
         }
     }
-    const elimiarCotizado =(id)=>{
-        var index = 0;
-        var indexEncotrado;
-        cotizados.forEach((cotizado) => {
-            if(cotizado.request_details_id === id){
-                indexEncotrado=index
-            }
-            index++
-        });
-        cotizados.splice(indexEncotrado,1);
+    const elimiarCotizado =(index)=>{
+        cotizados.splice(index,1);
         setCotizados(cotizados);
     }
     const salirHome = ()=>{
         history.push("/ingresoCodigo");
     }
     const onSubmit = async (data) =>{
-        data.detalles=cotizados;
+        console.log(data);
+        /* data.detalles=cotizados;
         data.company_codes_id=companyCode.id;
         data.answerDate=new Date().toISOString().substr(0,10);
-        data.nameEmpresa=empresa;
-        data.email=companyCode.email;
-        data.empresaId = empresaId;
         try {
             if(cotizados.length>0){
-                console.log(data);
                 document.getElementById('btnEnviar').disabled=true;
                 const res = await registrarCotizacion(data);
                 alert(res.response.message);
                 salirHome();
-            }else{
-                setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
             }
         } catch (error) {
             console.log(error)
-        }
+        } */
     };
-    const registraNombreEmpresa=(e)=>{
-        setEmpresa(e.target.value);
-    }
     const fechaDeHoy = () => {
         let hoy = new Date();
         var dia=hoy.getDate();
@@ -88,8 +68,7 @@ function RespCotizacion(props) {
         const {data} = props.location;
         setCompanyCode({id:data.id,email:data.email,request_quotitations_id:data.request_quotitations_id});
         if(data.empresa){
-            setEmpresaId(data.empresa.id);
-            setEmpresa(data.empresa.nameEmpresa);
+            setEmpresa(data.empresa);
         }
         const tiempoTranscurrido = Date.now();
         const hoy = new Date(tiempoTranscurrido);
@@ -115,8 +94,7 @@ function RespCotizacion(props) {
                             <div className="form-row">
                                     <div className="form-group col-md-4">
                                         <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input autoFocus  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
-                                        {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                        <input {...register("nameEmpresa")} value={empresa.nameEmpresa} type="text" className="form-control form-control-sm"></input>
                                     </div>
                                     <div className="form-group col-md-4">
                                         <label>Validez de la oferta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
@@ -151,26 +129,32 @@ function RespCotizacion(props) {
                                     <th width="40%" scope="col">Destalle</th>
                                     <th width="12%" scope="col">Precio Unit.</th>
                                     <th width="13%" scope="col">Precio total</th>
-                                    <th width="6%" scope="col">Oferta</th>
-                                    <th width="6%" scope="col">Cotizar</th>
+                                    <th width="5%" scope="col">Oferta</th>
+                                    <th width="4%" scope="col">Cotizar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                     {
                                         detalles.map((detalle,index)=>{
                                             return(
-                                                    <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} setMessage={setMessage} elimiarCotizado={elimiarCotizado} detalle={detalle} index={index} register={register}/>
+                                                    <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} detalle={detalle} index={index} register={register}/>
+                                                )
+                                        })
+                                    }
+                                    {
+                                        cotizados.map((detalle,index)=>{
+                                            return(
+                                                    <DetalleCotizado key={detalle.request_details_id} detalle={detalle} index={index} elimiarCotizado={elimiarCotizado}/>
                                                 )
                                         })
                                     }
                             </tbody>
                             </table>
-                            <div style={{textAlign:'right',width:'100%'}}><span style={{color:'red'}}>{message}</span></div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
                                     <textarea {...register("observacion",{maxLength:200})} type="text" className="form-control"></textarea>
-                                    {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                    {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de caracteres 200</span>}
                                 </div>
                             </div>
                             <div className="form-row" >

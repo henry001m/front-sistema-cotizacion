@@ -13,7 +13,7 @@ const DetalleCotizado = (props) => {
                 <td>{props.detalle.description}</td>
                 <td>{props.detalle.unitPrice}</td>
                 <td>{props.detalle.totalPrice}</td>
-                <td><button style={{border:"none",}} className="btn btn-primary" onClick={quitarDetalle}>Quitar</button></td>
+                <td><button style={{border:"none",}} className="btn btn-primary btn-sm" onClick={quitarDetalle}>Quitar</button></td>
             </tr> 
         </>
     )

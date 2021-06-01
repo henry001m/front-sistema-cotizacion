@@ -58,7 +58,7 @@ function ListaEmpresa(){
                 <div className="col-6">                                
                     <input {...register("rubro", { required: true })}
                         className="form-control"
-                        placeholder="Search" 
+                        placeholder="Ingrese rubro" 
                         aria-label="Search"
                         type="search"
                         id = "search"
