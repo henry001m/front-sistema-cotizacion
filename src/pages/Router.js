@@ -16,6 +16,7 @@ import ListaEmpresa from './empresa/ListaEmpresa'
 import ListaRoles from './rol/ListaRoles'
 import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
+import Cotizaciones from './cotizaciones/Cotizaciones';
 
 
 const Router = () => {
@@ -43,6 +44,8 @@ const Router = () => {
                 {/* Empresa respuesta de cotizacion */}
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
                 <Route exact path='/ingresoCodigo' component={ IngresoCodigo }/>
+                {/**Cotizaciones */}
+                <Route exact path='/cotizaciones' component={ Cotizaciones }/>
             </Switch>
         </div>
     )
