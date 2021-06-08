@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { EyeFill, PlusCircle } from 'bootstrap-icons-react'
+import { useHistory } from 'react-router-dom'
 
 function Cotizaciones() { 
 
     const [ quotitations, setQuotitations ] = useState([{id:1, bussiness:"dumbo", items:4,total:450}])
-
+    let history = useHistory()
     return(
         <>
             <div className="container" align="left" style={{marginBottom:"100px"}}>
@@ -42,7 +43,7 @@ function Cotizaciones() {
                                             <td>{quotitation.bussiness}</td>
                                             <td>{quotitation.items}</td>
                                             <td>{quotitation.total}</td>
-                                            <td><button className="btn btn-primary"><EyeFill/></button></td>
+                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${quotitation.id}`)}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}
