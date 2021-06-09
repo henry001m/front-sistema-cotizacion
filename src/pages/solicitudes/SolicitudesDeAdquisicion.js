@@ -108,6 +108,9 @@ function SolicitudesDeAdquisicion(){
                 <td>
                     {quotitation.status}         
                 </td>
+                <td>
+                    {""/*quotitation.statusQuotitation*/}         
+                </td>
                 <td >
                     <li className="nav-container--item dropdown">
                         <div className="dropdown">
@@ -155,7 +158,8 @@ function SolicitudesDeAdquisicion(){
                                 <th scope="col">#</th>
                                 <th scope="col">Unidad de Gasto</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">Estado</th>
+                                <th scope="col">Estado de Solicitud</th>
+                                <th scope="col">Estado de Cotización</th>
                                 <th scope="col">Acciones</th>
                                 </tr>
                             </thead>

@@ -90,7 +90,7 @@ function VerCotizacion(){
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
-                        <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace("/cotizaciones")}}>Cerrar</button>
+                        <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace(`/cotizaciones/${id}`)}}>Cerrar</button>
                     </div>
                 </div>
             </div>

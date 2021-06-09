@@ -25,7 +25,7 @@ export async function getQuotitationSpendingUnit(idUnit) {
     }
 }
 
-/**devuelve las cotizaciones de una unidad Aministrativa*/
+/**devuelve las soliciudes de cotizaciones de una unidad Aministrativa*/
 export async function getQuotitationAdministrativeUnit(idUnit) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};

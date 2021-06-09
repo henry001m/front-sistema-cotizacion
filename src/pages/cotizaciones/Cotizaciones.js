@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { EyeFill, PlusCircle } from 'bootstrap-icons-react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 function Cotizaciones() { 
 
+    const id = useParams();
     const [ quotitations, setQuotitations ] = useState([{id:1, bussiness:"dumbo", items:4,total:450}])
     let history = useHistory()
     return(
