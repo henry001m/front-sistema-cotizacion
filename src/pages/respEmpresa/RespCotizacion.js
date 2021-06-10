@@ -3,13 +3,15 @@ import './RespCotizacion.css'
 import { useForm } from "react-hook-form";
 import {detailsQuotitation,registrarCotizacion} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
-import DetalleCotizado from './DetalleCotizado';
 import { useHistory } from 'react-router-dom';
 
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
+    //datos de la empresa
     const [empresa, setEmpresa] = useState("");
+    const [nit, setNit] = useState("");
+    const [rubro, setRubro] = useState("");
     const [detalles, setDetalles] = useState([]);
     const [fechaSolic, setFechaSolic] = useState("");
     const [fechaMin, setFechaMin] = useState("");
@@ -17,6 +19,7 @@ function RespCotizacion(props) {
     const [companyCode, setCompanyCode] = useState({});
     const [message, setMessage] = useState("");
     const [empresaId, setEmpresaId] = useState(0);
+    const [existeEmpresa, setExisteEmpresa] = useState(true);
     const [flag, setFlag] = useState(false);
 
     const detallesCotizado =(dato)=>{
@@ -54,10 +57,12 @@ function RespCotizacion(props) {
         data.answerDate=new Date().toISOString().substr(0,10);
         data.nameEmpresa=empresa;
         data.email=companyCode.email;
+        data.nit = nit;
+        data.rubro = rubro;
         data.empresaId = empresaId;
         try {
             if(cotizados.length>0){
-                console.log(data);
+                console.log('dato que se enviara',data);
                 document.getElementById('btnEnviar').disabled=true;
                 const res = await registrarCotizacion(data);
                 alert(res.response.message);
@@ -71,6 +76,12 @@ function RespCotizacion(props) {
     };
     const registraNombreEmpresa=(e)=>{
         setEmpresa(e.target.value);
+    }
+    const registrarNit=(e)=>{
+        setNit(e.target.value);
+    }
+    const registrarRubro=(e)=>{
+        setRubro(e.target.value);
     }
     const fechaDeHoy = () => {
         let hoy = new Date();
@@ -90,6 +101,8 @@ function RespCotizacion(props) {
         if(data.empresa){
             setEmpresaId(data.empresa.id);
             setEmpresa(data.empresa.nameEmpresa);
+        }else{
+            setExisteEmpresa(false);
         }
         const tiempoTranscurrido = Date.now();
         const hoy = new Date(tiempoTranscurrido);
@@ -108,39 +121,56 @@ function RespCotizacion(props) {
     return(
         <>
             <div className="container" align="left">
-                <h2 className="ml-4">Responder cotización</h2>
                 <div className="col">
                     <div className="form-register">
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <h3>Datos del proveedor</h3>
+                            <hr style={{margin:'0px'}}></hr>
                             <div className="form-row">
-                                    <div className="form-group col-md-4">
-                                        <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input autoFocus  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
-                                        {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                    </div>
-                                    <div className="form-group col-md-4">
+                                {existeEmpresa&&<div className="form-group col-md-4">
+                                    <label>Empresa:</label>
+                                    <input readOnly id="nameEmpresa"  value={empresa} type="text" className="form-control form-control-sm"></input>
+                                    </div>}
+                                {!existeEmpresa&&<div className="form-group col-md-4">
+                                    <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                    <input autoFocus id="nameEmpresa"  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
+                                    {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                    </div>}
+                                {!existeEmpresa && <div className="form-group col-md-4">
+                                        <label>NIT:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                        <input  value={nit} {...register("nit",{required:true})} onChange={registrarNit} type="text" className="form-control form-control-sm"></input>
+                                        {errors.nit?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                </div>}
+                                {!existeEmpresa && <div className="form-group col-md-4">
+                                        <label>Rubro:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                        <input  value={rubro} {...register("rubro",{required:true})} onChange={registrarRubro} type="text" className="form-control form-control-sm"></input>
+                                        {errors.rubro?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                </div>}
+                            </div>
+                            <h3>Datos de Cotización</h3>
+                            <hr style={{margin:'0px'}}></hr>
+                            <div className="form-row">
+                                    <div className="form-group col-md-3">
                                         <label>Validez de la oferta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
                                         <input {...register("offerValidity",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
                                         {errors.offerValidity?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                     </div>
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-3">
                                         <label>Fecha de Respuesta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
                                         <input value={fechaSolic} onChange={()=>{}} type="text" className="form-control form-control-sm"></input>
-                                    </div>      
-                            </div>     
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
+                                    </div>
+                                    <div className="form-group col-md-3">
                                     <label>Formas de Pago:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
                                     <select {...register("paymentMethod")} className="form-control form-control-sm" aria-label="Default select example">
                                         <option value="efectivo">Efectivo</option>
                                         <option value="credito">Credito</option>
                                     </select>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <label>Tiempo de Entrega:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                    <input {...register("deliveryTime",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
-                                    {errors.deliveryTime &&<span style={{color:"red"}}>Este campo es requerido</span>}
-                                </div>
+                                    </div>
+                                    <div className="form-group col-md-3">
+                                        <label>Tiempo de Entrega:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                        <input {...register("deliveryTime",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
+                                        {errors.deliveryTime &&<span style={{color:"red"}}>Este campo es requerido</span>}
+                                    </div>   
                             </div>
                             <table className="table table-sm">
                             <thead>

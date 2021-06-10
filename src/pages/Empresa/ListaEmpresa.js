@@ -48,7 +48,7 @@ function ListaEmpresa(){
         setFilteredBusniss(
             empresas.filter((empresa) =>
                 empresa.rubro.toLowerCase().includes(search.toLowerCase())
-            ) 
+            )
         );
     }, [search,empresas]);
       

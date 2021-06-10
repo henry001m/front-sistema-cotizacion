@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { BagPlusFill } from 'bootstrap-icons-react';
+import { BagFill } from 'bootstrap-icons-react';
 import OfertaModal from './OfertaModal';
 
 const DetalleFila = (props) => {
@@ -8,6 +8,7 @@ const DetalleFila = (props) => {
     const [abierto, setAbierto] = useState(false);
     const [flagCotizar, setFlagCotizar] = useState(true);
     const [filaCotizada, setFilaCotizada] = useState("");
+    const [oferta, setOferta] = useState({})
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -17,6 +18,9 @@ const DetalleFila = (props) => {
     const calcularTotal = (e)=>{
         setPrecUnit(e.target.value);
         setTotal(e.target.value*props.detalle.amount);
+    }
+    const guardarOferta = (data)=>{
+        setOferta(data)
     }
     const onSubmit = () =>{
         var error = false;
@@ -31,6 +35,13 @@ const DetalleFila = (props) => {
         }
         if(!error){
             const data = {request_details_id:props.detalle.id,unitPrice:parseFloat(precUnit),totalPrice:total}
+            if(oferta){
+                data.brand = oferta.marca
+                data.model = oferta.modelo
+                data.industry = oferta.industria
+                data.warrantyTime = oferta.tiempo_garantia
+                data.archivo = oferta.archivo
+            }
             props.detallesCotizado(data);
             setFilaCotizada("table-success")
             setFlagCotizar(!flagCotizar);
@@ -45,7 +56,7 @@ const DetalleFila = (props) => {
     }
     return (
         <>
-            <OfertaModal abierto={abierto} cerrarModal={cerrarModal}/>
+            <OfertaModal abierto={abierto} guardarOferta={guardarOferta} cerrarModal={cerrarModal}/>
             <tr className={filaCotizada}>
                 <td>{props.index+1}</td>
                 <td style={{textAlign:'center'}}>{props.detalle.amount}</td>
@@ -53,7 +64,7 @@ const DetalleFila = (props) => {
                 <td>{props.detalle.description}</td>
                 <td><input className="form-control"  value={precUnit} type="number" onChange={calcularTotal}/></td>
                 <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>
-                <td style={{textAlign:'center'}}><BagPlusFill style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>
+                <td style={{textAlign:'center'}}><BagFill style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>
                 {flagCotizar &&<td><button style={{border:"none",}} className="btn btn-primary btn-sm" onClick={onSubmit}>Guardar</button></td>}
                 {!flagCotizar&&<td><button style={{border:"none",}} className="btn btn-danger btn-sm" onClick={calcelarCotizado}>Cancelar</button></td>}
             </tr>
