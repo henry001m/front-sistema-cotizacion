@@ -59,7 +59,9 @@ function SeleccionPersonal(props){
                         <div className="form-row">
                             <div className="col-md-12">
                                 <div class="table table-hover">
-                                   <h5 id="titulo-tabla">Usuarios:</h5>
+                                   <br></br>
+                                   <label>Estos usuarios no estan en su unidad</label>
+                                   <h5 id="titulo-tabla">Usuarios</h5>
                                    <table id="tablaC">
                                             <thead>
                                                 <tr>
@@ -71,7 +73,7 @@ function SeleccionPersonal(props){
                                             <tbody>
                                                 {
                                                     users.map((userAdd,index)=>{
-                                                        if(userAdd.id != userBandera.user.id & userAdd.id != 1){
+                                                        if(userAdd.id != userBandera.user.id & userAdd.id != 1 & userAdd.id != 3){
                                                             return (
                                                                 <tr>
                                                                     {/* <td>{index+1}</td> */}

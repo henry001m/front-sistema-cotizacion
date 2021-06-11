@@ -102,7 +102,8 @@ function ModalEditarUG (props){
                     name="faculties_id"
                     className="form-control"
                     disabled>
-                        <option value="">{props.gasto.faculty.nameFacultad}</option>
+                        {/* <option value="">{props.gasto.faculty.nameFacultad}</option> */}
+                        <option value="">{props.gasto.faculty}</option>
                     </select>
                 </div>
                 <div className="form-group col-md-12">

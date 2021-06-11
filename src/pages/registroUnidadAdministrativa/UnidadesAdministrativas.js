@@ -8,7 +8,7 @@ import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
     const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-    const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
+    const [ administrativeUnit, setAdministrativeUnit] = useState({name:"",faculty:"",admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);

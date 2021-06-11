@@ -77,7 +77,6 @@ function ModalSeleccionRoles(props){
                               <thead>
                                   <tr>
                                       <th></th>
-                                      <th>#</th>
                                       <th>Rol</th>
                                       <th>Descripcion</th>
                                   </tr>
@@ -96,7 +95,7 @@ function ModalSeleccionRoles(props){
                                                                 })}
                                                                 value={rol.id} 
                                                                 onChange={handleChangeCheckBox}/></td>
-                                                <td>{index+1}</td>
+                                                {/* <td>{index+1}</td> */}
                                                 <td>{rol.nameRol}</td>
                                                 <td>{rol.description}</td>
                                             </tr>
