@@ -96,3 +96,15 @@ export async function getInform(id) {
         console.log(error)
     }
 }
+
+/**Devuelve los datos de una cotizacion mediante su id */
+export async function getQuotitationId(id){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`/`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

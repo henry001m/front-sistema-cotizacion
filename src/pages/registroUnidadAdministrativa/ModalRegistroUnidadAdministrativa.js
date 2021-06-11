@@ -53,13 +53,8 @@ function ModalRegistroUnidadAdministrativa( props ){
     const saveData = async(data, e) => {
         try{ 
             console.log("Unidad:",data.nameUnidadAdministrativa,"Facultad:",data.selectFacultad,"IdAdmin:",data.idUser);
-            if(data.idUser == ""){
-                const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
-                alert("Registro Exitoso")
-            }else{
-                const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
-                alert(res.message);
-            }
+            const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
+            alert(res.message);
             closeModal();
         }catch(error){
             console.log( error )
