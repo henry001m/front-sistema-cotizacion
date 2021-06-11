@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './RespCotizacion.css'
 import { useForm } from "react-hook-form";
-import {detailsQuotitation,registrarCotizacion} from '../../services/http/CompanyCodeService';
+import {detailsQuotitation,registrarCotizacion,registrarCotizacionDetalle,registrarCotizacionDetalleFile} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
 import { useHistory } from 'react-router-dom';
 
@@ -51,8 +51,11 @@ function RespCotizacion(props) {
     const salirHome = ()=>{
         history.push("/ingresoCodigo");
     }
+    const enviarDetalle = async(detalle, id)=>{
+        const res = await registrarCotizacionDetalle(detalle,id)
+        const resFile = await registrarCotizacionDetalleFile(detalle.archivo,res.response)
+    }
     const onSubmit = async (data) =>{
-        data.detalles=cotizados;
         data.company_codes_id=companyCode.id;
         data.answerDate=new Date().toISOString().substr(0,10);
         data.nameEmpresa=empresa;
@@ -62,9 +65,11 @@ function RespCotizacion(props) {
         data.empresaId = empresaId;
         try {
             if(cotizados.length>0){
-                console.log('dato que se enviara',data);
                 document.getElementById('btnEnviar').disabled=true;
                 const res = await registrarCotizacion(data);
+                cotizados.forEach(cotizado => {
+                    enviarDetalle(cotizado,res.response.id);
+                });
                 alert(res.response.message);
                 salirHome();
             }else{

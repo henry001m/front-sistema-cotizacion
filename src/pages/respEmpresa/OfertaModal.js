@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
 import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label} from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
 import { useForm } from "react-hook-form";
 
 const OfertaModal = (props) => {
     const modalStyles={
-        top:"20%",
+        top:"10%",
         transfrom: 'translate(-50%, -50%)',
         width:'400px'
     }
@@ -14,13 +14,25 @@ const OfertaModal = (props) => {
     const [fileValidate, setFileValidate] = useState(false);
     const [fl, setFl] = useState(null);
     const closeModal = () => {
+        setNamefile([])
+        setFl(null)
+        setFileValidate(false);
         reset()
         props.cerrarModal()
     }
     const onSubmit=(data)=>{
-        data.archivo = fl
-        props.guardarOferta(data)
-        closeModal()
+        if(!fileValidate){
+            const formData = new FormData();
+            if(fl != null){
+                for(var i=0 ; i<fl.length ; i++){
+                let name = 'file';
+                formData.append(name,fl[i],fl[i].name);
+                }
+            }
+            data.archivo = formData;
+            props.guardarOferta(data)
+            closeModal()
+        }
     }
     const fileSelectHandler =(e)=>{
         let namefileAux =[];
@@ -35,7 +47,7 @@ const OfertaModal = (props) => {
         let flag = false;
         extenciones.forEach(exten => {
             if(!flag){
-                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg'){
+                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg' || exten === 'jpeg'){
                     noEsValido =false;
                 }else{
                     noEsValido=true;
@@ -46,7 +58,7 @@ const OfertaModal = (props) => {
         });
         setFileValidate(noEsValido);
         setNamefile(namefileAux);
-        setFl(e.target.files[0]);
+        setFl(e.target.files);
         console.log(e.target.files)
     }
     return (
@@ -76,7 +88,13 @@ const OfertaModal = (props) => {
             </FormGroup>
         </ModalBody>
         <ModalFooter>
-            <div className="form-group col-md-6" align="end">
+                {namefile.map((name,index)=>{
+                    return(
+                        <li key={index}>{name}</li>
+                    )
+                })}
+            <div style={{width:'100%',height:'35px', display:'flex',justifyContent:'space-between'}}>
+            <div className="">
                 <input 
                     name="archivo"
                     type="file" 
@@ -85,7 +103,9 @@ const OfertaModal = (props) => {
                 ></input>
                 <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
             </div>
-            <Button type="button" onClick={handleSubmit(onSubmit)} color="primary">Guardar</Button>
+            <Button type="button" onClick={handleSubmit(onSubmit)} color="primary" size="sm">Guardar</Button>
+            </div>
+            {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, png, jpg, jpeg</label>}
         </ModalFooter>
         </form>
     </Modal> 

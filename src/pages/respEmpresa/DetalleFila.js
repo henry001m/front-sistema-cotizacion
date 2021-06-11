@@ -9,6 +9,7 @@ const DetalleFila = (props) => {
     const [flagCotizar, setFlagCotizar] = useState(true);
     const [filaCotizada, setFilaCotizada] = useState("");
     const [oferta, setOferta] = useState({})
+    const [flagOferta, setflagOferta] = useState(true);
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -45,6 +46,8 @@ const DetalleFila = (props) => {
             props.detallesCotizado(data);
             setFilaCotizada("table-success")
             setFlagCotizar(!flagCotizar);
+            setflagOferta(!flagOferta);
+            document.getElementById('precioUnitario').disabled=true;
         }
     };
     const calcelarCotizado = ()=>{
@@ -53,6 +56,8 @@ const DetalleFila = (props) => {
         props.elimiarCotizado(props.detalle.id);
         setFilaCotizada("")
         setFlagCotizar(!flagCotizar);
+        setflagOferta(!flagOferta);
+        document.getElementById('precioUnitario').disabled=false;
     }
     return (
         <>
@@ -62,9 +67,10 @@ const DetalleFila = (props) => {
                 <td style={{textAlign:'center'}}>{props.detalle.amount}</td>
                 <td>{props.detalle.unitMeasure}</td>
                 <td>{props.detalle.description}</td>
-                <td><input className="form-control"  value={precUnit} type="number" onChange={calcularTotal}/></td>
+                <td><input id="precioUnitario" className="form-control"  value={precUnit} type="number" onChange={calcularTotal}/></td>
                 <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>
-                <td style={{textAlign:'center'}}><BagFill style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>
+                {flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>}
+                {!flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={()=>{}}/></td>}
                 {flagCotizar &&<td><button style={{border:"none",}} className="btn btn-primary btn-sm" onClick={onSubmit}>Guardar</button></td>}
                 {!flagCotizar&&<td><button style={{border:"none",}} className="btn btn-danger btn-sm" onClick={calcelarCotizado}>Cancelar</button></td>}
             </tr>
