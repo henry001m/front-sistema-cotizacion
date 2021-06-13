@@ -1,19 +1,23 @@
 
 import React, { useState, useEffect } from 'react'
-import { BagPlusFill } from 'bootstrap-icons-react'
+import { BagPlusFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 
 function VerCotizacion(){
     
-    const {id} = useParams();
+    const {idRe} = useParams();
+    const {idCo} = useParams();
     let history = useHistory();
-    const [ detalles, setDetalles ] = useState([{cantidad:"",unidad:"",detalle:"",precUnit:"",precTotal:""}])
+    const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",detalle:"",precUnit:"",precTotal:""}])
     
     useEffect(() => {
         async function getQuotitation() {
-            console.log(id)
-            //const result = await getQuotitationId(id);
+            console.log(idRe)
+            console.log(idCo)
+            const result = await getQuotitationId(idRe, idCo);
+            console.log(result)
+            setDetalles(result.details)
         }
         getQuotitation();
     }, []);
@@ -71,8 +75,8 @@ function VerCotizacion(){
                                     return(
                                         <tr key={detalle.id}>
                                             <th scope="row">{index+1}</th>
-                                            <td >{detalle.cantidad}</td>
-                                            <td>{detalle.unidad}</td>
+                                            <td >{detalle.amount}</td>
+                                            <td>{detalle.unitMeasure}</td>
                                             <td>{detalle.detalle}</td>
                                             <td>{detalle.precUnit}</td>
                                             <td>{detalle.precTotal}</td>
@@ -90,7 +94,7 @@ function VerCotizacion(){
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
-                        <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace(`/cotizaciones/${id}`)}}>Cerrar</button>
+                        <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace(`/cotizaciones/${idRe}`)}}>Cerrar</button>
                     </div>
                 </div>
             </div>

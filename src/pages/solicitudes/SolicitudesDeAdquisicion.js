@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'bootstrap-icons-react'
+import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'react-bootstrap-icons'
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';

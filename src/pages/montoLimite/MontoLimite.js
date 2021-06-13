@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { PlusCircle } from 'bootstrap-icons-react'
+import { PlusCircle } from 'react-bootstrap-icons'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
 import { getMontoLimiteAdminUnit} from '../../services/http/MontoLimiteService'

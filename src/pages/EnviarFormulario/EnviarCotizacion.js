@@ -2,7 +2,7 @@ import React,{useState} from "react"
 import './EnviarCotizacion.css'
 import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
-import { PlusCircle} from 'bootstrap-icons-react'
+import { PlusCircle} from 'react-bootstrap-icons'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 

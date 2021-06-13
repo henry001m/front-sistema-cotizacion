@@ -97,12 +97,12 @@ export async function getInform(id) {
     }
 }
 
-/**Devuelve los datos de una cotizacion mediante su id */
-export async function getQuotitationId(id){
+/**Devuelve los datos de una cotizacion mediante su id y el id de la solicitud*/
+export async function getQuotitationId(idRe, idCo){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/`,headers);
+        const response = await API.get(`/quote/${idCo}/${idRe}`,headers);
         return response.data;
     } catch (error) {
         console.log(error)

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
-import {PlusCircle} from 'bootstrap-icons-react';
+import {PlusCircle} from 'react-bootstrap-icons';
 import ModalSeleccionPersonal from './ModalSeleccionPersonal';
 import {getPersonal} from '../../services/http/UserService'
 import {getPersonalUG} from '../../services/http/UserService'

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { EyeFill, PlusCircle } from 'bootstrap-icons-react'
+import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
 import { useHistory, useParams } from 'react-router-dom'
 
 function Cotizaciones() { 
 
     const id = useParams();
-    const [ quotitations, setQuotitations ] = useState([{id:1, bussiness:"dumbo", items:4,total:450}])
+    const [ quotitations, setQuotitations ] = useState([{id:3, bussiness:"dumbo", items:4,total:450}])
     let history = useHistory()
     return(
         <>
@@ -44,7 +44,7 @@ function Cotizaciones() {
                                             <td>{quotitation.bussiness}</td>
                                             <td>{quotitation.items}</td>
                                             <td>{quotitation.total}</td>
-                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${quotitation.id}`)}><EyeFill/></button></td>
+                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id.id}/${quotitation.id}`)}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}

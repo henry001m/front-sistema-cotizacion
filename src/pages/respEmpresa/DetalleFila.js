@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { BagPlusFill } from 'bootstrap-icons-react';
+import { BagPlusFill } from 'react-bootstrap-icons';
 import OfertaModal from './OfertaModal';
 
 const DetalleFila = (props) => {

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
-import {PlusCircle} from 'bootstrap-icons-react';
+import {PlusCircle} from 'react-bootstrap-icons';
 import ModalRegistroEmpresa from './ModalRegistroEmpresa';
 import { getEmpresas } from '../../services/http/BussinessService';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';

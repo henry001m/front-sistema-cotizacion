@@ -1,4 +1,4 @@
-import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill, PlusCircle } from 'react-bootstrap-icons'
 import React, { useState, useEffect } from  'react'
 import { useForm } from 'react-hook-form'
 import { useHistory } from 'react-router-dom'

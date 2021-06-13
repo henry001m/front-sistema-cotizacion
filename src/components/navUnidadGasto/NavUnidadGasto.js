@@ -4,7 +4,7 @@ import Home from './../../pages/Home'
 import SolicitudesDeAdquisicion from '../../pages/solicitudes/SolicitudesDeAdquisicion'
 import './NavUnidadGasto.css'
 import AgregarDetalleSolictud from '../../pages/solicitudes/AgregarDetalleSolicitud'
-import { PersonCircle } from 'bootstrap-icons-react'
+import { PersonCircle } from 'react-bootstrap-icons'
 
 function NavUnidadGasto() {
     return(

@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
 import { useHistory  } from 'react-router-dom'
-import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, ConeStriped } from 'bootstrap-icons-react'
+import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import CrearInforme from '../informe/CrearInforme';
@@ -89,13 +89,13 @@ function SolicitudesVista(){
         if(quotitation.status!="pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
-                    <ConeStriped/> Cotizaciones
+                    <Coin/> Cotizaciones
                 </button>                                    
             );
         }else{
             return(
                 <button className="dropdown-item" disabled>
-                    <ConeStriped/> Cotizaciones
+                    <Coin/> Cotizaciones
                 </button>
             );
         }
