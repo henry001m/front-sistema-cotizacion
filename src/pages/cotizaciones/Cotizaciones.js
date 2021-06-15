@@ -1,12 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
 import { useHistory, useParams } from 'react-router-dom'
+import { getQuotitationList } from '../../services/http/QuotitationService';
 
 function Cotizaciones() { 
 
-    const id = useParams();
-    const [ quotitations, setQuotitations ] = useState([{id:3, bussiness:"dumbo", items:4,total:450}])
+    const {id} = useParams();
+    const [ quotitations, setQuotitations ] = useState([{id:1, Empresa:"dumbo", items:4,total:450}])
     let history = useHistory()
+
+    useEffect(() => {
+        async function getQuotitations() {
+            try {
+                const result = await getQuotitationList(id);
+                console.log("id de solicitud", id)
+                console.log(result.Cotizaciones)
+                setQuotitations(result.Cotizaciones)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getQuotitations();
+    }, []);
+    
     return(
         <>
             <div className="container" align="left" style={{marginBottom:"100px"}}>
@@ -41,10 +57,10 @@ function Cotizaciones() {
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>
                                             <td >{index+1}</td>
-                                            <td>{quotitation.bussiness}</td>
-                                            <td>{quotitation.items}</td>
-                                            <td>{quotitation.total}</td>
-                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id.id}/${quotitation.id}`)}><EyeFill/></button></td>
+                                            <td>{quotitation.Empresa}</td>
+                                            <td>{quotitation.ItemsCotizados}</td>
+                                            <td>{quotitation.TotalEnBs}</td>
+                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id}/${quotitation.id}`)}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}

@@ -108,3 +108,14 @@ export async function getQuotitationId(idRe, idCo){
         console.log(error)
     }
 }
+
+export async function getQuotitationList(idRe){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`/listQuotation/${idRe}`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

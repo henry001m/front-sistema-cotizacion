@@ -9,15 +9,22 @@ function VerCotizacion(){
     const {idRe} = useParams();
     const {idCo} = useParams();
     let history = useHistory();
-    const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",detalle:"",precUnit:"",precTotal:""}])
+    const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
+    const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
     
     useEffect(() => {
         async function getQuotitation() {
-            console.log(idRe)
-            console.log(idCo)
-            const result = await getQuotitationId(idRe, idCo);
-            console.log(result)
-            setDetalles(result.details)
+            try {
+                const result = await getQuotitationId(idRe, idCo)
+                /*setCotizacion(result.Cotizacion[0])
+                var aux = []
+                for (var i = 1; i < result.Cotizacion.length; i++) {
+                    aux.push(result.Cotizacion[i][0]);
+                }
+                setDetalles(aux)*/
+            } catch (error) {
+                console.log(error)
+            }
         }
         getQuotitation();
     }, []);
@@ -35,21 +42,21 @@ function VerCotizacion(){
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <h5>Validez de la oferta</h5>
-                                    <input className="form-control"></input>
+                                    <input className="form-control" value={ cotizacion.offerValidity}></input>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <h5>Fecha de Cotizacion</h5>
-                                    <input className="form-control"></input>
+                                    <input className="form-control" value={ cotizacion.answerDate}></input>
                                 </div>      
                             </div>     
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <h5>Tiempo de Entrega</h5>
-                                    <input className="form-control"></input>
+                                    <input className="form-control" value={ cotizacion.deliveryTime}></input>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <h5>Forma de Pago</h5>
-                                    <input className="form-control"></input>
+                                    <input className="form-control" value={ cotizacion.paymentMethod}></input>
                                 </div>
                             </div>
                         </form>
@@ -77,9 +84,9 @@ function VerCotizacion(){
                                             <th scope="row">{index+1}</th>
                                             <td >{detalle.amount}</td>
                                             <td>{detalle.unitMeasure}</td>
-                                            <td>{detalle.detalle}</td>
-                                            <td>{detalle.precUnit}</td>
-                                            <td>{detalle.precTotal}</td>
+                                            <td>{detalle.description}</td>
+                                            <td>{detalle.unitPrice}</td>
+                                            <td>{detalle.totalPrice}</td>
                                             <td><button className="btn btn-warning" style={{color:"white", backgroundColor:"orange"}}><BagPlusFill/></button></td>
                                         </tr>
                                     )
@@ -90,7 +97,7 @@ function VerCotizacion(){
                 </div>
                 <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
                     <h4>Observaciones</h4>
-                    <textarea type="text" className="form-control"></textarea>
+                    <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
