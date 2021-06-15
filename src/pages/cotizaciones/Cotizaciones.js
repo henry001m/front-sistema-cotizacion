@@ -54,13 +54,13 @@ function Cotizaciones() {
                                 <tbody>
                                 {quotitations.map((quotitation,index) => {
                                     return(
-                                        <tr key={quotitation.id}>
+                                        <tr key={quotitation.idCotizacion}>
                                             <th scope="row">{index+1}</th>
                                             <td >{index+1}</td>
                                             <td>{quotitation.Empresa}</td>
                                             <td>{quotitation.ItemsCotizados}</td>
                                             <td>{quotitation.TotalEnBs}</td>
-                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id}/${quotitation.id}`)}><EyeFill/></button></td>
+                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}

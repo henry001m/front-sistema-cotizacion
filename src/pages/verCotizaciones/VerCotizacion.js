@@ -16,12 +16,12 @@ function VerCotizacion(){
         async function getQuotitation() {
             try {
                 const result = await getQuotitationId(idRe, idCo)
-                /*setCotizacion(result.Cotizacion[0])
+                setCotizacion(result.Cotizacion[0])
                 var aux = []
                 for (var i = 1; i < result.Cotizacion.length; i++) {
                     aux.push(result.Cotizacion[i][0]);
                 }
-                setDetalles(aux)*/
+                setDetalles(aux)
             } catch (error) {
                 console.log(error)
             }
