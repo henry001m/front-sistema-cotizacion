@@ -40,16 +40,16 @@ function ModalEditarUG (props){
         }
         return admin;
     }
-    window.onload = function() {
-        var select = document.getElementById("admi");
-        var seleccion = ""
-        if(props.gasto.admin.id == ""){
-            seleccion = "Seleccione Administrador"
-        }else{
-            seleccion = props.gasto.admin.name;
-        }
-        select.value = seleccion.innerHTML;
-    };
+    // window.onload = function() {
+    //     var select = document.getElementById("admi");
+    //     var seleccion = ""
+    //     if(props.gasto.admin.id == ""){
+    //         seleccion = "Seleccione Administrador"
+    //     }else{
+    //         seleccion = props.gasto.admin.name;
+    //     }
+    //     select.value = seleccion.innerHTML;
+    // };
     const onSubmit = async (data) => {
         try{
             if(idAdmin != ""){  

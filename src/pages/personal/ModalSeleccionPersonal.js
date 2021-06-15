@@ -27,17 +27,24 @@ function RolDeUser(props){
     const handleChangeCheckBox = (e) => {
         let auxiliar = [];
         if(selectedCheckboxes.includes(e.target.value)){ 
-            auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
-            setSelectActivo(false);
+            document.getElementById('idRol').setAttribute("disabled","disabled");
+            // document.getElementById('idRol').setAttribute("disabled","true");
+            // document.getElementById('idRol').disabled = true;
         }else{
-            auxiliar=selectedCheckboxes.concat(e.target.value) 
-            setSelectActivo(true);
+           // document.getElementById('idRol').removeAttribute('disabled');
         }
-        for (const per of auxiliar) { 
-            seleccionados.push(parseInt(per));
-        }
-        setSelectedCheckboxes(auxiliar);
-        console.log(seleccionados);
+        // if(selectedCheckboxes.includes(e.target.value)){ 
+        //     auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
+        //     // setSelectActivo(false);
+        // }else{
+        //     auxiliar=selectedCheckboxes.concat(e.target.value) 
+        //     // setSelectActivo(true);
+        // }
+        // for (const per of auxiliar) { 
+        //     seleccionados.push(parseInt(per));
+        // }
+        // setSelectedCheckboxes(auxiliar);
+        // console.log(seleccionados);
     }
 
     const closeModal = () => {
@@ -129,10 +136,11 @@ function RolDeUser(props){
                                                     <td>{userAdd.name} {userAdd.lastName}</td>
                                                     <td>
                                                         <select 
+                                                            id="idRol"
                                                             name="idRol"
                                                             {...register("idRol",{})}
                                                             class="form-control" aria-label=".form-select-lg example"
-                                                            disabled={!selectActivo}
+                                                            disabled
                                                             onClick={handleSelectChange}>
                                                                 <option value="0">{userAdd.userRol}</option>
                                                                 {

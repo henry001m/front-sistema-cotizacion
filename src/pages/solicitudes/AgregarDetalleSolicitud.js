@@ -118,6 +118,7 @@ function AgregarDetalleSolictud(){
             }
             const token=window.localStorage.getItem("tokenContizacion");
             const headers = { headers: {'Authorization': `Bearer ${token}`}};
+            console.log("archivo que se manda",formData)
             const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
             console.log("respuesta ",res);
         }

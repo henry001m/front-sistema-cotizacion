@@ -36,16 +36,19 @@ function ListaEmpresa(){
             try {
                 const response = await getEmpresas();
                 setEmpresas(response.business);
+                
             } catch (error) {
                 console.log(error);
             }
             };
             fetchData();
-    }, [empresas]);
+    }, []);
 
     useEffect(() => {
         setFilteredBusniss(
-            empresas.filter((empresa) =>empresa.rubro.toLowerCase().includes(search.toLowerCase())) 
+            empresas.filter((empresa) =>
+                empresa.rubro.toLowerCase().includes(search.toLowerCase())
+            )
         );
     }, [search,empresas]);
       
@@ -58,7 +61,7 @@ function ListaEmpresa(){
                 <div className="col-6">                                
                     <input {...register("rubro", { required: true })}
                         className="form-control"
-                        placeholder="Search" 
+                        placeholder="Ingrese rubro" 
                         aria-label="Search"
                         type="search"
                         id = "search"
