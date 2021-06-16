@@ -18,6 +18,7 @@ import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
+import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
 
 
 const Router = () => {
@@ -35,6 +36,7 @@ const Router = () => {
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
                 <Route exact path='/montoLimite' component={ MontoLimite }/>
                 <Route exact path='/personal' component={ListaPersonal}/>
+                <Route exact path='/respuestaCotizacionUA' component={RespCotizacionUA}/>
                 {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
