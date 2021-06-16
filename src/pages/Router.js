@@ -17,6 +17,10 @@ import ListaRoles from './rol/ListaRoles'
 import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 import SeleccionPersonal from './personal/SeleccionPersonal'
+import Cotizaciones from './cotizaciones/Cotizaciones';
+import VerCotizacion from './verCotizaciones/VerCotizacion';
+import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
+import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
 
 const Router = () => {
     return (
@@ -32,8 +36,10 @@ const Router = () => {
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
                 <Route exact path='/montoLimite' component={ MontoLimite }/>
-                <Route exact path='/personal' component={ListaPersonal}/>
+                <Route exact path="/personal/:idUA/:idUS" component={ListaPersonal}/>
                 <Route exact path='/seleccionPersonal' component={SeleccionPersonal}/>
+                <Route exact path='/perfil' component={InicioSegunRol}/>
+                <Route exact path="/menu" component={ MenuNavegacion }/>
                 {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
@@ -44,6 +50,9 @@ const Router = () => {
                 {/* Empresa respuesta de cotizacion */}
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
                 <Route exact path='/ingresoCodigo' component={ IngresoCodigo }/>
+                {/**Cotizaciones */}
+                <Route exact path='/cotizaciones' component={ Cotizaciones }/>
+                <Route exact path='/verCotizacion/:id' component={ VerCotizacion }/>
             </Switch>
         </div>
     )

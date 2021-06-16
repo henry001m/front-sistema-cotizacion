@@ -18,7 +18,8 @@ function SeleccionPersonal(props){
     let history = useHistory();
 
     function closePage(){
-        history.replace("/personal");
+        // history.replace(`/personal/${props.idUnitA}/${props.idUnitS}`);
+        window.history.back();
     }
     const abrirModal =()=>{
         setAbierto(true);
@@ -73,7 +74,7 @@ function SeleccionPersonal(props){
                                             <tbody>
                                                 {
                                                     users.map((userAdd,index)=>{
-                                                        if(userAdd.id != userBandera.user.id & userAdd.id != 1 & userAdd.id != 3){
+                                                        if(userAdd.id != userBandera.user.id & userAdd.id != 1){
                                                             return (
                                                                 <tr>
                                                                     {/* <td>{index+1}</td> */}

@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import {Button} from 'reactstrap';
 import {PlusCircle} from 'bootstrap-icons-react';
 import {getPersonal} from '../../services/http/UserService'
 import {getPersonalUG} from '../../services/http/UserService'
 
 function ListaPersonal(){
-   
+    const {idUA} = useParams();
+    const {idUS} = useParams();
     const [flag, setFlag] = useState(false);
     const [personal, setPersonal] =useState([]);
     let history = useHistory();
@@ -24,22 +25,14 @@ function ListaPersonal(){
     }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnitA = user.user.administrative_units_id;
-        const idUnitS = user.user.spending_units_id;
         async function getAllUsers() {
-            if (idUnitA != null){
-                const response = await getPersonal(idUnitA);
-                setPersonal(response.users);
-            }else{
-                const resp = await getPersonalUG(idUnitS);
+            if (idUS != null ){
+                const resp = await getPersonalUG(idUS);
                 setPersonal(resp.users);
+            }else{
+                const response = await getPersonal(idUA);
+                setPersonal(response.users);
             }
-            // if(idUnitA != null && idUnitS != null){
-            //     const response = await getPersonal(idUnitA);
-            //     setPersonal(response.users);
-            //     const resp = await getPersonalUG(idUnitS);
-            //     setPersonal(resp.users);
-            // }
         }
         getAllUsers();
     }, [setPersonal,flag]);
