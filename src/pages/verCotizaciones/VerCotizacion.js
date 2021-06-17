@@ -16,6 +16,7 @@ function VerCotizacion(){
         async function getQuotitation() {
             try {
                 const result = await getQuotitationId(idRe, idCo)
+                console.log(result)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
                 for (var i = 1; i < result.Cotizacion.length; i++) {
@@ -79,17 +80,19 @@ function VerCotizacion(){
                         <tbody>
                             {
                                 detalles.map((detalle,index)=>{
-                                    return(
-                                        <tr key={detalle.id}>
-                                            <th scope="row">{index+1}</th>
-                                            <td >{detalle.amount}</td>
-                                            <td>{detalle.unitMeasure}</td>
-                                            <td>{detalle.description}</td>
-                                            <td>{detalle.unitPrice}</td>
-                                            <td>{detalle.totalPrice}</td>
-                                            <td><button className="btn btn-warning" style={{color:"white", backgroundColor:"orange"}}><BagPlusFill/></button></td>
-                                        </tr>
-                                    )
+                                    if(detalle){
+                                        return(
+                                            <tr key={detalle.id}>
+                                                <th scope="row">{index+1}</th>
+                                                <td >{detalle.amount}</td>
+                                                <td>{detalle.unitMeasure}</td>
+                                                <td>{detalle.description}</td>
+                                                <td>{detalle.unitPrice}</td>
+                                                <td>{detalle.totalPrice}</td>
+                                                <td><button className="btn btn-warning" style={{color:"white", backgroundColor:"orange"}}><BagPlusFill/></button></td>
+                                            </tr>
+                                        )
+                                    }
                                 })
                             }
                         </tbody>
