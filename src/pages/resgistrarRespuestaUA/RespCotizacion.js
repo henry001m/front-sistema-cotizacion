@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './RespCotizacion.css'
 import { useForm } from "react-hook-form";
-import {detailsQuotitation,registrarCotizacion,registrarCotizacionDetalle,registrarCotizacionDetalleFile} from '../../services/http/CompanyCodeService';
+import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
 import { getEmpresas } from '../../services/http/BussinessService';
 import { useHistory } from 'react-router-dom';
@@ -54,8 +54,8 @@ function RespCotizacion(props) {
     }
     const enviarDetalle = async(detalle, id)=>{
         console.log(detalle)
-        //const res = await registrarCotizacionDetalle(detalle,id)
-        //const resFile = await registrarCotizacionDetalleFile(detalle.archivo,res.response)
+        //const res = await registrarCotizacionDetalleUA(detalle,id)
+        //const resFile = await registrarCotizacionDetalleFileUA(detalle.archivo,res.response)
     }
     const onSubmit = async (data) =>{
         data.company_codes_id=quotitationId.id;
@@ -63,7 +63,8 @@ function RespCotizacion(props) {
         try {
             if(cotizados.length>0){
                 //document.getElementById('btnEnviar').disabled=true;
-                //const res = await registrarCotizacion(data);
+                const res = await registrarCotizacionUA(data);
+                const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
                 cotizados.forEach(cotizado => {
                     //enviarDetalle(cotizado,res.response.id);
                     enviarDetalle(cotizado,1);
