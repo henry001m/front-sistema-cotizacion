@@ -48,8 +48,8 @@ const Router = () => {
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
                 <Route exact path='/ingresoCodigo' component={ IngresoCodigo }/>
                 {/**Cotizaciones */}
-                <Route exact path='/cotizaciones' component={ Cotizaciones }/>
-                <Route exact path='/verCotizacion/:id' component={ VerCotizacion }/>
+                <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
+                <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
             </Switch>
         </div>
     )

@@ -4,7 +4,7 @@ import UserImg from './../../resources/user.jpg'
 import Home from '../../pages/Home'
 import SolicitudesVista from '../../pages/solictudesVista/SolicitudesVista';
 import Usuario from '../../pages/usuario/Usuario';
-import { PersonCircle } from 'bootstrap-icons-react';
+import { PersonCircle } from 'react-bootstrap-icons';
 import UnidadesAdministrativas from '../../pages/registroUnidadAdministrativa/UnidadesAdministrativas';
 import unidadDeGasto from '../../pages/regitroUnidadGasto/MainRegistroUnidad';
 import RolDeUser from '../../pages/rol/RolDeUser'

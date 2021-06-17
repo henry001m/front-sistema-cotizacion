@@ -1,5 +1,5 @@
 import React from 'react';
-import { PersonCircle } from 'bootstrap-icons-react';
+import { PersonCircle } from 'react-bootstrap-icons';
 import './NavAdministrador.css';
 
 function NavAdministrador() {

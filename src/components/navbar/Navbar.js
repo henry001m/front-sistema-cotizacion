@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { useForm } from "react-hook-form";
-import { PersonCircle } from 'bootstrap-icons-react';
+import { PersonCircle } from 'react-bootstrap-icons';
 import LoginModal from '../../pages/IniciarSesion/IniciarSesionModal';
 import {Button} from 'reactstrap'
 import MenuNavegacion from '../menuNavegacion/MenuNavegacion'

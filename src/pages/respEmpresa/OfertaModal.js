@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react';
+import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
 import { useForm } from "react-hook-form";
 

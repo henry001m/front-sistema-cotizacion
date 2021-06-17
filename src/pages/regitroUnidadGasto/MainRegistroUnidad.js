@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
-import {PlusCircle, PencilSquare} from 'bootstrap-icons-react';
+import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
 import {getUnidadesGastos} from '../../services/http/UniGastoService';
 import ModalEditarUG from './ModalEditarUG'
 

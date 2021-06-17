@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect }from 'react'
-import { PlusCircle } from 'bootstrap-icons-react';
+import { PlusCircle } from 'react-bootstrap-icons';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useForm } from 'react-hook-form';
 import { createUser } from '../../services/http/UserService' ;

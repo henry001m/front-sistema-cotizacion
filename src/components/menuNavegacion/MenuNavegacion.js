@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonCircle,BoxArrowRight, HouseDoorFill } from 'bootstrap-icons-react';
+import { PersonCircle,BoxArrowRight, HouseDoorFill } from 'react-bootstrap-icons';
 import './MenuNavegacion.css';
 import {NavLink} from 'react-router-dom'
 
