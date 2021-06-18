@@ -2,12 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
 import { useHistory, useParams } from 'react-router-dom'
 import { getQuotitationList } from '../../services/http/QuotitationService';
+import CuadroComparativo from './cuadroComparativo'
+
+
 
 function Cotizaciones() { 
 
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([{id:1, Empresa:"dumbo", items:4,total:450}])
+    const [abierto, setAbierto] = useState(false);
     let history = useHistory()
+
+    const abrirCuadro = ()=>{
+        history.push("/cuadro");
+    }
+
 
     useEffect(() => {
         async function getQuotitations() {
@@ -22,6 +31,8 @@ function Cotizaciones() {
         }
         getQuotitations();
     }, []);
+ 
+  
     
     return(
         <>
@@ -30,9 +41,10 @@ function Cotizaciones() {
                         <h1>Cotizaciones</h1>
                         <br></br>
                     <div className="col" style={{textAlign:"end"}}>
-                        <button className="btn btn-secondary">
-                            Realizar Comparación
+                        <button className="btn btn-secondary" onClick={abrirCuadro} >
+                          Realizar Comparación
                         </button>
+                        
                         <button className="btn btn-success" style={{marginLeft:"20px"}}>
                             <PlusCircle className="mb-1"/> Agregar
                         </button>
