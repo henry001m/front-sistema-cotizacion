@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from  'react'
-import {PlusCircle, PencilSquare} from 'bootstrap-icons-react';
+import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
 import RolDeUser from './RolDeUser';
 import EditarRol from './EditarRol';
 import {getRols} from '../../services/http/RolService'

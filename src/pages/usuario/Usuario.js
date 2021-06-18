@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from  'react'
-import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
+import { PencilSquare, PlusCircle } from 'react-bootstrap-icons';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
@@ -89,6 +89,7 @@ function Usuario(){
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
+                                                <td>{console.log("esto estra en iteracion",user.id)}</td>
                                             </tr>
                                         );
                                    })

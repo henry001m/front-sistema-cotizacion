@@ -1,7 +1,4 @@
 import React, { Fragment,useState,useEffect } from 'react'
-import { PersonCircle } from 'bootstrap-icons-react'
-import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion'
-import {Button} from 'reactstrap'
 import './Home.css';
 function Home(){
     const [user, setUser] = useState(null);

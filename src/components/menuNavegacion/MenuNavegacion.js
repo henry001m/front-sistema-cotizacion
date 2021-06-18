@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { PersonCircle,BoxArrowRight, HouseDoorFill, PersonBadgeFill} from 'bootstrap-icons-react';
+import { PersonFill,PersonCircle,BoxArrowRight, HouseDoorFill, PersonBadgeFill} from 'react-bootstrap-icons'
 import './MenuNavegacion.css';
 import ModalSeleccionRol from './ModalSeleccionRol';
 import {NavLink} from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import {Button} from 'reactstrap'
 function MenuNavegacion (){
 
@@ -34,6 +35,7 @@ function MenuNavegacion (){
     const [ roleMore, setRoleMore] = useState(false)
     const [ numRoles, setNumRoles] = useState(0)
     const [ bandera, setBandera] = useState(null)
+    let history = useHistory();
     const cerrarSesion = () =>{
         window.localStorage.removeItem("tokenContizacion");
         window.localStorage.removeItem("userDetails");
@@ -51,6 +53,7 @@ function MenuNavegacion (){
         cambiarPermisos(rol.permissions)
         setUserRol(rol.nameRol)
         setFlag(!flag);
+        history.replace("/")
     }
     const resetPermisos=()=>{
         setVerSolicitudesAdqui(false)
@@ -141,14 +144,20 @@ function MenuNavegacion (){
                                     <label>{userName} <br></br>{userRol}</label>
                                 </button>
                                 <div className="dropdown-content" >
-                                    {roleMore && 
                                         <button type="button" className="btn btn-default dropdown-item" id="userDrop"
                                         onClick={()=>{
-                                            setAbrirRoles(true)
+                                            history.replace("/perfil")
                                         }}>
-                                            <PersonBadgeFill height={20} width={20}/> Cambiar Rol
+                                            <PersonFill height={20} width={20}/> Mi Perfil
                                         </button>
-                                    }     
+                                        {roleMore && 
+                                            <button type="button" className="btn btn-default dropdown-item" id="userDrop"
+                                            onClick={()=>{
+                                                setAbrirRoles(true)
+                                            }}>
+                                                <PersonBadgeFill height={20} width={20}/> Cambiar Rol
+                                            </button>
+                                        }     
                                     <button onClick={cerrarSesion} type="button" className="btn btn-default dropdown-item" id="userDrop">
                                         <BoxArrowRight height={20} width={20}/> Cerrar Sesion
                                     </button>
@@ -175,12 +184,12 @@ function MenuNavegacion (){
                    }
                    {realizarSolicitudesAdqui &&
                        <li className="nav-container--item">
-                           <NavLink className="nav-link" type="button" to="/SolicitudesDeAdquisicion">Solicitudes De Adquisicion</NavLink>
+                           <NavLink className="nav-link" type="button" to={`/SolicitudesDeAdquisicion/${idUnitS}`}>Solicitudes De Adquisicion</NavLink>
                        </li>
                    }
                    {verSolicitudesAdqui &&
                        <li className="nav-container--item">
-                           <NavLink className="nav-link" to="/SolicitudesDeAdquisicionAdmin">Solicitudes De Adquisicion</NavLink>
+                           <NavLink className="nav-link" to={`/SolicitudesDeAdquisicionAdmin/${idUnitA}`}>Solicitudes De Adquisicion</NavLink>
                        </li>
                    }
                    {(adminitrarUsuario || administrarRoles) &&
@@ -226,7 +235,7 @@ function MenuNavegacion (){
                    }
                    { admiMontoLimite &&
                        <li className="nav-container--item">
-                           <NavLink className="nav-link" to="/montoLimite">Monto Limite</NavLink>
+                           <NavLink className="nav-link" to={`/montoLimite/${idUnitA}`}>Monto Limite</NavLink>
                        </li>
                    }
                    { personal &&

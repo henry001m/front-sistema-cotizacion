@@ -1,5 +1,5 @@
 import React, { Fragment,useState,useEffect } from 'react'
-import { PersonCircle ,BoxArrowRight,HouseDoorFill} from 'bootstrap-icons-react';
+import { PersonCircle ,BoxArrowRight,HouseDoorFill} from 'react-bootstrap-icons';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useHistory  } from 'react-router-dom'
 import { useForm } from "react-hook-form";

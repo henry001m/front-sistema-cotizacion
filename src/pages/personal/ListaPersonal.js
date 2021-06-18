@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import {Button} from 'reactstrap';
-import {PlusCircle} from 'bootstrap-icons-react';
+import {PlusCircle} from 'react-bootstrap-icons'
 import {getPersonal} from '../../services/http/UserService'
 import {getPersonalUG} from '../../services/http/UserService'
 
@@ -21,19 +21,21 @@ function ListaPersonal(){
         setFlag(!flag);
     }
     function buttonPersonal(){
-        history.push("/seleccionPersonal")
+        history.push(`/seleccionPersonal/${idUA}/${idUS}`)
     }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
         async function getAllUsers() {
-            if (idUS != null ){
+            if (idUS === "null" ){
+                const response = await getPersonal(idUA);
+                setPersonal(response.users);   
+            }
+            if (idUA === "null"){
                 const resp = await getPersonalUG(idUS);
                 setPersonal(resp.users);
-            }else{
-                const response = await getPersonal(idUA);
-                setPersonal(response.users);
             }
         }
+        console.log("Personal de unidad",personal,idUS,idUA)
         getAllUsers();
     }, [setPersonal,flag]);
     return (
@@ -63,7 +65,7 @@ function ListaPersonal(){
                                     <th scope="col">Nombre</th>
                                     <th scope="col">CI</th>
                                     <th scope="col">Telefono</th>
-                                    {/* <th scope="col">Rol</th> */}
+                                    <th scope="col">Rol</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,7 +76,7 @@ function ListaPersonal(){
                                             <td>{user.name} {user.lastName}</td>
                                             <td>{user.ci}</td>
                                             <td>{user.phone}</td>
-                                            <td>{user.userRol}</td>
+                                            <td>{user.roles}</td>
                                         </tr>
                                     );
                                 })}

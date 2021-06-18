@@ -1,14 +1,14 @@
-import { FileEarmarkArrowUpFill, PlusCircle } from 'bootstrap-icons-react'
+import { FileEarmarkArrowUpFill, PlusCircle } from 'react-bootstrap-icons'
 import React, { useState, useEffect } from  'react'
 import { useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams} from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
 
 function AgregarDetalleSolictud(){
-
+    const {idUS} = useParams();
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null,spending_units_id:""})
     const [ newDetails, setNewDetails] = useState([])
@@ -29,7 +29,7 @@ function AgregarDetalleSolictud(){
                 nameUnidadGasto : response.User.nameUnidadGasto,
                 aplicantName : user.user.name+" "+user.user.lastName,
                 requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
-                spending_units_id: user.user.spending_units_id
+                spending_units_id: idUS
             });
         } catch (error) {
             console.log(error);
@@ -144,7 +144,8 @@ function AgregarDetalleSolictud(){
     let history = useHistory();
 
     function closePage(){
-        history.replace("/SolicitudesDeAdquisicion");
+        // history.replace("/SolicitudesDeAdquisicion");
+        window.history.back();
     }
 
     const Details = newDetails.map((detail,index)=>{

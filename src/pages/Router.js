@@ -29,15 +29,15 @@ const Router = () => {
                 <Redirect exact from="/" to="/home" />
                 <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
-                <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
-                <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
+                <Route exact path='/SolicitudesDeAdquisicion/:idUS' component={ SolicitudesDeAdquisicion}/>
+                <Route exact path='/AgregarDetalleSolictud/:idUS' component={ AgregarDetalleSolictud }/>
                 {/* Unidad Administratica */}
-                <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
+                <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
-                <Route exact path='/montoLimite' component={ MontoLimite }/>
+                <Route exact path='/montoLimite/:idUA' component={ MontoLimite }/>
                 <Route exact path="/personal/:idUA/:idUS" component={ListaPersonal}/>
-                <Route exact path='/seleccionPersonal' component={SeleccionPersonal}/>
+                <Route exact path='/seleccionPersonal/:idUA/:idUS' component={SeleccionPersonal}/>
                 <Route exact path='/perfil' component={InicioSegunRol}/>
                 <Route exact path="/menu" component={ MenuNavegacion }/>
                 {/* Administrador del Sistema */}
@@ -51,8 +51,8 @@ const Router = () => {
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
                 <Route exact path='/ingresoCodigo' component={ IngresoCodigo }/>
                 {/**Cotizaciones */}
-                <Route exact path='/cotizaciones' component={ Cotizaciones }/>
-                <Route exact path='/verCotizacion/:id' component={ VerCotizacion }/>
+                <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
+                <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
             </Switch>
         </div>
     )

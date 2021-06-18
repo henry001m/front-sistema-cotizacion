@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
-import { useHistory } from 'react-router-dom'
-import { getUsers } from '../../services/http/UserService' ;
+import { useHistory, useParams} from 'react-router-dom'
+import { getUsersOutUA,getUsersOutUS} from '../../services/http/UserService' ;
 import ModalSeleccionRoles from "./ModalSeleccionRoles";
 import './SeleccionPersonal.css';
 
-function SeleccionPersonal(props){
-  
+function SeleccionPersonal(){
+    const {idUS} = useParams();
+    const {idUA} = useParams();
     const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [ users, setUsers ] = useState([]);
     const [ user, setUser ] = useState([{id:"",name:"",lastName:""}]);
@@ -38,16 +39,21 @@ function SeleccionPersonal(props){
         closePage();
     }
     useEffect(() => {
-            const fetchData = async () => {
-            try {
-                const response = await getUsers();
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        async function getAllUsers() {
+            // if (idUS != null ){
+                
+            // }else{}
+            if (idUS === "null" ){
+                const response = await getUsersOutUA(idUA);
                 setUsers(response.users);
-                console.log(response.users)
-            } catch (error) {
-                console.log(error);
             }
-        };
-        fetchData();
+            if (idUA === "null"){
+                const resp = await getUsersOutUS(idUS);
+                setUsers(resp.users);
+            }
+        }
+        getAllUsers();
     }, [setUsers,flag]);
 
     return(
@@ -68,17 +74,19 @@ function SeleccionPersonal(props){
                                                 <tr>
                                                     {/* <th width="3%" scope="col"></th> */}
                                                     <th id="columna" scope="col">Nombre</th>
+                                                    <th id="columna" scope="col">Telefono</th>
                                                     <th id="columna" scope="col">Seleccionar Rol</th>
                                                 </tr>
                                             </thead> 
                                             <tbody>
                                                 {
                                                     users.map((userAdd,index)=>{
-                                                        if(userAdd.id != userBandera.user.id & userAdd.id != 1){
+                                                        if(userAdd.id != 1){
                                                             return (
                                                                 <tr>
                                                                     {/* <td>{index+1}</td> */}
                                                                     <td id="fila">{userAdd.name} {userAdd.lastName}</td>
+                                                                    <td id="fila">{userAdd.phone}</td>
                                                                     <td id="fila">
                                                                         <button type="button" class="btn btn-info"
                                                                         onClick={()=>{
@@ -105,6 +113,8 @@ function SeleccionPersonal(props){
             <ModalSeleccionRoles
                 abierto ={ abierto }
                 user={ user }
+                idUS={idUS}
+                idUA={idUA}
                 cerrarModal = {cerrarModal}
                 updateUsers= {updateUsers}
            /> 

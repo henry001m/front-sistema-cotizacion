@@ -1,6 +1,6 @@
   
 import React, { useState, useRef, useEffect } from 'react'
-import { PlusCircle, PencilSquare } from 'bootstrap-icons-react'
+import { PlusCircle, PencilSquare } from 'react-bootstrap-icons'
 import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'

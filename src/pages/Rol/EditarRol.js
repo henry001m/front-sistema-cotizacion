@@ -3,19 +3,35 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
 import { updateBossUG } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import { getPermissions } from '../../services/http/PermissionService';
-
+// const {useState} = React;
+const Checkbox = ({ initialState, id, value, onChange}) => {
+    const [checked, setChecked] = useState(initialState);
+    const onClick=(checked)=>{
+     setChecked(checked);
+     onChange(id, value, checked);
+    }
+    return (
+      <input
+        type="checkbox"
+        onClick={e => onClick(e.target.checked)}
+        checked={checked}
+      />
+    );
+  };
+  
 function EditarRol (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ rol, setRol ] = useState({nameRol:"",description:"",permissions:[]});
     const [ flag, setFlag] = useState(false);
     const [ permissions, setPermissions ] = useState([]);
-    const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
+    const [ selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+    const [ permisosRol, setPermisosRol] = useState([]);
     var seleccionados =[];
-    const [ permisosUser, setPermisosUser ] = useState([
-        {id:1 , namePermission:"Solicitu de aquicición" },
-        {id:2 , namePermission:"Agregar detalle solictud" },
-        {id:3 , namePermission:"Ver las solicitudes de adquisición" },
-    ]);
+    // const [ permisosUser, setPermisosUser ] = useState([
+    //     {id:1 , namePermission:"Solicitu de aquicición" },
+    //     {id:2 , namePermission:"Agregar detalle solictud" },
+    //     {id:3 , namePermission:"Ver las solicitudes de adquisición" },
+    // ]);
     const modalStyles={
         top:"5%",
         transfrom: 'translate(-50%, -50%)'
@@ -23,7 +39,22 @@ function EditarRol (props){
     const closeModal = () => {
         props.cerrarEditor()
         props.updateRols()
+        setSelectedCheckboxes([])
         reset()
+    }
+    const onCheckboxClicked=(id, isValue, isChecked)=>{
+        console.log(`I'm checkbox number ${id} and i'm checked? --> ${isChecked} con el valor ${isValue}`);
+        let auxiliar = [];
+        if(selectedCheckboxes.includes(isValue) ){ 
+            auxiliar=selectedCheckboxes.filter(elemento=>elemento!=isValue);
+        }else{
+            auxiliar=selectedCheckboxes.concat(isValue)
+        }
+        for (const per of auxiliar) {
+            seleccionados.push(parseInt(per));
+        }
+        setSelectedCheckboxes(auxiliar);
+        console.log(auxiliar);
     }
     const onSubmit = async (data) => {
         try{
@@ -40,30 +71,14 @@ function EditarRol (props){
             console.log( error )
         }
     };
-    const handleChangeCheckBox = (e) => {
-        let auxiliar = [];
-        if(selectedCheckboxes.includes(e.target.value)){ //elimina repetidos
-            auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
-        }else{
-            auxiliar=selectedCheckboxes.concat(e.target.value) //agrega nuevos
-        }
-        for (const per of auxiliar) { //convertimos a numeros
-            seleccionados.push(parseInt(per));
-        }
-        setSelectedCheckboxes(auxiliar);
-        console.log(seleccionados);
-        rol.permissions = seleccionados;
-    }
     useEffect(() => {
-        const fetchData = async () => {
-        try {
+        async function getRequestId() {
             const response = await getPermissions();
-            setPermissions(response.permissions);
-        } catch (error) {
-            console.log(error);
+            setPermissions(response.permissions); 
+            setSelectedCheckboxes([1,2,3]);
+            setPermisosRol([1,2,3]);
         }
-    };
-    fetchData();
+        getRequestId();
     }, []);
     return (
         <>
@@ -84,6 +99,7 @@ function EditarRol (props){
                             disabled
                         ></input>
                 </div>
+               
                 <div className="form-group col-md-12">
                     <h6>Descripcion:</h6>
                     <input
@@ -93,8 +109,10 @@ function EditarRol (props){
                         value={props.rol.description}
                     ></input>
                 </div>
+               
                 <div className="form-group col-md-12">
                         <h6>Asignar Permisos:</h6>
+                        
                         <div class="modal-table">
                         <Table bordered>
                           <thead>
@@ -106,20 +124,24 @@ function EditarRol (props){
                           </thead> 
                           <tbody>
                               {
-                                //permisos.map((permission)=>{
                                 permissions.map((permission,index)=>{
                                     return (
                                         <tr>
-                                            <td><input 
-                                                            type="checkbox" 
-                                                            name="permissions"
-                                                            value={permission.id} 
-                                                            onChange={handleChangeCheckBox}/></td>
-                                            <th scope="row">{index+1}</th>
-                                            <td>{permission.namePermission}</td>
+                                        <td>
+                                             <Checkbox 
+                                             initialState={permisosRol.includes(permission.id)} 
+                                             id={index+1} 
+                                             value={permission.id}
+                                             onChange={onCheckboxClicked} 
+                                             />
+                                        </td>
+                                        <th scope="row">{index+1}</th>
+                                        <td>{permission.namePermission}</td> 
                                         </tr>
-                                    );
-                                })}
+                                    )  
+                                })
+                                
+                            }
                           </tbody> 
                         </Table>
                         </div>

@@ -1,5 +1,4 @@
 import React, { Fragment,useState,useEffect } from 'react'
-import { PersonCircle ,BoxArrowRight,HouseDoorFill} from 'bootstrap-icons-react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useHistory  } from 'react-router-dom'
 import Navbar from '../navbar/Navbar';

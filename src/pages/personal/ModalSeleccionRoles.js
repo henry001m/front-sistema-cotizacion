@@ -2,13 +2,18 @@ import React, {useState, useEffect} from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
 import { getRols} from '../../services/http/RolService'
+import {agregarPersonalUS} from '../../services/http/UniGastoService'
+import {agregarPersonalUA} from '../../services/http/UniAdministrativaService'
 function ModalSeleccionRoles(props){
   
     const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
-    const [ user, setUser ] = useState({id:"",name:"",roles:[]});
+    const [ user, setUser ] = useState({idUser:"",idUnit:"",roles:[]});
     const [ rols, setRols ] =useState([]);
+    const [ rolSelec, setRolSelec ] =useState("");
     const [ message, setMessage] = useState("");
+    const {idUS} = props.idUS;
+    const {idUA} = props.idUA;
     var seleccionados =[];
     
     const closeModal = () => {
@@ -34,7 +39,7 @@ function ModalSeleccionRoles(props){
         }
         setSelectedCheckboxes(auxiliar);
         console.log(seleccionados);
-        user.roles = seleccionados;
+        user.roles=seleccionados;
     }
     //Cargar roles desde BD
     useEffect(() => {
@@ -42,6 +47,9 @@ function ModalSeleccionRoles(props){
         try {
             const response = await getRols();
             setRols(response.roles);
+            user.idUser=props.user.id;
+            // user.idUnit=props.idUS;
+            // user.idUnit=props.idUA;
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -51,7 +59,21 @@ function ModalSeleccionRoles(props){
     }, [] );
    
     const onSubmit = async (data)  => {
-        closeModal();
+        try{ 
+            // console.log("Rol seleccionado:",user.roles,"unidad UA",props.idUA);
+            if (props.idUS === "null" ){
+                console.log("este user se registra:",props.user.id, "en unidad",props.idUA,"con el rol",user.roles)
+                const res = await agregarPersonalUA({idUser:props.user.id,idUnit:props.idUA,idRol:user.roles});
+                alert(res.message);
+            }
+            if (props.idUA === "null" ){
+                const resp = await agregarPersonalUS({idUser:props.user.id,idUnit:props.idUS,idRol:user.roles});
+                alert(resp.message);
+            }
+            closeModal();
+        }catch(error){
+            console.log( error )
+        }
     }
     return(
         <>
