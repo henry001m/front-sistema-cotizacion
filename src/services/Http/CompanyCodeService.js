@@ -45,7 +45,7 @@ export async function registrarCotizacionUA(data) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.post('/quotitacion/response/ua',data,headers);
+        const res = await API.post('/ua/quotitacion/response',data,headers);
         return res.data;
     } catch (error) {
         console.log(error);
@@ -55,7 +55,7 @@ export async function registrarCotizacionDetalleUA(data,id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.post('/quotitacion/response/ua'+id,data,headers);
+        const res = await API.post('/ua/quotitacion/response/'+id,data,headers);
         return res.data;
     } catch (error) {
         console.log(error);
@@ -65,7 +65,7 @@ export async function registrarCotizacionDetalleFileUA(data,id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.post('/quotitacion/response/file/ua'+id,data,headers);
+        const res = await API.post('/ua/quotitacion/response/file/'+id,data,headers);
         return res.data;
     } catch (error) {
         console.log(error);
@@ -75,7 +75,7 @@ export async function regitrarArchivoGeneralUA(data,id) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const res = await API.post('quotitacion/response/file/uageneral/'+id,data,headers);
+        const res = await API.post('/ua/quotitacion/response/file/uageneral/'+id,data,headers);
         return res.data;
     } catch (error) {
         console.log(error);

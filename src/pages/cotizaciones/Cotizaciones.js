@@ -8,7 +8,9 @@ function Cotizaciones() {
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([{id:1, Empresa:"dumbo", items:4,total:450}])
     let history = useHistory()
-
+    const addCositation = () =>{
+        history.push(`/respuesta/cotizacion/ua/${id}`)
+    }
     useEffect(() => {
         async function getQuotitations() {
             try {
@@ -33,7 +35,7 @@ function Cotizaciones() {
                         <button className="btn btn-secondary">
                             Realizar Comparación
                         </button>
-                        <button className="btn btn-success" style={{marginLeft:"20px"}}>
+                        <button onClick={addCositation} className="btn btn-success" style={{marginLeft:"20px"}}>
                             <PlusCircle className="mb-1"/> Agregar
                         </button>
                     </div>

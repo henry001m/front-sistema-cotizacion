@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
 import { getEmpresas } from '../../services/http/BussinessService';
-import { useHistory } from 'react-router-dom';
 import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
+import { useHistory, useParams } from 'react-router-dom'
 
 function RespCotizacion(props) {
+    const {id} = useParams();
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
     const [empresas, setEmpresas] = useState([]);
@@ -15,7 +16,6 @@ function RespCotizacion(props) {
     const [fechaSolic, setFechaSolic] = useState("");
     const [fechaMin, setFechaMin] = useState("");
     const [cotizados, setCotizados] = useState([]);
-    const [quotitationId, setQuotitationId] = useState({});
     const [message, setMessage] = useState("");
     const [flag, setFlag] = useState(false);
     //files
@@ -49,29 +49,27 @@ function RespCotizacion(props) {
         cotizados.splice(indexEncotrado,1);
         setCotizados(cotizados);
     }
-    const salirHome = ()=>{
-        history.push("/ingresoCodigo");
+    const irAtras = ()=>{
+        history.push("/cotizaciones/"+id);
     }
     const enviarDetalle = async(detalle, id)=>{
-        console.log(detalle)
-        //const res = await registrarCotizacionDetalleUA(detalle,id)
-        //const resFile = await registrarCotizacionDetalleFileUA(detalle.archivo,res.response)
+        const res = await registrarCotizacionDetalleUA(detalle,id)
+        console.log("respuesta detalle",res.response);
+        const resFile = await registrarCotizacionDetalleFileUA(detalle.archivo,res.response)
     }
     const onSubmit = async (data) =>{
-        data.company_codes_id=quotitationId.id;
+        data.request_quotitations_id=id;
         data.answerDate=new Date().toISOString().substr(0,10);
         try {
             if(cotizados.length>0){
-                //document.getElementById('btnEnviar').disabled=true;
+                document.getElementById('btnEnviar').disabled=true;
                 const res = await registrarCotizacionUA(data);
-                const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
                 cotizados.forEach(cotizado => {
-                    //enviarDetalle(cotizado,res.response.id);
-                    enviarDetalle(cotizado,1);
+                    enviarDetalle(cotizado,res.response.id);
                 });
-                console.log(data)
-                //alert(res.response.message);
-                //salirHome();
+                const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
+                alert(res.response.message);
+                irAtras();
             }else{
                 setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
             }
@@ -121,18 +119,13 @@ function RespCotizacion(props) {
         console.log(e.target.files)
     }
     useEffect(() => {
-        //const {data} = props.location;
-        const data ={
-            request_quotitations_id:1
-        };
-        setQuotitationId(data.request_quotitations_id);
         const tiempoTranscurrido = Date.now();
         const hoy = new Date(tiempoTranscurrido);
         setFechaSolic(hoy.toLocaleDateString());
         setFechaMin(fechaDeHoy());
         const fetchData = async () => {
             try {
-                const response = await detailsQuotitation( data.request_quotitations_id);
+                const response = await detailsQuotitation(id);
                 setDetalles(response);
                 const res = await getEmpresas();
                 setEmpresas(res.business);
@@ -151,7 +144,7 @@ function RespCotizacion(props) {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <h3>Datos del proveedor</h3>
                             <hr style={{margin:'0px'}}></hr>
-                            <div className="form-row">
+                            <div className="form-row ">
                                 <div className="col-md-4">
                                     <select {...register("idEmpresa",{required:true})} className="form-select form-control" aria-label="Default select example">
                                         <option value="" >Seleccione la empresa</option>
@@ -162,6 +155,10 @@ function RespCotizacion(props) {
                                         }
                                     </select>
                                     {errors.idEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                </div>
+                                <div className="col-md-4"></div>
+                                <div className="col-md-4">
+                                    <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
                                 </div>
                             </div>
                             <h3>Datos de Cotización</h3>
@@ -241,7 +238,7 @@ function RespCotizacion(props) {
                                 </div>
                                 
                                 <div className="form-group col" id="toolbar">
-                                    <button className="btn btn-secondary" onClick={salirHome}  id="btnV">Cancelar</button>
+                                    <button className="btn btn-secondary" onClick={irAtras}  id="btnV">Cancelar</button>
                                     <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Enviar</button>
                                 </div>
                             </div>
