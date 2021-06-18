@@ -21,6 +21,8 @@ import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
 import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
 import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
+import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
+
 
 const Router = () => {
     return (
@@ -40,6 +42,7 @@ const Router = () => {
                 <Route exact path='/seleccionPersonal/:idUA/:idUS' component={SeleccionPersonal}/>
                 <Route exact path='/perfil' component={InicioSegunRol}/>
                 <Route exact path="/menu" component={ MenuNavegacion }/>
+                <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
                 {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>

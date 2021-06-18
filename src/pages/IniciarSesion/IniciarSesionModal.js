@@ -79,7 +79,7 @@ const IniciarSesion = (props) => {
                                 {errors.userName.message}
                             </span>}
                     <Label for="password">
-                        Contaseña
+                        Contraseña
                     </Label>
                     <input 
                         name="password"
