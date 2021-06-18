@@ -5,7 +5,7 @@ import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,re
 import DetalleFila from './DetalleFila';
 import { getEmpresas } from '../../services/http/BussinessService';
 import { useHistory } from 'react-router-dom';
-import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react';
+import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
 
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();

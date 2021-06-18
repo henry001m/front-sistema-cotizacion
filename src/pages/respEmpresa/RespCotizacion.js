@@ -62,11 +62,13 @@ function RespCotizacion(props) {
         data.email=companyCode.email;
         data.nit = nit;
         data.rubro = rubro;
-        data.empresaId = empresaId;
+        data.business_id = empresaId;
         try {
             if(cotizados.length>0){
-                document.getElementById('btnEnviar').disabled=true;
+                //document.getElementById('btnEnviar').disabled=true;
+                console.log(data)
                 const res = await registrarCotizacion(data);
+                console.log(res);
                 cotizados.forEach(cotizado => {
                     enviarDetalle(cotizado,res.response.id);
                 });
@@ -204,8 +206,8 @@ function RespCotizacion(props) {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <textarea {...register("observacion",{maxLength:200})} type="text" className="form-control"></textarea>
-                                    {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                    <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
+                                    {errors.observation?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
                                 </div>
                             </div>
                             <div className="form-row" >
