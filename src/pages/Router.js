@@ -31,8 +31,8 @@ const Router = () => {
                 <Redirect exact from="/" to="/home" />
                 <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
-                <Route exact path='/SolicitudesDeAdquisicion/:idUS' component={ SolicitudesDeAdquisicion}/>
-                <Route exact path='/AgregarDetalleSolictud/:idUS' component={ AgregarDetalleSolictud }/>
+                <Route exact path='/SolicitudesDeAdquisicion/:idUS/:nameUS' component={ SolicitudesDeAdquisicion}/>
+                <Route exact path='/AgregarDetalleSolictud/:idUS/:nameUS' component={ AgregarDetalleSolictud }/>
                 {/* Unidad Administratica */}
                 <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>

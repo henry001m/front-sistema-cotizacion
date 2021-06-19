@@ -35,7 +35,7 @@ function ListaPersonal(){
                 setPersonal(resp.users);
             }
         }
-        console.log("Personal de unidad",personal,idUS,idUA)
+        // console.log("Personal de unidad",personal,idUS,idUA)
         getAllUsers();
     }, [setPersonal,flag]);
     return (

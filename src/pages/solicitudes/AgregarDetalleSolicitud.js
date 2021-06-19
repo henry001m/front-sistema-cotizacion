@@ -9,6 +9,7 @@ import axios from 'axios';
 
 function AgregarDetalleSolictud(){
     const {idUS} = useParams();
+    const {nameUS} = useParams();
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null,spending_units_id:""})
     const [ newDetails, setNewDetails] = useState([])
@@ -26,7 +27,7 @@ function AgregarDetalleSolictud(){
             console.log("esto es el response",response)
             setAdquisicion({
                 ...adquisicion,
-                nameUnidadGasto : response.User.nameUnidadGasto,
+                nameUnidadGasto : nameUS,
                 aplicantName : user.user.name+" "+user.user.lastName,
                 requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
                 spending_units_id: idUS

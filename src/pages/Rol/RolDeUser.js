@@ -153,17 +153,17 @@ function RolDeUser(props){
                         
                             <h6>Asignar Permisos:</h6>
                             <div class="modal-table">
-                            <Table bordered>
+                            <Table striped bordered hover size="sm">
                               <thead>
                                   <tr>
                                       <th></th>
+                                      <th>#</th>
                                       <th>Permiso</th>
                                   </tr>
                               </thead> 
                               <tbody>
                                   {
-                                    //permisos.map((permission)=>{
-                                    permissions.map((permission)=>{
+                                    permissions.map((permission,index)=>{
                                         return (
                                             <tr>
                                                 <td scope="row"><input 
@@ -174,7 +174,9 @@ function RolDeUser(props){
                                                                 })}
                                                                 value={permission.id} 
                                                                 onChange={handleChangeCheckBox}/></td>
+                                                 <th scope="row">{index+1}</th>
                                                 <td>{permission.namePermission}</td>
+                                               
                                             </tr>
                                         );
                                    })

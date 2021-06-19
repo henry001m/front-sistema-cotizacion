@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Table} from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Table,FormGroup, Label, Input} from 'reactstrap';
 import { updateBossUG } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import { getPermissions } from '../../services/http/PermissionService';
@@ -10,6 +10,7 @@ const Checkbox = ({ initialState, id, value, onChange}) => {
      setChecked(checked);
      onChange(id, value, checked);
     }
+    
     return (
       <input
         type="checkbox"
@@ -43,7 +44,7 @@ function EditarRol (props){
         reset()
     }
     const onCheckboxClicked=(id, isValue, isChecked)=>{
-        console.log(`I'm checkbox number ${id} and i'm checked? --> ${isChecked} con el valor ${isValue}`);
+        // console.log(`I'm checkbox number ${id} and i'm checked? --> ${isChecked} con el valor ${isValue}`);
         let auxiliar = [];
         if(selectedCheckboxes.includes(isValue) ){ 
             auxiliar=selectedCheckboxes.filter(elemento=>elemento!=isValue);
@@ -111,10 +112,9 @@ function EditarRol (props){
                 </div>
                
                 <div className="form-group col-md-12">
-                        <h6>Asignar Permisos:</h6>
-                        
-                        <div class="modal-table">
-                        <Table bordered>
+                        <h6>Asignar Permisos:</h6>                       
+                    <div class="modal-table"> 
+                        <Table striped bordered hover size="sm">
                           <thead>
                               <tr>
                                   <th></th>
@@ -127,7 +127,7 @@ function EditarRol (props){
                                 permissions.map((permission,index)=>{
                                     return (
                                         <tr>
-                                        <td>
+                                        <td scope="row">
                                              <Checkbox 
                                              initialState={permisosRol.includes(permission.id)} 
                                              id={index+1} 
@@ -143,9 +143,11 @@ function EditarRol (props){
                                 
                             }
                           </tbody> 
+                        
                         </Table>
-                        </div>
+                        </div> 
                     </div>
+                 
             </div>
             </ModalBody>
             <ModalFooter>

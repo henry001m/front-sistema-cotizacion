@@ -32,6 +32,8 @@ function MenuNavegacion (){
     const [personal, setPersonal] = useState(false)
     const [idUnitA,setidUnitA]=useState(null);
     const [idUnitS,setidUnitS]=useState(null);
+    const [nameUnitA,setNameUnitA]=useState(null);
+    const [nameUnitS,setNameUnitS]=useState(null);
     const [ roleMore, setRoleMore] = useState(false)
     const [ numRoles, setNumRoles] = useState(0)
     const [ bandera, setBandera] = useState(null)
@@ -52,6 +54,8 @@ function MenuNavegacion (){
         setBandera(rol)
         cambiarPermisos(rol.permissions)
         setUserRol(rol.nameRol)
+        setNameUnitS(rol.nameUnidadGasto)
+        setNameUnitA(rol.nameUnidadAdministrativa)
         setFlag(!flag);
         history.replace("/")
     }
@@ -117,6 +121,8 @@ function MenuNavegacion (){
                     setNumRoles(1)
                     setidUnitA(user.user.roles[0].pivot.administrative_unit_id)
                     setidUnitS(user.user.roles[0].pivot.spending_unit_id)
+                    setNameUnitS(user.user.roles[0].nameUnidadGasto)
+                    setNameUnitA(user.user.roles[0].nameUnidadAdministrativa)
                     console.log("UNIDAD ADMIN",user.user.roles[0].pivot.administrative_unit_id)
                     console.log("UNIDAD GASTO",user.user.roles[0].pivot.spending_unit_id)
                 }else{
@@ -184,7 +190,7 @@ function MenuNavegacion (){
                    }
                    {realizarSolicitudesAdqui &&
                        <li className="nav-container--item">
-                           <NavLink className="nav-link" type="button" to={`/SolicitudesDeAdquisicion/${idUnitS}`}>Solicitudes De Adquisicion</NavLink>
+                           <NavLink className="nav-link" type="button" to={`/SolicitudesDeAdquisicion/${idUnitS}/${nameUnitS}`}>Solicitudes De Adquisicion</NavLink>
                        </li>
                    }
                    {verSolicitudesAdqui &&
