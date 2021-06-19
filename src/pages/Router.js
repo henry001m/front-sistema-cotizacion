@@ -18,6 +18,7 @@ import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
+import RespuestaInformeCotizacion from './cotizaciones/RespuestaInformeCotizacion';
 
 
 const Router = () => {
@@ -48,6 +49,7 @@ const Router = () => {
                 {/**Cotizaciones */}
                 <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
                 <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
+                <Route exact path='/informeCotizacionResp' component={ RespuestaInformeCotizacion }/>
             </Switch>
         </div>
     )
