@@ -35,12 +35,34 @@ export async function getPersonal(idUnit) {
         console.log(error);
     }
 }
+/**Devuelve los usuarios que NO estan en una unidad administrativa*/
+export async function getUsersOutUA(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.get(`users/unit/administrative/out/${idUnit}`,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 /**Devuelve los usuarios de una unidad e gasto*/
 export async function getPersonalUG(idUnit) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
         const res = await API.get(`users/unit/spending/${idUnit}`,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+/**Devuelve los usuarios que NO estan en una unidad e gasto*/
+export async function getUsersOutUS(idUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.get(`users/unit/spending/out/${idUnit}`,headers);
         return res.data;
     } catch (error) {
         console.log(error);

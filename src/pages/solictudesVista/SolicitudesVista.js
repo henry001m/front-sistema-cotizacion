@@ -1,15 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
-import { useHistory  } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
 import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 
 function SolicitudesVista(){
+    const {idUA} = useParams();
     const [quotitations, setQuotitations] = useState([{id:1, nameUnidadGasto:"tecno", requestDate:"20-10-18", status:"aceptado"}]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
     const [quotitationId, setQuotitationID ] = useState("")
@@ -21,10 +21,9 @@ function SolicitudesVista(){
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.administrative_units_id
         async function getAllQuotitations() {
             try {
-                const result = await getQuotitationAdministrativeUnit(idUnit);
+                const result = await getQuotitationAdministrativeUnit(idUA);
                 const resultQuotitations=result.request_quotitations;
                 console.log(resultQuotitations)
                 //setQuotitations(resultQuotitations);

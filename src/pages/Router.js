@@ -16,9 +16,13 @@ import ListaEmpresa from './empresa/ListaEmpresa'
 import ListaRoles from './rol/ListaRoles'
 import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
+import SeleccionPersonal from './personal/SeleccionPersonal'
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
 import RespuestaInformeCotizacion from './cotizaciones/RespuestaInformeCotizacion';
+import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
+import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
+import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
 
 
 const Router = () => {
@@ -28,14 +32,18 @@ const Router = () => {
                 <Redirect exact from="/" to="/home" />
                 <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
-                <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
-                <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
+                <Route exact path='/SolicitudesDeAdquisicion/:idUS' component={ SolicitudesDeAdquisicion}/>
+                <Route exact path='/AgregarDetalleSolictud/:idUS' component={ AgregarDetalleSolictud }/>
                 {/* Unidad Administratica */}
-                <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
+                <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
-                <Route exact path='/montoLimite' component={ MontoLimite }/>
-                <Route exact path='/personal' component={ListaPersonal}/>
+                <Route exact path='/montoLimite/:idUA' component={ MontoLimite }/>
+                <Route exact path="/personal/:idUA/:idUS" component={ListaPersonal}/>
+                <Route exact path='/seleccionPersonal/:idUA/:idUS' component={SeleccionPersonal}/>
+                <Route exact path='/perfil' component={InicioSegunRol}/>
+                <Route exact path="/menu" component={ MenuNavegacion }/>
+                <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
                 {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>

@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from  'react'
-import { PlusCircle } from 'react-bootstrap-icons';
+import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
 import RolDeUser from './RolDeUser';
+import EditarRol from './EditarRol';
 import {getRols} from '../../services/http/RolService'
 import {Button} from 'reactstrap';
 
@@ -10,14 +11,16 @@ function ListaRoles(){
     const [ rols, setRols ] =useState([]);
     const [ flag, setFlag] = useState(false);
     const [ rol, setRol ] = useState({nameRol:"",description:""})
-
+    const [ abrirEditor, setAbrirEditor] = useState(false);
     const OpenModalRR = () => {
         setAbierto(true);
     };
     const CloseModalRR = () => {
         setAbierto(false);
     };
-
+    const cerrarEditor = () => {
+        setAbrirEditor( false );
+    }
     const updateRols = ()=>{
         setFlag(!flag);
     }
@@ -50,8 +53,8 @@ function ListaRoles(){
                         <div className="col-6" align="right">
                              <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
                          </div>
-                    </div>
-                
+            </div>
+            <RolDeUser abierto={ abierto } CloseModalRR={CloseModalRR} updateRols={updateRols} /> 
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
@@ -61,16 +64,25 @@ function ListaRoles(){
                                     <th scope="col">#</th>
                                     <th scope="col">Rol</th>
                                     <th scope="col">Descripcion</th>
+                                    <th scope="col">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    rols.map((rols,index)=>{
+                                    rols.map((rol,index)=>{
                                         return (
                                             <tr key={index}>
                                                 <td scope="row">{index+1}</td>
-                                                <td>{rols.nameRol}</td>
-                                                <td>{rols.description}</td>
+                                                <td>{rol.nameRol}</td>
+                                                <td>{rol.description}</td>
+                                                <td><button className="btn  btn-warning" 
+                                                        onClick={()=>{
+                                                            setAbrirEditor(true)
+                                                            setRol(rol)
+                                                        }}
+                                                        style={{color:'white', backgroundColor:'orange'}}
+                                                    ><PencilSquare/></button>
+                                                </td>
                                             </tr>
                                         );
                                    })
@@ -80,10 +92,12 @@ function ListaRoles(){
                     </div>
                 </div>
             </div>
-            <RolDeUser 
-            abierto={ abierto } 
-            CloseModalRR={CloseModalRR} 
-            updateRols={updateRols} /> 
+            <EditarRol 
+            abrirEditor={ abrirEditor }
+            rol={ rol }
+            cerrarEditor = {cerrarEditor}
+            updateRols= {updateRols}
+        /> 
         </>
     );
 }

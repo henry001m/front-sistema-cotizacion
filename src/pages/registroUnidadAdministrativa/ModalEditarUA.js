@@ -104,7 +104,7 @@ function ModalEditarUA (props){
                     {...register("admin_id")}
                     className="form-control"
                     onClick={handleSelectChange}>
-                        <option id="admi" value="">{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option>
+                        <option id="admi" value="">{props.administrativeUnit.admin[0].name} {props.administrativeUnit.admin[0].lastName}</option>
                         {
                             admins.map((administrador)=>{
                                 return(

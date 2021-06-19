@@ -23,6 +23,7 @@ const IniciarSesion = (props) => {
             window.localStorage.setItem("tokenContizacion",res.data.success.token);
             setMessageLogin("");
             userDetails();
+            props.cerrarModal()
         } catch (error) {
             setMessageLogin("Por favor revise su nombre de usuario y contraseña");
             console.log(error);
@@ -78,7 +79,7 @@ const IniciarSesion = (props) => {
                                 {errors.userName.message}
                             </span>}
                     <Label for="password">
-                        Contaseña
+                        Contraseña
                     </Label>
                     <input 
                         name="password"
