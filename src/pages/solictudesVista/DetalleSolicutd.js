@@ -29,19 +29,21 @@ function DetalleSolicitud(){
         }else{
             const aux = {status:"aceptado"}
             const result = await updateStatus(id,aux);
-            history.replace("/SolicitudesDeAdquisicionAdmin")
+            // history.replace("/SolicitudesDeAdquisicionAdmin")
+            window.history.back();
         }
     };
 
     const rejectRequest = async ( ) => {
         const aux = {status:"rechazado"}
         const result = await updateStatus(id,aux);
-        history.replace("/SolicitudesDeAdquisicionAdmin")
+        // history.replace("/SolicitudesDeAdquisicionAdmin")
+        window.history.back();
     };
 
     const closePage = ( ) => {
-        history.replace("/SolicitudesDeAdquisicionAdmin")
-
+        // history.replace("/SolicitudesDeAdquisicionAdmin")
+        window.history.back();
     };
 
     const alertMessgeInforme = () => {

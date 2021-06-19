@@ -53,3 +53,14 @@ export async function updateBossUA(idUser,idUnit) {
         console.log(error);
     }
 }
+/**Agregar un usuario con rol a una Unidad Admnistrativa*/
+export async function agregarPersonalUA(userRolUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.post('administrativeUnit/personal/new',userRolUnit,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

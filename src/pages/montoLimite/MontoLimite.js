@@ -3,9 +3,9 @@ import { PlusCircle } from 'react-bootstrap-icons'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
 import { getMontoLimiteAdminUnit} from '../../services/http/MontoLimiteService'
-
+import { useHistory, useParams} from 'react-router-dom'
 function MontoLimite() {
-
+    const {idUA} = useParams();
     const [limiteAmouts, setLimiteAmouts] = useState([]);
     const [flag, setFlag] = useState(false);
     const [final, setFinal] = useState({monto:""})
@@ -46,11 +46,9 @@ function MontoLimite() {
         setAbierto(false);
     }
     useEffect(() => {
-        const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.administrative_units_id
         const fetchData = async () => {
         try {
-            const response = await getMontoLimiteAdminUnit(idUnit);
+            const response = await getMontoLimiteAdminUnit(idUA);
             if(response.Limite_Amounts.length>0){
                 setFinal(response.Limite_Amounts[response.Limite_Amounts.length-1]);
             }
@@ -92,7 +90,7 @@ function MontoLimite() {
                         </div>
                     </div>
                     {/* Modal para agregar un nuevo limite */}
-                    <MontoLimiteModal abierto={abierto} cerrarModal={cerrarModal} updateLimitAmout={updateLimitAmout}/>
+                    <MontoLimiteModal idUA={idUA} abierto={abierto} cerrarModal={cerrarModal} updateLimitAmout={updateLimitAmout}/>
                     <br></br>
                     <div className="form-register">             
                         <div className="form-row">

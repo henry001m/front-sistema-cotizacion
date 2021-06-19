@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams} from 'react-router-dom'
 import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'react-bootstrap-icons'
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
 
-
 function SolicitudesDeAdquisicion(){
-
+    const {idUS} = useParams();
     const [abrirModalInforme, setAbrirModalInforme] = useState(false)
     const [ idSolicitud, setIdSolicitud ] = useState("")
     const [ report, setReport ] = useState({description:""})
@@ -16,17 +15,17 @@ function SolicitudesDeAdquisicion(){
 
 
     function ButtonAgregar(){
-        history.push("/AgregarDetalleSolictud")
+        history.push(`/AgregarDetalleSolictud/${idUS}`)
     }
 
     const [quotitations, setQuotitations] = useState([]);
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.spending_units_id
         async function getAllQuotitations() {
             try {
-                const result = await getQuotitationSpendingUnit(idUnit);
+                console.log("llega esta unidad a solicitudes",idUS)
+                const result = await getQuotitationSpendingUnit(idUS);
                 console.log(result);
                 const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
