@@ -7,7 +7,7 @@ import './ModalSeleccionRol.css';
 function ModalSeleccionRol(props){
     const [user, setUser] = useState([]);
     const [userRol, setUserRol] = useState([]);
-    const [bandera, setBandera] = useState("")
+    const [nameUnidad, setNameUnidad] = useState("")
     const [ flag, setFlag] = useState(false);
     // const [userRol, setUserRol] = useState([
     //     {id:1, nameRol:"Jefe unidad de gasto",unidad:"3",facultad:"Ciencias y Tecnologia"},
@@ -15,6 +15,9 @@ function ModalSeleccionRol(props){
     //     {id:5, nameRol:"Secretaria",unidad:"6", facultad:"Arquietectura"},
     //     {id:6, nameRol:"Encargado de Correos",unidad:"4", facultad:"Humanidades"},
     //     {id:7, nameRol:"Encargado de Personal",unidad:"4", facultad:"Humanidades"},
+    //     {id:8, nameRol:"Encargado de Compras",unidad:"5", facultad:"Humanidades"},
+    //     {id:9, nameRol:"Encargado de relaciones publicas",unidad:"1", facultad:"Humanidades"},
+    //     {id:10, nameRol:"Encargado de Personal",unidad:"3", facultad:"Ciencias y Tecnologia"},
     // ]);
 
     const modalStyles={
@@ -30,7 +33,7 @@ function ModalSeleccionRol(props){
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
                 setUser(user.user);
                 setUserRol(user.user.roles);
-                console.log("LOS ROLES",user.user.roles)
+                //console.log("LOS ROLES",user.user.roles)
             } catch (error) {
                 console.log(error);
             }
@@ -47,15 +50,17 @@ function ModalSeleccionRol(props){
         <ModalBody>
                 <div align="center" class="tabla grid-container--fill">
                     {userRol.map((rol)=>{
+                        // rol.nameUnidadGasto==null? setNameUnidad(rol.nameUnidadAdministrativa):setNameUnidad(rol.nameUnidadGasto);
                         return(
                             <div id="card">
                             <image class="card-img-top"><PersonCircle height={60} width={60} id="card-image"/></image>
                             <div class="card-body">
                                 <h6 class="card-title">{rol.nameRol}</h6>
-                                {/* <label class="card-text">{rol.facultad}</label><br></br> */}
+                                <label class="card-text">{rol.nameUnidadGasto} </label>
+                                <label class="card-text">{rol.nameUnidadAdministrativa}</label>
                                 <button type="button" class="btn btn-info"
                                  onClick={()=>{
-                                    console.log("entra con el rol",rol.nameRol);  
+                                    console.log("entra con el rol",rol.nameRol,rol.nameUnidadAdministrativa,rol.nameUnidadGasto);  
                                     props.updateRol(rol)
                                     closeModal()
                                 }}>Acceder</button> 

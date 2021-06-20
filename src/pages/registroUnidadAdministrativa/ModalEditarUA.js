@@ -61,6 +61,7 @@ function ModalEditarUA (props){
             try {
                 const response = await getAdmins();
                 setAdmins(response.users);
+                console.log("ENTRA A EDITAR")
             } catch (error) {
                 console.log(error);
             }

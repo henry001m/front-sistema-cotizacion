@@ -36,3 +36,14 @@ export async function updateRolUser(idu,idr) {
         console.log(error);
     }
 }
+/**Actualiza un rol */
+export async function updateRol(rol) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.put(`roles/edit`,rol,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

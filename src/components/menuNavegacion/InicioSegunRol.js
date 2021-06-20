@@ -7,30 +7,13 @@ import {Button} from 'reactstrap'
 import {NavLink} from 'react-router-dom'
 import './InicioSegunRol.css';
 function InicioSegunRol(props){
-    // const [userRol, setUserRol] = useState([
-    //     {id:1, nameRol:"Jefe unidad de gasto",unidad:"3",facultad:"Ciencias y Tecnologia"},
-    //     {id:4, nameRol:"Cotizador",unidad:"2", facultad:"Economia"},
-    //     {id:5, nameRol:"Secretaria",unidad:"6", facultad:"Arquietectura"},
-    //     {id:6, nameRol:"Encargado de Correos",unidad:"4", facultad:"Humanidades"},
-    //     {id:7, nameRol:"Encargado de Personal",unidad:"4", facultad:"Humanidades"},
-    // ]);
     const [user, setUser] = useState([]);
-    const [rolEntrante, setRolEntrante] = useState([]);
-    const [userRol, setUserRol] = useState([]);
-    const [bandera, setBandera] = useState("")
     const [ flag, setFlag] = useState(false);
-    const [ abrirMenu, setAbrirMenu] = useState(false);
-    let history = useHistory();
-    const updateMenu = ()=>{
-        setFlag(!flag);
-    }
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
                 setUser(user.user);
-                setUserRol(user.user.roles);
-                console.log("esta en INICIO ROL(perfil)",bandera);
             } catch (error) {
                 console.log(error);
             }
