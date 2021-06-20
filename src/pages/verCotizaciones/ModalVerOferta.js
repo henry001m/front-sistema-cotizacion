@@ -1,6 +1,7 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect, useRef} from 'react';
 import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
+import { set } from 'react-hook-form';
 const ModalVerOferta = (props) => {
     const modalStyles={
         top:"10%",
@@ -8,17 +9,16 @@ const ModalVerOferta = (props) => {
         width:'400px'
     }
     const [namefile, setNamefile] = useState([])
-    const [fileValidate, setFileValidate] = useState(false);
-    const [fl, setFl] = useState(null);
-    const [oferta, setOferta ] = useState[{brand:"",industry:"",model:"",warrantyTime:""}];
-    const [bandera, setBandera] = useState("");
+    const [oferta, setOferta ] = useState[{brand:"Patito",industry:"Patito",model:"Patito Junior",warrantyTime:"10 meses"}];
+    const banderaRef =useRef(props.detalle);
     const closeModal = () => {
-        setNamefile([])
-        setFl(null)
-        setFileValidate(false);
         props.cerrarOferta()
+        setOferta("")
     }
-    
+    useEffect(function(){
+        banderaRef.current = props.detalle;
+        setOferta(props.detalle);
+    },[props.abrirOferta]);
     return (
         <Modal isOpen={props.abrirOferta} style={modalStyles}>
         <ModalHeader toggle={closeModal}>
@@ -32,7 +32,7 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                    value={oferta.brand}
+                   // value={oferta.brand}
                     disabled
                 ></input>
             <label>Modelo:</label>
@@ -40,7 +40,7 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                    value={oferta.model}
+                    //value={oferta.model}
                     disabled
                 ></input>
             <label>Industria:</label>
@@ -48,7 +48,7 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                    value={oferta.industry}
+                   // value={oferta.industry}
                     disabled
                 ></input>
             <label>Tiempo de Garantia:</label>
@@ -56,7 +56,7 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                    value={oferta.warrantyTime}
+                   // value={oferta.warrantyTime}
                     disabled
                 ></input>
             </FormGroup>

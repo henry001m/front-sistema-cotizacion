@@ -29,7 +29,13 @@ function Navbar() {
 
     return(
         <> 
-            {(user === null) ? 
+          {(window.location.pathname=="/ingresoCodigo") ? 
+          (
+            <nav className="navbar navbar-info justify-content-between" id="cabecera">
+            <h1> Sistema de Cotizaciones </h1>
+            </nav>
+          ):(
+            (user === null) ? 
                 (<div>
                 <nav className="navbar navbar-info justify-content-between" id="cabecera">
                     <h1> Sistema de Cotizaciones </h1>
@@ -40,7 +46,9 @@ function Navbar() {
                 <LoginModal abierto={abierto} cerrarModal={cerrarModal}/> 
                 </div>):( <MenuNavegacion/>
                 )
-            }
+          )}
+
+            
         </>
     );
 }
