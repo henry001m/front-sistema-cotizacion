@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { getRols } from '../../services/http/RolService'
 import { updateRolUser } from '../../services/http/RolService'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import './RolDeUser.css';
 import './Usuario.css'
 
 function ModalEditarUsuario( props ){

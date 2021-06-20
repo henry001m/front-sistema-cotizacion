@@ -7,6 +7,7 @@ import { getReport } from '../../services/http/ReportService';
 
 function SolicitudesDeAdquisicion(){
     const {idUS} = useParams();
+    const {nameUS} = useParams();
     const [abrirModalInforme, setAbrirModalInforme] = useState(false)
     const [ idSolicitud, setIdSolicitud ] = useState("")
     const [ report, setReport ] = useState({description:""})
@@ -15,7 +16,7 @@ function SolicitudesDeAdquisicion(){
 
 
     function ButtonAgregar(){
-        history.push(`/AgregarDetalleSolictud/${idUS}`)
+        history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
     }
 
     const [quotitations, setQuotitations] = useState([]);

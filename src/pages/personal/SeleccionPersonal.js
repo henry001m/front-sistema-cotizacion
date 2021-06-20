@@ -32,28 +32,25 @@ function SeleccionPersonal(){
         setFlag(!flag);
     }
     const onSubmit = async (data)  => {
-        // setRol(rol.nameRol,rol.description,rol.users);
-        // const res = await createRol(rol);
-        // alert(res.message);
-        // console.log("Esto se envia",rol);
         closePage();
     }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        async function getAllUsers() {
-            // if (idUS != null ){
-                
-            // }else{}
-            if (idUS === "null" ){
-                const response = await getUsersOutUA(idUA);
-                setUsers(response.users);
+        try {
+            async function getAllUsers() {
+                if (idUS === "null" ){
+                    const response = await getUsersOutUA(idUA);
+                    setUsers(response.users);
+                }
+                if (idUA === "null"){
+                    const resp = await getUsersOutUS(idUS);
+                    setUsers(resp.users);
+                }
             }
-            if (idUA === "null"){
-                const resp = await getUsersOutUS(idUS);
-                setUsers(resp.users);
-            }
+            getAllUsers();
+        } catch (error) {
+            console.log(error);
         }
-        getAllUsers();
     }, [setUsers,flag]);
 
     return(
@@ -72,10 +69,10 @@ function SeleccionPersonal(){
                                    <table id="tablaC">
                                             <thead>
                                                 <tr>
-                                                    {/* <th width="3%" scope="col"></th> */}
-                                                    <th id="columna" scope="col">Nombre</th>
-                                                    <th id="columna" scope="col">Telefono</th>
-                                                    <th id="columna" scope="col">Seleccionar Rol</th>
+                                                    <th width="5%" scope="col">#</th>
+                                                    <th width="30%" scope="col">Nombre</th>
+                                                    <th width="20%" scope="col">Telefono</th>
+                                                    <th width="30%" scope="col">Seleccionar Rol</th>
                                                 </tr>
                                             </thead> 
                                             <tbody>
@@ -84,10 +81,10 @@ function SeleccionPersonal(){
                                                         if(userAdd.id != 1){
                                                             return (
                                                                 <tr>
-                                                                    {/* <td>{index+1}</td> */}
-                                                                    <td id="fila">{userAdd.name} {userAdd.lastName}</td>
-                                                                    <td id="fila">{userAdd.phone}</td>
-                                                                    <td id="fila">
+                                                                    <td scope="row">{index}</td>
+                                                                    <td >{userAdd.name} {userAdd.lastName}</td>
+                                                                    <td >{userAdd.phone}</td>
+                                                                    <td >
                                                                         <button type="button" class="btn btn-info"
                                                                         onClick={()=>{
                                                                             setAbierto(true)
