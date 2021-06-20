@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import './RespCotizacion.css'
 import { useForm } from "react-hook-form";
-import {detailsQuotitation,registrarCotizacion,registrarCotizacionDetalle,registrarCotizacionDetalleFile} from '../../services/http/CompanyCodeService';
+import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
-import { useHistory } from 'react-router-dom';
+import { getEmpresas } from '../../services/http/BussinessService';
+import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
+import { useHistory, useParams } from 'react-router-dom'
 
 function RespCotizacion(props) {
+    const {id} = useParams();
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
-    //datos de la empresa
-    const [empresa, setEmpresa] = useState("");
-    const [nit, setNit] = useState("");
-    const [rubro, setRubro] = useState("");
+    const [empresas, setEmpresas] = useState([]);
     const [detalles, setDetalles] = useState([]);
     const [fechaSolic, setFechaSolic] = useState("");
     const [fechaMin, setFechaMin] = useState("");
     const [cotizados, setCotizados] = useState([]);
-    const [companyCode, setCompanyCode] = useState({});
     const [message, setMessage] = useState("");
-    const [empresaId, setEmpresaId] = useState(0);
-    const [existeEmpresa, setExisteEmpresa] = useState(true);
     const [flag, setFlag] = useState(false);
+    //files
+    const [namefile, setNamefile] = useState([])
+    const [fileValidate, setFileValidate] = useState(false);
+    const [fl, setFl] = useState(null);
 
     const detallesCotizado =(dato)=>{
         setMessage("");
@@ -48,32 +49,27 @@ function RespCotizacion(props) {
         cotizados.splice(indexEncotrado,1);
         setCotizados(cotizados);
     }
-    const salirHome = ()=>{
-        history.push("/ingresoCodigo");
+    const irAtras = ()=>{
+        history.push("/cotizaciones/"+id);
     }
     const enviarDetalle = async(detalle, id)=>{
-        const res = await registrarCotizacionDetalle(detalle,id)
-        const resFile = await registrarCotizacionDetalleFile(detalle.archivo,res.response)
+        const res = await registrarCotizacionDetalleUA(detalle,id)
+        console.log("respuesta detalle",res.response);
+        const resFile = await registrarCotizacionDetalleFileUA(detalle.archivo,res.response)
     }
     const onSubmit = async (data) =>{
-        data.company_codes_id=companyCode.id;
+        data.request_quotitations_id=id;
         data.answerDate=new Date().toISOString().substr(0,10);
-        data.nameEmpresa=empresa;
-        data.email=companyCode.email;
-        data.nit = nit;
-        data.rubro = rubro;
-        data.business_id = empresaId;
         try {
             if(cotizados.length>0){
-                //document.getElementById('btnEnviar').disabled=true;
-                console.log(data)
-                const res = await registrarCotizacion(data);
-                console.log(res);
+                document.getElementById('btnEnviar').disabled=true;
+                const res = await registrarCotizacionUA(data);
                 cotizados.forEach(cotizado => {
                     enviarDetalle(cotizado,res.response.id);
                 });
+                const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
                 alert(res.response.message);
-                salirHome();
+                irAtras();
             }else{
                 setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
             }
@@ -81,15 +77,6 @@ function RespCotizacion(props) {
             console.log(error)
         }
     };
-    const registraNombreEmpresa=(e)=>{
-        setEmpresa(e.target.value);
-    }
-    const registrarNit=(e)=>{
-        setNit(e.target.value);
-    }
-    const registrarRubro=(e)=>{
-        setRubro(e.target.value);
-    }
     const fechaDeHoy = () => {
         let hoy = new Date();
         var dia=hoy.getDate();
@@ -102,23 +89,47 @@ function RespCotizacion(props) {
         }
         return hoy.getFullYear()+'-'+mes+'-'+dia;
     }
-    useEffect(() => {
-        const {data} = props.location;
-        setCompanyCode({id:data.id,email:data.email,request_quotitations_id:data.request_quotitations_id});
-        if(data.empresa){
-            setEmpresaId(data.empresa.id);
-            setEmpresa(data.empresa.nameEmpresa);
-        }else{
-            setExisteEmpresa(false);
+    const fileSelectHandler =(e)=>{
+        let namefileAux =[];
+        let extenciones = [];
+        for (let index = 0; index <e.target.files.length; index++) {
+            const name = e.target.files[index].name;
+            let extension = name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2);
+            namefileAux.push(name);
+            extenciones.push(extension);
         }
+        let noEsValido = true;
+        let flag = false;
+        extenciones.forEach(exten => {
+            if(!flag){
+                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg' || exten === 'jpeg' || exten === 'PNG'){
+                    noEsValido =false;
+                }else{
+                    noEsValido=true;
+                    flag = true;
+                    
+                }
+            }
+        });
+        if(extenciones.length>0){
+            setFileValidate(noEsValido);
+        }
+        setNamefile(namefileAux);
+        setFl(e.target.files);
+        console.log(e.target.files)
+    }
+    useEffect(() => {
         const tiempoTranscurrido = Date.now();
         const hoy = new Date(tiempoTranscurrido);
         setFechaSolic(hoy.toLocaleDateString());
         setFechaMin(fechaDeHoy());
         const fetchData = async () => {
             try {
-                const response = await detailsQuotitation( data.request_quotitations_id);
+                const response = await detailsQuotitation(id);
                 setDetalles(response);
+                const res = await getEmpresas();
+                setEmpresas(res.business);
+                console.log(res)
             } catch (error) {
                 console.log(error);
             }
@@ -133,26 +144,22 @@ function RespCotizacion(props) {
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <h3>Datos del proveedor</h3>
                             <hr style={{margin:'0px'}}></hr>
-                            <div className="form-row">
-                                {existeEmpresa&&<div className="form-group col-md-4">
-                                    <label>Empresa:</label>
-                                    <input readOnly id="nameEmpresa"  value={empresa} type="text" className="form-control form-control-sm"></input>
-                                    </div>}
-                                {!existeEmpresa&&<div className="form-group col-md-4">
-                                    <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                    <input autoFocus id="nameEmpresa"  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
-                                    {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                    </div>}
-                                {!existeEmpresa && <div className="form-group col-md-4">
-                                        <label>NIT:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input  value={nit} {...register("nit",{required:true})} onChange={registrarNit} type="text" className="form-control form-control-sm"></input>
-                                        {errors.nit?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                </div>}
-                                {!existeEmpresa && <div className="form-group col-md-4">
-                                        <label>Rubro:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input  value={rubro} {...register("rubro",{required:true})} onChange={registrarRubro} type="text" className="form-control form-control-sm"></input>
-                                        {errors.rubro?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                </div>}
+                            <div className="form-row ">
+                                <div className="col-md-4">
+                                    <select {...register("idEmpresa",{required:true})} className="form-select form-control" aria-label="Default select example">
+                                        <option value="" >Seleccione la empresa</option>
+                                        {
+                                            empresas.map((empresa)=>(
+                                                <option key={empresa.id} value={empresa.id}>{empresa.nameEmpresa}</option>
+                                            ))
+                                        }
+                                    </select>
+                                    {errors.idEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                </div>
+                                <div className="col-md-4"></div>
+                                <div className="col-md-4">
+                                    <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
+                                </div>
                             </div>
                             <h3>Datos de Cotización</h3>
                             <hr style={{margin:'0px'}}></hr>
@@ -196,7 +203,7 @@ function RespCotizacion(props) {
                                     {
                                         detalles.map((detalle,index)=>{
                                             return(
-                                                    <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} setMessage={setMessage} elimiarCotizado={elimiarCotizado} detalle={detalle} index={index} register={register}/>
+                                                    <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} elimiarCotizado={elimiarCotizado} detalle={detalle} index={index}/>
                                                 )
                                         })
                                     }
@@ -206,13 +213,32 @@ function RespCotizacion(props) {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
-                                    {errors.observation?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                    <textarea {...register("observacion",{maxLength:200})} type="text" className="form-control"></textarea>
+                                    {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
                                 </div>
                             </div>
                             <div className="form-row" >
+                                <div className="form-group col-md-6" id="toolbar">
+                                    {namefile.map((name,index)=>{
+                                        return(
+                                            <li key={index}>{name}</li>
+                                        )
+                                    })}
+                                    <div className="">
+                                        <input 
+                                            name="archivo"
+                                            type="file" 
+                                            id="files" 
+                                            multiple
+                                            onChange = {fileSelectHandler}
+                                        ></input>
+                                        <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
+                                    </div>
+                                    {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, png, jpg, jpeg</label>}
+                                </div>
+                                
                                 <div className="form-group col" id="toolbar">
-                                    <button className="btn btn-secondary" onClick={salirHome}  id="btnV">Cancelar</button>
+                                    <button className="btn btn-secondary" onClick={irAtras}  id="btnV">Cancelar</button>
                                     <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Enviar</button>
                                 </div>
                             </div>

@@ -36,7 +36,8 @@ const Router = () => {
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
                 <Route exact path='/montoLimite' component={ MontoLimite }/>
                 <Route exact path='/personal' component={ListaPersonal}/>
-                {/* Administrador del Sistema */}
+{/*                 <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
+ */}                {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
