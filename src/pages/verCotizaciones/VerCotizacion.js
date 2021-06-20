@@ -113,17 +113,19 @@ function VerCotizacion(){
                         </tbody>
                     </table>
                 </div>
-                <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
-                    <h4>Observaciones</h4>
-                    <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
-                </div>
-                <div className="form-group col-md-6" style={{marginTop:"33px"}}>
-                    <button type="button" className="btn btn-secondary"
-                        disabled={disabledVerCotizacion}
-                        // onClick={()=>
-                        //     {history.push(`/showFile/${idRe}`)}
-                        // }
-                >Ver Cotizacion</button>
+                <div className="form-row" >
+                    <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
+                        <h4>Observaciones</h4>
+                        <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
+                    </div>
+                    <div className="form-group col-md-6" align="end">
+                        <button type="button" className="btn btn-secondary"
+                            disabled={disabledVerCotizacion}
+                            // onClick={()=>
+                            //     {history.push(`/showFile/${idRe}`)}
+                            // }
+                    >Ver Cotizacion</button>
+                    </div>
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
