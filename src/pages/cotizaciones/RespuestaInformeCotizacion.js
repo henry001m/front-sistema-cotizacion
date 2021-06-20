@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
+import { getComparativeChart } from '../../services/http/QuotitationService'
 
 function RespuestaInformeCotizacion(){
 
-    const [ solicitud, setSolicitud ] = useState({
-        items:[
+    const {idRe} = useParams();
+
+    const [ empresas, setEmpresas ] = useState([])
+    const [ items, setItems ] = useState([
             {
                 id:1, descripcion:"barbijos", amount:20,
                 cotizaciones:[
@@ -22,8 +26,29 @@ function RespuestaInformeCotizacion(){
                     {empresa:"chicken", total:250},{empresa:"Sensacion", total:null},{empresa:"Keido", total:300}
                 ]
             },
-        ]
-    })
+        ])
+
+    let history = useHistory();
+
+    useEffect(() => {
+        console.log("id de items", idRe)
+        async function getComparative() {
+            try {
+                const result = await getComparativeChart(idRe);
+                console.log(result.comparativeChart)
+                var aux = []
+                for(var i=0; i<result.comparativeChart.length-1; i++){
+                    aux.push(result.comparativeChart[i])
+                }
+                console.log(aux)
+                setItems(aux)
+                setEmpresas(result.comparativeChart[result.comparativeChart.length].empresasCotizadas)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getComparative();
+    }, []);
 
     const closePage = () => {
 
@@ -46,7 +71,7 @@ function RespuestaInformeCotizacion(){
 
     const SumaTotal = ( index ) => {
         var suma = 0;
-        solicitud.items.forEach(element => {
+        items.forEach(element => {
             if(element.cotizaciones[index].total!=null){
                 suma=suma+element.cotizaciones[index].total;
             }
@@ -61,10 +86,10 @@ function RespuestaInformeCotizacion(){
         <>
             <div className="container" align="left">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-10">
                         <h1>Informe de cotización</h1>   
                     </div>
-                    <div className="col-md-6" align="right">
+                    <div className="col-md-2" align="right">
                         <button type="button" className="close" onClick={ closePage }>
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -97,8 +122,8 @@ function RespuestaInformeCotizacion(){
                                         <th scope="col">Producto</th>
                                         <th scope="col">Cantidad</th>
                                         {
-                                            solicitud.items[0].cotizaciones.map((empresa,index)=>(
-                                                <th scope="col">{empresa.empresa}</th>
+                                            items[0].cotizaciones.map((empresa,index)=>(
+                                                <th scope="col">{empresa.Empresa}</th>
                                             ))
                                         }
                                         <th scope="col">Precio mas bajo</th>
@@ -106,10 +131,10 @@ function RespuestaInformeCotizacion(){
                                 </thead>
                                 <tbody>
                                     {
-                                        solicitud.items.map((item,index)=>(
+                                        items.map((item,index)=>(
                                             <tr key={item.id}>
                                                 <th scope="row">{index+1}</th>
-                                                <td >{item.descripcion}</td>
+                                                <td >{item.description}</td>
                                                 <td>{item.amount}</td>
                                                 {
                                                     item.cotizaciones.map((cotizacion,index)=>(
@@ -127,11 +152,17 @@ function RespuestaInformeCotizacion(){
                                         <td>Total</td>
                                         <td></td>
                                         {
-                                            solicitud.items[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
+                                            items[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
                                         }
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="form-row">
+                            <div className="col" align="right">
+                                <button className="btn btn-secondary" onClick={() => history.goBack()}>Cerrar</button>
+                            </div>
                         </div>
                     </div>
                 </div>

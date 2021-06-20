@@ -10,7 +10,7 @@ import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 
 function SolicitudesVista(){
     const {idUA} = useParams();
-    const [quotitations, setQuotitations] = useState([{id:1, nameUnidadGasto:"tecno", requestDate:"20-10-18", status:"aceptado"}]);
+    const [quotitations, setQuotitations] = useState([]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
     const [quotitationId, setQuotitationID ] = useState("")
     let history = useHistory();
@@ -26,7 +26,7 @@ function SolicitudesVista(){
                 const result = await getQuotitationAdministrativeUnit(idUA);
                 const resultQuotitations=result.request_quotitations;
                 console.log(resultQuotitations)
-                //setQuotitations(resultQuotitations);
+                setQuotitations(resultQuotitations);
             } catch (error) {
                 console.log(error)
             }
@@ -85,7 +85,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status==="aceptado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
                     <Coin/> Cotizaciones
@@ -101,9 +101,9 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonAddReportQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status==="aceptado"){
             return(
-                <button className="dropdown-item" onClick={() => abrirModalInformeCotizacion(quotitation.id)}>
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
                     <FileEarmarkText/>Informe cotizacion
                 </button>                                    
             );
@@ -197,7 +197,7 @@ function SolicitudesVista(){
                                             <td >{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>{quotitation.status}</td>
-                                            <td>{""/**quotitation.statusQuotitation*/}</td>
+                                            <td>{quotitation.statusReport}</td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
