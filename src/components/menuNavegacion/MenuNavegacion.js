@@ -183,11 +183,11 @@ function MenuNavegacion (){
                            <NavLink className="nav-link" to="/home"><HouseDoorFill style={{height:'23px',width:'23px'}}/></NavLink>
                        </li>
                    }
-                   {perfil &&
+                   {/* {perfil &&
                        <li className="nav-container--item">
                            <NavLink className="nav-link" type="button" to="/perfil">Mi Perfil</NavLink>
                        </li>
-                   }
+                   } */}
                    {realizarSolicitudesAdqui &&
                        <li className="nav-container--item">
                            <NavLink className="nav-link" type="button" to={`/SolicitudesDeAdquisicion/${idUnitS}/${nameUnitS}`}>Solicitudes De Adquisicion</NavLink>

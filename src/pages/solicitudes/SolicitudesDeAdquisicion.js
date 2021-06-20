@@ -109,7 +109,7 @@ function SolicitudesDeAdquisicion(){
                     {quotitation.status}         
                 </td>
                 <td>
-                    {""/*quotitation.statusQuotitation*/}         
+                    {quotitation.statusResponse}         
                 </td>
                 <td >
                     <li className="nav-container--item dropdown">

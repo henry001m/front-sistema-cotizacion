@@ -37,7 +37,7 @@ function SolicitudesVista(){
     }, []);
 
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
                     <FileEarmarkText/> Agregar informe
@@ -53,7 +53,7 @@ function SolicitudesVista(){
     }
 
     const EnableSendMailButton = (quotitation) =>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             return(
                 <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
                     <Envelope/> Enviar correo
@@ -69,7 +69,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonImprimir=(quotitation)=>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
@@ -86,7 +86,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
                     <Coin/> Cotizaciones
@@ -102,7 +102,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonAddReportQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInformeCotizacion(quotitation.id)}>
                     <FileEarmarkText/>Informe cotizacion
@@ -198,7 +198,7 @@ function SolicitudesVista(){
                                             <td >{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>{quotitation.status}</td>
-                                            <td>{""/**quotitation.statusQuotitation*/}</td>
+                                            <td>{quotitation.statusResponse}</td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
