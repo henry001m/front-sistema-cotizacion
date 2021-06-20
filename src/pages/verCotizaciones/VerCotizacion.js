@@ -1,17 +1,19 @@
-
 import React, { useState, useEffect } from 'react'
 import { BagPlusFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
-
+import ModalVerOferta from './ModalVerOferta';
 function VerCotizacion(){
-    
     const {idRe} = useParams();
     const {idCo} = useParams();
     let history = useHistory();
     const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
-    
+    const [ oferta, setOferta ] = useState[{brand:"",industry:"",model:"",warrantyTime:""}];
+    const [ abrirOferta, setAbrirOferta] = useState(false);
+    const cerrarOferta = () => {
+        setAbrirOferta( false );
+    }
     useEffect(() => {
         async function getQuotitation() {
             try {
@@ -22,6 +24,7 @@ function VerCotizacion(){
                     aux.push(result.Cotizacion[i][0]);
                 }
                 setDetalles(aux)
+                console.log("esto es aux",aux)
             } catch (error) {
                 console.log(error)
             }
@@ -87,12 +90,19 @@ function VerCotizacion(){
                                             <td>{detalle.description}</td>
                                             <td>{detalle.unitPrice}</td>
                                             <td>{detalle.totalPrice}</td>
-                                            <td><button className="btn btn-warning" style={{color:"white", backgroundColor:"orange"}}><BagPlusFill/></button></td>
+                                            <td><button className="btn btn-warning"
+                                                onClick={()=>{
+                                                    setAbrirOferta(true)
+                                                    setOferta(detalle.id)
+                                                }}
+                                                style={{color:"white", backgroundColor:"orange"}}
+                                                ><BagPlusFill/></button></td>
                                         </tr>
                                     )
                                 })
                             }
                         </tbody>
+                        <ModalVerOferta abrirOferta={abrirOferta} cerrarOferta={cerrarOferta} oferta={oferta}/>
                     </table>
                 </div>
                 <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>

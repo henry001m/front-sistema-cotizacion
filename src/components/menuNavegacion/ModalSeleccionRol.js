@@ -9,6 +9,7 @@ function ModalSeleccionRol(props){
     const [userRol, setUserRol] = useState([]);
     const [nameUnidad, setNameUnidad] = useState("")
     const [ flag, setFlag] = useState(false);
+    let history = useHistory();
     // const [userRol, setUserRol] = useState([
     //     {id:1, nameRol:"Jefe unidad de gasto",unidad:"3",facultad:"Ciencias y Tecnologia"},
     //     {id:4, nameRol:"Cotizador",unidad:"2", facultad:"Economia"},
@@ -26,6 +27,7 @@ function ModalSeleccionRol(props){
     }
     const closeModal = () => {
         props.cerrarModalRoles()
+        //history.replace("/")
     }
     useEffect(() => {
         const fetchData = async () => {
