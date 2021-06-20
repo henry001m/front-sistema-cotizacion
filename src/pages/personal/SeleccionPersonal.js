@@ -36,17 +36,21 @@ function SeleccionPersonal(){
     }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        async function getAllUsers() {
-            if (idUS === "null" ){
-                const response = await getUsersOutUA(idUA);
-                setUsers(response.users);
+        try {
+            async function getAllUsers() {
+                if (idUS === "null" ){
+                    const response = await getUsersOutUA(idUA);
+                    setUsers(response.users);
+                }
+                if (idUA === "null"){
+                    const resp = await getUsersOutUS(idUS);
+                    setUsers(resp.users);
+                }
             }
-            if (idUA === "null"){
-                const resp = await getUsersOutUS(idUS);
-                setUsers(resp.users);
-            }
+            getAllUsers();
+        } catch (error) {
+            console.log(error);
         }
-        getAllUsers();
     }, [setUsers,flag]);
 
     return(
@@ -79,7 +83,7 @@ function SeleccionPersonal(){
                                                                 <tr>
                                                                     <td scope="row">{index}</td>
                                                                     <td >{userAdd.name} {userAdd.lastName}</td>
-                                                                    <td >71400786</td>
+                                                                    <td >{userAdd.phone}</td>
                                                                     <td >
                                                                         <button type="button" class="btn btn-info"
                                                                         onClick={()=>{

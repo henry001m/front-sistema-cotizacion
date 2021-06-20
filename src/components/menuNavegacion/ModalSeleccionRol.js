@@ -33,7 +33,7 @@ function ModalSeleccionRol(props){
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
                 setUser(user.user);
                 setUserRol(user.user.roles);
-                console.log("LOS ROLES",user.user.roles)
+                //console.log("LOS ROLES",user.user.roles)
             } catch (error) {
                 console.log(error);
             }
@@ -56,10 +56,11 @@ function ModalSeleccionRol(props){
                             <image class="card-img-top"><PersonCircle height={60} width={60} id="card-image"/></image>
                             <div class="card-body">
                                 <h6 class="card-title">{rol.nameRol}</h6>
-                                <label class="card-text">{rol.nameUnidadGasto} {rol.nameUnidadAdministrativa}</label><br></br>
+                                <label class="card-text">{rol.nameUnidadGasto} </label>
+                                <label class="card-text">{rol.nameUnidadAdministrativa}</label>
                                 <button type="button" class="btn btn-info"
                                  onClick={()=>{
-                                    console.log("entra con el rol",rol.nameRol);  
+                                    console.log("entra con el rol",rol.nameRol,rol.nameUnidadAdministrativa,rol.nameUnidadGasto);  
                                     props.updateRol(rol)
                                     closeModal()
                                 }}>Acceder</button> 

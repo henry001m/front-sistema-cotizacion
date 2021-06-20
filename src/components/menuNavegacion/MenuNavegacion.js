@@ -48,7 +48,7 @@ function MenuNavegacion (){
     }
     const updateRol=(rol)=>{
         resetPermisos()
-        console.log("entra a ACTUALIZAR y recibe",rol)
+        //console.log("entra a ACTUALIZAR y recibe",rol)
         setidUnitA(rol.pivot.administrative_unit_id)
         setidUnitS(rol.pivot.spending_unit_id)
         setBandera(rol)
@@ -115,7 +115,7 @@ function MenuNavegacion (){
                 setLogin(true)
                 if(user.user.roles.length === 1){ //si solo hay un rol
                     setRolEntrante(user.user.roles[0])
-                    console.log("entra a menu navegacion CON ESTE UNICO ROL",user.user.roles[0]);
+                    //console.log("entra a menu navegacion CON ESTE UNICO ROL",user.user.roles[0]);
                     cambiarPermisos(user.user.roles[0].permissions)
                     setUserRol(user.user.roles[0].nameRol)
                     setNumRoles(1)
