@@ -19,7 +19,7 @@ function Navbar() {
             try {
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
                 setUser(user.user);
-                console.log(user.user);
+                //console.log(user.user);
             } catch (error) {
                 console.log(error);
             }

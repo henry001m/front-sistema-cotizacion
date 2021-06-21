@@ -19,6 +19,7 @@ function ModalSeleccionRoles(props){
     const closeModal = () => {
         clearForm();
         props.cerrarModal();
+        props.updateUsers();
     }
 
     const clearForm = () => {

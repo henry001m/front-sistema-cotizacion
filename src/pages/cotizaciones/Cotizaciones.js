@@ -16,7 +16,6 @@ function Cotizaciones() {
             try {
                 const result = await getQuotitationList(id);
                 console.log("id de solicitud", id)
-                console.log("estas son cotizaciones",result.Cotizaciones)
                 setQuotitations(result.Cotizaciones)
             } catch (error) {
                 console.log(error)

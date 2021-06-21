@@ -6,7 +6,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { createReport } from '../../services/http/ReportService';
+import { createReportQuotitation } from '../../services/http/ReportQuotitationService';
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
@@ -70,7 +70,7 @@ function InformeCotizacion (props) {
     const onSubmit = async ( ) => {
         const htm = {
             dateReport:date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate(),
-            administrative_username: userName, 
+            aplicantName: userName, 
             description:draftToHtml(convertToRaw(editorState.getCurrentContent())),
             request_quotitations_id:props.id
         }
@@ -81,7 +81,7 @@ function InformeCotizacion (props) {
                 if(props.rejectRequest){
                     props.rejectRequest()
                 }
-                const result = await createReport(htm);
+                const result = await createReportQuotitation(htm);
                 console.log(result);
                 alert(result.message)
                 setEditorState(EditorState.createEmpty())
@@ -106,7 +106,7 @@ function InformeCotizacion (props) {
                             <div className="form-row">
                                 <h5>Encargado:</h5>
                                 {(props.report!=null)?
-                                    (<label style={{fontSize:"20px"}}>{props.report.administrative_username}</label>):
+                                    (<label style={{fontSize:"20px"}}>{props.report.aplicantName}</label>):
                                     (<label style={{fontSize:"20px"}}>{" "+userName}</label>)
                                 }
                             </div>
@@ -126,6 +126,7 @@ function InformeCotizacion (props) {
                     }
                     <span style={{color:'red'}}>{message}</span>
                     <br></br>
+                    <label style={{fontSize:"20px"}}> Se adjunto el cuadro comparativo...</label>
                     <div className="form-col" style={{textAlign:"right"}}>
                         <button className="btn btn-secondary" style={{marginRight:"5px"}} onClick={closeModal}>Cancelar</button>
                         {(props.report!=null)?
