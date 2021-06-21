@@ -53,7 +53,7 @@ function RespCotizacion(props) {
     }
     const enviarDetalle = async(detalle, id)=>{
         const res = await registrarCotizacionDetalle(detalle,id)
-        const resFile = await registrarCotizacionDetalleFile(detalle.archivo,res.response)
+        const resFile = await registrarCotizacionDetalleFile(detalle.archivo,res/* .response */)
     }
     const onSubmit = async (data) =>{
         data.company_codes_id=companyCode.id;

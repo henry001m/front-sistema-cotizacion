@@ -19,11 +19,7 @@ import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 import SeleccionPersonal from './personal/SeleccionPersonal'
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
-import RespuestaInformeCotizacion from './cotizaciones/RespuestaInformeCotizacion';
-import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
-import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
-import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
-import VerArchivoCotizacion from './verCotizaciones/VerArchivoCotizacion';
+import cuadroComparativo from './cotizaciones/cuadroComparativo'
 
 
 const Router = () => {
@@ -39,18 +35,15 @@ const Router = () => {
                 <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
-                <Route exact path='/montoLimite/:idUA' component={ MontoLimite }/>
-                <Route exact path="/personal/:idUA/:idUS" component={ListaPersonal}/>
-                <Route exact path='/seleccionPersonal/:idUA/:idUS' component={SeleccionPersonal}/>
-                <Route exact path='/perfil' component={InicioSegunRol}/>
-                <Route exact path="/menu" component={ MenuNavegacion }/>
-                <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
-                {/* Administrador del Sistema */}
+                <Route exact path='/montoLimite' component={ MontoLimite }/>
+                <Route exact path='/personal' component={ListaPersonal}/>
+{/*                 <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
+ */}                {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
-                <Route exact path='/empresas' component={ListaEmpresa}/>
-                <Route exact path='/roles' component={ListaRoles}/>
+{                <Route exact path='/empresas' component={ListaEmpresa}/>
+}                <Route exact path='/roles' component={ListaRoles}/>
                 <Route exact path='/showFile/:id/:fl' component={VentanaVerArchivo}/>
                 {/* Empresa respuesta de cotizacion */}
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
@@ -58,8 +51,9 @@ const Router = () => {
                 {/**Cotizaciones */}
                 <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
                 <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
-                <Route exact path='/informeCotizacionResp/:idRe' component={ RespuestaInformeCotizacion }/>
-                <Route exact path='/showFileQuotitationDetail/:aux/:fl' component={VerArchivoCotizacion}/>
+                <Route exact path='/cuadro' component={ cuadroComparativo }/>
+                <Route exact path='/cotizaciones' component={ Cotizaciones }/>
+
             </Switch>
         </div>
     )

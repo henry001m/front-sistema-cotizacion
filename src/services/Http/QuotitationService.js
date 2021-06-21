@@ -120,15 +120,14 @@ export async function getQuotitationList(idRe){
         console.log(error)
     }
 }
-/**devuelve los datos para el cuadro comparativo */
-export async function getComparativeChart(idRe){
+
+export async function getComparative(idRe){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/getComparativeChart/${idRe}`);
+        const response = await API.get(`/getComparativeChart/${idRe}`,headers);
         return response.data;
     } catch (error) {
         console.log(error)
     }
 }
-
