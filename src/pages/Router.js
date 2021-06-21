@@ -23,6 +23,7 @@ import RespuestaInformeCotizacion from './cotizaciones/RespuestaInformeCotizacio
 import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
 import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
 import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
+import VerArchivoCotizacion from './verCotizaciones/VerArchivoCotizacion';
 
 
 const Router = () => {
@@ -58,6 +59,7 @@ const Router = () => {
                 <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
                 <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
                 <Route exact path='/informeCotizacionResp/:idRe' component={ RespuestaInformeCotizacion }/>
+                <Route exact path='/showFileQuotitationDetail/:fl' component={VerArchivoCotizacion}/>
             </Switch>
         </div>
     )
