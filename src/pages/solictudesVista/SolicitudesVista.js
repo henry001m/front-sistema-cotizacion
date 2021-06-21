@@ -10,7 +10,6 @@ import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 
 function SolicitudesVista(){
     const {idUA} = useParams();
-    //const [quotitations, setQuotitations] = useState([{id:1, nameUnidadGasto:"tecno", requestDate:"20-10-18", status:"aceptado"}]);
     const [quotitations, setQuotitations] = useState([]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
     const [quotitationId, setQuotitationID ] = useState("")
@@ -86,7 +85,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.status!="Pendiente"){
+        if(quotitation.statusResponse==="En proseso" || quotitation.statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
                     <Coin/> Cotizaciones
@@ -102,9 +101,9 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonAddReportQuotitation = (quotitation) =>{
-        if(quotitation.status!="Pendiente"){
+        if(quotitation.statusResponse==="Finalizado"){
             return(
-                <button className="dropdown-item" onClick={() => abrirModalInformeCotizacion(quotitation.id)}>
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
                     <FileEarmarkText/>Informe cotizacion
                 </button>                                    
             );
@@ -165,7 +164,7 @@ function SolicitudesVista(){
 
     return(
         <>
-            <div className="container" align="left" style={{marginBottom:"100px"}}>
+            <div className="container" align="left" style={{marginBottom:"160px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>

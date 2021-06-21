@@ -9,7 +9,7 @@ function VerCotizacion(){
     let history = useHistory();
     const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
-    const [ abrirOferta, setAbrirOferta] = useState(true); 
+    const [ abrirOferta, setAbrirOferta] = useState(false); 
     const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(true)
     const [ oferta, setOferta ] = useState("");
     const cerrarOferta = () => {

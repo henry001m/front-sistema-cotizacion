@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams} from 'react-router-dom'
-import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'react-bootstrap-icons'
+import { PlusCircle, ChevronLeft, Eye, FileEarmarkText, Coin} from 'react-bootstrap-icons'
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
@@ -82,6 +82,22 @@ function SolicitudesDeAdquisicion(){
         }
     }
 
+    const EnablebuttonInformeCotizacion = (id,statusResponse) =>{
+        if(statusResponse==="Finalizado"){
+            return(
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${id}`)}>
+                    <Coin/> Respuesta Cotización
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Coin/> Respuesta Cotización
+                </button>
+            );
+        }
+    }
+
     const AbrirModal = (id) => {
         getInforme(id)
         setIdSolicitud(id)
@@ -121,7 +137,10 @@ function SolicitudesDeAdquisicion(){
                                     </button>
                                     {
                                         EnablebuttonReport(quotitation.id,quotitation.statusReport)
-                                    }                                   
+                                    }  
+                                    {
+                                        EnablebuttonInformeCotizacion(quotitation.id, quotitation.statusResponse)
+                                    }                                 
                                 </div>
                         </div>
                     </li>
