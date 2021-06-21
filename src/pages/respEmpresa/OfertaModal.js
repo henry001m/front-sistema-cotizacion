@@ -29,10 +29,15 @@ const OfertaModal = (props) => {
                 formData.append(name,fl[i],fl[i].name);
                 }
             }
-            data.archivo = formData;
-            props.guardarOferta(data)
-            alert("Se agrego el detalle del producto")
-            closeModal()
+            console.log("Data",data)
+            if(data.marca || data.industria || data.tiempo_garantia ||data.modelo){
+                data.archivo = formData;
+                props.guardarOferta(data)
+                alert("Se agrego el detalle del producto")
+                closeModal()
+            }else{
+                alert("No agrego ningún detalle del producto")
+            }
         }
     }
     const fileSelectHandler =(e)=>{
@@ -48,7 +53,7 @@ const OfertaModal = (props) => {
         let flag = false;
         extenciones.forEach(exten => {
             if(!flag){
-                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg' || exten === 'jpeg'){
+                if(exten === 'pdf' || exten=== 'jpg' || exten === 'docx'){
                     noEsValido =false;
                 }else{
                     noEsValido=true;
@@ -71,21 +76,21 @@ const OfertaModal = (props) => {
         <ModalBody>
             <FormGroup className="col-md-8">
             <label>Marca:</label>
-            <input className="form-control form-control-sm" {...register("marca", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i})} />
+            <input className="form-control form-control-sm" {...register("marca", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i})} />
             <span style={{color:'red'}}>{errors.marca?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
-            <span style={{color:'red'}}>{errors.marca?.type === 'pattern' && "Solo se permiten caracteres"}</span>
+            <span style={{color:'red'}}>{errors.marca?.type === 'pattern' && "Solo se permiten caracteres alfanumericos"}</span>
             <label>Modelo:</label>
-            <input className="form-control form-control-sm" {...register("modelo", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <input className="form-control form-control-sm" {...register("modelo", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.modelo?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
-            <span style={{color:'red'}}>{errors.modelo?.type === 'pattern' && "Solo se permiten caracteres"}</span>
-            <label>Indutria:</label>
-            <input className="form-control form-control-sm" {...register("industria", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <span style={{color:'red'}}>{errors.modelo?.type === 'pattern' && "Solo se permiten caracteres alfanumericos"}</span>
+            <label>Industria:</label>
+            <input className="form-control form-control-sm" {...register("industria", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.industria?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
-            <span style={{color:'red'}}>{errors.industria?.type === 'pattern' && "Solo se permiten caracteres"}</span>
+            <span style={{color:'red'}}>{errors.industria?.type === 'pattern' && "Solo se permiten caracteres alfanumericos"}</span>
             <label>Tiempo de Garantia:</label>
-            <input className="form-control form-control-sm" {...register("tiempo_garantia", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <input className="form-control form-control-sm" {...register("tiempo_garantia", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.tiempo_garantia?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
-            <span style={{color:'red'}}>{errors.tiempo_garantia?.type === 'pattern' && "Solo se permiten caracteres"}</span>
+            <span style={{color:'red'}}>{errors.tiempo_garantia?.type === 'pattern' && "Solo se permiten caracteres alfanumericos"}</span>
             </FormGroup>
         </ModalBody>
         <ModalFooter>
@@ -106,7 +111,7 @@ const OfertaModal = (props) => {
             </div>
             <Button type="button" onClick={handleSubmit(onSubmit)} color="primary" size="sm">Guardar</Button>
             </div>
-            {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, png, jpg, jpeg</label>}
+            {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx”</label>}
         </ModalFooter>
         </form>
     </Modal> 
