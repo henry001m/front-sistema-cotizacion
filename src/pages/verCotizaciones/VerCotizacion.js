@@ -9,7 +9,7 @@ function VerCotizacion(){
     const {idRe} = useParams();
     const {idCo} = useParams();
     let history = useHistory();
-    const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
+    const [ detalles, setDetalles ] = useState([])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
     const [ abrirOferta, setAbrirOferta] = useState(false); 
     const [ verCotizacion, setVerCotizacion] = useState(false)
@@ -23,7 +23,6 @@ function VerCotizacion(){
         async function getQuotitation() {
             try {
                 const result = await getQuotitationId(idRe, idCo)
-                console.log(result)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
                 
@@ -31,10 +30,9 @@ function VerCotizacion(){
                     aux.push(result.Cotizacion[i][0]);
                 }
                 const fileQuotation = await getFileNameQuotitation(idCo);
-                console.log(fileQuotation)
-                if ( fileQuotation ){
-                    setVerCotizacion(false)
-                    setNameFile("")
+                if ( fileQuotation.length>0 ){
+                    setVerCotizacion(true)
+                    setNameFile(fileQuotation[0])
                 }
                 setDetalles(aux)
             } catch (error) {
@@ -109,7 +107,7 @@ function VerCotizacion(){
                                     if(detalle){
                                         return(
                                             <tr key={detalle.id}>
-                                                <th scope="row">{index}</th>
+                                                <th scope="row">{index+1}</th>
                                                 <td >{detalle.amount}</td>
                                                 <td>{detalle.unitMeasure}</td>
                                                 <td>{detalle.description}</td>
@@ -132,12 +130,15 @@ function VerCotizacion(){
                         <h4>Observaciones</h4>
                         <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
                     </div>
-                    <div className="form-group col-md-6" align="end">
-                    {(verCotizacion) && 
-                        (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</a>)
-                    }
-                    </div>
                 </div>
+                <br></br>
+                <div className="form-row" >
+                    <div className="col-6"  style={{marginLeft:"5%", marginRight:"5%"}}>
+                        {(verCotizacion) && 
+                            (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/> Ver archivo</a>)
+                        }
+                    </div>
+                    </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
                         <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace(`/cotizaciones/${idRe}`)}}>Cerrar</button>
