@@ -16,7 +16,7 @@ function Cotizaciones() {
             try {
                 const result = await getQuotitationList(id);
                 console.log("id de solicitud", id)
-                console.log(result)
+                console.log("estas son cotizaciones",result.Cotizaciones)
                 setQuotitations(result.Cotizaciones)
             } catch (error) {
                 console.log(error)
@@ -62,7 +62,11 @@ function Cotizaciones() {
                                             <td>{quotitation.Empresa}</td>
                                             <td>{quotitation.ItemsCotizados}</td>
                                             <td>{quotitation.TotalEnBs}</td>
-                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)}><EyeFill/></button></td>
+                                            <td><button className="btn btn-primary" 
+                                            onClick={() => {
+                                            history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
+                                            console.log("este es el ID",quotitation.idCotizacion)
+                                            }}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}

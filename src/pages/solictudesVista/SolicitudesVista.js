@@ -36,7 +36,7 @@ function SolicitudesVista(){
     }, []);
 
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
                     <FileEarmarkText/> Agregar informe
@@ -52,7 +52,7 @@ function SolicitudesVista(){
     }
 
     const EnableSendMailButton = (quotitation) =>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             return(
                 <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
                     <Envelope/> Enviar correo
@@ -68,7 +68,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonImprimir=(quotitation)=>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">

@@ -1,17 +1,20 @@
-
 import React, { useState, useEffect } from 'react'
 import { BagPlusFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
-
+import ModalVerOferta from './ModalVerOferta'
 function VerCotizacion(){
-    
     const {idRe} = useParams();
     const {idCo} = useParams();
     let history = useHistory();
     const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
-    
+    const [ abrirOferta, setAbrirOferta] = useState(true); 
+    const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(true)
+    const [ oferta, setOferta ] = useState("");
+    const cerrarOferta = () => {
+        setAbrirOferta( false );
+    }
     useEffect(() => {
         async function getQuotitation() {
             try {
@@ -19,9 +22,14 @@ function VerCotizacion(){
                 console.log(result)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
+                
                 for (var i = 1; i < result.Cotizacion.length; i++) {
                     aux.push(result.Cotizacion[i][0]);
                 }
+                // const fileQuotation = result.Cotizacion;
+                // if ( fileQuotation ){
+                //     setDisabledVerCotizacion(false)
+                // } 
                 setDetalles(aux)
             } catch (error) {
                 console.log(error)
@@ -89,7 +97,14 @@ function VerCotizacion(){
                                                 <td>{detalle.description}</td>
                                                 <td>{detalle.unitPrice}</td>
                                                 <td>{detalle.totalPrice}</td>
-                                                <td><button className="btn btn-warning" style={{color:"white", backgroundColor:"orange"}}><BagPlusFill/></button></td>
+                                                <td><button className="btn btn-warning" 
+                                                style={{color:"white", backgroundColor:"orange"}}
+                                                onClick={()=>{
+                                                    setAbrirOferta(true)
+                                                    setOferta(detalle)
+                                                    console.log("se manda a oferta",detalle)
+                                                }}
+                                                ><BagPlusFill/></button></td>
                                             </tr>
                                         )
                                     }
@@ -98,9 +113,19 @@ function VerCotizacion(){
                         </tbody>
                     </table>
                 </div>
-                <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
-                    <h4>Observaciones</h4>
-                    <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
+                <div className="form-row" >
+                    <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
+                        <h4>Observaciones</h4>
+                        <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
+                    </div>
+                    <div className="form-group col-md-6" align="end">
+                        <button type="button" className="btn btn-secondary"
+                            disabled={disabledVerCotizacion}
+                            // onClick={()=>
+                            //     {history.push(`/showFile/${idRe}`)}
+                            // }
+                    >Ver Cotizacion</button>
+                    </div>
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
@@ -108,6 +133,10 @@ function VerCotizacion(){
                     </div>
                 </div>
             </div>
+            <ModalVerOferta 
+            abrirOferta={abrirOferta} 
+            cerrarOferta={cerrarOferta} 
+            oferta={oferta}/>
         </>
     );
 }

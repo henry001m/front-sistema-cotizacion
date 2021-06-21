@@ -27,7 +27,7 @@ function DetalleSolicitud(){
         if(amount > montoTope){
             alert("Monto excedido");
         }else{
-            const aux = {status:"aceptado"}
+            const aux = {status:"Aceptado"}
             const result = await updateStatus(id,aux);
             // history.replace("/SolicitudesDeAdquisicionAdmin")
             window.history.back();
@@ -35,7 +35,7 @@ function DetalleSolicitud(){
     };
 
     const rejectRequest = async ( ) => {
-        const aux = {status:"rechazado"}
+        const aux = {status:"Rechazado"}
         const result = await updateStatus(id,aux);
         // history.replace("/SolicitudesDeAdquisicionAdmin")
         window.history.back();
@@ -107,7 +107,7 @@ function DetalleSolicitud(){
             if ( files ){
                 setDisabledVerArchivos(false)
             }    
-            if((resultQuotitations.status == "pendiente")){
+            if((resultQuotitations.status == "Pendiente")){
                     setBtnActivo(true);
                }else{
                     setBtnActivo(false);
