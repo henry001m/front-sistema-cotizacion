@@ -31,6 +31,7 @@ const OfertaModal = (props) => {
             }
             data.archivo = formData;
             props.guardarOferta(data)
+            alert("Se agrego el detalle del producto")
             closeModal()
         }
     }
@@ -64,7 +65,7 @@ const OfertaModal = (props) => {
     return (
         <Modal isOpen={props.abierto} style={modalStyles}>
         <ModalHeader toggle={closeModal}>
-            Agregar oferta
+            Agregar Item Oferta
         </ModalHeader>
         <form > 
         <ModalBody>

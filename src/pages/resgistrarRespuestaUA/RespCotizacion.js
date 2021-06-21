@@ -67,7 +67,10 @@ function RespCotizacion(props) {
                 cotizados.forEach(cotizado => {
                     enviarDetalle(cotizado,res.response.id);
                 });
+            
+                console.log(fl,res.response.id)
                 const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
+                console.log("mesage respuesta",resfilegeneral)
                 alert(res.response.message);
                 irAtras();
             }else{
@@ -102,7 +105,7 @@ function RespCotizacion(props) {
         let flag = false;
         extenciones.forEach(exten => {
             if(!flag){
-                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg' || exten === 'jpeg' || exten === 'PNG'){
+                if(exten === 'pdf' || exten === 'docx' || exten=== 'jpg'){
                     noEsValido =false;
                 }else{
                     noEsValido=true;
@@ -142,7 +145,14 @@ function RespCotizacion(props) {
                 <div className="col">
                     <div className="form-register">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <h3>Datos del proveedor</h3>
+                            <div className="form-row ">
+                                <h3 className="col-md-9" >Datos del proveedor</h3>
+                                <di className="col-md-3 " align="end">
+                                    <button type="button" className="close" onClick={irAtras}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </di>
+                            </div>
                             <hr style={{margin:'0px'}}></hr>
                             <div className="form-row ">
                                 <div className="col-md-4">
@@ -157,7 +167,7 @@ function RespCotizacion(props) {
                                     {errors.idEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                 </div>
                                 <div className="col-md-4"></div>
-                                <div className="col-md-4">
+                                <div className="col-md-4" align="end">
                                     <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
                                 </div>
                             </div>
@@ -234,7 +244,7 @@ function RespCotizacion(props) {
                                         ></input>
                                         <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
                                     </div>
-                                    {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, png, jpg, jpeg</label>}
+                                    {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx</label>}
                                 </div>
                                 
                                 <div className="form-group col" id="toolbar">
