@@ -7,6 +7,7 @@ import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
 import InformeCotizacion from '../cotizaciones/InformeCotizacion';
+import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
 
 function SolicitudesVista(){
     const {idUA} = useParams();
@@ -18,6 +19,7 @@ function SolicitudesVista(){
     const [abiertoInforme, setAbiertoInforme] = useState(false);
     const [ report, setReport ] = useState(null)
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
+    const [ reportQuotitation, setReportQuotitation ] = useState(null)
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -39,13 +41,13 @@ function SolicitudesVista(){
         if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
-                    <FileEarmarkText/> Agregar informe
+                    <FileEarmarkText/> Informe Solicitud
                 </button>                                    
             );
         }else{
             return(
                 <button className="dropdown-item" disabled>
-                    <FileEarmarkText/> Agregar informe
+                    <FileEarmarkText/> Informe Solicitud
                 </button>
             );
         }
@@ -100,7 +102,7 @@ function SolicitudesVista(){
         }
     }
 
-    const EnablebuttonAddReportQuotitation = (quotitation) =>{
+    const EnablebuttonReportQuotitation = (quotitation) =>{
         if(quotitation.statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
@@ -135,10 +137,13 @@ function SolicitudesVista(){
     }
 
     const abrirModalInformeCotizacion =(id)=>{
+        getInformeQuotitation(id)
         setQuotitationID(id);
         setAbiertoInformeCotizacion(true);
     }
+
     const cerrarModalInformeCotizacion=()=>{
+        setReportQuotitation(null)
         setAbiertoInformeCotizacion(false);
     }
 
@@ -156,6 +161,21 @@ function SolicitudesVista(){
                 setReport(result);
             }else{
                 setReport(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function getInformeQuotitation(id) {
+        console.log("id",id)
+        try {
+            const result = await getReportQuotitation(id);
+            console.log(result)
+            if(result){
+                setReportQuotitation(result);
+            }else{
+                setReportQuotitation(null)
             }
         } catch (error) {
             console.log(error)
@@ -218,7 +238,7 @@ function SolicitudesVista(){
                                                             EnablebuttonQuotitation(quotitation)
                                                         }
                                                         {
-                                                            EnablebuttonAddReportQuotitation(quotitation)
+                                                            EnablebuttonReportQuotitation(quotitation)
                                                         }
                                                     </div>
                                                 </div>
@@ -246,6 +266,7 @@ function SolicitudesVista(){
                         id={quotitationId}
                         abierto={abiertoInformeCotizacion} 
                         cerrarModal={cerrarModalInformeCotizacion}
+                        report={reportQuotitation}
                     />
             </div>
         </>

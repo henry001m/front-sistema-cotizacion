@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { getComparativeChart } from '../../services/http/QuotitationService'
+import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
+import './Cotizaciones.css'
 
 function RespuestaInformeCotizacion(){
 
@@ -27,6 +29,7 @@ function RespuestaInformeCotizacion(){
                 ]
             },
         ])
+    const [reportQuotitation, setReportQuotitation ] = useState({})
 
     let history = useHistory();
 
@@ -34,36 +37,18 @@ function RespuestaInformeCotizacion(){
         console.log("id de items", idRe)
         async function getComparative() {
             try {
+                const report = await getReportQuotitation(idRe)
+                setReportQuotitation(report)
                 const result = await getComparativeChart(idRe);
                 console.log(result.comparativeChart)
-                var aux = []
-                for(var i=0; i<result.comparativeChart.length-1; i++){
-                    aux.push(result.comparativeChart[i])
-                }
-                console.log(aux)
-                setItems(aux)
-                setEmpresas(result.comparativeChart[result.comparativeChart.length].empresasCotizadas)
+                setItems(result.comparativeChart)
+
             } catch (error) {
                 console.log(error)
             }
         }
         getComparative();
     }, []);
-
-    const ValorMenor = ( lista ) => {
-
-        var menor = lista[0].total;
-
-        lista.forEach(element => {
-            if(element.total<menor && element.total!=null){
-                menor = element.total;
-            }
-        });
-        
-        return(
-            <td>{menor}</td>
-        )
-    }
 
     const SumaTotal = ( index ) => {
         var suma = 0;
@@ -96,20 +81,26 @@ function RespuestaInformeCotizacion(){
                     <div className="form-register">
                         <div className="form-row">
                             <div className="form-group col-md-6" >
-                                <h5>Encargado: </h5>
-                                <label>Nombre</label>
+                                <div className="row">
+                                    <h5>Encargado: </h5>
+                                    <label style={{fontSize:"20px"}}>{reportQuotitation.aplicantName}</label>
+                                </div>
                             </div>
                             <div className="form-group col-md-6">
-                                <h5>Fecha: </h5>
-                                <label> fecha</label>
+                                <div className="row">
+                                    <h5>Fecha: </h5>
+                                    <label style={{fontSize:"20px"}}>{reportQuotitation.dateReport}</label>
+                                </div>
                             </div>
                         </div>
+                        <div className="form-row" id="informe">
+                            <div dangerouslySetInnerHTML={{ __html: reportQuotitation.description}} style={{margin:"10px"}}/>
+                        </div> 
+                        <br></br>
                         <div className="form-row">
-                            <textarea value="valor"></textarea>
+                            <h4>Cuadro comparativo de cotizaciones </h4>
                         </div>
-                        <div className="form-row">
-                            <h5>Cuadro comparativo de cotizaciones </h5>
-                        </div>
+                        <br></br>
                         <div className="form-row">
                             <table className="table table-striped">
                                 <thead>
@@ -122,7 +113,6 @@ function RespuestaInformeCotizacion(){
                                                 <th scope="col">{empresa.Empresa}</th>
                                             ))
                                         }
-                                        <th scope="col">Precio mas bajo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -137,9 +127,6 @@ function RespuestaInformeCotizacion(){
                                                         <td key={index}>{cotizacion.total}</td>
                                                     ))
                                                 }
-                                                {
-                                                    ValorMenor(item.cotizaciones)
-                                                }
                                             </tr>
                                         ))
                                     }
@@ -150,7 +137,6 @@ function RespuestaInformeCotizacion(){
                                         {
                                             items[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
                                         }
-                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
