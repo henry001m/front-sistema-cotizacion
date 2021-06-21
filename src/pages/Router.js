@@ -19,6 +19,7 @@ import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
 import SeleccionPersonal from './personal/SeleccionPersonal'
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
+import RespuestaInformeCotizacion from './cotizaciones/RespuestaInformeCotizacion';
 import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
 import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
 import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
@@ -56,6 +57,7 @@ const Router = () => {
                 {/**Cotizaciones */}
                 <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
                 <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
+                <Route exact path='/informeCotizacionResp/:idRe' component={ RespuestaInformeCotizacion }/>
             </Switch>
         </div>
     )

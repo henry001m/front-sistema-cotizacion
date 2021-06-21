@@ -9,8 +9,8 @@ function VerCotizacion(){
     let history = useHistory();
     const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
-    const [ abrirOferta, setAbrirOferta] = useState(true); 
-    const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(true)
+    const [ abrirOferta, setAbrirOferta] = useState(false); 
+    const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(false)
     const [ oferta, setOferta ] = useState("");
     const cerrarOferta = () => {
         setAbrirOferta( false );
@@ -118,14 +118,14 @@ function VerCotizacion(){
                         <h4>Observaciones</h4>
                         <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
                     </div>
-                    <div className="form-group col-md-6" align="end">
-                        <button type="button" className="btn btn-secondary"
-                            disabled={disabledVerCotizacion}
-                            // onClick={()=>
-                            //     {history.push(`/showFile/${idRe}`)}
-                            // }
-                    >Ver Cotizacion</button>
-                    </div>
+                    {/* <div className="form-group col-md-6" align="end">
+                            <button type="button" className="btn btn-secondary"
+                                disabled={disabledVerCotizacion}
+                                onClick={()=>
+                                    {history.push(`/showFile/${idRe}`)}
+                                }
+                        >Ver Cotizacion</button>
+                    </div> */}
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">

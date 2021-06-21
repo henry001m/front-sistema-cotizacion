@@ -6,7 +6,6 @@ import { getQuotitationList } from '../../services/http/QuotitationService';
 function Cotizaciones() { 
 
     const {id} = useParams();
-    //const [ quotitations, setQuotitations ] = useState([{id:1, Empresa:"dumbo", items:4,total:450}])
     const [ quotitations, setQuotitations ] = useState([])
     let history = useHistory()
     const addCositation = () =>{

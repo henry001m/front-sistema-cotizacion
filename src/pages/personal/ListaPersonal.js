@@ -29,12 +29,12 @@ function ListaPersonal(){
             if (idUS === "null" ){
                 const response = await getPersonal(idUA);
                 setPersonal(response.users);   
-                console.log("Personal de unidad",personal,idUS,idUA)
+                console.log("Personal",personal,idUS,idUA)
             }
             if (idUA === "null"){
                 const resp = await getPersonalUG(idUS);
                 setPersonal(resp.users);
-                console.log("Personal de unidad",personal,idUS,idUA)
+                console.log("Personal",personal,idUS,idUA)
             }
         }
         // console.log("Personal de unidad",personal,idUS,idUA)

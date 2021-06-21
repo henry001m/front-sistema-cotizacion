@@ -9,8 +9,9 @@ const ModalVerOferta = (props) => {
         width:'400px'
     }
     const [namefile, setNamefile] = useState([])
-    const [oferta, setOferta ] = useState[{brand:"Patito",industry:"Patito",model:"Patito Junior",warrantyTime:"10 meses"}];
+    const [oferta, setOferta ] = useState({brand:"Patito",industry:"Patito",model:"Patito Junior",warrantyTime:"10 meses"});
     const banderaRef =useRef(props.detalle);
+    
     const closeModal = () => {
         props.cerrarOferta()
         setOferta("")
