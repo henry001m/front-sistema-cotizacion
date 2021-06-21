@@ -73,7 +73,7 @@ const ModalVerOferta = (props) => {
             <div style={{width:'100%',height:'35px', display:'flex',justifyContent:'space-between'}}>
             <div className="col">
                 { (props.file.length>0)?
-                (<a href={`/showFileQuotitationDetail/${props.file[0]}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</a>):
+                (<a href={`/showFileQuotitationDetail/${1}/${props.file[0]}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</a>):
                 (<button className="btn btn-secondary sm" disabled><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</button>)
                 }
             </div>

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { BagPlusFill } from 'react-bootstrap-icons'
+import { BagPlusFill, FileEarmarkArrowUpFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import ModalVerOferta from './ModalVerOferta'
-import { getFileNameDetail } from '../../services/http/FileService';
+import { getFileNameDetail, getFileNameQuotitation } from '../../services/http/FileService';
 
 function VerCotizacion(){
     const {idRe} = useParams();
@@ -12,7 +12,8 @@ function VerCotizacion(){
     const [ detalles, setDetalles ] = useState([{amount:"",unitMeasure:"",description:"",unitPrice:"",totalPrice:""}])
     const [ cotizacion, setCotizacion] = useState({offerValidity:"",answerDate:"",deliveryTime:"",paymentMethod:"",observation:""})
     const [ abrirOferta, setAbrirOferta] = useState(false); 
-    const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(false)
+    const [ verCotizacion, setVerCotizacion] = useState(false)
+    const [ nameFile, setNameFile ] = useState("")
     const [ oferta, setOferta ] = useState("");
     const [ file, setFile ] = useState([])
     const cerrarOferta = () => {
@@ -29,10 +30,12 @@ function VerCotizacion(){
                 for (var i = 1; i < result.Cotizacion.length; i++) {
                     aux.push(result.Cotizacion[i][0]);
                 }
-                // const fileQuotation = result.Cotizacion;
-                // if ( fileQuotation ){
-                //     setDisabledVerCotizacion(false)
-                // } 
+                const fileQuotation = await getFileNameQuotitation(idCo);
+                console.log(fileQuotation)
+                if ( fileQuotation ){
+                    setVerCotizacion(false)
+                    setNameFile("")
+                }
                 setDetalles(aux)
             } catch (error) {
                 console.log(error)
@@ -43,6 +46,7 @@ function VerCotizacion(){
 
     const AbrirModalOferta = async(detalle) => {
         try {
+            console.log(detalle)
             const result = await getFileNameDetail(detalle.idDetail)
             setFile(result)
             setAbrirOferta(true)
@@ -128,14 +132,11 @@ function VerCotizacion(){
                         <h4>Observaciones</h4>
                         <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
                     </div>
-                    {/* <div className="form-group col-md-6" align="end">
-                            <button type="button" className="btn btn-secondary"
-                                disabled={disabledVerCotizacion}
-                                onClick={()=>
-                                    {history.push(`/showFile/${idRe}`)}
-                                }
-                        >Ver Cotizacion</button>
-                    </div> */}
+                    <div className="form-group col-md-6" align="end">
+                    {(verCotizacion) && 
+                        (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</a>)
+                    }
+                    </div>
                 </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
