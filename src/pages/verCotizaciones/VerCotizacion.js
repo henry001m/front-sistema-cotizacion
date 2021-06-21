@@ -67,21 +67,21 @@ function VerCotizacion(){
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <h5>Validez de la oferta</h5>
-                                    <input className="form-control" value={ cotizacion.offerValidity}></input>
+                                    <input className="form-control form-control-sm" value={ cotizacion.offerValidity}></input>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <h5>Fecha de Cotizacion</h5>
-                                    <input className="form-control" value={ cotizacion.answerDate}></input>
+                                    <input className="form-control form-control-sm" value={ cotizacion.answerDate}></input>
                                 </div>      
                             </div>     
                             <div className="form-row">
                                 <div className="form-group col-md-4">
                                     <h5>Tiempo de Entrega</h5>
-                                    <input className="form-control" value={ cotizacion.deliveryTime}></input>
+                                    <input className="form-control form-control-sm" value={ cotizacion.deliveryTime}></input>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <h5>Forma de Pago</h5>
-                                    <input className="form-control" value={ cotizacion.paymentMethod}></input>
+                                    <input className="form-control form-control-sm" value={ cotizacion.paymentMethod}></input>
                                 </div>
                             </div>
                         </form>
@@ -89,7 +89,7 @@ function VerCotizacion(){
                 </div>
                 <h3>Detalle por item de Cotización</h3>
                 <div className="col" style={{marginLeft:"5%", marginRight:"5%"}}>
-                    <table className="table table-striped">
+                    <table className="table table-sm table-striped">
                         <thead>
                             <tr>
                                 <th width="3%" scope="col">#</th>

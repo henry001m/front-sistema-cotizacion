@@ -228,7 +228,7 @@ function RespCotizacion(props) {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <textarea {...register("observacion",{maxLength:200})} type="text" className="form-control"></textarea>
+                                    <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
                                     {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
                                 </div>
                             </div>
