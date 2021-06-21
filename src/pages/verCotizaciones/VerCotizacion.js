@@ -3,6 +3,8 @@ import { BagPlusFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import ModalVerOferta from './ModalVerOferta'
+import { getFileNameDetail } from '../../services/http/FileService';
+
 function VerCotizacion(){
     const {idRe} = useParams();
     const {idCo} = useParams();
@@ -12,6 +14,7 @@ function VerCotizacion(){
     const [ abrirOferta, setAbrirOferta] = useState(false); 
     const [ disabledVerCotizacion, setDisabledVerCotizacion] = useState(false)
     const [ oferta, setOferta ] = useState("");
+    const [ file, setFile ] = useState([])
     const cerrarOferta = () => {
         setAbrirOferta( false );
     }
@@ -37,6 +40,17 @@ function VerCotizacion(){
         }
         getQuotitation();
     }, []);
+
+    const AbrirModalOferta = async(detalle) => {
+        try {
+            const result = await getFileNameDetail(detalle.idDetail)
+            setFile(result)
+            setAbrirOferta(true)
+            setOferta(detalle)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
     return(
         <>
@@ -99,11 +113,7 @@ function VerCotizacion(){
                                                 <td>{detalle.totalPrice}</td>
                                                 <td><button className="btn btn-warning" 
                                                 style={{color:"white", backgroundColor:"orange"}}
-                                                onClick={()=>{
-                                                    setAbrirOferta(true)
-                                                    setOferta(detalle)
-                                                    console.log("se manda a oferta",detalle)
-                                                }}
+                                                onClick={()=>AbrirModalOferta(detalle)}
                                                 ><BagPlusFill/></button></td>
                                             </tr>
                                         )
@@ -136,7 +146,8 @@ function VerCotizacion(){
             <ModalVerOferta 
             abrirOferta={abrirOferta} 
             cerrarOferta={cerrarOferta} 
-            oferta={oferta}/>
+            oferta={oferta}
+            file={file}/>
         </>
     );
 }

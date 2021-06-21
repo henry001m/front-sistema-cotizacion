@@ -2,6 +2,7 @@ import React,{useState,useEffect, useRef} from 'react';
 import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
 import { set } from 'react-hook-form';
+
 const ModalVerOferta = (props) => {
     const modalStyles={
         top:"10%",
@@ -20,6 +21,7 @@ const ModalVerOferta = (props) => {
         banderaRef.current = props.detalle;
         setOferta(props.detalle);
     },[props.abrirOferta]);
+
     return (
         <Modal isOpen={props.abrirOferta} style={modalStyles}>
         <ModalHeader toggle={closeModal}>
@@ -69,15 +71,13 @@ const ModalVerOferta = (props) => {
                     )
                 })} */}
             <div style={{width:'100%',height:'35px', display:'flex',justifyContent:'space-between'}}>
-            <div className="">
-                <input 
-                    name="archivo"
-                    type="file" 
-                    id="files" 
-                ></input>
-                <label for="files"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</label>
+            <div className="col">
+                { (props.file.length>0)?
+                (<a href={`/showFileQuotitationDetail/${props.file[0]}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</a>):
+                (<button className="btn btn-secondary sm" disabled><FileEarmarkArrowUpFill className="mb-1"/>Ver archivo</button>)
+                }
             </div>
-            <Button type="button" onClick={closeModal} color="primary" size="sm">Cerrar</Button>
+            <button className="btn btn-primary sm" type="button" onClick={closeModal}>Cerrar</button>
             </div>
         </ModalFooter>
         </form>
