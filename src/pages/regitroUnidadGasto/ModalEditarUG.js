@@ -40,16 +40,6 @@ function ModalEditarUG (props){
         }
         return admin;
     }
-    // window.onload = function() {
-    //     var select = document.getElementById("admi");
-    //     var seleccion = ""
-    //     if(props.gasto.admin.id == ""){
-    //         seleccion = "Seleccione Administrador"
-    //     }else{
-    //         seleccion = props.gasto.admin.name;
-    //     }
-    //     select.value = seleccion.innerHTML;
-    // };
     const onSubmit = async (data) => {
         try{
             if(idAdmin != ""){  
@@ -102,7 +92,7 @@ function ModalEditarUG (props){
                     name="faculties_id"
                     className="form-control"
                     disabled>
-                        <option value="">{props.gasto.faculty.nameFacultad}</option>
+                        <option value="">{props.gasto.faculty}</option>
                     </select>
                 </div>
                 <div className="form-group col-md-12">
@@ -113,8 +103,7 @@ function ModalEditarUG (props){
                     {...register("admin_id")}
                     className="form-control"
                     onClick={handleSelectChange}>
-                        {/* <option value="">{props.gasto.admin.name} {props.gasto.admin.lastName}</option> */}
-                        <option id="admi" value="" >{props.gasto.admin.name} {props.gasto.admin.lastName}</option>
+                        <option id="admi" value="" >{props.gasto.admin[0].name} {props.gasto.admin[0].lastName}</option>
                         {
                             admins.map((administrador)=>{
                                 return(
@@ -123,7 +112,6 @@ function ModalEditarUG (props){
                             })
                         }
                     </select>
-                    {/* <strong id="seleccion">Seleccione Administrador</strong> */}
                 </div>
             </div>
             </ModalBody>

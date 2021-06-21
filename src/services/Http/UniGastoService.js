@@ -54,3 +54,14 @@ export async function updateBossUG(idUser,idUnit) {
         console.log(error);
     }
 }
+/**Agregar un usuario con rol a una Unidad de Gasto*/
+export async function agregarPersonalUS(userRolUnit) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.post('spendingUnit/personal/new',userRolUnit,headers);
+        return res.data;
+    } catch (error) {
+        console.log(error);
+    }
+}

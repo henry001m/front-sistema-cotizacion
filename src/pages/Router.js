@@ -16,6 +16,7 @@ import ListaEmpresa from './empresa/ListaEmpresa'
 import ListaRoles from './rol/ListaRoles'
 import ListaPersonal from './personal/ListaPersonal'
 import VentanaVerArchivo from './verArchivos/VentanaVerArchivo';
+import SeleccionPersonal from './personal/SeleccionPersonal'
 import Cotizaciones from './cotizaciones/Cotizaciones';
 import VerCotizacion from './verCotizaciones/VerCotizacion';
 import cuadroComparativo from './cotizaciones/cuadroComparativo'
@@ -28,10 +29,10 @@ const Router = () => {
                 <Redirect exact from="/" to="/home" />
                 <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
-                <Route exact path='/SolicitudesDeAdquisicion' component={ SolicitudesDeAdquisicion}/>
-                <Route exact path='/AgregarDetalleSolictud' component={ AgregarDetalleSolictud }/>
+                <Route exact path='/SolicitudesDeAdquisicion/:idUS/:nameUS' component={ SolicitudesDeAdquisicion}/>
+                <Route exact path='/AgregarDetalleSolictud/:idUS/:nameUS' component={ AgregarDetalleSolictud }/>
                 {/* Unidad Administratica */}
-                <Route exact path="/SolicitudesDeAdquisicionAdmin" component={ SolicitudesVista }/>
+                <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
                 <Route exact path="/DetalleSolicitud/:id" component={ DetalleSolicitud }/>
                 <Route exact path='/montoLimite' component={ MontoLimite }/>

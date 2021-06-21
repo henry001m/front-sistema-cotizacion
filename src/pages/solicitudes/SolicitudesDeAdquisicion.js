@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'react-bootstrap-icons'
+import { useHistory, useParams} from 'react-router-dom'
+import { PlusCircle, ChevronLeft, Eye, FileEarmarkText, Coin} from 'react-bootstrap-icons'
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
 
-
 function SolicitudesDeAdquisicion(){
-
+    const {idUS} = useParams();
+    const {nameUS} = useParams();
     const [abrirModalInforme, setAbrirModalInforme] = useState(false)
     const [ idSolicitud, setIdSolicitud ] = useState("")
     const [ report, setReport ] = useState({description:""})
@@ -16,17 +16,17 @@ function SolicitudesDeAdquisicion(){
 
 
     function ButtonAgregar(){
-        history.push("/AgregarDetalleSolictud")
+        history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
     }
 
     const [quotitations, setQuotitations] = useState([]);
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.spending_units_id
         async function getAllQuotitations() {
             try {
-                const result = await getQuotitationSpendingUnit(idUnit);
+                console.log("llega esta unidad a solicitudes",idUS)
+                const result = await getQuotitationSpendingUnit(idUS);
                 console.log(result);
                 const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
@@ -82,6 +82,22 @@ function SolicitudesDeAdquisicion(){
         }
     }
 
+    const EnablebuttonInformeCotizacion = (id,statusResponse) =>{
+        if(statusResponse==="Finalizado"){
+            return(
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${id}`)}>
+                    <Coin/> Respuesta Cotización
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Coin/> Respuesta Cotización
+                </button>
+            );
+        }
+    }
+
     const AbrirModal = (id) => {
         getInforme(id)
         setIdSolicitud(id)
@@ -109,7 +125,7 @@ function SolicitudesDeAdquisicion(){
                     {quotitation.status}         
                 </td>
                 <td>
-                    {""/*quotitation.statusQuotitation*/}         
+                    {quotitation.statusResponse}         
                 </td>
                 <td >
                     <li className="nav-container--item dropdown">
@@ -121,7 +137,10 @@ function SolicitudesDeAdquisicion(){
                                     </button>
                                     {
                                         EnablebuttonReport(quotitation.id,quotitation.statusReport)
-                                    }                                   
+                                    }  
+                                    {
+                                        EnablebuttonInformeCotizacion(quotitation.id, quotitation.statusResponse)
+                                    }                                 
                                 </div>
                         </div>
                     </li>

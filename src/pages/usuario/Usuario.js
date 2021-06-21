@@ -89,6 +89,7 @@ function Usuario(){
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
+                                                <td>{console.log("esto estra en iteracion",user.id)}</td>
                                             </tr>
                                         );
                                    })

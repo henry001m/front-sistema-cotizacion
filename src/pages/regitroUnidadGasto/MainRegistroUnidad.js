@@ -77,8 +77,9 @@ const MainRegistroUnidad = () => {
                                             <tr>
                                                 <td>{index+1}</td>
                                                 <td>{gasto.nameUnidadGasto}</td>
-                                                <td>{gasto.faculty.nameFacultad}</td>
-                                                <td>{gasto.admin.name} {gasto.admin.lastName}</td>
+                                                {/* <td>{gasto.faculty.nameFacultad}</td> */}
+                                                <td>{gasto.faculty}</td>
+                                                <td>{gasto.admin[0].name} {gasto.admin[0].lastName}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

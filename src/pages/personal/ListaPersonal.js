@@ -1,48 +1,45 @@
 import React,{useState,useEffect} from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 import {Button} from 'reactstrap';
-import {PlusCircle} from 'react-bootstrap-icons';
-import ModalSeleccionPersonal from './ModalSeleccionPersonal';
+import {PlusCircle} from 'react-bootstrap-icons'
 import {getPersonal} from '../../services/http/UserService'
 import {getPersonalUG} from '../../services/http/UserService'
+
 function ListaPersonal(){
-    const [abierto, setAbierto] = useState(false);
+    const {idUA} = useParams();
+    const {idUS} = useParams();
     const [flag, setFlag] = useState(false);
     const [personal, setPersonal] =useState([]);
+    let history = useHistory();
     // const [personal, setPersonal] = useState([
     //     {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
     //     {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
     //     {id:3 , name:"Enrique Saavedra", ci:998547, phone:68686868, nameRol:"Responsable de correos"},
     // ]);
-    const abrirModal =()=>{
-        setAbierto(true);
-    }
-    const cerrarModal=()=>{
-        setAbierto(false);
-        updatePersonal()
-    }
+    
     const updatePersonal = ()=>{
         setFlag(!flag);
     }
+    function buttonPersonal(){
+        history.push(`/seleccionPersonal/${idUA}/${idUS}`)
+    }
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnitA = user.user.administrative_units_id;
-        const idUnitS = user.user.spending_units_id;
         async function getAllUsers() {
-            if (idUnitA != null){
-                const response = await getPersonal(idUnitA);
-                setPersonal(response.users);
-            }else{
-                const resp = await getPersonalUG(idUnitS);
-                setPersonal(resp.users);
+            if (idUS === "null" ){
+                const response = await getPersonal(idUA);
+                setPersonal(response.users);   
+                console.log("Personal",personal,idUS,idUA)
             }
-            // if(idUnitA != null && idUnitS != null){
-            //     const response = await getPersonal(idUnitA);
-            //     setPersonal(response.users);
-            //     const resp = await getPersonalUG(idUnitS);
-            //     setPersonal(resp.users);
-            // }
+            if (idUA === "null"){
+                const resp = await getPersonalUG(idUS);
+                setPersonal(resp.users);
+                console.log("Personal",personal,idUS,idUA)
+            }
         }
+        // console.log("Personal de unidad",personal,idUS,idUA)
         getAllUsers();
+        
     }, [setPersonal,flag]);
     return (
         <>
@@ -57,10 +54,10 @@ function ListaPersonal(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                    <Button color="success" onClick={abrirModal}><PlusCircle className="mr-1"/>Agregar</Button>
+                        <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ buttonPersonal }> 
+                        <PlusCircle  className="mb-1"/>Agregar</button>
                     </div>
                 </div>
-                <ModalSeleccionPersonal abierto={ abierto } cerrarModal={ cerrarModal }/>
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
@@ -71,7 +68,7 @@ function ListaPersonal(){
                                     <th scope="col">Nombre</th>
                                     <th scope="col">CI</th>
                                     <th scope="col">Telefono</th>
-                                    {/* <th scope="col">Rol</th> */}
+                                    <th scope="col">Rol</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,7 +79,7 @@ function ListaPersonal(){
                                             <td>{user.name} {user.lastName}</td>
                                             <td>{user.ci}</td>
                                             <td>{user.phone}</td>
-                                            <td>{user.userRol}</td>
+                                            <td>{user.roles}</td>
                                         </tr>
                                     );
                                 })}

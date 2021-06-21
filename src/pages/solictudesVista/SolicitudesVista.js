@@ -1,16 +1,17 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
-import { useHistory  } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
 import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
 import InformeCotizacion from '../cotizaciones/InformeCotizacion';
+import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
 
 function SolicitudesVista(){
-    const [quotitations, setQuotitations] = useState([{id:1, nameUnidadGasto:"tecno", requestDate:"20-10-18", status:"aceptado"}]);
+    const {idUA} = useParams();
+    const [quotitations, setQuotitations] = useState([]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
     const [quotitationId, setQuotitationID ] = useState("")
     let history = useHistory();
@@ -18,16 +19,16 @@ function SolicitudesVista(){
     const [abiertoInforme, setAbiertoInforme] = useState(false);
     const [ report, setReport ] = useState(null)
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
+    const [ reportQuotitation, setReportQuotitation ] = useState(null)
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.administrative_units_id
         async function getAllQuotitations() {
             try {
-                const result = await getQuotitationAdministrativeUnit(idUnit);
+                const result = await getQuotitationAdministrativeUnit(idUA);
                 const resultQuotitations=result.request_quotitations;
                 console.log(resultQuotitations)
-                //setQuotitations(resultQuotitations);
+                setQuotitations(resultQuotitations);
             } catch (error) {
                 console.log(error)
             }
@@ -37,23 +38,23 @@ function SolicitudesVista(){
     }, []);
 
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
-                    <FileEarmarkText/> Agregar informe
+                    <FileEarmarkText/> Informe Solicitud
                 </button>                                    
             );
         }else{
             return(
                 <button className="dropdown-item" disabled>
-                    <FileEarmarkText/> Agregar informe
+                    <FileEarmarkText/> Informe Solicitud
                 </button>
             );
         }
     }
 
     const EnableSendMailButton = (quotitation) =>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             return(
                 <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
                     <Envelope/> Enviar correo
@@ -69,7 +70,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonImprimir=(quotitation)=>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
@@ -86,7 +87,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.statusResponse==="En proseso" || quotitation.statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
                     <Coin/> Cotizaciones
@@ -101,10 +102,10 @@ function SolicitudesVista(){
         }
     }
 
-    const EnablebuttonAddReportQuotitation = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+    const EnablebuttonReportQuotitation = (quotitation) =>{
+        if(quotitation.statusResponse==="Finalizado"){
             return(
-                <button className="dropdown-item" onClick={() => abrirModalInformeCotizacion(quotitation.id)}>
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
                     <FileEarmarkText/>Informe cotizacion
                 </button>                                    
             );
@@ -136,10 +137,13 @@ function SolicitudesVista(){
     }
 
     const abrirModalInformeCotizacion =(id)=>{
+        getInformeQuotitation(id)
         setQuotitationID(id);
         setAbiertoInformeCotizacion(true);
     }
+
     const cerrarModalInformeCotizacion=()=>{
+        setReportQuotitation(null)
         setAbiertoInformeCotizacion(false);
     }
 
@@ -163,9 +167,24 @@ function SolicitudesVista(){
         }
     }
 
+    async function getInformeQuotitation(id) {
+        console.log("id",id)
+        try {
+            const result = await getReportQuotitation(id);
+            console.log(result)
+            if(result){
+                setReportQuotitation(result);
+            }else{
+                setReportQuotitation(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <>
-            <div className="container" align="left" style={{marginBottom:"100px"}}>
+            <div className="container" align="left" style={{marginBottom:"160px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
@@ -198,7 +217,7 @@ function SolicitudesVista(){
                                             <td >{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>{quotitation.status}</td>
-                                            <td>{""/**quotitation.statusQuotitation*/}</td>
+                                            <td>{quotitation.statusResponse}</td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
@@ -219,7 +238,7 @@ function SolicitudesVista(){
                                                             EnablebuttonQuotitation(quotitation)
                                                         }
                                                         {
-                                                            EnablebuttonAddReportQuotitation(quotitation)
+                                                            EnablebuttonReportQuotitation(quotitation)
                                                         }
                                                     </div>
                                                 </div>
@@ -247,6 +266,7 @@ function SolicitudesVista(){
                         id={quotitationId}
                         abierto={abiertoInformeCotizacion} 
                         cerrarModal={cerrarModalInformeCotizacion}
+                        report={reportQuotitation}
                     />
             </div>
         </>
