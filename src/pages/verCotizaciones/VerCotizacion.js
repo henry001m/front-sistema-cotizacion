@@ -109,7 +109,7 @@ function VerCotizacion(){
                                     if(detalle){
                                         return(
                                             <tr key={detalle.id}>
-                                                <th scope="row">{index+1}</th>
+                                                <th scope="row">{index}</th>
                                                 <td >{detalle.amount}</td>
                                                 <td>{detalle.unitMeasure}</td>
                                                 <td>{detalle.description}</td>

@@ -35,15 +35,15 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                   // value={oferta.brand}
+                   value={props.oferta.brand}
                     disabled
                 ></input>
-            <label>Modelo:</label>
+             <label>Modelo:</label>
                 <input
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                    //value={oferta.model}
+                value={props.oferta.model}
                     disabled
                 ></input>
             <label>Industria:</label>
@@ -51,7 +51,7 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                   // value={oferta.industry}
+                   value={props.oferta.industry}
                     disabled
                 ></input>
             <label>Tiempo de Garantia:</label>
@@ -59,17 +59,12 @@ const ModalVerOferta = (props) => {
                     name="nameRol"
                     className="form-control form-control-sm" 
                     type="text"
-                   // value={oferta.warrantyTime}
+                   value={props.oferta.warrantyTime}
                     disabled
                 ></input>
             </FormGroup>
         </ModalBody>
         <ModalFooter>
-                {/* {namefile.map((name,index)=>{
-                    return(
-                        <li key={index}>{name}</li>
-                    )
-                })} */}
             <div style={{width:'100%',height:'35px', display:'flex',justifyContent:'space-between'}}>
             <div className="col">
                 { (props.file.length>0)?

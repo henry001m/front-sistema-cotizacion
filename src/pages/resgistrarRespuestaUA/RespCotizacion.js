@@ -19,9 +19,9 @@ function RespCotizacion(props) {
     const [message, setMessage] = useState("");
     const [flag, setFlag] = useState(false);
     //files
-    const [namefile, setNamefile] = useState([])
+    const [namefiles, setNamefiles] = useState([])
     const [fileValidate, setFileValidate] = useState(false);
-    const [fl, setFl] = useState(null);
+    const [fls, setFls] = useState(null);
 
     const detallesCotizado =(dato)=>{
         setMessage("");
@@ -54,8 +54,9 @@ function RespCotizacion(props) {
     }
     const enviarDetalle = async(detalle, id)=>{
         const res = await registrarCotizacionDetalleUA(detalle,id)
-        console.log("respuesta detalle",res.response);
+        console.log(detalle.archivo);
         const resFile = await registrarCotizacionDetalleFileUA(detalle.archivo,res.response)
+
     }
     const onSubmit = async (data) =>{
         data.request_quotitations_id=id;
@@ -67,7 +68,15 @@ function RespCotizacion(props) {
                 cotizados.forEach(cotizado => {
                     enviarDetalle(cotizado,res.response.id);
                 });
-                const resfilegeneral = await regitrarArchivoGeneralUA(fl,res.response.id);
+                const formData = new FormData();
+                if(fls != null){
+                    console.log("todos los archivos",fls.length)
+                    for(var i=0 ; i<fls.length ; i++){
+                        let name = 'file';
+                        formData.append(name,fls[i],fls[i].name);
+                    }
+                }
+                const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
                 alert(res.response.message);
                 irAtras();
             }else{
@@ -89,7 +98,7 @@ function RespCotizacion(props) {
         }
         return hoy.getFullYear()+'-'+mes+'-'+dia;
     }
-    const fileSelectHandler =(e)=>{
+    const fileSelectHandlerGeneral =(e)=>{
         let namefileAux =[];
         let extenciones = [];
         for (let index = 0; index <e.target.files.length; index++) {
@@ -102,7 +111,7 @@ function RespCotizacion(props) {
         let flag = false;
         extenciones.forEach(exten => {
             if(!flag){
-                if(exten === 'pdf' || exten === 'png' || exten=== 'jpg' || exten === 'jpeg' || exten === 'PNG'){
+                if(exten === 'pdf' || exten === 'docx' || exten=== 'jpg'){
                     noEsValido =false;
                 }else{
                     noEsValido=true;
@@ -114,9 +123,8 @@ function RespCotizacion(props) {
         if(extenciones.length>0){
             setFileValidate(noEsValido);
         }
-        setNamefile(namefileAux);
-        setFl(e.target.files);
-        console.log(e.target.files)
+        setNamefiles(namefileAux);
+        setFls(e.target.files);
     }
     useEffect(() => {
         const tiempoTranscurrido = Date.now();
@@ -142,7 +150,14 @@ function RespCotizacion(props) {
                 <div className="col">
                     <div className="form-register">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <h3>Datos del proveedor</h3>
+                            <div className="form-row ">
+                                <h3 className="col-md-9" >Datos del proveedor</h3>
+                                <di className="col-md-3 " align="end">
+                                    <button type="button" className="close" onClick={irAtras}>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </di>
+                            </div>
                             <hr style={{margin:'0px'}}></hr>
                             <div className="form-row ">
                                 <div className="col-md-4">
@@ -157,7 +172,7 @@ function RespCotizacion(props) {
                                     {errors.idEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                 </div>
                                 <div className="col-md-4"></div>
-                                <div className="col-md-4">
+                                <div className="col-md-4" align="end">
                                     <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
                                 </div>
                             </div>
@@ -219,22 +234,15 @@ function RespCotizacion(props) {
                             </div>
                             <div className="form-row" >
                                 <div className="form-group col-md-6" id="toolbar">
-                                    {namefile.map((name,index)=>{
-                                        return(
-                                            <li key={index}>{name}</li>
-                                        )
-                                    })}
                                     <div className="">
-                                        <input 
+                                        <input
+                                        className = "btn btn-secondary"
                                             name="archivo"
-                                            type="file" 
-                                            id="files" 
-                                            multiple
-                                            onChange = {fileSelectHandler}
+                                            type="file"
+                                            onChange = {fileSelectHandlerGeneral}
                                         ></input>
-                                        <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
                                     </div>
-                                    {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, png, jpg, jpeg</label>}
+                                    {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx</label>}
                                 </div>
                                 
                                 <div className="form-group col" id="toolbar">
