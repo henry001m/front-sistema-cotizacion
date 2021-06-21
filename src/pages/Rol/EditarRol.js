@@ -136,6 +136,7 @@ function EditarRol (props){
                     <input
                         className="form-control"
                         type="text"
+                        autofocus
                         value={rol.description}
                         name="description"
                         {...register("description",{
