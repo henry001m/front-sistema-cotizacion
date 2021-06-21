@@ -50,26 +50,25 @@ function EditarRol (props){
         if ( i !== -1 ) {
             arr.splice( i, 1 );
         }
+        console.log("cuando se elimina",arr);
     }
     function actualizarPermisos (seleccionados){
-        //comenzamos con el original
         let bandera=permissionsRef.current.concat(seleccionados);
         var repetidos = [];
         var temporal = [];
-        //sacamos los repetidos
         bandera.forEach((value,index)=>{
-        temporal = Object.assign([],bandera); //Copiado de elemento
-        temporal.splice(index,1); //Se elimina el elemnto q se compara
-        if(temporal.indexOf(value)!=-1 && repetidos.indexOf(value)==-1) 
-         repetidos.push(value);
+            temporal = Object.assign([],bandera); 
+            temporal.splice(index,1); 
+            if(temporal.indexOf(value)!=-1 && repetidos.indexOf(value)==-1) 
+            repetidos.push(value);
         });
-
-        if(repetidos.length>0){ // si hay repetidos eliminar
+        if(repetidos.length > 0){
              repetidos.forEach(element => 
-                removeItemFromArr (bandera, element )
-             );
+                bandera = bandera.filter(function(item) {
+                    return item !== element
+                })
+            );
         }
-        console.log("Permisos Finales",bandera);
         return bandera;
     }
     const onCheckboxClicked=(id, isValue, isChecked)=>{
@@ -83,7 +82,7 @@ function EditarRol (props){
             seleccionados.push(parseInt(per));
         }
         setSelectedCheckboxes(seleccionados)
-        console.log("seleccionados",seleccionados);
+        //console.log("seleccionados",seleccionados);
     }
     const onSubmit = async (data) => {
         try{
@@ -110,7 +109,7 @@ function EditarRol (props){
     }, [props.abrirEditor]);
     useEffect(function(){
         permissionsRef.current = props.rol.permissions;
-        //console.log(`Usa Ref: ${permissionsRef.current}`);
+        console.log(`Usa Ref: ${permissionsRef.current}`);
     },[selectedCheckboxes]);
     return (
         <>
