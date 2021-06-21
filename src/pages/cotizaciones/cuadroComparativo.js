@@ -1,41 +1,37 @@
 
-
 import React, { useState, useEffect } from 'react'
-import { BagPlusFill, Flag } from 'react-bootstrap-icons'
-import {getComparative } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
+import { getComparative} from '../../services/http/QuotitationService'
 import Informe from '../informe/CrearInforme'
-import ListaEmpresa from '../empresa/ListaEmpresa';
 
 function RespuestaInformeCotizacion(){
-    let history = useHistory()
+
+    const {id} = useParams();
     const [abierto, setAbierto] = useState(false);
-    const [ solicitud, setSolicitud ] = useState({
-        items:[
-            {
-                id:1, descripcion:"barbijos", amount:20,
-                cotizaciones:[
-                    {empresa:"chicken", total:200},{empresa:"Sensacion", total:350},{empresa:"Keido", total:400}
-                ]
-            },
-            {
-                id:2, descripcion:"guantes", amount:25,
-                cotizaciones:[
-                    {empresa:"chicken", total:100},{empresa:"Sensacion", total:420},{empresa:"Keido", total:null}
-                ]
-            },
-            {
-                id:3, descripcion:"lentes", amount:30,
-                cotizaciones:[
-                    {empresa:"chicken", total:250},{empresa:"Sensacion", total:null},{empresa:"Keido", total:300}
-                ]
-            },
-        ]
-    })
+    const [ solicitud, setSolicitud ] = useState([
+        {
+            id:1, descripcion:"barbijos", amount:20,
+            cotizaciones:[
+                {empresa:"chicken", total:200},{empresa:"Sensacion", total:350},{empresa:"Keido", total:400}
+            ]
+        },
+        {
+            id:2, descripcion:"guantes", amount:25,
+            cotizaciones:[
+                {empresa:"chicken", total:100},{empresa:"Sensacion", total:420},{empresa:"Keido", total:null}
+            ]
+        },
+        {
+            id:3, descripcion:"lentes", amount:30,
+            cotizaciones:[
+                {empresa:"chicken", total:250},{empresa:"Sensacion", total:null},{empresa:"Keido", total:300}
+            ]
+        },
+        ])
+    const [reportQuotitation, setReportQuotitation ] = useState({})
 
-    const [cotizados, setCotizados] = useState([]);
-
-    const back = ()=>{
+    let history = useHistory();
+        const back = ()=>{
         history.push("/cotizaciones");
     }
 
@@ -44,26 +40,6 @@ function RespuestaInformeCotizacion(){
     }
     const cerrarModal=()=>{
         setAbierto(false);
-    }
-
-    useEffect(()=>{
-        const listQuotation = async () => {
-            try {
-                const response = await getComparative(3);
-                setCotizados(response.comparativeChart);
-               console.log(response) 
-                
-            } catch (error) {
-                console.log(error);
-            }
-            };
-            listQuotation();
-    }, []);
-
-    console.log(solicitud)
-
-    const closePage = () => {
-
     }
 
     const ValorMenor = ( lista ) => {
@@ -81,30 +57,42 @@ function RespuestaInformeCotizacion(){
         )
     }
 
-/*     var numeros = [ 67, 6, 23, 11, 100, 8, 3, 93, 0, 17, 24, 7, -2, 33, 45, 28, 33, 23, -12, 99, 100 ];
-    var min = numeros[0];
-    for (var i = 0; i < numeros.length ; i++) {
-        if (numeros[i] < min) {
-            console.log('Anterior minimo: ' + min + ', nuevo minimo: ' + numeros[i]);
-            min = numeros[i];
-        }
-    }
-    console.log('Valor mínimo: ' + min); */
 
     const SumaTotal = ( index ) => {
         var suma = 0;
-        var aux;
-            solicitud .items.forEach(element => {
+        solicitud.forEach(element => {
             if(element.cotizaciones[index].total!=null){
-                
                 suma=suma+element.cotizaciones[index].total;
-
-                console.log(suma)
             }
         });
 
+
+  /*   var precioMin = precios[0];
+    for (var i = 0; i < precios.length ; i++) {
+        if (precios[i] < precioMin) {
+            console.log( precios[i]);
+            precioMin = precios[i];
+        }
+    } */
+    
+        useEffect(() => {
+        
+            async function getComparatives() {
+                try {
+                    const res = await getComparative(id);
+                    console.log(res.comparativeChart)
+                    setSolicitud(res.comparativeChart)
+                    console.log("Cotizaciones:",res)
+    
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            getComparatives();
+        }, []);
+
         return(
-            <td>{suma}</td>
+            <th>{suma}</th>
         );
     }
 
@@ -112,16 +100,18 @@ function RespuestaInformeCotizacion(){
         <>
             <div className="container" align="left">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h1>Cuadro Comparativo</h1>   
+                    <div className="col-md-10">
+                        <h1>Informe de cotización</h1>   
                     </div>
-                    <div className="col-md-6" align="right">
-                        <button type="button" className="close" onClick={ closePage }>
+                    <div className="col-md-2" align="right">
+                        <button type="button" className="close" onClick={() => history.goBack()}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 </div>
                 <br></br>
+                <div className="col">
+                    <div className="form-register">
                         <div className="form-row">
                             <table className="table table-striped">
                                 <thead>
@@ -130,32 +120,32 @@ function RespuestaInformeCotizacion(){
                                         <th scope="col">Producto</th>
                                         <th scope="col">Cantidad</th>
                                         {
-                                            solicitud.items[0].cotizaciones.map((empresa,index)=>(
-                                                <th scope="col">{empresa.empresa}</th>
+                                            solicitud[0].cotizaciones.map((empresa,index)=>(
+                                                <th scope="col">{empresa.Empresa}</th>
                                             ))
                                         }
-                                        <th scope="col">Precio mas bajo</th>
+                                        <th scope="col">Precio Menor</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        solicitud.items.map((item,index)=>(
+                                        solicitud.map((item,index)=>(
                                             <tr key={item.id}>
                                                 <th scope="row">{index+1}</th>
                                                 <td >{item.descripcion}</td>
-                                                <td className="text-lg font-bold">{item.amount}</td>
+                                                <td>{item.amount}</td>
                                                 {
                                                     item.cotizaciones.map((cotizacion,index)=>(
                                                         <td key={index}>{cotizacion.total}</td>
                                                     ))
                                                 }
-                                                {
+
+                                                {   
                                                     ValorMenor(item.cotizaciones)
                                                 }
                                             </tr>
                                         ))
                                     }
-                                    
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -163,7 +153,7 @@ function RespuestaInformeCotizacion(){
                                         <th>Total</th>
                                         <th></th>
                                         {
-                                            solicitud.items[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
+                                            solicitud[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
                                         }
                                         <th></th>
                                     </tr>
@@ -171,25 +161,19 @@ function RespuestaInformeCotizacion(){
                                 </tfoot>
                             </table>
                         </div>
-                        <div className="form-row" >
+                       
+                    </div>
+                </div>
+                <div className="form-row" >
                      <div className="form-group col" id="toolbar">
                         <button className="btn btn-secondary" onClick={back}  id="btnV">Volver Atrás</button>
                         <button type="submit" className="btn btn-primary ml-4" id="btnEnviar" onClick={abrirModal} >Realizar Informe</button>
                      </div>           
                     </div>
-                    <Informe abierto={abierto}  cerrarModal={cerrarModal}/>
-        
-                    </div> 
-            
+            </div>
         </>
     );
 }
 
 export default RespuestaInformeCotizacion;
-
-
-
-
-
-
 
