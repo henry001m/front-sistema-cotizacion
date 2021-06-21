@@ -50,10 +50,6 @@ function RespuestaInformeCotizacion(){
         getComparative();
     }, []);
 
-    const closePage = () => {
-
-    }
-
     const ValorMenor = ( lista ) => {
 
         var menor = lista[0].total;
@@ -90,7 +86,7 @@ function RespuestaInformeCotizacion(){
                         <h1>Informe de cotización</h1>   
                     </div>
                     <div className="col-md-2" align="right">
-                        <button type="button" className="close" onClick={ closePage }>
+                        <button type="button" className="close" onClick={() => history.goBack()}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

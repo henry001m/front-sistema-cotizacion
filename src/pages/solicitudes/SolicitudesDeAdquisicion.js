@@ -82,8 +82,8 @@ function SolicitudesDeAdquisicion(){
         }
     }
 
-    const EnablebuttonInformeCotizacion = (id,statusReport) =>{
-        if(statusReport){
+    const EnablebuttonInformeCotizacion = (id,statusResponse) =>{
+        if(statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${id}`)}>
                     <Coin/> Respuesta Cotización
@@ -139,7 +139,7 @@ function SolicitudesDeAdquisicion(){
                                         EnablebuttonReport(quotitation.id,quotitation.statusReport)
                                     }  
                                     {
-                                        EnablebuttonInformeCotizacion(quotitation.id, quotitation.statusReport)
+                                        EnablebuttonInformeCotizacion(quotitation.id, quotitation.statusResponse)
                                     }                                 
                                 </div>
                         </div>

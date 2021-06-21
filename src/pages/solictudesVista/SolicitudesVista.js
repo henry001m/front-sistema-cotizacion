@@ -85,7 +85,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.status==="aceptado"){
+        if(quotitation.statusResponse==="En proseso" || quotitation.statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
                     <Coin/> Cotizaciones
@@ -101,7 +101,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonAddReportQuotitation = (quotitation) =>{
-        if(quotitation.status==="aceptado"){
+        if(quotitation.statusResponse==="Finalizado"){
             return(
                 <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
                     <FileEarmarkText/>Informe cotizacion
@@ -164,7 +164,7 @@ function SolicitudesVista(){
 
     return(
         <>
-            <div className="container" align="left" style={{marginBottom:"100px"}}>
+            <div className="container" align="left" style={{marginBottom:"160px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
@@ -197,7 +197,7 @@ function SolicitudesVista(){
                                             <td >{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>{quotitation.status}</td>
-                                            <td>{quotitation.statusReport}</td>
+                                            <td>{quotitation.statusResponse}</td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
