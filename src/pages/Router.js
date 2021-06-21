@@ -41,8 +41,8 @@ const Router = () => {
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
                 <Route exact path='/user' component={Usuario}/>
-                <Route exact path='/empresas' component={ListaEmpresa}/>
-                <Route exact path='/roles' component={ListaRoles}/>
+{                <Route exact path='/empresas' component={ListaEmpresa}/>
+}                <Route exact path='/roles' component={ListaRoles}/>
                 <Route exact path='/showFile/:id/:fl' component={VentanaVerArchivo}/>
                 {/* Empresa respuesta de cotizacion */}
                 <Route exact path='/respuestaCotizacion' component={ RespCotizacion }/>
