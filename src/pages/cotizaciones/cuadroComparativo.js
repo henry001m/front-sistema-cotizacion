@@ -8,27 +8,7 @@ function RespuestaInformeCotizacion(){
 
     const {id} = useParams();
     const [abierto, setAbierto] = useState(false);
-    const [ solicitud, setSolicitud ] = useState([
-        {
-            id:1, descripcion:"barbijos", amount:20,
-            cotizaciones:[
-                {empresa:"chicken", total:200},{empresa:"Sensacion", total:350},{empresa:"Keido", total:400}
-            ]
-        },
-        {
-            id:2, descripcion:"guantes", amount:25,
-            cotizaciones:[
-                {empresa:"chicken", total:100},{empresa:"Sensacion", total:420},{empresa:"Keido", total:null}
-            ]
-        },
-        {
-            id:3, descripcion:"lentes", amount:30,
-            cotizaciones:[
-                {empresa:"chicken", total:250},{empresa:"Sensacion", total:null},{empresa:"Keido", total:300}
-            ]
-        },
-        ])
-    const [reportQuotitation, setReportQuotitation ] = useState({})
+    const [ solicitud, setSolicitud ] = useState([]);
 
     let history = useHistory();
         const back = ()=>{
