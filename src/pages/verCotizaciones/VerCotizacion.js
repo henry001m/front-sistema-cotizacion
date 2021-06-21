@@ -91,7 +91,7 @@ function VerCotizacion(){
                                     if(detalle){
                                         return(
                                             <tr key={detalle.id}>
-                                                <th scope="row">{index+1}</th>
+                                                <th scope="row">{index}</th>
                                                 <td >{detalle.amount}</td>
                                                 <td>{detalle.unitMeasure}</td>
                                                 <td>{detalle.description}</td>
@@ -102,7 +102,7 @@ function VerCotizacion(){
                                                 onClick={()=>{
                                                     setAbrirOferta(true)
                                                     setOferta(detalle)
-                                                    console.log("se manda a oferta",detalle)
+                                                    //console.log("se manda a oferta",detalle)
                                                 }}
                                                 ><BagPlusFill/></button></td>
                                             </tr>

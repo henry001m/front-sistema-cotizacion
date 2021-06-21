@@ -34,7 +34,7 @@ const OfertaModal = (props) => {
             closeModal()
         }
     }
-    const fileSelectHandler =(e)=>{
+    const fileSelectHandlerDetalle =(e)=>{
         let namefileAux =[];
         let extenciones = [];
         for (let index = 0; index <e.target.files.length; index++) {
@@ -59,7 +59,6 @@ const OfertaModal = (props) => {
         setFileValidate(noEsValido);
         setNamefile(namefileAux);
         setFl(e.target.files);
-        console.log(e.target.files)
     }
     return (
         <Modal isOpen={props.abierto} style={modalStyles}>
@@ -99,7 +98,7 @@ const OfertaModal = (props) => {
                     name="archivo"
                     type="file" 
                     id="files" 
-                    onChange = {fileSelectHandler}
+                    onChange = {fileSelectHandlerDetalle}
                 ></input>
                 <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
             </div>
