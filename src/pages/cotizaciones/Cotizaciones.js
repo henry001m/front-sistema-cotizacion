@@ -21,7 +21,7 @@ function Cotizaciones() {
         async function getQuotitations() {
             try {
                 const result = await getQuotitationList(id);
-                console.log("id de solicitud", id)
+                console.log("id de solicitud", result)
                 setQuotitations(result.Cotizaciones)
             } catch (error) {
                 console.log(error)
