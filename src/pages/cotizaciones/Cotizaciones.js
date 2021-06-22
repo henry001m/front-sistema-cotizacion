@@ -8,6 +8,7 @@ function Cotizaciones() {
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([]);
     const [abierto, setAbierto] = useState(false);
+    const [flagCotizar, setFlagCotizar] = useState(true);
     let history = useHistory()
 
     const abrirCuadro = ()=>{
@@ -21,8 +22,10 @@ function Cotizaciones() {
         async function getQuotitations() {
             try {
                 const result = await getQuotitationList(id);
-                console.log("id de solicitud", result)
                 setQuotitations(result.Cotizaciones)
+                if(result.Cotizaciones.length>2){
+                    setFlagCotizar(false);
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -39,7 +42,7 @@ function Cotizaciones() {
                         <h1>Cotizaciones</h1>
                         <br></br>
                     <div className="col" style={{textAlign:"end"}}>
-                        <button className="btn btn-secondary" onClick={abrirCuadro} >
+                        <button className="btn btn-secondary" onClick={abrirCuadro} disabled={flagCotizar} >
                           Realizar Comparación
                         </button>
                         
