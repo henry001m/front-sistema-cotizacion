@@ -117,6 +117,7 @@ function VerCotizacion(){
                                                 style={{color:"white", backgroundColor:"orange"}}
                                                 onClick={()=>AbrirModalOferta(detalle)}
                                                 ><BagPlusFill/></button></td>
+                                                {/* <td>Marca:{detalle.brand} Modelo:{detalle.model} Industria:{detalle.industry} Tiempo de Garantia:{detalle.warrantyTime}</td> */}
                                             </tr>
                                         )
                                     }

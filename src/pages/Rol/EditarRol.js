@@ -1,6 +1,5 @@
 import React,{useState,useEffect, useRef} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Table,FormGroup, Label, Input} from 'reactstrap';
-import { updateBossUG } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import { getPermissions } from '../../services/http/PermissionService';
 import { updateRol } from '../../services/http/RolService'
