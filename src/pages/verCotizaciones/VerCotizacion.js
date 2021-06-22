@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BagPlusFill, FileEarmarkArrowUpFill } from 'react-bootstrap-icons'
+import { BagPlusFill, FileEarmarkArrowUpFill, FileEarmarkFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import ModalVerOferta from './ModalVerOferta'
@@ -15,7 +15,7 @@ function VerCotizacion(){
     const [ verCotizacion, setVerCotizacion] = useState(false)
     const [ nameFile, setNameFile ] = useState("")
     const [ oferta, setOferta ] = useState("");
-    const [ file, setFile ] = useState([])
+    const [ files, setFiles ] = useState([])
     const cerrarOferta = () => {
         setAbrirOferta( false );
     }
@@ -25,9 +25,12 @@ function VerCotizacion(){
                 const result = await getQuotitationId(idRe, idCo)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
+                var files = []
                 
                 for (var i = 1; i < result.Cotizacion.length; i++) {
                     aux.push(result.Cotizacion[i][0]);
+                    const res = await getFileNameDetail(result.Cotizacion[i][0].idDetail)
+                    files.push(res);
                 }
                 const fileQuotation = await getFileNameQuotitation(idCo);
                 if ( fileQuotation.length>0 ){
@@ -35,25 +38,26 @@ function VerCotizacion(){
                     setNameFile(fileQuotation[0])
                 }
                 setDetalles(aux)
+                setFiles(files)
+                console.log(files)
             } catch (error) {
                 console.log(error)
             }
         }
         getQuotitation();
     }, []);
+    // const AbrirModalOferta = async(detalle) => {
+    //     try {
+    //         console.log(detalle)
+    //         const result = await getFileNameDetail(detalle.idDetail)
+    //         setFile(result)
+    //         setAbrirOferta(true)
+    //         setOferta(detalle)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
-    const AbrirModalOferta = async(detalle) => {
-        try {
-            console.log(detalle)
-            const result = await getFileNameDetail(detalle.idDetail)
-            setFile(result)
-            setAbrirOferta(true)
-            setOferta(detalle)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    
     return(
         <>
             <div className="container" align="left">
@@ -61,7 +65,7 @@ function VerCotizacion(){
                     <h1> Cotización</h1>
                 <br></br>
                 <h3>Datos de Cotización</h3>
-                <div className="col" style={{marginLeft:"5%", marginRight:"5%"}}>
+                <div className="col" >
                     <div className="form-register">
                         <form>
                             <div className="form-row">
@@ -88,17 +92,19 @@ function VerCotizacion(){
                     </div>
                 </div>
                 <h3>Detalle por item de Cotización</h3>
-                <div className="col" style={{marginLeft:"5%", marginRight:"5%"}}>
+                <div className="col">
+                {/* <div className="col" style={{marginLeft:"5%", marginRight:"5%"}}></div> */}
                     <table className="table table-striped">
                         <thead>
                             <tr>
                                 <th width="3%" scope="col">#</th>
-                                <th width="11%" scope="col">Cantidad</th>
-                                <th width="11%" scope="col">Unidad</th>
-                                <th width="43%" scope="col">Detalle</th>
-                                <th width="13%" scope="col">Precio Unit.</th>
-                                <th width="13%" scope="col">Precio total</th>
-                                <th width="6%" scope="col">Oferta</th>
+                                <th width="8%" scope="col">Cant.</th>
+                                <th width="8%" scope="col">Unidad</th>
+                                <th width="22%" scope="col">Detalle</th>
+                                <th width="11%" scope="col">Precio Unit.</th>
+                                <th width="11%" scope="col">Precio total</th>
+                                <th width="23%" scope="col">Oferta</th>
+                                <th width="16%" scope="col">Archivo</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,11 +119,20 @@ function VerCotizacion(){
                                                 <td>{detalle.description}</td>
                                                 <td>{detalle.unitPrice}</td>
                                                 <td>{detalle.totalPrice}</td>
-                                                <td><button className="btn btn-warning" 
+                                                {/* <td><button className="btn btn-warning" 
                                                 style={{color:"white", backgroundColor:"orange"}}
                                                 onClick={()=>AbrirModalOferta(detalle)}
-                                                ><BagPlusFill/></button></td>
-                                                {/* <td>Marca:{detalle.brand} Modelo:{detalle.model} Industria:{detalle.industry} Tiempo de Garantia:{detalle.warrantyTime}</td> */}
+                                                ><BagPlusFill/></button></td> */}
+                                                <td>Marca: {detalle.brand} <br></br>Modelo: {detalle.model}<br></br>Industria: {detalle.industry}<br></br> Tiempo de Garantia: {detalle.warrantyTime}</td>
+                                                <td>
+                                                { (files.length>0)?
+                                                (<a
+                                                href={`/showFileQuotitationDetail/${1}/${files[0][index]}`} 
+                                                className="btn btn-secondary sm" target="_blank"
+                                                ><FileEarmarkFill className="mb-1"/>Ver archivo</a>):
+                                                (<button className="btn btn-secondary sm" disabled><FileEarmarkFill className="mb-1"/>Ver archivo</button>)
+                                                }
+                                                </td>
                                             </tr>
                                         )
                                     }
@@ -136,7 +151,7 @@ function VerCotizacion(){
                 <div className="form-row" >
                     <div className="col-6"  style={{marginLeft:"5%", marginRight:"5%"}}>
                         {(verCotizacion) && 
-                            (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkArrowUpFill className="mb-1"/> Ver archivo</a>)
+                            (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkFill className="mb-1"/> Ver archivo</a>)
                         }
                     </div>
                     </div>
@@ -146,11 +161,11 @@ function VerCotizacion(){
                     </div>
                 </div>
             </div>
-            <ModalVerOferta 
+            {/* <ModalVerOferta 
             abrirOferta={abrirOferta} 
             cerrarOferta={cerrarOferta} 
             oferta={oferta}
-            file={file}/>
+            file={file}/> */}
         </>
     );
 }
