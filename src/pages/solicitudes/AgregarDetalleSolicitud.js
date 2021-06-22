@@ -1,20 +1,52 @@
-import { FileEarmarkArrowUpFill } from 'bootstrap-icons-react'
-import React, { useState } from  'react'
+import { FileEarmarkArrowUpFill, PlusCircle } from 'react-bootstrap-icons'
+import React, { useState, useEffect } from  'react'
 import { useForm } from 'react-hook-form'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams} from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation } from '../../services/http/QuotitationService';
+import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
-import NavUnidadGasto from '../../components/navUnidadGasto/NavUnidadGasto'
 
 function AgregarDetalleSolictud(){
-
+    const {idUS} = useParams();
+    const {nameUS} = useParams();
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null})
+    const [ adquisicion, setAdquisicion] = useState({nameUnidadGasto:"",aplicantName:"", requestDate:"", amount:null,spending_units_id:""})
     const [ newDetails, setNewDetails] = useState([])
     const [fecha , setFecha ] = useState(new Date())
-    
+    const [namefile, setNamefile] = useState([])
+    const [fileValidate, setFileValidate] = useState(false);
+
+    const [abierto, setAbierto] = useState(false);
+
+    useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        const fetchData = async () => {
+        try {
+            const response = await getInform(user.user.id);
+            console.log("esto es el response",response)
+            setAdquisicion({
+                ...adquisicion,
+                nameUnidadGasto : nameUS,
+                aplicantName : user.user.name+" "+user.user.lastName,
+                requestDate : fecha.getFullYear()+"-"+(fecha.getMonth()+1+"-"+fecha.getDate()),
+                spending_units_id: idUS
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    fetchData();
+    }, []);    
+
+    const abrirModal =()=>{
+        setAbierto(true);
+    }
+    const cerrarModal=()=>{
+        setAbierto(false);
+    }
+
     const handleInputChange = (event) => {
         console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
@@ -53,6 +85,29 @@ function AgregarDetalleSolictud(){
     const [fls, setFls] = useState(null);
 
     const fileSelectHandler =(e)=>{
+        let namefileAux =[];
+        let extenciones = [];
+        for (let index = 0; index <e.target.files.length; index++) {
+            const name = e.target.files[index].name;
+            let extension = name.slice((name.lastIndexOf(".") - 1 >>> 0) + 2);
+            namefileAux.push(name);
+            extenciones.push(extension);
+        }
+        let noEsValido = true;
+        let flag = false;
+        extenciones.forEach(exten => {
+            if(!flag){
+                if(exten === 'pdf' || exten === 'docx' || exten=== 'jpg'){
+                    noEsValido =false;
+                }else{
+                    noEsValido=true;
+                    flag = true;
+                    
+                }
+            }
+        });
+        setFileValidate(noEsValido);
+        setNamefile(namefileAux);
         setFls(e.target.files);   
     }
     const onSubmit =async (id) =>{
@@ -62,33 +117,43 @@ function AgregarDetalleSolictud(){
             let name = 'file'+i;
             formData.append(name,fls[i],fls[i].name);
             }
-            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData);
+            const token=window.localStorage.getItem("tokenContizacion");
+            const headers = { headers: {'Authorization': `Bearer ${token}`}};
+            console.log("archivo que se manda",formData)
+            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
             console.log("respuesta ",res);
         }
     }
 
     const sendData = async ( ) => {
-        if(newDetails.length>0){
-            const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
-            const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount};
-            const result = await createQuotitation(obj);
-            await onSubmit(result.success);
-            reset();
-            closePage();
+        if(newDetails.length>0 && !fileValidate){
+            try {
+                const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
+                const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
+                const result = await createQuotitation(obj);
+                console.log(obj);
+                console.log("resultado ",result);
+                await onSubmit(result.success);
+                reset();
+                closePage();
+            } catch (error) {
+                console.log(error);
+            }
         }
     };
 
     let history = useHistory();
 
     function closePage(){
-        history.replace("/SolicitudesDeAdquisicion");
+        // history.replace("/SolicitudesDeAdquisicion");
+        window.history.back();
     }
 
     const Details = newDetails.map((detail,index)=>{
         return(
             <tr key={index}>
                 <th scope="row">
-                    {index}         
+                    {index+1}         
                 </th>
                 <td>
                     {detail.amount}         
@@ -105,7 +170,6 @@ function AgregarDetalleSolictud(){
 
     return(
         <>
-            <NavUnidadGasto/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Nueva solicitud</h1>
@@ -117,71 +181,19 @@ function AgregarDetalleSolictud(){
                                 <div className="form-group col-md-4">
                                     <label>Unidad de gasto:</label>
                                     <div className="form-row" id="inputs">
-                                        {/* <input 
-                                            name ="nameUnidadGasto" 
-                                            {...register("nameUnidadGasto",{
-                                                required:"El campo es requerido",
-                                                minLength:{
-                                                    value:3,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                maxLength:{
-                                                    value:50,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                pattern:{
-                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                                    message:"El campo solo permite caracteres alfabeticos"
-                                                },
-                                                validate:{
-                                                    value:(value)=>invalidateSpace(value)
-                                                }
-                                            })}
-                                            value={adquisicion.nameUnidadGasto}
-                                            type="text" 
-                                            className="form-control" 
-                                            onChange={ handleInputChange }
-                                        ></input>
-                                        {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>} */}
-                                         <label className="col-form-label">Centro de Aguas</label>
+                                         <label className="col-form-label">{adquisicion.nameUnidadGasto}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <label>Nombre del solicitante:</label>
                                     <div className="form-row" id="inputs">
-                                        {/* <input 
-                                            name ="aplicantName" 
-                                            {...register("aplicantName",{
-                                                required:"El campo es requerido",
-                                                minLength:{
-                                                    value:3,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                maxLength:{
-                                                    value:50,
-                                                    message:"Este campo debe tener entre 3 y 50 caracteres"
-                                                },
-                                                pattern:{
-                                                    value: /^[Ññíóáéú. a-zA-Z ]+$/,
-                                                    message:"El campo solo permite caracteres alfabeticos"
-                                                },
-                                                validate:{
-                                                    value:(value)=>invalidateSpace(value)
-                                                }
-                                            })}
-                                            value={adquisicion.aplicantName}
-                                            type="text" 
-                                            className="form-control" 
-                                            onChange={ handleInputChange }
-                                        ></input>
-                                        {errors.aplicantName && <span className="text-danger text-small d-block mb-2">{errors.aplicantName.message}</span>} */}
-                                        <label className="col-form-label">Pedro Perez</label>
+                                        <label className="col-form-label">{adquisicion.aplicantName}</label>
                                     </div>
                                 </div>
                                 <div className="form-group col-md-4">
                                     <label>Fecha de solicitud:</label>
                                     <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{fecha.getFullYear()+"/"+(fecha.getMonth()+1+"/"+fecha.getDate())}</label>
+                                        <label className="col-form-label">{adquisicion.requestDate}</label>
                                     </div>
                                 </div>
                             </div>                     
@@ -189,9 +201,10 @@ function AgregarDetalleSolictud(){
                                 <div className="form-col">
                                     <label>Detalle de solicitud</label>
                                 </div>
-                                <div className="form-group col" align="end">                                   
-                                    <ModalAgregarAdquisicion
-                                    updateDetails={updateDetails}/>                                 
+                                <div className="form-group col" align="end">
+                                <button className="btn btn-success" type="button" onClick={ abrirModal }>
+                                    < PlusCircle className="mb-1"/> Agregar
+                                </button>                                                                    
                                 </div>
                             </div>
                             <div className="form-row" id="list">
@@ -232,6 +245,15 @@ function AgregarDetalleSolictud(){
                                         {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
                                     </div>
                                 </div>
+                                    <ol>
+                                        {namefile.map((name)=>{
+                                            return(
+                                                <li>{name}</li>
+                                            )
+                                        })}
+                                    </ol>
+                                        
+                                        {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, docx y jpg</label>}
                                 <div className="form-group col-md-6" align="end">
                                     <input 
                                     name="files"
@@ -252,6 +274,11 @@ function AgregarDetalleSolictud(){
                         </form>
                                 
                     </div>
+                    <ModalAgregarAdquisicion
+                        abierto={abierto}
+                        cerrarModal={cerrarModal}
+                        updateDetails={updateDetails}
+                    />
                 </div>
             </div>
         </>

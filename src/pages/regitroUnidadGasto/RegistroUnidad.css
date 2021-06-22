@@ -1,4 +1,4 @@
-.principal{
+/* .principal{
 align-items: center;
 display: flex;
 height: 100vh;
@@ -21,4 +21,7 @@ margin: 0 auto;
 
 .btnguardar{
     margin-right: 34px;
-}
+} */
+.modal-content {
+    float:left;
+  }

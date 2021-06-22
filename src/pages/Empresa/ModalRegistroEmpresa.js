@@ -2,6 +2,7 @@
 import React,{useState} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useForm } from "react-hook-form";
+import { createBusiness }  from '../../services/http/BussinessService'
 
 const ModalRegistroEmpresa = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -9,7 +10,13 @@ const ModalRegistroEmpresa = (props) => {
     const [message, setMessage] = useState("");
     
     const onSubmit = async (data) => {
-        
+        const res = await createBusiness(empresa);
+        if(res.message){
+            alert(res.message);
+        }
+        console.log(res)
+        props.updateEmpresas()
+        closeModal()
     };
 
     const validateEmail = (e) => {

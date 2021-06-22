@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-
 import { useHistory, useParams } from 'react-router-dom'
-import { getRequest } from '../../services/http/QuotitationService'
-import { updateStatus } from '../../services/http/QuotitationService'
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import { getRequest,updateStatus } from '../../services/http/QuotitationService'
+import { getFileNames } from '../../services/http/FileService'
+import VerArchivos from '../verArchivos/VerArchivos'
+import swal from 'sweetalert'
 import './SolicitudesVista.css'
+import CrearInforme from '../informe/CrearInforme'
 
 function DetalleSolicitud(){
     const {id} = useParams();
@@ -12,46 +13,70 @@ function DetalleSolicitud(){
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState();
     const [ aplicantName, setAplicantName ] = useState();
     const [ requestDate, setRequestDate ] = useState();
+    const [messageAmount, setMessageAmount] = useState("");
     const [ amount, setAmount ] = useState();
     const [ details, setDetails ] = useState([])
+    const [ isShowModalFile, setIsShowModalFile ] = useState(false)
+    const [btnActivo, setBtnActivo]=useState(false)
+    const [disabledVerArchivos, setDisabledVerArchivos] = useState(true)
+    const [montoTope, setMontoTope] = useState(0)
+    const [isShowModalInforme, setIsShowModalInforme] = useState(false)
 
     let history = useHistory();
-
-    useEffect(() => {
-        async function getRequestId() {
-            const result = await getRequest(id);
-            const resultQuotitations=result;
-            setRequest(resultQuotitations);
-            setNameUnidadGasto(resultQuotitations.nameUnidadGasto)
-            setAplicantName(resultQuotitations.aplicantName)
-            setRequestDate(resultQuotitations.requestDate)
-            setDetails(resultQuotitations.details)
-            setAmount(resultQuotitations.amount)
-        }
-        getRequestId();
-    }, []);
-
     const acceptRequest = async ( ) => {
-        const aux = {status:"aceptado"}
-        const result = await updateStatus(id,aux);
-        history.replace("/SolicitudesDeAdquisicionAdmin")
+        if(amount > montoTope){
+            alert("Monto excedido");
+        }else{
+            const aux = {status:"Aceptado"}
+            const result = await updateStatus(id,aux);
+            // history.replace("/SolicitudesDeAdquisicionAdmin")
+            window.history.back();
+        }
     };
 
     const rejectRequest = async ( ) => {
-        const aux = {status:"rechazado"}
+        const aux = {status:"Rechazado"}
         const result = await updateStatus(id,aux);
-        history.replace("/SolicitudesDeAdquisicionAdmin")
+        // history.replace("/SolicitudesDeAdquisicionAdmin")
+        window.history.back();
     };
 
     const closePage = ( ) => {
-        history.replace("/SolicitudesDeAdquisicionAdmin")
+        // history.replace("/SolicitudesDeAdquisicionAdmin")
+        window.history.back();
     };
+
+    const alertMessgeInforme = () => {
+        swal({
+            title: "¿Estas seguro?",
+            text: "Para cambiar el estado de una solicitud se debera agregar un informe",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+                console.log("se debe abrir el modal")
+                setIsShowModalInforme(true)
+            } else {
+                console.log("no pasa nada")
+            }
+          });
+    };
+
+    const cerrarModalInforme=()=>{
+        setIsShowModalInforme(false);
+    }
+
+    const closeModal = () => {
+        setIsShowModalFile(false)
+    }
 
     const Details = details.map((detail,index)=>{
         return(
             <tr key={index}>
                 <th scope="row">
-                    {index}         
+                    {index+1}         
                 </th>
                 <td>
                     {detail.amount}         
@@ -62,13 +87,37 @@ function DetalleSolicitud(){
                 <td >
                     {detail.description}         
                 </td>
+                
             </tr>
         );
     })
-
+    useEffect(() => {
+        async function getRequestId() {
+            const result = await getRequest(id);
+            const resultQuotitations=result;
+            setRequest(resultQuotitations);
+            setNameUnidadGasto(resultQuotitations.nameUnidadGasto)
+            setAplicantName(resultQuotitations.aplicantName)
+            setRequestDate(resultQuotitations.requestDate)
+            setDetails(resultQuotitations.details)
+            setAmount(resultQuotitations.amount)
+            setMontoTope(resultQuotitations.limite.monto)
+            setMessageAmount(resultQuotitations.message);
+            const files = await getFileNames(id);   
+            if ( files ){
+                setDisabledVerArchivos(false)
+            }    
+            if((resultQuotitations.status == "Pendiente")){
+                    setBtnActivo(true);
+               }else{
+                    setBtnActivo(false);
+               }
+            
+        }
+        getRequestId();
+    }, []);
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                 <div className="row">
                     <div className="col-md-6">
@@ -131,17 +180,39 @@ function DetalleSolicitud(){
                                         <label class="col-form-label">{amount}</label>
                                     </div>
                                 </div>
+                                <div className="form-group col-md-6" style={{marginTop:"33px"}}>
+                                    <button type="button" className="btn btn-secondary"
+                                        disabled={disabledVerArchivos}
+                                        onClick={()=>setIsShowModalFile(true)}
+                                    >Ver Archivos</button>
+                                </div>
                             </div>
+                            <div style={{color:'red'}}>{messageAmount}</div>
+                            {
+                                messageAmount&&<div style={{color:'red'}}>Monto tope: {montoTope}</div>
+                            }
                             <div className="form-row" >
                                 <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger" id="btnV" onClick={ rejectRequest }> Rechazar solicitud </button>
-                                    <button type="button" className="btn btn-success" id="btnV" onClick={ acceptRequest }> Aceptar Solicitud </button>
+                                    <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ alertMessgeInforme }> Rechazar solicitud </button>
+                                    <button type="button" className="btn btn-success"  id="btnV" disabled={!btnActivo} onClick={ acceptRequest}> Aceptar Solicitud </button>
                                 </div>
                             </div>
                         </form>
                                 
                     </div>
                 </div>
+                <VerArchivos
+                    isShowModalFile={isShowModalFile}
+                    closeModal={closeModal}
+                    id={id}    
+                />
+                <CrearInforme
+                        id={id}
+                        abierto={isShowModalInforme} 
+                        cerrarModal={cerrarModalInforme}
+                        report={null}
+                        rejectRequest={rejectRequest}
+                />
             </div>
         </>
     );

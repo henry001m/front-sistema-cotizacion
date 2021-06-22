@@ -1,14 +1,18 @@
 import React,{useState,useEffect} from 'react'
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
-import {PlusCircle} from 'bootstrap-icons-react';
-import {getUnidadesGastos} from '../../services/http/UniGastoService'
+import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
+import {getUnidadesGastos} from '../../services/http/UniGastoService';
+import ModalEditarUG from './ModalEditarUG'
 
 const MainRegistroUnidad = () => {
     const [abierto, setAbierto] = useState(false);
+    const [abrirEditor, setAbrirEditor] = useState(false);
     const [unidadesGasto, setUnidadesGasto] = useState([]);
+    const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
     const [flag, setFlag] = useState(false);
+    const [administrador, setAdministrador] = useState({id:"",name:"",lastName:""})
+
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -18,12 +22,15 @@ const MainRegistroUnidad = () => {
     const updateGastos = ()=>{
         setFlag(!flag);
     }
+    const cerrarEditor = () => {
+        setAbrirEditor( false );
+    }
     useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getUnidadesGastos();
-            console.log(response.spending_units)
             setUnidadesGasto(response.spending_units);
+            console.log(unidadesGasto);
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +40,6 @@ const MainRegistroUnidad = () => {
     }, [setUnidadesGasto,flag]);
     return (
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                 <br></br>
                 <h1>Unidades de Gasto</h1>
@@ -60,7 +66,8 @@ const MainRegistroUnidad = () => {
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
-                                    <th scope="col">Unidad Administrativa</th>
+                                    <th scope="col">Encargado</th>
+                                    <th scope="col">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,8 +77,17 @@ const MainRegistroUnidad = () => {
                                             <tr>
                                                 <td>{index+1}</td>
                                                 <td>{gasto.nameUnidadGasto}</td>
-                                                <td>{gasto.faculty.nameFacultad}</td>
-                                                <td>{gasto.administrativeUnit.name}</td>
+                                                {/* <td>{gasto.faculty.nameFacultad}</td> */}
+                                                <td>{gasto.faculty}</td>
+                                                <td>{gasto.admin[0].name} {gasto.admin[0].lastName}</td>
+                                                <td><button className="btn  btn-warning" 
+                                                        onClick={()=>{
+                                                            setAbrirEditor(true)
+                                                            setGasto(gasto)
+                                                        }}
+                                                        style={{color:'white', backgroundColor:'orange'}}
+                                                    ><PencilSquare/></button>
+                                                </td>
                                             </tr>
                                         )
                                     })
@@ -81,6 +97,12 @@ const MainRegistroUnidad = () => {
                     </div>
                 </div>
             </div>
+            <ModalEditarUG
+                abrirEditor={ abrirEditor }
+                gasto={ gasto }
+                cerrarEditor = {cerrarEditor}
+                updateGastos= {updateGastos}
+            />
         </>
     )
 }

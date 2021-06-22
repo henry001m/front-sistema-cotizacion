@@ -1,46 +1,60 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
-import {getQuotitation} from '../../services/http/QuotitationService';
-import { Link, useHistory  } from 'react-router-dom'
-import { Eye, FileEarmarkText, Envelope, ChevronLeft } from 'bootstrap-icons-react'
+import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
+import { useHistory, useParams } from 'react-router-dom'
+import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
+import CrearInforme from '../informe/CrearInforme';
+import { getReport } from '../../services/http/ReportService';
+import InformeCotizacion from '../cotizaciones/InformeCotizacion';
+import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
 
 function SolicitudesVista(){
+    const {idUA} = useParams();
     const [quotitations, setQuotitations] = useState([]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
     const [quotitationId, setQuotitationID ] = useState("")
     let history = useHistory();
     const [request, setRequest ] = useState({});
+    const [abiertoInforme, setAbiertoInforme] = useState(false);
+    const [ report, setReport ] = useState(null)
+    const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
+    const [ reportQuotitation, setReportQuotitation ] = useState(null)
 
     useEffect(() => {
+        const user = JSON.parse(window.localStorage.getItem("userDetails"));
         async function getAllQuotitations() {
-            const result = await getQuotitation();
-            const resultQuotitations=result.request_quotitations;
-            setQuotitations(resultQuotitations);
+            try {
+                const result = await getQuotitationAdministrativeUnit(idUA);
+                const resultQuotitations=result.request_quotitations;
+                console.log(resultQuotitations)
+                setQuotitations(resultQuotitations);
+            } catch (error) {
+                console.log(error)
+            }
         }
         getAllQuotitations();
         //eslint-disable-next-line
     }, []);
 
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="pendiente"){
+        if(quotitation.status!="Pendiente"){
             return(
-                <button className="dropdown-item">
-                    <FileEarmarkText/> Agregar informe
+                <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
+                    <FileEarmarkText/> Informe Solicitud
                 </button>                                    
             );
         }else{
             return(
                 <button className="dropdown-item" disabled>
-                    <FileEarmarkText/> Agregar informe
+                    <FileEarmarkText/> Informe Solicitud
                 </button>
             );
         }
     }
 
     const EnableSendMailButton = (quotitation) =>{
-        if(quotitation.status=="aceptado"){
+        if(quotitation.status=="Aceptado"){
             return(
                 <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
                     <Envelope/> Enviar correo
@@ -55,6 +69,55 @@ function SolicitudesVista(){
         }
     }
 
+    const EnablebuttonImprimir=(quotitation)=>{
+        if(quotitation.status=="Aceptado"){
+            const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
+            return(
+                <button className="dropdown-item">
+                    <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir cotización</a>
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Printer/> Imprimir cotización
+                </button>
+            );
+        }
+    }
+
+    const EnablebuttonQuotitation = (quotitation) =>{
+        if(quotitation.statusResponse==="En proseso" || quotitation.statusResponse==="Finalizado"){
+            return(
+                <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
+                    <Coin/> Cotizaciones
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Coin/> Cotizaciones
+                </button>
+            );
+        }
+    }
+
+    const EnablebuttonReportQuotitation = (quotitation) =>{
+        if(quotitation.statusResponse==="Finalizado"){
+            return(
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${quotitation.id}`)}>
+                    <FileEarmarkText/>Informe cotizacion
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <FileEarmarkText/>Informe cotizacion
+                </button>
+            );
+        }
+    }
+
     const abrirModalEmail =(id)=>{
         setQuotitationID(id);
         setAbiertoEmail(true);
@@ -63,37 +126,65 @@ function SolicitudesVista(){
         setAbiertoEmail(false);
     }
 
+    const abrirModalInforme =(id)=>{
+        getInforme(id)
+        setQuotitationID(id);
+        setAbiertoInforme(true);
+    }
+    const cerrarModalInforme=()=>{
+        setReport(null)
+        setAbiertoInforme(false);
+    }
+
+    const abrirModalInformeCotizacion =(id)=>{
+        getInformeQuotitation(id)
+        setQuotitationID(id);
+        setAbiertoInformeCotizacion(true);
+    }
+
+    const cerrarModalInformeCotizacion=()=>{
+        setReportQuotitation(null)
+        setAbiertoInformeCotizacion(false);
+    }
+
     const RequestSelect = (index) =>{
         setRequest(quotitations[index])
         console.log("solicitud",quotitations[index])
     }
 
-    const Quotitations = quotitations.map((quotitation,index)=>{
-        return(
-            <tr key={index}>
-                <td className="col-1">
-                    {index+1}         
-                </td>
-                <td className="col-2">
-                    {/limpieza/}         
-                </td>
-                <td className="col-2">
-                    {/fecha/}         
-                </td>
-                <td className="col-2">
-                    <a className="link">ver</a>
-                </td>
-                <td className="col-3">
-                    {/pendiente/}         
-                </td>
-                <td className="col-2">----</td>
-            </tr>
-        );
-    })
+    async function getInforme(id) {
+        console.log("id",id)
+        try {
+            const result = await getReport(id);
+            console.log(result)
+            if(result){
+                setReport(result);
+            }else{
+                setReport(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function getInformeQuotitation(id) {
+        console.log("id",id)
+        try {
+            const result = await getReportQuotitation(id);
+            console.log(result)
+            if(result){
+                setReportQuotitation(result);
+            }else{
+                setReportQuotitation(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <>
-            <NavAdministrador/>
-            <div className="container" align="left">
+            <div className="container" align="left" style={{marginBottom:"160px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
@@ -113,7 +204,8 @@ function SolicitudesVista(){
                                         <th scope="col">#</th>
                                         <th scope="col">Unidad de Gasto</th>
                                         <th scope="col">Fecha</th>
-                                        <th scope="col">Estado</th>
+                                        <th scope="col">Estado de Solicitud</th>
+                                        <th scope="col">Estado de Cotización</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
@@ -125,6 +217,7 @@ function SolicitudesVista(){
                                             <td >{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>{quotitation.status}</td>
+                                            <td>{quotitation.statusResponse}</td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
@@ -137,6 +230,15 @@ function SolicitudesVista(){
                                                         }
                                                         {
                                                             EnableSendMailButton(quotitation)
+                                                        }
+                                                        {
+                                                            EnablebuttonImprimir(quotitation)
+                                                        }
+                                                        {
+                                                            EnablebuttonQuotitation(quotitation)
+                                                        }
+                                                        {
+                                                            EnablebuttonReportQuotitation(quotitation)
                                                         }
                                                     </div>
                                                 </div>
@@ -153,6 +255,18 @@ function SolicitudesVista(){
                         id={quotitationId}
                         abiertoEmail={abiertoEmail} 
                         cerrarModal={cerrarModalEmail}
+                    />
+                    <CrearInforme
+                        id={quotitationId}
+                        abierto={abiertoInforme} 
+                        cerrarModal={cerrarModalInforme}
+                        report={report}
+                    />
+                    <InformeCotizacion
+                        id={quotitationId}
+                        abierto={abiertoInformeCotizacion} 
+                        cerrarModal={cerrarModalInformeCotizacion}
+                        report={reportQuotitation}
                     />
             </div>
         </>

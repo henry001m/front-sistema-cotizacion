@@ -1,34 +1,49 @@
-
 import React,{useState,useEffect} from 'react';
-import './RegistroUnidad.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {getFaculties} from '../../services/http/FacultyService';
-import {createUnidadGasto} from '../../services/http/UniGastoService';
+import { getFacultyInUse } from '../../services/http/FacultyService';
+import { getAdminsUG } from '../../services/http/UserService';
+import { createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
+import './RegistroUnidad.css';
 
 const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
+    const [ admins, setAdmins] = useState([]);
+    const [ idAdmin, setIdAdmin ] = useState("");
+    const [ flag, setFlag] = useState(false);
+    // const [ admins, setAdmins] = useState([
+    //     {id:1 , name:"Rodrigo Cespedes"},
+    //     {id:2 , name:"Yurguen Pariente"},
+    //     {id:3 , name:"Ramiro Saavedra"},
+    // ]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
     const modalStyles={
-        top:"20%",
+        top:"10%",
         transfrom: 'translate(-50%, -50%)'
     }
 
     const closeModal = () => {
         props.cerrarModal()
+        props.updateGastos();
         setNameUnidadGasto("")
+        setIdAdmin("")
+        updateAdmins()
         reset()
     }
-
+    const updateAdmins = ()=>{
+        setFlag(!flag);
+    }
     const onSubmit = async (data) => {
-        const res = await createUnidadGasto(data);
-        console.log(res);
-        setNameUnidadGasto("");
-        props.updateGastos();
-        props.cerrarModal();
-        reset()
+        try{ 
+            console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.idUser);
+            const res = await createUnidadGasto(data);
+            alert(res.message);
+            closeModal();
+        }catch(error){
+            console.log( error )
+        }
     };
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
@@ -41,10 +56,11 @@ const RegistroUnidad = (props) => {
             );
         } 
     };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await getFaculties();
+                const response = await getFacultyInUse();
                 setFaculties(response.facultades);
             } catch (error) {
                 console.log(error);
@@ -53,6 +69,19 @@ const RegistroUnidad = (props) => {
 
         fetchData();
     }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getAdminsUG();
+                setAdmins(response.users);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
+    }, [setAdmins,flag]);
+
     return (
         <>
         <Modal isOpen={props.abierto} style={modalStyles}>
@@ -60,10 +89,10 @@ const RegistroUnidad = (props) => {
             <ModalHeader toggle={closeModal}>
             Agregar Unidad de Gasto
             </ModalHeader>  
-            <ModalBody>
+            <div className="modal-body">
             <div className="form-rom">
-                <div className="form-group col-md-10">
-                    <h5>Nombre de Unidad de Gasto:</h5>
+                <div className="form-group col-md-12">
+                    <h6>Nombre de Unidad de Gasto:</h6>
                         <input
                             name="nameUnidadGasto"
                             {...register("nameUnidadGasto",{
@@ -88,11 +117,11 @@ const RegistroUnidad = (props) => {
                         ></input>
                         {errors.nameUnidadGasto && <span className="text-danger text-small d-block mb-2">{errors.nameUnidadGasto.message}</span>}
                 </div>
-                <div className="form-group col-md-10">
-                    <h5>Facultad:</h5>
+                <div className="form-group col-md-12">
+                    <h6>Facultad:</h6>
                 <select 
-                    name="faculties"
-                    {...register("faculties",{
+                    name="faculties_id"
+                    {...register("faculties_id",{
                         required:"Seleccione facultad"
                     })}
                     className="form-control">
@@ -104,11 +133,29 @@ const RegistroUnidad = (props) => {
                                 )
                             })
                         }
+                </select>
+                    {errors.faculties_id && <span className="text-danger text-small d-block mb-2">{errors.faculties_id.message}</span>}
+                </div>
+                <div className="form-group col-md-12">
+                    <h6>Administrador de Unidad:<label style={{color:'silver'}}>(opcional)</label></h6>
+                    <select 
+                    name="idUser"
+                    {...register("idUser")}
+                    className="form-control">
+                        <option value="">Seleccione Administrador</option>
+                        {  
+                            
+                            admins.map((administrador)=>{
+                                console.log(admins)
+                                return(
+                                    <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
+                                )
+                            })
+                        }
                     </select>
-                    {errors.faculties && <span className="text-danger text-small d-block mb-2">{errors.faculties}</span>}
                 </div>
             </div>
-            </ModalBody>
+            </div>
             <ModalFooter>
                 <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal"
                     onClick={closeModal}>Cancelar</button>

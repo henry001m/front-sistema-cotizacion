@@ -1,40 +1,45 @@
 import React,{useEffect, useState} from  'react'
-import { PencilSquare, PlusCircle } from 'bootstrap-icons-react';
+import { PencilSquare, PlusCircle } from 'react-bootstrap-icons';
 import ModalAgregarUsuario from './ModalAgregarUsuario';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
-
+import {Button} from 'reactstrap';
 function Usuario(){
 
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
-    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:[{id:"",nameRol:""}]})
+    const [ isShowModalAgregarU, setIsShowModalAgregarU ] = useState(false)
+    const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:""})
 
     const updateUsers = ()=>{
         setFlag(!flag);
+    }
+    const openModalAgregarU= () => {
+        setIsShowModalAgregarU( true );
+    }
+    const CloseModalEditarU = () => {
+        setIsShowModalEditarU( false );
+    };
+    const CloseModalAgregarU = () => {
+        setIsShowModalAgregarU( false );
     }
     useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getUsers();
             setUsers(response.users);
+            console.log(response.users)
         } catch (error) {
             console.log(error);
         }
     };
 
     fetchData();
-    }, [setUsers,flag]);
-
-    const CloseModalEditarU = () => {
-        setIsShowModalEditarU( false );
-    };
+    }, [setUsers,flag]);;
 
     return(
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                     <br></br>
                     <h1>Usuarios</h1>
@@ -46,9 +51,10 @@ function Usuario(){
                         </form>
                     </div>
                     <div className="col-6" align="right">
-                        <ModalAgregarUsuario updateUsers={updateUsers}/>
+                    <Button color="success" onClick={openModalAgregarU}><PlusCircle className="mr-1"/>Nuevo</Button>
                     </div>
                 </div>
+                <ModalAgregarUsuario isShowModalAgregarU={ isShowModalAgregarU } CloseModalAgregarU={ CloseModalAgregarU } updateUsers={ updateUsers }/>
                 <br></br>
                 <div className="form-register">             
                     <div className="form-row">
@@ -74,7 +80,7 @@ function Usuario(){
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
-                                                <td>{user.userRol[0].nameRol}</td>
+                                                <td>{user.userRol}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setIsShowModalEditarU(true)
@@ -83,6 +89,7 @@ function Usuario(){
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
+                                                <td>{console.log("esto estra en iteracion",user.id)}</td>
                                             </tr>
                                         );
                                    })
@@ -93,10 +100,10 @@ function Usuario(){
                 </div>
             </div>
             <ModalEditarUsuario
-            isShowModalEditarU={ isShowModalEditarU }
-            user={ user }
-            CloseModalEditarU = {CloseModalEditarU}
-            updateUsers={updateUsers}
+                isShowModalEditarU={ isShowModalEditarU }
+                user={ user }
+                CloseModalEditarU = {CloseModalEditarU}
+                updateUsers={updateUsers}
             />
         </>
     );
