@@ -23,9 +23,10 @@ function EditarRol (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ flag, setFlag] = useState(false);
     const [ rol, setRol ] = useState({nameRol:"",description:"",permissions:[]});
-    const [ permisosRol, setPermisosRol] = useState("");
+    const [ existEvent, setExistEvent] = useState(false);
     const [ permissions, setPermissions] = useState([]);
-    
+    const [ message, setMessage] = useState("")
+    const [ messageD, setMessageD] = useState("")
     const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
     const permissionsRef = useRef(props.rol.permissions);
     var seleccionados =[];
@@ -37,6 +38,8 @@ function EditarRol (props){
         props.cerrarEditor()
         props.updateRols()
         setSelectedCheckboxes([])
+        setMessage("")
+        setMessageD("")
         setRol("")
         reset()
     }
@@ -44,6 +47,7 @@ function EditarRol (props){
         setRol({
             description: event.target.value
           });
+        //setExistEvent(true);
     };
     function removeItemFromArr ( arr, item ) {
         var i = arr.indexOf( item );
@@ -87,14 +91,18 @@ function EditarRol (props){
     const onSubmit = async (data) => {
         try{
             if(selectedCheckboxes.length>0 | rol.description!=props.rol.description){
-            let bandera = actualizarPermisos(selectedCheckboxes)
-            console.log("IdRol:",props.rol.id,"Descripcion",data.description,"Permisos NUEVOS",bandera);
-            updateRol({idRol:props.rol.id,idPermission:bandera,description:data.description})
-            alert(`Se actualizo el rol ${props.rol.nameRol} exitosamente`);
-            closeModal();
+                let bandera = actualizarPermisos(selectedCheckboxes)
+                if(bandera.length == 0){
+                    setMessage('No puede dejar un rol sin permisos')
+                }else{
+                    console.log("IdRol:",props.rol.id,"Descripcion",data.description,"Permisos NUEVOS",bandera);
+                    updateRol({idRol:props.rol.id,idPermission:bandera,description:data.description})
+                    alert(`Se actualizo el rol ${props.rol.nameRol} exitosamente`);
+                    closeModal();
+                }
             }else{
                 alert("No realizo cambios")
-            }
+            } 
         }catch(error){
             console.log( error )
         }
@@ -107,6 +115,9 @@ function EditarRol (props){
         }
         getPermisos();
     }, [props.abrirEditor]);
+    function ponleFocus(){
+        document.getElementById("texto").focus();
+    }
     useEffect(function(){
         permissionsRef.current = props.rol.permissions;
         console.log(`Usa Ref: ${permissionsRef.current}`);
@@ -136,7 +147,6 @@ function EditarRol (props){
                     <input
                         className="form-control"
                         type="text"
-                        autofocus
                         value={rol.description}
                         name="description"
                         {...register("description",{
@@ -144,7 +154,7 @@ function EditarRol (props){
                         })}
                         onChange={e => handleInputChange(e)}
                     ></input>
-                     {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
+                    {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                 </div>
                
                 <div className="form-group col-md-12">
@@ -178,11 +188,10 @@ function EditarRol (props){
                                 })    
                             }
                           </tbody> 
-                        
                         </Table>
                         </div> 
+                        <span className="text-danger text-small d-block mb-2">{message}</span>
                     </div>
-                 
             </div>
             </ModalBody>
             <ModalFooter>
