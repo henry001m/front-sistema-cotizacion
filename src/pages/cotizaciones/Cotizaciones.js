@@ -6,10 +6,16 @@ import { getQuotitationList } from '../../services/http/QuotitationService';
 function Cotizaciones() { 
 
     const {id} = useParams();
-    const [ quotitations, setQuotitations ] = useState([])
+    const [ quotitations, setQuotitations ] = useState([]);
+    const [abierto, setAbierto] = useState(false);
     let history = useHistory()
-    const addCositation = () =>{
-        history.push(`/respuesta/cotizacion/ua/${id}`)
+
+    const abrirCuadro = ()=>{
+        history.push("/cuadro/"+id);
+    }
+
+    const agregarCotizacion = () =>{
+        history.push("/respuesta/cotizacion/ua/"+id);
     }
     useEffect(() => {
         async function getQuotitations() {
@@ -23,6 +29,8 @@ function Cotizaciones() {
         }
         getQuotitations();
     }, []);
+ 
+  
     
     return(
         <>
@@ -31,10 +39,11 @@ function Cotizaciones() {
                         <h1>Cotizaciones</h1>
                         <br></br>
                     <div className="col" style={{textAlign:"end"}}>
-                        <button className="btn btn-secondary">
-                            Realizar Comparación
+                        <button className="btn btn-secondary" onClick={abrirCuadro} >
+                          Realizar Comparación
                         </button>
-                        <button onClick={addCositation} className="btn btn-success" style={{marginLeft:"20px"}}>
+                        
+                        <button  onClick={agregarCotizacion} className="btn btn-success" style={{marginLeft:"20px"}}>
                             <PlusCircle className="mb-1"/> Agregar
                         </button>
                     </div>
@@ -63,8 +72,8 @@ function Cotizaciones() {
                                             <td>{quotitation.TotalEnBs}</td>
                                             <td><button className="btn btn-primary" 
                                             onClick={() => {
-                                            history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
-                                            console.log("este es el ID",quotitation.idCotizacion)
+                                                history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
+                                                console.log("este es el ID",quotitation.idCotizacion)
                                             }}><EyeFill/></button></td>
                                         </tr>
                                     );
