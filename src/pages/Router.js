@@ -24,7 +24,7 @@ import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
 import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
 import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
 import VerArchivoCotizacion from './verCotizaciones/VerArchivoCotizacion';
-
+import CuadroComparativo from './cotizaciones/CuadroComparativo';
 
 const Router = () => {
     return (
@@ -45,6 +45,8 @@ const Router = () => {
                 <Route exact path='/perfil' component={InicioSegunRol}/>
                 <Route exact path="/menu" component={ MenuNavegacion }/>
                 <Route exact path='/respuesta/cotizacion/ua/:id' component={RespCotizacionUA}/>
+                <Route exact path='/cuadro/:id' component={CuadroComparativo}/>
+                
                 {/* Administrador del Sistema */}
                 <Route exact path="/UnidadesAdministrativas" component={ UnidadesAdministrativas }/>
                 <Route exact path='/unidadesDeGasto' component={ MainRegistroUnidad }/>
