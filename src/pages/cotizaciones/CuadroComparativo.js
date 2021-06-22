@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { getComparativeChart} from '../../services/http/QuotitationService'
-
+import Informe from './InformeCotizacion';
 
 function RespuestaInformeCotizacion(){
 
@@ -65,6 +65,7 @@ function RespuestaInformeCotizacion(){
 
     return(
         <>
+        <Informe abierto={abierto} cerrarModal={cerrarModal}/>
             <div className="container" align="left">
                 <div className="row">
                     <div className="col-md-10">
