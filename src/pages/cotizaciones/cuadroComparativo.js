@@ -9,10 +9,10 @@ function RespuestaInformeCotizacion(){
     const {id} = useParams();
     const [abierto, setAbierto] = useState(false);
     const [ solicitud, setSolicitud ] = useState([]);
-
+    const [nameBusinesses, setNameBusinesses] = useState([]);
     let history = useHistory();
-        const back = ()=>{
-        history.push("/cotizaciones");
+    const back = ()=>{
+        history.push("/cotizaciones/"+id);
     }
 
     const abrirModal =()=>{
@@ -45,36 +45,23 @@ function RespuestaInformeCotizacion(){
                 suma=suma+element.cotizaciones[index].total;
             }
         });
-
-
-  /*   var precioMin = precios[0];
-    for (var i = 0; i < precios.length ; i++) {
-        if (precios[i] < precioMin) {
-            console.log( precios[i]);
-            precioMin = precios[i];
-        }
-    } */
-    
-        useEffect(() => {
-        
-            async function getComparatives() {
-                try {
-                    const res = await getComparative(id);
-                    console.log(res.comparativeChart)
-                    setSolicitud(res.comparativeChart)
-                    console.log("Cotizaciones:",res)
-    
-                } catch (error) {
-                    console.log(error)
-                }
-            }
-            getComparatives();
-        }, []);
-
         return(
             <th>{suma}</th>
         );
     }
+
+    useEffect(() => {
+        async function getComparatives() {
+            try {
+                const res = await getComparative(id);
+                setSolicitud(res.comparativeChart)
+                setNameBusinesses(res.businesses)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getComparatives();
+    }, []);
 
     return(
         <>
@@ -95,47 +82,42 @@ function RespuestaInformeCotizacion(){
                         <div className="form-row">
                             <table className="table table-striped">
                                 <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Cantidad</th>
+                                    <tr className="table-active">
+                                        <th width="5%" scope="col">#</th>
+                                        <th width="40%" scope="col">Producto</th>
+                                        <th width="10%" scope="col">Cantidad</th>
                                         {
-                                            solicitud[0].cotizaciones.map((empresa,index)=>(
-                                                <th scope="col">{empresa.Empresa}</th>
+                                            nameBusinesses.map((name,index)=>(
+                                                <th scope="col">{name}</th>
                                             ))
                                         }
-                                        <th scope="col">Precio Menor</th>
+                                        {/* <th scope="col">Precio Menor</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
                                         solicitud.map((item,index)=>(
                                             <tr key={item.id}>
-                                                <th scope="row">{index+1}</th>
-                                                <td >{item.descripcion}</td>
+                                                <th scope="row">{index}</th>
+                                                <td >{item.description}</td>
                                                 <td>{item.amount}</td>
                                                 {
                                                     item.cotizaciones.map((cotizacion,index)=>(
                                                         <td key={index}>{cotizacion.total}</td>
                                                     ))
                                                 }
-
-                                                {   
-                                                    ValorMenor(item.cotizaciones)
-                                                }
                                             </tr>
                                         ))
                                     }
                                 </tbody>
                                 <tfoot>
-                                <tr>
+                                    <tr>
                                         <th scope="row"></th>
                                         <th>Total</th>
                                         <th></th>
                                         {
-                                            solicitud[0].cotizaciones.map((cotizacion,index)=> SumaTotal(index))
+                                            nameBusinesses.map((cotizacion,index)=> SumaTotal(index))
                                         }
-                                        <th></th>
                                     </tr>
 
                                 </tfoot>

@@ -51,7 +51,7 @@ const Router = () => {
                 {/**Cotizaciones */}
                 <Route exact path='/cotizaciones/:id' component={ Cotizaciones }/>
                 <Route exact path='/verCotizacion/:idRe/:idCo' component={ VerCotizacion }/>
-                <Route exact path='/cuadro' component={ cuadroComparativo }/>
+                <Route exact path='/cuadro/:id' component={ cuadroComparativo }/>
                 <Route exact path='/cotizaciones' component={ Cotizaciones }/>
 
             </Switch>

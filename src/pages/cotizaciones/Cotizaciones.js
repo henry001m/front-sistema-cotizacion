@@ -9,12 +9,12 @@ import CuadroComparativo from './cuadroComparativo'
 function Cotizaciones() { 
 
     const {id} = useParams();
-    const [ quotitations, setQuotitations ] = useState([{id:1, Empresa:"dumbo", items:4,total:450}])
+    const [ quotitations, setQuotitations ] = useState([]);
     const [abierto, setAbierto] = useState(false);
     let history = useHistory()
 
     const abrirCuadro = ()=>{
-        history.push("/cuadro");
+        history.push("/cuadro/"+id);
     }
 
 
@@ -73,8 +73,8 @@ function Cotizaciones() {
                                             <td>{quotitation.TotalEnBs}</td>
                                             <td><button className="btn btn-primary" 
                                             onClick={() => {
-                                            history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
-                                            console.log("este es el ID",quotitation.idCotizacion)
+                                                history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
+                                                console.log("este es el ID",quotitation.idCotizacion)
                                             }}><EyeFill/></button></td>
                                         </tr>
                                     );
