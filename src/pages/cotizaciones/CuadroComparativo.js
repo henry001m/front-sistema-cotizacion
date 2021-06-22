@@ -97,7 +97,7 @@ function RespuestaInformeCotizacion(){
             <div className="container" align="left">
                 <div className="row">
                     <div className="col-md-10">
-                        <h1>Informe de cotización</h1>   
+                        <h1>Cuadro Comparativo de Cotizaciones</h1>   
                     </div>
                     <div className="col-md-2" align="right">
                         <button type="button" className="close" onClick={() => history.goBack()}>
