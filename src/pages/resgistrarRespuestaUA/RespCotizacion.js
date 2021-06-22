@@ -22,6 +22,7 @@ function RespCotizacion(props) {
     const [namefiles, setNamefiles] = useState([])
     const [fileValidate, setFileValidate] = useState(false);
     const [fls, setFls] = useState(null);
+    const [existeFile, setExisteFile] = useState("");
 
     const detallesCotizado =(dato)=>{
         setMessage("");
@@ -63,23 +64,30 @@ function RespCotizacion(props) {
         data.answerDate=new Date().toISOString().substr(0,10);
         try {
             if(cotizados.length>0){
-                document.getElementById('btnEnviar').disabled=true;
-                const res = await registrarCotizacionUA(data);
-                cotizados.forEach(cotizado => {
-                    enviarDetalle(cotizado,res.response.id);
-                });
-                const formData = new FormData();
-                if(fls != null){
-                    console.log("todos los archivos",fls.length)
-                    for(var i=0 ; i<fls.length ; i++){
-                        let name = 'file';
-                        formData.append(name,fls[i],fls[i].name);
+                if(fls!== null){
+                    setExisteFile("");
+                    document.getElementById('btnEnviar').disabled=true;
+                    const res = await registrarCotizacionUA(data);
+                    cotizados.forEach(cotizado => {
+                        enviarDetalle(cotizado,res.response.id);
+                    });
+                    const formData = new FormData();
+                    if(fls != null){
+                        console.log("todos los archivos",fls.length)
+                        for(var i=0 ; i<fls.length ; i++){
+                            let name = 'file';
+                            formData.append(name,fls[i],fls[i].name);
+                        }
                     }
+                    const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
+                    alert(res.response.message);
+                    irAtras();
+                }else{
+                    console.log("no existe file")
+                   setExisteFile("Abjunte el archivo de cotización por favor");
                 }
-                const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
-                alert(res.response.message);
-                irAtras();
             }else{
+
                 setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
             }
         } catch (error) {
@@ -123,6 +131,7 @@ function RespCotizacion(props) {
         if(extenciones.length>0){
             setFileValidate(noEsValido);
         }
+        setExisteFile("");
         setNamefiles(namefileAux);
         setFls(e.target.files);
     }
@@ -242,6 +251,7 @@ function RespCotizacion(props) {
                                             onChange = {fileSelectHandlerGeneral}
                                         ></input>
                                     </div>
+                                    <label style={{color:'red'}}>{existeFile}</label>
                                     {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx</label>}
                                 </div>
                                 
