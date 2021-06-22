@@ -30,7 +30,7 @@ function VerCotizacion(){
                 for (var i = 1; i < result.Cotizacion.length; i++) {
                     aux.push(result.Cotizacion[i][0]);
                     const res = await getFileNameDetail(result.Cotizacion[i][0].idDetail)
-                    files.push(res);
+                    files.push(res[0]);
                 }
                 const fileQuotation = await getFileNameQuotitation(idCo);
                 if ( fileQuotation.length>0 ){
@@ -125,9 +125,9 @@ function VerCotizacion(){
                                                 ><BagPlusFill/></button></td> */}
                                                 <td>Marca: {detalle.brand} <br></br>Modelo: {detalle.model}<br></br>Industria: {detalle.industry}<br></br> Tiempo de Garantia: {detalle.warrantyTime}</td>
                                                 <td>
-                                                { (files.length>0)?
+                                                { (files[index])?
                                                 (<a
-                                                href={`/showFileQuotitationDetail/${1}/${files[0][index]}`} 
+                                                href={`/showFileQuotitationDetail/${1}/${files[index]}`} 
                                                 className="btn btn-secondary sm" target="_blank"
                                                 ><FileEarmarkFill className="mb-1"/>Ver archivo</a>):
                                                 (<button className="btn btn-secondary sm" disabled><FileEarmarkFill className="mb-1"/>Ver archivo</button>)
