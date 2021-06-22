@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { getComparativeChart} from '../../services/http/QuotitationService'
-import Informe from './InformeCotizacion';
+import InformeCotizacion from '../cotizaciones/InformeCotizacion'
+import { getReportQuotitation } from '../../services/http/ReportQuotitationService'
 
 function RespuestaInformeCotizacion(){
 
@@ -10,6 +11,9 @@ function RespuestaInformeCotizacion(){
     const [abierto, setAbierto] = useState(false);
     const [ solicitud, setSolicitud ] = useState([]);
     const [nameBusinesses, setNameBusinesses] = useState([]);
+    const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
+    const [ reportQuotitation, setReportQuotitation ] = useState(null)
+
     let history = useHistory();
     const back = ()=>{
         history.push("/cotizaciones/"+id);
@@ -63,9 +67,33 @@ function RespuestaInformeCotizacion(){
         getComparatives();
     }, []);
 
+    const abrirModalInformeCotizacion =()=>{
+        getInformeQuotitation(id)
+        setAbiertoInformeCotizacion(true);
+    }
+
+    const cerrarModalInformeCotizacion=()=>{
+        setReportQuotitation(null)
+        setAbiertoInformeCotizacion(false);
+    }
+
+    async function getInformeQuotitation(id) {
+        console.log("id",id)
+        try {
+            const result = await getReportQuotitation(id);
+            console.log(result)
+            if(result){
+                setReportQuotitation(result);
+            }else{
+                setReportQuotitation(null)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <>
-        <Informe abierto={abierto} cerrarModal={cerrarModal}/>
             <div className="container" align="left">
                 <div className="row">
                     <div className="col-md-10">
@@ -130,9 +158,15 @@ function RespuestaInformeCotizacion(){
                 <div className="form-row" >
                      <div className="form-group col" id="toolbar">
                         <button className="btn btn-secondary" onClick={back}  id="btnV">Volver Atrás</button>
-                        <button type="submit" className="btn btn-primary ml-4" id="btnEnviar" onClick={abrirModal} >Realizar Informe</button>
+                        <button type="submit" className="btn btn-primary ml-4" id="btnEnviar" onClick={abrirModalInformeCotizacion} >Realizar Informe</button>
                      </div>           
-                    </div>
+                </div>
+                <InformeCotizacion
+                    id={id}
+                    abierto={abiertoInformeCotizacion} 
+                    cerrarModal={cerrarModalInformeCotizacion}
+                    report={reportQuotitation}
+                />
             </div>
         </>
     );
