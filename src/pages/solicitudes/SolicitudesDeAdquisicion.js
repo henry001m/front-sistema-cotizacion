@@ -132,7 +132,7 @@ function SolicitudesDeAdquisicion(){
                         <div className="dropdown">
                             <button className="dropbtn"><ChevronLeft/>Acciones</button>
                                 <div className="dropdown-content  dropdown-menu-right">
-                                    <button className="dropdown-item" >
+                                    <button className="dropdown-item" onClick={()=>history.push(`verSolicitud/${idUS}`)}>
                                         <Eye/> Ver solicitud
                                     </button>
                                     {

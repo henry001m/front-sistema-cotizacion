@@ -24,6 +24,7 @@ import InicioSegunRol from '../components/menuNavegacion/InicioSegunRol';
 import MenuNavegacion from '../components/menuNavegacion/MenuNavegacion';
 import RespCotizacionUA from './resgistrarRespuestaUA/RespCotizacion';
 import VerArchivoCotizacion from './verCotizaciones/VerArchivoCotizacion';
+import VerSolicitud from './solicitudes/VerSolicutd';
 
 
 const Router = () => {
@@ -35,6 +36,7 @@ const Router = () => {
                 {/* Unidad de Gasto */}
                 <Route exact path='/SolicitudesDeAdquisicion/:idUS/:nameUS' component={ SolicitudesDeAdquisicion}/>
                 <Route exact path='/AgregarDetalleSolictud/:idUS/:nameUS' component={ AgregarDetalleSolictud }/>
+                <Route exact path='/verSolicitud/:id' component={ VerSolicitud }/>
                 {/* Unidad Administratica */}
                 <Route exact path="/SolicitudesDeAdquisicionAdmin/:idUA" component={ SolicitudesVista }/>
                 <Route exact path="/EnviarCotizacion" component={ EnviarCotizacion }/>
