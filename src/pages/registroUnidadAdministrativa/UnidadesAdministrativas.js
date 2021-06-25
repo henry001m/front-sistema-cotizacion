@@ -1,42 +1,35 @@
-import React, { useState,useEffect } from 'react'
-import { PlusCircle } from 'bootstrap-icons-react'
+  
+import React, { useState, useRef, useEffect } from 'react'
+import { PlusCircle, PencilSquare } from 'react-bootstrap-icons'
+import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
-import NavSuperusuario from '../../components/navSuperusuario/NavSuperusuario'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
-
+import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
-
+    const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
+    // const [ administrativeUnit, setAdministrativeUnit] = useState([])
+    const [ administrativeUnit, setAdministrativeUnit] = useState({name:"",faculty:"",admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
+    const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
-    const CloseModalRUA = () => {
+
+    const closeModalRUA = () => {
         setIsShowModalRegistroUA( false );
     };
-
-    const AdministrativeUnits = administrativeUnits.map((administrativeUnit,index)=>{
-        return(
-            <tr key={index}>
-                <th scope="row">
-                    {index+1}         
-                </th>
-                <td >
-                    {administrativeUnit.name}         
-                </td>
-                <td >
-                    {administrativeUnit.facultad}         
-                </td>
-            </tr>
-        );
-    });
+   const cerrarEditor = () => {
+        setAbrirEditor( false );
+    }
     const updateAdministrativas = ()=>{
         setFlag(!flag);
     }
+    // Unit admin de BD
     useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getUnidadesAdministrativas();
             setAdministrativeUnits(response.Administrative_unit);
-            console.log(response);
+            console.log("esto se envia en UA",response);
         } catch (error) {
             console.log(error);
         }
@@ -47,7 +40,6 @@ function UnidadesAdministrativas() {
 
     return(
         <>
-            <NavSuperusuario/>
             <div className="container" align="left">
                         <br></br>
                         <h1>Unidades Administrativas</h1>
@@ -63,6 +55,7 @@ function UnidadesAdministrativas() {
                             <PlusCircle  className="mb-1"/> Nuevo </button>
                         </div>
                     </div>
+                    <ModalRegistroUnidadAdministrativa isShowModalRegistroUA={ isShowModalRegistroUA } closeModalRUA = {closeModalRUA} updateAdministrativas={updateAdministrativas}/>
                     <br></br>
                     <div className="form-register">             
                         <div className="form-row">
@@ -72,19 +65,44 @@ function UnidadesAdministrativas() {
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Facultad</th>
+                                    <th scope="col">Encargado</th>
+                                    <th scope="col">Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {AdministrativeUnits}
+                                    {
+                                        administrativeUnits.map((administrativeUnit,index)=>{
+                                            return(
+                                                <tr>
+                                                {/* <tr key={index}>
+                                                <th scope="row">{index+1}</th> */}
+                                                <td>{index+1}</td>
+                                                <td>{administrativeUnit.name}</td>
+                                                <td>{administrativeUnit.faculty}</td>
+                                                <td>{administrativeUnit.admin[0].name} {administrativeUnit.admin[0].lastName}</td>
+                                                <td><button className="btn  btn-warning" 
+                                                        onClick={()=>{
+                                                            setAbrirEditor(true)
+                                                            setAdministrativeUnit(administrativeUnit)
+                                                        }}
+                                                        style={{color:'white', backgroundColor:'orange'}}
+                                                    ><PencilSquare/></button>
+                                                </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                                                        
                                 </tbody>
                             </table>
                         </div>
                     </div>
             </div>
-            <ModalRegistroUnidadAdministrativa
-            isShowModalRegistroUA={ isShowModalRegistroUA }
-            CloseModalRUA = {CloseModalRUA}
-            updateAdministrativas={updateAdministrativas}
+            <ModalEditarUA
+                abrirEditor={ abrirEditor }
+                administrativeUnit ={ administrativeUnit }
+                cerrarEditor = {cerrarEditor}
+                updateAdministrativas= {updateAdministrativas}
             />
         </>
     );

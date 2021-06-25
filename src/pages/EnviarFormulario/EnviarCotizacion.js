@@ -1,50 +1,10 @@
-import React,{useState, useRef } from "react"
-import  Modal from '../../components/modal/Modal'
+import React,{useState} from "react" 
 import './EnviarCotizacion.css'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
-import { Envelope, PlusCircle} from 'bootstrap-icons-react'
+import { PlusCircle} from 'react-bootstrap-icons'
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-
-const Input = ({name,tabIndex,value,onChange}) => {
-    const {register, formState: { errors }, handleSubmit, reset} = useForm();
-
-    const validateAroba = (e) => {
-        const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-        if(/@/.test(e)){
-            if (reg.exec(e)!=null) {
-                return true
-            }else{
-                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
-            }
-        }else{
-            return "Este campo debe tener el carácter @"
-        }
-    };
-
-    return(
-        <form>
-            <div className="form-row">
-                <input
-                    name={name} 
-                    {...register(name,{
-                        required:"Campo requerido",
-                        minLength:{
-                            value:11,
-                            message:"Este campo debe tener mínimo 11 caracteres"
-                        }
-                    })}
-                    tabIndex={tabIndex}
-                    value={value}
-                    type="text" 
-                    className="form-control"
-                    onChange={(event)=>onChange(event)}
-                ></input>
-                {errors.name && <span className="text-danger text-small d-block mb-2">{errors.name.message}</span>}
-            </div>
-        </form>
-    );
-};
 
 function EnviarCotizacion( props ){
 
@@ -52,34 +12,29 @@ function EnviarCotizacion( props ){
     const [emailMessage, setEmailMessage]  = useState({emails:"", description:""});
     const [espera, setEspera] = useState("")
     /**esta es la lista de los emails */
-    const [emails, setEmails] = useState([{name:"email1", correo:""}])
-
-    const modalref = useRef();
-
-    const openModal = () => {
-        modalref.current.openModal()
-    };
-
-    const closeModal = () => {
-        reset();
-        modalref.current.closeModal()
-    };
+    const [correos, setCorreos ] = useState([""])
+    const [errorsCorreos, setErrorsCorreos] = useState([""])
 
     const addEmail = () => {
-        setEmails([...emails,{name:"email"+(emails.length+1),correo:""}]);
-        setEmailMessage({...emailMessage,emails:emails});
+        if(correos.length<5){
+            setCorreos([...correos,""])
+            setEmailMessage({...emailMessage,emails:correos});
+            setErrorsCorreos([...errorsCorreos,""])
+        }
     };
 
     const onChangeEmail = (event) => {
-        //console.log(event.target.tabIndex)
-        const newData = emails.map((d, index) => {
+        const newData = correos.map((d, index) => {
             if (index === event.target.tabIndex) {
-              d[event.target.name] = event.target.value;
+                if(event.target.value[0]==" "){
+                    d = event.target.value.substring(1)
+                }else{
+                    d = event.target.value;
+                }
             }
             return d;
           });
-          setEmails([...newData])
-        //console.log(newData)
+          setCorreos([...newData])
     };
 
     const handleInputChange = (event) => {
@@ -98,69 +53,82 @@ function EnviarCotizacion( props ){
         }
     };
 
+    const closeModal=()=>{
+        props.cerrarModal()
+        setEmailMessage({emails:"", description:""})
+        setCorreos([""])
+        setErrorsCorreos([""])
+        setEspera("")
+        reset()
+    }
+
     const saveEmail = async ( ) => {
-        setEspera("Enviando....");
-        document.getElementById('btnIE').disabled=true;
-        console.log(emailMessage);
-        const result = await sendEmail(emailMessage);
-        alert(result.data.result);
-        setEmailMessage({email:"",description:""});
-        setEspera("");
-        document.getElementById('btnIE').disabled=false;
-        reset();
-        closeModal();
+        try {
+            const aux = {emails:correos, description:emailMessage.description}
+            setEspera("Enviando....");
+            console.log(aux,props.id);
+            document.getElementById('btnIE').disabled=true;
+            const result = await sendEmail(aux,props.id);
+            console.log("este es el resultado ",result);
+            alert(result.data.result);
+            setEmailMessage({email:"",description:""});
+            setEspera("");
+            document.getElementById('btnIE').disabled=false;
+            reset();
+            closeModal();
+        } catch (error) {
+            console.log(error)
+        }
     };
 
-    const clearInput = () =>{
-
-    }
-    const validateAroba = (e) => {
+    const validateEmail = (e, index) => {
         const reg = /^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/
-        if(/@/.test(e)){
-            if (reg.exec(e)!=null) {
-                return true
+        if(e!=""){
+            console.log(/@/.test(e))
+            if(e.length>10){
+                if(/@/.test(e)){
+                    if (reg.exec(e)!=null) {
+                        const aux = errorsCorreos
+                        aux[index]=""
+                        setErrorsCorreos(aux)
+                        return true
+                    }else{
+                        const aux = errorsCorreos
+                        aux[index]="Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                        setErrorsCorreos(aux)
+                        return false
+                    }
+                }else{
+                    const aux = errorsCorreos
+                    aux[index]="Este campo debe tener el carácter @"
+                    setErrorsCorreos(aux)
+                    return false
+                }
             }else{
-                return "Este campo solo acepta caracteres alfanuméricos y especiales como el @ (arroba) .(punto) - (guión) y _ (guión bajo)"
+                const aux = errorsCorreos
+                aux[index]="Este campo debe tener mínimo 11 caracteres"
+                setErrorsCorreos(aux)
+                return false
             }
         }else{
-            return "Este campo debe tener el carácter @"
+            const aux = errorsCorreos
+            aux[index]="Este campo es requerido"
+            setErrorsCorreos(aux)
+            return false
         }
     };
 
-    const EnableSendMailButton = () =>{
-        if(props.status=="aceptado"){
-            return(
-                <button className="dropdown-item" onClick={ openModal }>
-                    <Envelope/> Enviar correo
-                </button>                                    
-            );
-        }else{
-            return(
-                <button className="dropdown-item" disabled>
-                    <Envelope/> Enviar correo
-                </button>
-            );
-        }
-    }
 
     return(
         <>
-        {
-            EnableSendMailButton()
-        }
-            <Modal ref={ modalref }>
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Envio por correo</h5>
-                            <button type="button" className="close" onClick={ closeModal}>
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <div className="container" align="left">
+            <Modal isOpen={props.abiertoEmail}>
+            <form onSubmit={handleSubmit(saveEmail)}>
+                <ModalHeader toggle={closeModal}>
+                    Envio por correo
+                </ModalHeader>
+                <ModalBody>
+                <div className="container" align="left">
                                 <div className="form-register">
-                                    <form onSubmit={handleSubmit(saveEmail)}>
                                         <div className="form-row">
                                             <div className="col-md-10">
                                                 <label>Correo de la Empresa:</label>
@@ -168,14 +136,25 @@ function EnviarCotizacion( props ){
                                         </div>
                                         <div className="form-row">
                                             <div className="form-group col-md-10">
-                                                {emails.map((email,index) => {
+                                                {correos.map((correo,index) => {
                                                     return(
-                                                        <Input
-                                                            name="correo"
-                                                            tabIndex={index}
-                                                            value={email.correo}
-                                                            onChange={onChangeEmail}
-                                                        />
+                                                        <>
+                                                            <input
+                                                                name={`correo[${index}]`}
+                                                                {...register(`correo[${index}]`,{
+                                                                    validate:{
+                                                                        value:(value)=>validateEmail(value, index)
+                                                                    }
+                                                                })}
+                                                                value={correo}
+                                                                id="email"
+                                                                tabIndex={index}
+                                                                type="text" 
+                                                                className="form-control"
+                                                                onChange={ onChangeEmail }
+                                                            ></input>
+                                                            <span style={{color:"#dc3545"}}>{ errorsCorreos[index] }</span>
+                                                        </>
                                                     )
                                                 })}
                                             </div>
@@ -192,7 +171,7 @@ function EnviarCotizacion( props ){
                                                 <label>Descripción:</label>
                                                 <div className="form-row">
                                                     <textarea
-                                                        rows="7" 
+                                                        rows="6" 
                                                         name="description"
                                                         {...register("description",{
                                                             required:"Campo requerido",
@@ -215,25 +194,16 @@ function EnviarCotizacion( props ){
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="form-row">
-                                            <div className="form-group col-md-10">
-                                                <div className="form-row">
-                                                    <label style={{color:"#28a745"}}>Se adjunto el formulario de cotizacion</label>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div className="form-row  justify-content-end" align="right">
                                                 <div style={{color:"red"}}>
                                                     {espera}
                                                 </div>
                                                 <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                </ModalBody>
+                </form>
             </Modal>
         </>
     );

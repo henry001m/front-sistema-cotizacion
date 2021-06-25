@@ -1,15 +1,14 @@
 import React, { useState,useEffect } from 'react'
-import { PlusCircle } from 'bootstrap-icons-react'
+import { PlusCircle } from 'react-bootstrap-icons'
 import {Button} from 'reactstrap';
 import MontoLimiteModal from './MontoLimiteModal';
-import NavAdministrador from '../../components/navAdministrador/NavAdministrador'
-import {getMontoLomite} from '../../services/http/MontoLimiteService'
-
+import { getMontoLimiteAdminUnit} from '../../services/http/MontoLimiteService'
+import { useHistory, useParams} from 'react-router-dom'
 function MontoLimite() {
-
+    const {idUA} = useParams();
     const [limiteAmouts, setLimiteAmouts] = useState([]);
     const [flag, setFlag] = useState(false);
-    const [final, setFinal] = useState({})
+    const [final, setFinal] = useState({monto:""})
     const updateLimitAmout = ()=>{
         setFlag(!flag);
     }
@@ -26,7 +25,10 @@ function MontoLimite() {
                     {amount.monto}         
                 </td>
                 <td >
-                    {amount.dateStamp}         
+                    {amount.starDate}         
+                </td>
+                <td >
+                    {amount.endDate}         
                 </td>
             </tr>
         );
@@ -46,11 +48,11 @@ function MontoLimite() {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await getMontoLomite();
-            console.log(response.limit_amout)
-            setFinal(response.limit_amout[response.limit_amout.length-1]);
-            console.log(response.limit_amout[response.limit_amout.length-1])
-            setLimiteAmouts(response.limit_amout);
+            const response = await getMontoLimiteAdminUnit(idUA);
+            if(response.Limite_Amounts.length>0){
+                setFinal(response.Limite_Amounts[response.Limite_Amounts.length-1]);
+            }
+            setLimiteAmouts(response.Limite_Amounts);
         } catch (error) {
             console.log(error);
         }
@@ -60,7 +62,6 @@ function MontoLimite() {
 
     return(
         <>
-            <NavAdministrador/>
             <div className="container" align="left">
                 <br></br>
                 <br></br>
@@ -89,7 +90,7 @@ function MontoLimite() {
                         </div>
                     </div>
                     {/* Modal para agregar un nuevo limite */}
-                    <MontoLimiteModal abierto={abierto} cerrarModal={cerrarModal} updateLimitAmout={updateLimitAmout}/>
+                    <MontoLimiteModal idUA={idUA} abierto={abierto} cerrarModal={cerrarModal} updateLimitAmout={updateLimitAmout}/>
                     <br></br>
                     <div className="form-register">             
                         <div className="form-row">
@@ -99,7 +100,8 @@ function MontoLimite() {
                                     <th scope="col">#</th>
                                     <th scope="col">Gestiones</th>
                                     <th scope="col">Montos limites</th>
-                                    <th scope="col">Fecha de actualización</th>
+                                    <th scope="col">Fecha de inicio</th>
+                                    <th scope="col">Fecha de finalización</th>
                                     </tr>
                                 </thead>
                                 <tbody>
