@@ -11,10 +11,12 @@ function Cotizaciones(props) {
     const [abierto, setAbierto] = useState(false);
     const [flagCotizar, setFlagCotizar] = useState(true);
     const [finalizado, setFinalizado] = useState(false);
+    const [dataQ, setDataQ] = useState({});
     let history = useHistory()
 
     const abrirCuadro = ()=>{
-        history.push("/cuadro/"+id);
+        //history.push("/cuadro/"+id);
+        history.push({pathname:`/cuadro/${id}`,data:dataQ});
     }
 
     const agregarCotizacion = () =>{
@@ -33,6 +35,7 @@ function Cotizaciones(props) {
         const {data} = props.location;
         async function getQuotitations() {
             try {
+                setDataQ(data);
                 if(data.statusResponse ==="Finalizado"){
                     setFinalizado(true);
                 }
