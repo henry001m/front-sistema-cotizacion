@@ -54,7 +54,7 @@ function SolicitudesVista(){
     }
 
     const EnableSendMailButton = (quotitation) =>{
-        if(quotitation.status=="Aceptado"){
+        if(quotitation.status=="Aceptado" && quotitation.statusResponse !== "Finalizado"){
             return(
                 <button className="dropdown-item" onClick={ () => abrirModalEmail(quotitation.id) }>
                     <Envelope/> Enviar correo
