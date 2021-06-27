@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
 import { getQuotitationList } from '../../services/http/QuotitationService';
 
 function Cotizaciones(props) { 
@@ -20,7 +21,12 @@ function Cotizaciones(props) {
         if(!finalizado){
             history.push("/respuesta/cotizacion/ua/"+id);
         }else{
-            alert("Ya finalizo cotización de esta solicitud");
+            swal({
+                title: "Finalizado",
+                text: "Ya finalizo cotización de esta solicitud",
+                icon: "success",
+                button: "Entendido",
+              });
         }
     }
     useEffect(() => {
