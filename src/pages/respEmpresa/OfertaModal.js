@@ -20,7 +20,7 @@ const OfertaModal = (props) => {
         reset()
         props.cerrarModal()
     }
-    const onSubmit=(data)=>{
+    const onSubmitOferta=(data)=>{
         if(!fileValidate){
             const formData = new FormData();
             if(fl != null){
@@ -109,7 +109,7 @@ const OfertaModal = (props) => {
                 ></input>
                 <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
             </div>
-            <Button type="button" onClick={handleSubmit(onSubmit)} color="primary" size="sm">Guardar</Button>
+            <Button type="button" onClick={handleSubmit(onSubmitOferta)} color="primary" size="sm">Guardar</Button>
             </div>
             {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx”</label>}
         </ModalFooter>

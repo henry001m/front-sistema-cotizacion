@@ -69,19 +69,19 @@ const OfertaModal = (props) => {
         <ModalBody>
             <FormGroup className="col-md-8">
             <label>Marca:</label>
-            <input className="form-control form-control-sm" {...register("marca", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i})} />
+            <input className="form-control form-control-sm" {...register("marca", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i})} />
             <span style={{color:'red'}}>{errors.marca?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
             <span style={{color:'red'}}>{errors.marca?.type === 'pattern' && "Solo se permiten caracteres"}</span>
             <label>Modelo:</label>
-            <input className="form-control form-control-sm" {...register("modelo", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <input className="form-control form-control-sm" {...register("modelo", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.modelo?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
             <span style={{color:'red'}}>{errors.modelo?.type === 'pattern' && "Solo se permiten caracteres"}</span>
             <label>Indutria:</label>
-            <input className="form-control form-control-sm" {...register("industria", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <input className="form-control form-control-sm" {...register("industria", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.industria?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
             <span style={{color:'red'}}>{errors.industria?.type === 'pattern' && "Solo se permiten caracteres"}</span>
             <label>Tiempo de Garantia:</label>
-            <input className="form-control form-control-sm" {...register("tiempo_garantia", { maxLength: 50,pattern: /^[A-Za-z 0-9]+$/i })} />
+            <input className="form-control form-control-sm" {...register("tiempo_garantia", { maxLength: 50,pattern: /^[A-Za-z ñáéíóúÁÉÍÓÚ 0-9]+$/i })} />
             <span style={{color:'red'}}>{errors.tiempo_garantia?.type === 'maxLength' && "Supero el numero maximo de caracteres (50)"}</span>
             <span style={{color:'red'}}>{errors.tiempo_garantia?.type === 'pattern' && "Solo se permiten caracteres"}</span>
             </FormGroup>
