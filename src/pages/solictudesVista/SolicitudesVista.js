@@ -89,7 +89,7 @@ function SolicitudesVista(){
     const EnablebuttonQuotitation = (quotitation) =>{
         if(quotitation.statusResponse==="En proceso" || quotitation.statusResponse==="Finalizado"){
             return(
-                <button className="dropdown-item" onClick={() => history.push(`/cotizaciones/${quotitation.id}`)}>
+                <button className="dropdown-item" onClick={() => {history.push({pathname:`/cotizaciones/${quotitation.id}`,data:quotitation});}}>
                     <Coin/> Cotizaciones
                 </button>                                    
             );

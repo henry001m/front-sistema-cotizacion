@@ -3,12 +3,13 @@ import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
 import { useHistory, useParams } from 'react-router-dom'
 import { getQuotitationList } from '../../services/http/QuotitationService';
 
-function Cotizaciones() { 
+function Cotizaciones(props) { 
 
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([]);
     const [abierto, setAbierto] = useState(false);
     const [flagCotizar, setFlagCotizar] = useState(true);
+    const [finalizado, setFinalizado] = useState(false);
     let history = useHistory()
 
     const abrirCuadro = ()=>{
@@ -16,11 +17,19 @@ function Cotizaciones() {
     }
 
     const agregarCotizacion = () =>{
-        history.push("/respuesta/cotizacion/ua/"+id);
+        if(!finalizado){
+            history.push("/respuesta/cotizacion/ua/"+id);
+        }else{
+            alert("Ya finalizo cotización de esta solicitud");
+        }
     }
     useEffect(() => {
+        const {data} = props.location;
         async function getQuotitations() {
             try {
+                if(data.statusResponse ==="Finalizado"){
+                    setFinalizado(true);
+                }
                 const result = await getQuotitationList(id);
                 setQuotitations(result.Cotizaciones)
                 if(result.Cotizaciones.length>2){
