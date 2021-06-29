@@ -109,6 +109,7 @@ export async function getQuotitationId(idRe, idCo){
     }
 }
 
+/**Devueve una lista de cotizaciones realizadas dado el id de solicitud */
 export async function getQuotitationList(idRe){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
@@ -120,7 +121,7 @@ export async function getQuotitationList(idRe){
     }
 }
 
-export async function getComparative(idRe){
+export async function getComparativeChart(idRe){
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {

@@ -6,12 +6,16 @@ import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrati
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
 import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
-    const {reset} = useForm();
+    const {reset, register, handleSubmit, watch, formState: { errors } } = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-    const [ administrativeUnit, setAdministrativeUnit] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
+    // const [ administrativeUnit, setAdministrativeUnit] = useState([])
+    const [ administrativeUnit, setAdministrativeUnit] = useState({name:"",faculty:"",admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
+    const [search, setSearch] = useState("");
+    const [filteredAdministrative, setFilteredAdministrative] = useState([]);
+
 
     const closeModalRUA = () => {
         setIsShowModalRegistroUA( false );
@@ -28,7 +32,7 @@ function UnidadesAdministrativas() {
         try {
             const response = await getUnidadesAdministrativas();
             setAdministrativeUnits(response.Administrative_unit);
-            console.log(response);
+            console.log("esto se envia en UA",response);
         } catch (error) {
             console.log(error);
         }
@@ -36,6 +40,13 @@ function UnidadesAdministrativas() {
     fetchData();
     }, [setAdministrativeUnits,flag]);
 
+    useEffect(() => {
+        setFilteredAdministrative(
+            administrativeUnits.filter((unit) =>
+                unit.name.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,administrativeUnits]);
 
     return(
         <>
@@ -45,9 +56,14 @@ function UnidadesAdministrativas() {
                         <br></br>
                     <div className="row">
                         <div className="col-6">
-                            <form className="form-inline">
-                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                            </form>
+                        <input {...register("unit", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese nombre de unidad administrativa" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                                />   
                         </div>
                         <div className="col-6" align="right">
                             <button type="button" className="btn btn-success my-2 my-sm-0" onClick={() => setIsShowModalRegistroUA(true)}> 
@@ -70,7 +86,7 @@ function UnidadesAdministrativas() {
                                 </thead>
                                 <tbody>
                                     {
-                                        administrativeUnits.map((administrativeUnit,index)=>{
+                                        filteredAdministrative.map((administrativeUnit,index)=>{
                                             return(
                                                 <tr>
                                                 {/* <tr key={index}>
@@ -78,7 +94,7 @@ function UnidadesAdministrativas() {
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>
-                                                <td>{administrativeUnit.admin.name} {administrativeUnit.admin.lastName}</td>
+                                                <td>{administrativeUnit.admin[0].name} {administrativeUnit.admin[0].lastName}</td>
                                                 <td><button className="btn  btn-warning" 
                                                         onClick={()=>{
                                                             setAbrirEditor(true)

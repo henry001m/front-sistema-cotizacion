@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
 import { useHistory, useParams } from 'react-router-dom'
 import { getQuotitationList } from '../../services/http/QuotitationService';
-import CuadroComparativo from './cuadroComparativo'
+import CuadroComparativo from './CuadroComparativo'
 
 
 
@@ -22,8 +22,7 @@ function Cotizaciones() {
         async function getQuotitations() {
             try {
                 const result = await getQuotitationList(id);
-                console.log("id de solicitud", id)
-                console.log(result.Cotizaciones)
+                console.log("id de solicitud", result)
                 setQuotitations(result.Cotizaciones)
             } catch (error) {
                 console.log(error)
@@ -72,7 +71,11 @@ function Cotizaciones() {
                                             <td>{quotitation.Empresa}</td>
                                             <td>{quotitation.ItemsCotizados}</td>
                                             <td>{quotitation.TotalEnBs}</td>
-                                            <td><button className="btn btn-primary" onClick={() => history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)}><EyeFill/></button></td>
+                                            <td><button className="btn btn-primary" 
+                                            onClick={() => {
+                                                history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
+                                                console.log("este es el ID",quotitation.idCotizacion)
+                                            }}><EyeFill/></button></td>
                                         </tr>
                                     );
                                 })}

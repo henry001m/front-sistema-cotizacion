@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { getRols } from '../../services/http/RolService'
 import { updateRolUser } from '../../services/http/RolService'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import './RolDeUser.css';
 import './Usuario.css'
 
 function ModalEditarUsuario( props ){
@@ -68,7 +67,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Nombres:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="nombres"
                             className="form-control"
                             type="text"
                             value={props.user.name}
@@ -78,7 +77,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Apellidos:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="apellidos"
                             className="form-control"
                             type="text"
                             value={props.user.lastName}
@@ -90,7 +89,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Carnet de Identidad:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="carnet"
                             className="form-control"
                             type="text"
                             value={props.user.ci}
@@ -100,7 +99,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Telefono:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="telefono"
                             className="form-control"
                             type="text"
                             value={props.user.phone}
@@ -112,7 +111,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Direccion:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="direccion"
                             className="form-control"
                             type="text"
                             value={props.user.direction}
@@ -122,7 +121,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Correo Electronico:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="correo"
                             className="form-control"
                             type="text"
                             value={props.user.email}
@@ -134,7 +133,7 @@ function ModalEditarUsuario( props ){
                     <div className="form-group col-md-6">
                         <h6>Nombre de usuario:</h6>
                         <input
-                            name="nameUnidadGasto"
+                            name="user"
                             className="form-control"
                             type="text"
                             value={props.user.userName}

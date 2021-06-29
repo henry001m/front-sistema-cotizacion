@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import {createMontoLimite, updateMontoLimite} from '../../services/http/MontoLimiteService';
 
 const MontoLimiteModal = (props) => {
-
+    
     const modalStyles={
         top:"20%",
         transfrom: 'translate(-50%, -50%)',
@@ -18,12 +18,10 @@ const MontoLimiteModal = (props) => {
     }
     
     const onSubmit = async (data) => {
-        const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.administrative_units_id
         const fecha = new Date();
         const newFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate();
-        const res = await updateMontoLimite({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit});
-        console.log({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:idUnit})
+        const res = await updateMontoLimite({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:props.idUA});
+        console.log({monto:data.monto,starDate:newFecha,steps:fecha.getFullYear(), administrative_units_id:props.idUA})
         props.updateLimitAmout();
         closeModal()
         console.log(res);

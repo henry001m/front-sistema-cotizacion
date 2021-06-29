@@ -144,7 +144,9 @@ const RegistroUnidad = (props) => {
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {  
+                            
                             admins.map((administrador)=>{
+                                console.log(admins)
                                 return(
                                     <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                 )

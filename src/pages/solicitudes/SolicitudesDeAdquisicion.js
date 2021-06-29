@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { PlusCircle, ChevronLeft, Eye, FileEarmarkText} from 'react-bootstrap-icons'
+import { useHistory, useParams} from 'react-router-dom'
+import { useForm } from 'react-hook-form';
+import { PlusCircle, ChevronLeft, Eye, FileEarmarkText, Coin} from 'react-bootstrap-icons'
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
 
-
 function SolicitudesDeAdquisicion(){
-
+    const {reset, register, handleSubmit, watch, formState: { errors } } = useForm();
+    const {idUS} = useParams();
+    const {nameUS} = useParams();
     const [abrirModalInforme, setAbrirModalInforme] = useState(false)
     const [ idSolicitud, setIdSolicitud ] = useState("")
     const [ report, setReport ] = useState({description:""})
+    const [search, setSearch] = useState("");
+    const [filteredSolicitud, setFilteredSolicitud] = useState([]);
 
     let history = useHistory();
 
 
     function ButtonAgregar(){
-        history.push("/AgregarDetalleSolictud")
+        history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
     }
 
     const [quotitations, setQuotitations] = useState([]);
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        const idUnit = user.user.spending_units_id
         async function getAllQuotitations() {
             try {
-                const result = await getQuotitationSpendingUnit(idUnit);
+                console.log("llega esta unidad a solicitudes",idUS)
+                const result = await getQuotitationSpendingUnit(idUS);
                 console.log(result);
                 const resultQuotitations=result.request_quotitations;
             setQuotitations(resultQuotitations);
@@ -37,6 +41,14 @@ function SolicitudesDeAdquisicion(){
         getAllQuotitations();
         //eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        setFilteredSolicitud(
+            quotitations.filter((nameSolicitud) =>
+                nameSolicitud.nameUnidadGasto.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,quotitations]);
 
     async function getInforme(id) {
         console.log("id",id)
@@ -82,6 +94,22 @@ function SolicitudesDeAdquisicion(){
         }
     }
 
+    const EnablebuttonInformeCotizacion = (id,statusResponse) =>{
+        if(statusResponse==="Finalizado"){
+            return(
+                <button className="dropdown-item" onClick={() => history.push(`/informeCotizacionResp/${id}`)}>
+                    <Coin/> Respuesta Cotización
+                </button>                                    
+            );
+        }else{
+            return(
+                <button className="dropdown-item" disabled>
+                    <Coin/> Respuesta Cotización
+                </button>
+            );
+        }
+    }
+
     const AbrirModal = (id) => {
         getInforme(id)
         setIdSolicitud(id)
@@ -93,7 +121,7 @@ function SolicitudesDeAdquisicion(){
         setReport([{description:""}])
     }
 
-    const Quotitations = quotitations.map((quotitation,index)=>{
+    const Quotitations = filteredSolicitud.map((quotitation,index)=>{
         return(
             <tr key={index}>
                 <th scope="row">
@@ -109,7 +137,7 @@ function SolicitudesDeAdquisicion(){
                     {quotitation.status}         
                 </td>
                 <td>
-                    {""/*quotitation.statusQuotitation*/}         
+                    {quotitation.statusResponse}         
                 </td>
                 <td >
                     <li className="nav-container--item dropdown">
@@ -121,7 +149,10 @@ function SolicitudesDeAdquisicion(){
                                     </button>
                                     {
                                         EnablebuttonReport(quotitation.id,quotitation.statusReport)
-                                    }                                   
+                                    }  
+                                    {
+                                        EnablebuttonInformeCotizacion(quotitation.id, quotitation.statusResponse)
+                                    }                                 
                                 </div>
                         </div>
                     </li>
@@ -140,9 +171,15 @@ function SolicitudesDeAdquisicion(){
                     <br></br>
                 <div className="row">
                     <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                        
+                        <input {...register("solicitud", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese nombre unidad de gasto" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                                />                           
                     </div>
                     <div className="col-6" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 

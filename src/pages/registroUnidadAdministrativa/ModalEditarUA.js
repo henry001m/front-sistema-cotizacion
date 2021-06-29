@@ -61,6 +61,7 @@ function ModalEditarUA (props){
             try {
                 const response = await getAdmins();
                 setAdmins(response.users);
+                console.log("ENTRA A EDITAR")
             } catch (error) {
                 console.log(error);
             }
@@ -104,7 +105,7 @@ function ModalEditarUA (props){
                     {...register("admin_id")}
                     className="form-control"
                     onClick={handleSelectChange}>
-                        <option id="admi" value="">{props.administrativeUnit.admin.name} {props.administrativeUnit.admin.lastName}</option>
+                        <option id="admi" value="">{props.administrativeUnit.admin[0].name} {props.administrativeUnit.admin[0].lastName}</option>
                         {
                             admins.map((administrador)=>{
                                 return(
