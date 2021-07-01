@@ -1,27 +1,28 @@
-import React, { useState, useRef, useEffect }from 'react'
-import { PlusCircle } from 'react-bootstrap-icons';
+import React, { useState, useRef, useEffect }from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { useForm } from 'react-hook-form';
 import { createUser } from '../../services/http/UserService' ;
 import { getRols } from '../../services/http/RolService';
-
+import swal from 'sweetalert';
 function ModalAgregarUsuario(props){
-
-    // const modalref = useRef();
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
-    const [message, setMessage] = useState("");
     const [user, setUser]  = useState({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""});
-    const [idRolUSer, setIdRolUSer ] = useState("")
+    const [idRolUSer, setIdRolUSer ] = useState(0)
     const [rols, setRols ] = useState([])
-
     const closeModal = () => {
-        reset()
-        setMessage("");
-        setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""})
-        setIdRolUSer("")
+        props.updateUsers();
         props.CloseModalAgregarU()
+        setUser({name:"", lastName:"", ci:"", phone:"", direction:"", email:"",userName:""})
+        setIdRolUSer(0)
+        reset()
     };
-
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -35,9 +36,7 @@ function ModalAgregarUsuario(props){
     }, []);
     
     const handleInputChange = (event) => {
-        console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
-            console.log("primer",event.target.value[0])
             setUser({
                 ...user,
                 [event.target.name] : event.target.value.substring(1)
@@ -69,13 +68,12 @@ function ModalAgregarUsuario(props){
 
     const SaveData = async ( ) => {
         const result = await createUser(user,idRolUSer);
-        console.log(result)
+        console.log("esto se envia user",user)
         if(result.data){
-            setMessage(result.data.message);
+            alertMessage(result.data.message,"warning")
         }
-        console.log(result);
-        props.updateUsers();
         if(!result.data.message){
+            alertMessage("Registro exitoso","success");
             closeModal();
         }
     };
@@ -232,10 +230,6 @@ function ModalAgregarUsuario(props){
                                 value:11,
                                 message:"Este campo debe tener mínimo 11 caracteres"
                             },
-                            // pattern:{
-                            //     value:/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-                            //     message:"Dato invalido"
-                            // },
                         })}
                         value={user.email}
                         type="text" 
@@ -273,24 +267,22 @@ function ModalAgregarUsuario(props){
                         {errors.userName && <span className="text-danger text-small d-block mb-2">{errors.userName.message}</span>}
                     </div>
                     <div className="form-group col-md-6">
-                        <h6>Rol de Usuario:</h6>
+                        <h6>Rol de Usuario:<label style={{color:'silver'}}>(opcional)</label></h6>
                         <select 
                         name="selectRol"
-                        {...register("selectRol",{
-                            required:"Seleccione su rol"
-                        })}
                         className="form-control"
                         onChange={ handleSelectChange }>
-                            <option value="">Seleccione su Rol...</option>
+                            <option value="">Seleccione rol</option>
                             {
                                 rols.map((role, index)=>{
+                                    if(role.id==1 | role.id==2 | role.id==3){
                                     return(
                                         <option value={role.id} key={index}>{role.nameRol}</option>   
                                     )
+                                    }
                                 })
                             }
                         </select>
-                            {errors.selectRol && <span className="text-danger text-small d-block mb-2">{errors.selectRol.message}</span>}
                     </div>
                 </div>
             </ModalBody>

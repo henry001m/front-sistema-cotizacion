@@ -8,7 +8,6 @@ import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
     const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-    // const [ administrativeUnit, setAdministrativeUnit] = useState([])
     const [ administrativeUnit, setAdministrativeUnit] = useState({name:"",faculty:"",admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [abrirEditor, setAbrirEditor] = useState(false);
@@ -29,7 +28,6 @@ function UnidadesAdministrativas() {
         try {
             const response = await getUnidadesAdministrativas();
             setAdministrativeUnits(response.Administrative_unit);
-            console.log("esto se envia en UA",response);
         } catch (error) {
             console.log(error);
         }

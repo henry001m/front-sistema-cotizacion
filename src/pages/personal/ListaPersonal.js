@@ -11,12 +11,6 @@ function ListaPersonal(){
     const [flag, setFlag] = useState(false);
     const [personal, setPersonal] =useState([]);
     let history = useHistory();
-    // const [personal, setPersonal] = useState([
-    //     {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
-    //     {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
-    //     {id:3 , name:"Enrique Saavedra", ci:998547, phone:68686868, nameRol:"Responsable de correos"},
-    // ]);
-    
     const updatePersonal = ()=>{
         setFlag(!flag);
     }
@@ -37,9 +31,7 @@ function ListaPersonal(){
                 console.log("Personal",personal,idUS,idUA)
             }
         }
-        // console.log("Personal de unidad",personal,idUS,idUA)
         getAllUsers();
-        
     }, [setPersonal,flag]);
     return (
         <>

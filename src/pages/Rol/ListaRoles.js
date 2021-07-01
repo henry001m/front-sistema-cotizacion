@@ -93,8 +93,6 @@ function ListaRoles(){
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
                                                             setRol(rol)
-                                                            // setPermissions(rol.permissions)
-                                                            console.log(rol.permissions)
                                                         }}
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>

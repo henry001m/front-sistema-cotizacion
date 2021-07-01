@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { useForm } from "react-hook-form";
-import { useHistory, useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import { getUsersOutUA,getUsersOutUS} from '../../services/http/UserService' ;
 import ModalSeleccionRoles from "./ModalSeleccionRoles";
 import './SeleccionPersonal.css';
@@ -16,10 +16,7 @@ function SeleccionPersonal(){
     const [ flag, setFlag] = useState(false);
     const [ abierto, setAbierto] = useState(false);
     const userBandera = JSON.parse(window.localStorage.getItem("userDetails"));
-    let history = useHistory();
-
     function closePage(){
-        // history.replace(`/personal/${props.idUnitA}/${props.idUnitS}`);
         window.history.back();
     }
     const abrirModal =()=>{
@@ -35,7 +32,6 @@ function SeleccionPersonal(){
         closePage();
     }
     useEffect(() => {
-        const user = JSON.parse(window.localStorage.getItem("userDetails"));
         try {
             async function getAllUsers() {
                 if (idUS === "null" ){

@@ -4,27 +4,18 @@ import { useForm } from "react-hook-form";
 import { createRol } from '../../services/http/RolService'
 import './RolDeUser.css';
 import { getPermissions } from '../../services/http/PermissionService'
+import swal from 'sweetalert';
 function RolDeUser(props){
-  
     const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [ rol, setRol ] = useState({nameRol:"",description:"",permissions:[]});
     const [ permissions, setPermissions ] = useState([]);
     const [ selectedCheckboxes, setSelectedCheckboxes]=useState([]);
     const [message, setMessage] = useState("");
-    // const [ permisos, setPermisos ] = useState([
-    //     {id:1 , namePermission:"Solicitud de Adquisicion" },
-    //     {id:2 , namePermission:"Agregar detalle Solicitud" },
-    //     {id:3 , namePermission:"Ver Solictudes de Adquisicion" },
-    //     {id:4 , namePermission:"Enviar cotizacion"},
-    //     {id:5 , namePermission:"Ver Detalle de Solictud de Adquisicion" },
-    //     {id:6 , namePermission:"Actualizacion de montos limite" },
-    //     {id:7 , namePermission:"Registro Unidades Administrativas" },
-    //     {id:8 , namePermission:"Registro Unidades de Gasto"  },
-    //     {id:9 , namePermission:"Registro Usuarios" },
-    // ]);
+    const [units, setUnits] = useState([
+        {id:1, typeUnit:"Unidad Administrativa"},
+        {id:2, typeUnit:"Unidad de Gasto"}
+    ]);
     var seleccionados =[];
-    
-    //Cargar permisos desde BD
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -36,8 +27,6 @@ function RolDeUser(props){
     };
     fetchData();
     }, []);
-   
-     //Pedir nombre rol / descripcion
      const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
             setRol({
@@ -51,45 +40,43 @@ function RolDeUser(props){
             });
         }
     };
-    // Pedir arreglo de permisos
     const handleChangeCheckBox = (e) => {
         let auxiliar = [];
-        if(selectedCheckboxes.includes(e.target.value)){ //elimina repetidos
+        if(selectedCheckboxes.includes(e.target.value)){
             auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
         }else{
-            auxiliar=selectedCheckboxes.concat(e.target.value) //agrega nuevos
+            auxiliar=selectedCheckboxes.concat(e.target.value)
         }
-        for (const per of auxiliar) { //convertimos a numeros
+        for (const per of auxiliar) { 
             seleccionados.push(parseInt(per));
         }
         setSelectedCheckboxes(auxiliar);
-        console.log(seleccionados);
         rol.permissions = seleccionados;
     }
-
     const closeModal = () => {
-        clearForm();
+        props.updateRols();
         props.CloseModalRR();
-    }
-
-    const clearForm = () => {
         setMessage("");
         setSelectedCheckboxes("");
         setRol({nameRol:"",description:"",permissions:[]});
         reset();
-    };
-
-    const onSubmit = async (data)  => {
-        setRol(rol.nameRol,rol.description,rol.permissions);
-        const res = await createRol(rol);
-        alert(res.message);
-        console.log("Esto se envia",rol);
-        props.CloseModalRR();
-        props.updateRols();
-        closeModal();
-        clearForm();
     }
-
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
+    const onSubmit = async (data)  => {
+        const res = await createRol(rol);
+        if(res.message == "Registro exitoso"){
+            alertMessage(res.message,"success");
+            closeModal();
+        }else{
+            alertMessage(res.message,"warning");
+        }
+    }
     return(
         <>
             <Modal isOpen={props.abierto} >
@@ -148,9 +135,26 @@ function RolDeUser(props){
                                 />
                                 {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                         </div>
-                        
+                        {/* <div className="form-group col-md-12">
+                            <h6>Tipo de Unidad:</h6>
+                                <select 
+                                name="selectUnit"
+                                {...register("selectUnit",{
+                                    required:"Campo requerido"
+                                })}
+                                className="form-control">
+                                    <option value="">Seleccione tipo unidad</option>
+                                    {
+                                    units.map((unit)=>{
+                                        return(
+                                            <option value={unit.id}>{unit.typeUnit}</option>   
+                                        )
+                                    })
+                                }
+                                </select>
+                                {errors.selectUnit && <span className="text-danger text-small d-block mb-2">{errors.selectUnit.message}</span>}
+                        </div> */}
                         <div className="form-group col-md-12">
-                        
                             <h6>Asignar Permisos:</h6>
                             <div class="modal-table">
                             <Table striped bordered hover size="sm">
@@ -193,13 +197,7 @@ function RolDeUser(props){
                             onClick={closeModal}>Cancelar</button>
                         <button type="submit" className="btn btn-primary btn-sm">Guardar</button>
                     </ModalFooter>  
-                        {/* < div  className = "btnCancel mt-5" >
-                            < div  className = "cancel" > < Button  onClick={closeModal}> Cancelar </Button > </div>
-                            < div  className = "guardar" > < Button  type = "submit"  color = "primary" > Guardar </Button > </div>
-                        </div >
-                         */}
-               </form>
-               
+               </form> 
             </Modal>
         </>
     )

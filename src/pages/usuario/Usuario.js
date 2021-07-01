@@ -1,11 +1,10 @@
 import React,{useEffect, useState} from  'react'
 import { PencilSquare, PlusCircle } from 'react-bootstrap-icons';
-import ModalAgregarUsuario from './ModalAgregarUsuario';
+import {Button} from 'reactstrap';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
-import {Button} from 'reactstrap';
+import ModalAgregarUsuario from './ModalAgregarUsuario';
 function Usuario(){
-
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
@@ -34,7 +33,6 @@ function Usuario(){
             console.log(error);
         }
     };
-
     fetchData();
     }, [setUsers,flag]);;
 
@@ -76,7 +74,7 @@ function Usuario(){
                                         return (
                                             <tr key={user.id}>
                                                 <td scope="row">{index+1}</td>
-                                                <td>{user.name}</td>
+                                                <td>{user.name} {user.lastName}</td>
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
@@ -89,7 +87,6 @@ function Usuario(){
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
-                                                <td>{console.log("esto estra en iteracion",user.id)}</td>
                                             </tr>
                                         );
                                    })
@@ -99,11 +96,7 @@ function Usuario(){
                     </div>
                 </div>
             </div>
-            <ModalEditarUsuario
-                isShowModalEditarU={ isShowModalEditarU }
-                user={ user }
-                CloseModalEditarU = {CloseModalEditarU}
-                updateUsers={updateUsers}
+            <ModalEditarUsuario isShowModalEditarU={ isShowModalEditarU } user={ user } CloseModalEditarU={CloseModalEditarU} updateUsers={updateUsers}
             />
         </>
     );

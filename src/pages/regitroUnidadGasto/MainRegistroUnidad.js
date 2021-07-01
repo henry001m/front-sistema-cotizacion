@@ -30,7 +30,6 @@ const MainRegistroUnidad = () => {
         try {
             const response = await getUnidadesGastos();
             setUnidadesGasto(response.spending_units);
-            console.log(unidadesGasto);
         } catch (error) {
             console.log(error);
         }

@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import { updateBossUG } from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import { getAdminsUG } from '../../services/http/UserService';
-
+import swal from 'sweetalert';
 function ModalEditarUG (props){
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ admins, setAdmins] = useState([]);
@@ -32,6 +32,13 @@ function ModalEditarUG (props){
     const handleSelectChange = (event) => {
         setIdAdmin(event.target.value)
     };
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     const mostrarAdmin = () =>{
         if(props.gasto.admin.id = ""){
             setAdmin("Seleccione Administrador")
@@ -45,10 +52,10 @@ function ModalEditarUG (props){
             if(idAdmin != ""){  
                 console.log("IdAdminNuevo:",data.admin_id,"IdUnidad:",props.gasto.id);
                 const res = await updateBossUG(data.admin_id,props.gasto.id);
-                alert("Se realizo el cambio exitosamente")
+                alertMessage("Se realizo el cambio exitosamente","success")
                 closeModal()
             }else{
-                alert("No selecciono un administrador diferente")
+                alertMessage("No realizo cambios","warning")
                 console.log("es el mismo id:",idAdmin)
             }
         }catch(error){
