@@ -81,10 +81,12 @@ function InformeCotizacion (props) {
                     props.rejectRequest()
                 }
                 const result = await createReportQuotitation(htm);
+
                 swal({
                     title: result.message,
                     button: "Aceptar",
                 });
+                props.setinformeEnviado(true);
                 setEditorState(EditorState.createEmpty())
                 closeModal()
             } catch (error) {

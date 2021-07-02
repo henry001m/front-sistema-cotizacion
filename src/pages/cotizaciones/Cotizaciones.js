@@ -19,7 +19,8 @@ function Cotizaciones(props) {
 
     const agregarCotizacion = () =>{
         if(!finalizado){
-            history.push("/respuesta/cotizacion/ua/"+id);
+            history.push();
+            history.push({pathname:"/respuesta/cotizacion/ua/"+id,data:dataQ});
         }else{
             swal({
                 title: "Finalizado",
@@ -91,7 +92,7 @@ function Cotizaciones(props) {
                                             <td>{quotitation.TotalEnBs}</td>
                                             <td><button className="btn btn-primary" 
                                             onClick={() => {
-                                                history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
+                                                history.push({pathname:`/verCotizacion/${id}/${quotitation.idCotizacion}`,data:dataQ})
                                             }}><EyeFill/></button></td>
                                         </tr>
                                     );

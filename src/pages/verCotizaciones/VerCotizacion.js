@@ -5,7 +5,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import ModalVerOferta from './ModalVerOferta'
 import { getFileNameDetail, getFileNameQuotitation } from '../../services/http/FileService';
 
-function VerCotizacion(){
+function VerCotizacion(props){
     const {idRe} = useParams();
     const {idCo} = useParams();
     let history = useHistory();
@@ -15,13 +15,19 @@ function VerCotizacion(){
     const [ verCotizacion, setVerCotizacion] = useState(false)
     const [ nameFile, setNameFile ] = useState("")
     const [ oferta, setOferta ] = useState("");
+    const [dataQ, setDataQ] = useState({});
     const [ files, setFiles ] = useState([])
     const cerrarOferta = () => {
         setAbrirOferta( false );
     }
+    const cerrarVerCotizacion = ()=>{
+        history.push({pathname:`/cotizaciones/${idRe}`,data:dataQ})
+    }
     useEffect(() => {
+        const {data} = props.location;
         async function getQuotitation() {
             try {
+                setDataQ(data);
                 const result = await getQuotitationId(idRe, idCo)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
@@ -46,18 +52,6 @@ function VerCotizacion(){
         }
         getQuotitation();
     }, []);
-    // const AbrirModalOferta = async(detalle) => {
-    //     try {
-    //         console.log(detalle)
-    //         const result = await getFileNameDetail(detalle.idDetail)
-    //         setFile(result)
-    //         setAbrirOferta(true)
-    //         setOferta(detalle)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
     return(
         <>
             <div className="container" align="left">
@@ -157,7 +151,7 @@ function VerCotizacion(){
                     </div>
                 <div className="form-row" >
                     <div className="form-group col" id="toolbar">
-                        <button className="btn btn-secondary" id="btnV" onClick={()=>{history.replace(`/cotizaciones/${idRe}`)}}>Cerrar</button>
+                        <button className="btn btn-secondary" id="btnV" onClick={()=>{cerrarVerCotizacion();}}>Cerrar</button>
                     </div>
                 </div>
             </div>

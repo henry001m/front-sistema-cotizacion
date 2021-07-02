@@ -14,9 +14,13 @@ function RespuestaInformeCotizacion(props){
     const [ reportQuotitation, setReportQuotitation ] = useState(null)
     const [ valorMenor, setValorMenor ] = useState([])
     const [dataQu, setDataQu] = useState({});
+    const [informeEnviado, setinformeEnviado] = useState(false);
 
     let history = useHistory();
     const back = ()=>{
+        if(informeEnviado){
+            dataQu.statusResponse = "Finalizado";
+        }
         history.push({pathname:`/cotizaciones/${id}`,data:dataQu});
     }
 
@@ -31,22 +35,6 @@ function RespuestaInformeCotizacion(props){
             <th>{suma}</th>
         );
     }
-
-    useEffect(() => {
-        const {data} = props.location;
-        async function getComparatives() {
-            try {
-                setDataQu(data)
-                const res = await getComparativeChart(id);
-                Menor(res.comparativeChart)
-                setSolicitud(res.comparativeChart)
-                setNameBusinesses(res.businesses)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getComparatives();
-    }, []);
 
     const Menor = (solicitudes) => {
         var aux = valorMenor
@@ -84,6 +72,22 @@ function RespuestaInformeCotizacion(props){
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        const {data} = props.location;
+        async function getComparatives() {
+            try {
+                setDataQu(data)
+                const res = await getComparativeChart(id);
+                Menor(res.comparativeChart)
+                setSolicitud(res.comparativeChart)
+                setNameBusinesses(res.businesses)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getComparatives();
+    }, []);
 
     return(
         <>
@@ -161,6 +165,7 @@ function RespuestaInformeCotizacion(props){
                     abierto={abiertoInformeCotizacion} 
                     cerrarModal={cerrarModalInformeCotizacion}
                     report={reportQuotitation}
+                    setinformeEnviado={setinformeEnviado}
                 />
             </div>
         </>
