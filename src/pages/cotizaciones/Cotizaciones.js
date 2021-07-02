@@ -8,14 +8,12 @@ function Cotizaciones(props) {
 
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([]);
-    const [abierto, setAbierto] = useState(false);
     const [flagCotizar, setFlagCotizar] = useState(true);
     const [finalizado, setFinalizado] = useState(false);
     const [dataQ, setDataQ] = useState({});
     let history = useHistory()
 
     const abrirCuadro = ()=>{
-        //history.push("/cuadro/"+id);
         history.push({pathname:`/cuadro/${id}`,data:dataQ});
     }
 
@@ -25,7 +23,7 @@ function Cotizaciones(props) {
         }else{
             swal({
                 title: "Finalizado",
-                text: "Ya finalizo cotización de esta solicitud",
+                text: "Ya finalizo la cotización de esta solicitud",
                 icon: "success",
                 button: "Entendido",
               });
@@ -94,7 +92,6 @@ function Cotizaciones(props) {
                                             <td><button className="btn btn-primary" 
                                             onClick={() => {
                                                 history.push(`/verCotizacion/${id}/${quotitation.idCotizacion}`)
-                                                console.log("este es el ID",quotitation.idCotizacion)
                                             }}><EyeFill/></button></td>
                                         </tr>
                                     );

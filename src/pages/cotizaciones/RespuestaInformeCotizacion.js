@@ -8,39 +8,23 @@ function RespuestaInformeCotizacion(){
 
     const {idRe} = useParams();
 
-    const [ empresas, setEmpresas ] = useState([])
     const [ items, setItems ] = useState([
             {
-                id:1, descripcion:"barbijos", amount:20,
-                cotizaciones:[
-                    {empresa:"chicken", total:200},{empresa:"Sensacion", total:350},{empresa:"Keido", total:400}
-                ]
-            },
-            {
-                id:2, descripcion:"guantes", amount:25,
-                cotizaciones:[
-                    {empresa:"chicken", total:100},{empresa:"Sensacion", total:420},{empresa:"Keido", total:null}
-                ]
-            },
-            {
-                id:3, descripcion:"lentes", amount:30,
-                cotizaciones:[
-                    {empresa:"chicken", total:250},{empresa:"Sensacion", total:null},{empresa:"Keido", total:300}
-                ]
-            },
+                id:0, descripcion:"", amount:0,
+                cotizaciones:[]
+            }
         ])
     const [reportQuotitation, setReportQuotitation ] = useState({})
 
     let history = useHistory();
 
     useEffect(() => {
-        console.log("id de items", idRe)
         async function getComparative() {
             try {
                 const report = await getReportQuotitation(idRe)
                 setReportQuotitation(report)
                 const result = await getComparativeChart(idRe);
-                console.log(result.comparativeChart)
+                console.log(result)
                 setItems(result.comparativeChart)
 
             } catch (error) {
@@ -123,8 +107,8 @@ function RespuestaInformeCotizacion(){
                                                 <td >{item.description}</td>
                                                 <td>{item.amount}</td>
                                                 {
-                                                    item.cotizaciones.map((cotizacion,index)=>(
-                                                        <td key={index}>{cotizacion.total}</td>
+                                                    item.cotizaciones.map((cotizacion,i)=>(
+                                                        <td key={i}>{cotizacion.total}</td>
                                                     ))
                                                 }
                                             </tr>

@@ -8,7 +8,6 @@ import { getReportQuotitation } from '../../services/http/ReportQuotitationServi
 function RespuestaInformeCotizacion(props){
 
     const {id} = useParams();
-    const [abierto, setAbierto] = useState(false);
     const [ solicitud, setSolicitud ] = useState([]);
     const [nameBusinesses, setNameBusinesses] = useState([]);
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
@@ -20,29 +19,6 @@ function RespuestaInformeCotizacion(props){
     const back = ()=>{
         history.push({pathname:`/cotizaciones/${id}`,data:dataQu});
     }
-
-    const abrirModal =()=>{
-        setAbierto(true);
-    }
-    const cerrarModal=()=>{
-        setAbierto(false);
-    }
-
-    const ValorMenor = ( lista ) => {
-
-        var menor = lista[0].total;
-
-        lista.forEach(element => {
-            if(element.total<menor && element.total!=null){
-                menor = element.total;
-            }
-        });
-        
-        return(
-            <th>{menor}</th>
-        )
-    }
-
 
     const SumaTotal = ( index ) => {
         var suma = 0;
@@ -56,20 +32,6 @@ function RespuestaInformeCotizacion(props){
         );
     }
 
-    const Suma = ( solicitudes ) => {
-        var suma = 0;
-        for (var i=0; i<solicitudes.length; i++){
-            solicitud.forEach(element => {
-                if(element.cotizaciones[i].total!=null){
-                    suma=suma+element.cotizaciones[i].total;
-                }
-            });
-        }
-        return(
-            <th>{suma}</th>
-        );
-    }
-
     useEffect(() => {
         const {data} = props.location;
         async function getComparatives() {
@@ -78,7 +40,6 @@ function RespuestaInformeCotizacion(props){
                 const res = await getComparativeChart(id);
                 Menor(res.comparativeChart)
                 setSolicitud(res.comparativeChart)
-                console.log("solicitudes", res)
                 setNameBusinesses(res.businesses)
             } catch (error) {
                 console.log(error)
@@ -112,10 +73,8 @@ function RespuestaInformeCotizacion(props){
     }
 
     async function getInformeQuotitation(id) {
-        console.log("id",id)
         try {
             const result = await getReportQuotitation(id);
-            console.log(result)
             if(result){
                 setReportQuotitation(result);
             }else{
@@ -129,7 +88,7 @@ function RespuestaInformeCotizacion(props){
     return(
         <>
             <div className="container" align="left">
-                <div className="row">
+                <div className="form-row">
                     <div className="col-md-10">
                         <h1>Cuadro Comparativo de Cotizaciones</h1>   
                     </div>
