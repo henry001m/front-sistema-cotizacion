@@ -84,7 +84,6 @@ function RespCotizacion(props) {
                         const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
                         swal({
                             text: res.response.message,
-                            icon: "success",
                             button: "Aceptar",
                           });
                         irAtras();

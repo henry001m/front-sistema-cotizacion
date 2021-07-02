@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import {sendEmail} from '../../services/http/QuotitationService' 
 import { PlusCircle} from 'react-bootstrap-icons'
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-
+import swal from 'sweetalert';
 
 function EnviarCotizacion( props ){
 
@@ -69,8 +69,10 @@ function EnviarCotizacion( props ){
             console.log(aux,props.id);
             document.getElementById('btnIE').disabled=true;
             const result = await sendEmail(aux,props.id);
-            console.log("este es el resultado ",result);
-            alert(result.data.result);
+            swal({
+                text: result.data.result,
+                button: "Aceptar",
+              });
             setEmailMessage({email:"",description:""});
             setEspera("");
             document.getElementById('btnIE').disabled=false;
