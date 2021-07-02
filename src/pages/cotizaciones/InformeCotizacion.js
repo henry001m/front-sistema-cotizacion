@@ -5,6 +5,7 @@ import { EditorState, convertToRaw, ContentState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
+import swal from 'sweetalert';
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { createReportQuotitation } from '../../services/http/ReportQuotitationService';
 
@@ -15,7 +16,6 @@ function InformeCotizacion (props) {
     const user = JSON.parse(window.localStorage.getItem("userDetails"));
     const userName= user.user.name+" "+user.user.lastName
 
-    const [html, setHtml] = useState(null)
     const[ date, setDate] = useState(new Date())
     const[ editorState, setEditorState ] = useState(EditorState.createEmpty())
     const [message, setMessage] = useState("");
@@ -27,8 +27,8 @@ function InformeCotizacion (props) {
         props.cerrarModal()
     }
 
-    const onEditorStateChange = (editorState) => {
-        setEditorState(editorState);
+    const onEditorStateChange = (editorStat) => {
+        setEditorState(editorStat);
     };
 
     const InformeState = () => {
@@ -74,7 +74,6 @@ function InformeCotizacion (props) {
             description:draftToHtml(convertToRaw(editorState.getCurrentContent())),
             request_quotitations_id:props.id
         }
-        setHtml(draftToHtml(convertToRaw(editorState.getCurrentContent())))
         const text = convertToRaw(editorState.getCurrentContent()).blocks[0].text
         if(text.length>0){
             try {
@@ -82,8 +81,10 @@ function InformeCotizacion (props) {
                     props.rejectRequest()
                 }
                 const result = await createReportQuotitation(htm);
-                console.log(result);
-                alert(result.message)
+                swal({
+                    title: result.message,
+                    button: "Aceptar",
+                });
                 setEditorState(EditorState.createEmpty())
                 closeModal()
             } catch (error) {

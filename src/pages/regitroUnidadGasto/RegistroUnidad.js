@@ -5,18 +5,13 @@ import { getAdminsUG } from '../../services/http/UserService';
 import { createUnidadGasto} from '../../services/http/UniGastoService';
 import { useForm } from "react-hook-form";
 import './RegistroUnidad.css';
-
+import swal from 'sweetalert';
 const RegistroUnidad = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [ faculties, setFaculties] = useState([]);
     const [ admins, setAdmins] = useState([]);
     const [ idAdmin, setIdAdmin ] = useState("");
     const [ flag, setFlag] = useState(false);
-    // const [ admins, setAdmins] = useState([
-    //     {id:1 , name:"Rodrigo Cespedes"},
-    //     {id:2 , name:"Yurguen Pariente"},
-    //     {id:3 , name:"Ramiro Saavedra"},
-    // ]);
     const [ nameUnidadGasto, setNameUnidadGasto ] = useState("");
     const [ selectDefaul, setSelectDefault ]= useState({value:"", label:"Seleccione facultad"})
     const modalStyles={
@@ -35,12 +30,22 @@ const RegistroUnidad = (props) => {
     const updateAdmins = ()=>{
         setFlag(!flag);
     }
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     const onSubmit = async (data) => {
         try{ 
-            console.log("Unidad:",data.nameUnidadGasto,"Facultad:",data.faculties_id,"IdAdmin:",data.idUser);
             const res = await createUnidadGasto(data);
-            alert(res.message);
-            closeModal();
+            if(res.message=="Registro exitoso"){
+              alertMessage(res.message,"success");
+              closeModal();
+            }else{
+              alertMessage(res.message,"warning");
+            }
         }catch(error){
             console.log( error )
         }
@@ -144,9 +149,7 @@ const RegistroUnidad = (props) => {
                     className="form-control">
                         <option value="">Seleccione Administrador</option>
                         {  
-                            
                             admins.map((administrador)=>{
-                                console.log(admins)
                                 return(
                                     <option value={administrador.id}>{administrador.name} {administrador.lastName}</option>   
                                 )

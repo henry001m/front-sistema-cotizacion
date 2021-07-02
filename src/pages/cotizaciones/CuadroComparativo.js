@@ -8,40 +8,17 @@ import { getReportQuotitation } from '../../services/http/ReportQuotitationServi
 function RespuestaInformeCotizacion(props){
 
     const {id} = useParams();
-    const [abierto, setAbierto] = useState(false);
     const [ solicitud, setSolicitud ] = useState([]);
     const [nameBusinesses, setNameBusinesses] = useState([]);
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
     const [ reportQuotitation, setReportQuotitation ] = useState(null)
+    const [ valorMenor, setValorMenor ] = useState([])
     const [dataQu, setDataQu] = useState({});
 
     let history = useHistory();
     const back = ()=>{
         history.push({pathname:`/cotizaciones/${id}`,data:dataQu});
     }
-
-    const abrirModal =()=>{
-        setAbierto(true);
-    }
-    const cerrarModal=()=>{
-        setAbierto(false);
-    }
-
-    const ValorMenor = ( lista ) => {
-
-        var menor = lista[0].total;
-
-        lista.forEach(element => {
-            if(element.total<menor && element.total!=null){
-                menor = element.total;
-            }
-        });
-        
-        return(
-            <th>{menor}</th>
-        )
-    }
-
 
     const SumaTotal = ( index ) => {
         var suma = 0;
@@ -61,6 +38,7 @@ function RespuestaInformeCotizacion(props){
             try {
                 setDataQu(data)
                 const res = await getComparativeChart(id);
+                Menor(res.comparativeChart)
                 setSolicitud(res.comparativeChart)
                 setNameBusinesses(res.businesses)
             } catch (error) {
@@ -69,6 +47,20 @@ function RespuestaInformeCotizacion(props){
         }
         getComparatives();
     }, []);
+
+    const Menor = (solicitudes) => {
+        var aux = valorMenor
+        solicitudes.forEach(element => {
+            var auxMenor = element.cotizaciones[0].total
+            element.cotizaciones.forEach(cotizacion => {
+                if(cotizacion.total<auxMenor && cotizacion.total!=null){
+                    auxMenor=cotizacion.total
+                }
+            });
+            aux.push(auxMenor)
+        });
+        setValorMenor(aux)
+    }
 
     const abrirModalInformeCotizacion =()=>{
         getInformeQuotitation(id)
@@ -81,10 +73,8 @@ function RespuestaInformeCotizacion(props){
     }
 
     async function getInformeQuotitation(id) {
-        console.log("id",id)
         try {
             const result = await getReportQuotitation(id);
-            console.log(result)
             if(result){
                 setReportQuotitation(result);
             }else{
@@ -98,7 +88,7 @@ function RespuestaInformeCotizacion(props){
     return(
         <>
             <div className="container" align="left">
-                <div className="row">
+                <div className="form-row">
                     <div className="col-md-10">
                         <h1>Cuadro Comparativo de Cotizaciones</h1>   
                     </div>
@@ -134,8 +124,10 @@ function RespuestaInformeCotizacion(props){
                                                 <td >{item.description}</td>
                                                 <td>{item.amount}</td>
                                                 {
-                                                    item.cotizaciones.map((cotizacion,index)=>(
-                                                        <td key={index}>{cotizacion.total}</td>
+                                                    item.cotizaciones.map((cotizacion,i)=>(
+                                                        (cotizacion.total==valorMenor[index])?
+                                                            (<td key={i}><strong>{cotizacion.total}</strong></td>):
+                                                            (<td key={i}>{cotizacion.total}</td>)
                                                     ))
                                                 }
                                             </tr>

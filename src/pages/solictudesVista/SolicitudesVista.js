@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
+import { useForm } from "react-hook-form";
 import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
@@ -10,6 +11,7 @@ import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
 
 function SolicitudesVista(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const {idUA} = useParams();
     const [quotitations, setQuotitations] = useState([]);
     const [abiertoEmail, setAbiertoEmail] = useState(false);
@@ -17,10 +19,11 @@ function SolicitudesVista(){
     let history = useHistory();
     const [request, setRequest ] = useState({});
     const [abiertoInforme, setAbiertoInforme] = useState(false);
-    const [ report, setReport ] = useState(null)
+    const [report, setReport ] = useState(null)
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
-    const [ reportQuotitation, setReportQuotitation ] = useState(null)
-
+    const [reportQuotitation, setReportQuotitation ] = useState(null)
+    const [search, setSearch] = useState("");
+    const [filteredQuontitation, setFilteredQuotitation] = useState([])
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
         async function getAllQuotitations() {
@@ -36,7 +39,13 @@ function SolicitudesVista(){
         getAllQuotitations();
         //eslint-disable-next-line
     }, []);
-
+    useEffect(() => {
+        setFilteredQuotitation(
+            quotitations.filter((quantitation) =>
+                quantitation.nameUnidadGasto.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,quotitations]);
     const EnablebuttonAddReport = (quotitation) =>{
         if(quotitation.status!="Pendiente"){
             return(
@@ -190,9 +199,14 @@ function SolicitudesVista(){
                         <br></br>
                     <div className="row">
                         <div className="col-6">
-                            <form className="form-inline">
-                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                            </form>
+                            <input {...register("quotitation", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese unidad de gasto" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                           />
                         </div>
                     </div>
                     <br></br>
@@ -210,7 +224,7 @@ function SolicitudesVista(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {quotitations.map((quotitation,index) => {
+                                {filteredQuontitation.map((quotitation,index) => {
                                     return(
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>

@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router-dom'
 import {Button} from 'reactstrap';
 import {PlusCircle} from 'react-bootstrap-icons'
@@ -6,17 +7,14 @@ import {getPersonal} from '../../services/http/UserService'
 import {getPersonalUG} from '../../services/http/UserService'
 
 function ListaPersonal(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const {idUA} = useParams();
     const {idUS} = useParams();
     const [flag, setFlag] = useState(false);
     const [personal, setPersonal] =useState([]);
+    const [search, setSearch] = useState("");
+    const [filteredPersonal, setFilteredPersonal] = useState([]);
     let history = useHistory();
-    // const [personal, setPersonal] = useState([
-    //     {id:1 , name:"Fiorela Claros", ci:798647, phone:67676767, nameRol:"Secretaria"},
-    //     {id:2 , name:"Sergio Orellana", ci:456647, phone:67686764, nameRol:"Cotizador"},
-    //     {id:3 , name:"Enrique Saavedra", ci:998547, phone:68686868, nameRol:"Responsable de correos"},
-    // ]);
-    
     const updatePersonal = ()=>{
         setFlag(!flag);
     }
@@ -37,10 +35,15 @@ function ListaPersonal(){
                 console.log("Personal",personal,idUS,idUA)
             }
         }
-        // console.log("Personal de unidad",personal,idUS,idUA)
         getAllUsers();
-        
     }, [setPersonal,flag]);
+    useEffect(() => {
+        setFilteredPersonal(
+            personal.filter((person) =>
+                person.name.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,personal]);
     return (
         <>
             <div className="container" align="left">
@@ -49,9 +52,14 @@ function ListaPersonal(){
                 <br></br>
                 <div className="row">
                     <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                    <input {...register("personal", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese nombre" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                                /> 
                     </div>
                     <div className="col-6" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ buttonPersonal }> 
@@ -72,7 +80,7 @@ function ListaPersonal(){
                                 </tr>
                             </thead>
                             <tbody>
-                                {personal.map((user,index) => {
+                                {filteredPersonal.map((user,index) => {
                                     return(
                                         <tr key={user.id}>
                                             <td scope="row">{index+1}</td>

@@ -5,14 +5,11 @@ import {PlusCircle} from 'react-bootstrap-icons';
 import ModalRegistroEmpresa from './ModalRegistroEmpresa';
 import { getEmpresas } from '../../services/http/BussinessService';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import {getRubro} from '../../services/http/BussinessService'
-import { scryRenderedComponentsWithType } from 'react-dom/test-utils';
 
 
 function ListaEmpresa(){
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register } = useForm();
     const [empresas, setEmpresas] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState("");
     const [filteredBusniss, setFilteredBusniss] = useState([]);
     const [abierto, setAbierto] = useState(false);

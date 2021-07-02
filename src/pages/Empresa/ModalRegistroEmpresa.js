@@ -1,20 +1,22 @@
 
 import React,{useState} from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { useForm } from "react-hook-form";
+import swal from 'sweetalert';
 import { createBusiness }  from '../../services/http/BussinessService'
 
 const ModalRegistroEmpresa = (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [empresa, setEmpresa]  = useState({nameEmpresa:"", nit:"", email:"", phone:"", direction:"", rubro:""});
-    const [message, setMessage] = useState("");
     
     const onSubmit = async (data) => {
         const res = await createBusiness(empresa);
         if(res.message){
-            alert(res.message);
+            swal({
+                title: res.message,
+                button: "Aceptar",
+            });
         }
-        console.log(res)
         props.updateEmpresas()
         closeModal()
     };
@@ -202,9 +204,6 @@ const ModalRegistroEmpresa = (props) => {
                     </div>
                 </div>
                 <div className="form-row">
-                    <span style={{color:"red"}}>
-                    {message}
-                    </span>
                     <div className="form-group col" id="toolbar">
                         <button type="button" className="btn btn-secondary" onClick={closeModal} id="btnV">Cancelar</button>
                         <button type="submit" className="btn btn-primary" id="btnV">Guardar</button>

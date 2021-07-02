@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { getRols} from '../../services/http/RolService'
 import {agregarPersonalUS} from '../../services/http/UniGastoService'
 import {agregarPersonalUA} from '../../services/http/UniAdministrativaService'
+import swal from 'sweetalert';
 function ModalSeleccionRoles(props){
   
     const { register, formState: { errors },handleSubmit, reset } = useForm();
@@ -12,45 +13,44 @@ function ModalSeleccionRoles(props){
     const [ rols, setRols ] =useState([]);
     const [ rolSelec, setRolSelec ] =useState("");
     const [ message, setMessage] = useState("");
-    const {idUS} = props.idUS;
-    const {idUA} = props.idUA;
-    var seleccionados =[];
-    
+    var seleccionados =[];  
     const closeModal = () => {
         clearForm();
         props.cerrarModal();
         props.updateUsers();
     }
-
     const clearForm = () => {
         setMessage("");
         setSelectedCheckboxes("");
         reset();
     };
-    // Pedir arreglo de roles
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     const handleChangeCheckBox = (e) => {
         let auxiliar = [];
-        if(selectedCheckboxes.includes(e.target.value)){ //elimina repetidos
+        if(selectedCheckboxes.includes(e.target.value)){ 
             auxiliar=selectedCheckboxes.filter(elemento=>elemento!==e.target.value);
         }else{
-            auxiliar=selectedCheckboxes.concat(e.target.value) //agrega nuevos
+            auxiliar=selectedCheckboxes.concat(e.target.value) 
         }
-        for (const per of auxiliar) { //convertimos a numeros
+        for (const per of auxiliar) { 
             seleccionados.push(parseInt(per));
         }
         setSelectedCheckboxes(auxiliar);
         console.log(seleccionados);
         user.roles=seleccionados;
     }
-    //Cargar roles desde BD
     useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getRols();
             setRols(response.roles);
             user.idUser=props.user.id;
-            // user.idUnit=props.idUS;
-            // user.idUnit=props.idUA;
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -61,15 +61,14 @@ function ModalSeleccionRoles(props){
    
     const onSubmit = async (data)  => {
         try{ 
-            // console.log("Rol seleccionado:",user.roles,"unidad UA",props.idUA);
             if (props.idUS === "null" ){
                 console.log("este user se registra:",props.user.id, "en unidad",props.idUA,"con el rol",user.roles)
                 const res = await agregarPersonalUA({idUser:props.user.id,idUnit:props.idUA,idRol:user.roles});
-                alert(res.message);
+                alertMessage(res.message,"success");
             }
             if (props.idUA === "null" ){
                 const resp = await agregarPersonalUS({idUser:props.user.id,idUnit:props.idUS,idRol:user.roles});
-                alert(resp.message);
+                alertMessage(resp.message,"success");
             }
             closeModal();
         }catch(error){
@@ -81,19 +80,11 @@ function ModalSeleccionRoles(props){
             <Modal isOpen={props.abierto} >
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <ModalHeader toggle={closeModal}>
-                        {/* Seleccion Rol */}
                         {props.user.name} {props.user.lastName}
                     </ModalHeader>
                     <ModalBody>
                     <div className="form-row">
-                        {/* <div className="form-group col-md-8">
-                            <div className="form-row">
-                                <h6>Usuario: </h6>
-                                <label>{props.user.name} {props.user.lastName}</label>
-                            </div>
-                        </div> */}
                         <div className="form-group col-md-12">
-                            {/* <h6>Asignar Rol(es):</h6> */}
                             <label>Seleccione el/los rol(es) que desea que cumpla en su unidad</label>
                             <div class="table table-hover">
                             <Table bordered>
