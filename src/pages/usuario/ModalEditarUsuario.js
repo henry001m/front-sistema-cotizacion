@@ -4,25 +4,25 @@ import { getRols } from '../../services/http/RolService'
 import { updateRolUser } from '../../services/http/RolService'
 import { Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import './Usuario.css'
-
+import swal from 'sweetalert';
 function ModalEditarUsuario( props ){
-
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
     const [ rols, setRols ] = useState([])
     const [ idRol, setIdRol ] = useState("")
-    // const [ rolUser, setRolUser ] = useState({value:props.user.userRol[0].id, nameRol:props.user.userRol[0].nameRol})
     const [flag, setFlag] = useState(false);
-
     const closeModal = () => {
-        reset()
-        updateRoles()
-        setIdRol("")
         props.updateUsers()
         props.CloseModalEditarU()
+        setIdRol("")
+        reset()
     };
-    const updateRoles = ()=>{
-        setFlag(!flag);
-    }
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     useEffect(() => {
         const fetchData = async () => {
         try {
@@ -43,13 +43,11 @@ function ModalEditarUsuario( props ){
         try{ 
             if(idRol != 0 & idRol != ""){
                 const result = await updateRolUser(props.user.id,idRol);
-                alert("Se realizo el cambio exitosamente");
-                console.log("entra al registrar el id",idRol)  
+                alertMessage("Se realizo el cambio exitosamente","success");
+                closeModal()
             }else{
-                alert("No selecciono un rol diferente")
-                console.log("es el mismo id:",idRol)
+                alertMessage("No selecciono un rol diferente","warning");
             }
-            closeModal()
         }catch(error){
             console.log( error )
         }

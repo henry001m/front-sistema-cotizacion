@@ -2,7 +2,8 @@ import React,{useState,useEffect, useRef} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Table,FormGroup, Label, Input} from 'reactstrap';
 import { useForm } from "react-hook-form";
 import { getPermissions } from '../../services/http/PermissionService';
-import { updateRol } from '../../services/http/RolService'
+import { updateRol } from '../../services/http/RolService';
+import swal from 'sweetalert';
 const Checkbox = ({ initialState, id, value, onChange}) => {
     const [checked, setChecked] = useState(initialState);
     const onClick=(checked)=>{
@@ -42,19 +43,18 @@ function EditarRol (props){
         setRol("")
         reset()
     }
+    const alertMessage = (message,icono) => {
+        swal({
+            text: message,
+            icon: icono,
+            button: "Ok",
+          });
+    };
     const handleInputChange = (event) => {
         setRol({
             description: event.target.value
           });
-        //setExistEvent(true);
     };
-    function removeItemFromArr ( arr, item ) {
-        var i = arr.indexOf( item );
-        if ( i !== -1 ) {
-            arr.splice( i, 1 );
-        }
-        console.log("cuando se elimina",arr);
-    }
     function actualizarPermisos (seleccionados){
         let bandera=permissionsRef.current.concat(seleccionados);
         var repetidos = [];
@@ -85,22 +85,26 @@ function EditarRol (props){
             seleccionados.push(parseInt(per));
         }
         setSelectedCheckboxes(seleccionados)
-        //console.log("seleccionados",seleccionados);
     }
     const onSubmit = async (data) => {
         try{
-            if(selectedCheckboxes.length>0 | rol.description!=props.rol.description){
+            if(selectedCheckboxes.length>0){
                 let bandera = actualizarPermisos(selectedCheckboxes)
                 if(bandera.length == 0){
                     setMessage('No puede dejar un rol sin permisos')
                 }else{
-                    console.log("IdRol:",props.rol.id,"Descripcion",data.description,"Permisos NUEVOS",bandera);
                     updateRol({idRol:props.rol.id,idPermission:bandera,description:data.description})
-                    alert(`Se actualizo el rol ${props.rol.nameRol} exitosamente`);
+                    alertMessage(`Se actualizo el rol ${props.rol.nameRol} exitosamente`,"success")
                     closeModal();
                 }
             }else{
-                alert("No realizo cambios")
+                if(selectedCheckboxes.length==0 & rol.description!=props.rol.description){
+                    updateRol({idRol:props.rol.id,idPermission:props.rol.permissions,description:data.description})
+                    alertMessage(`Se actualizo el rol ${props.rol.nameRol} exitosamente`,"success")
+                    closeModal();
+                }else{
+                    alertMessage("No realizo cambios","warning")
+                }   
             } 
         }catch(error){
             console.log( error )
@@ -114,12 +118,8 @@ function EditarRol (props){
         }
         getPermisos();
     }, [props.abrirEditor]);
-    function ponleFocus(){
-        document.getElementById("texto").focus();
-    }
     useEffect(function(){
         permissionsRef.current = props.rol.permissions;
-        console.log(`Usa Ref: ${permissionsRef.current}`);
     },[selectedCheckboxes]);
     return (
         <>
@@ -155,7 +155,15 @@ function EditarRol (props){
                     ></input>
                     {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                 </div>
-               
+                {/* <div className="form-group col-md-12">
+                    <h6>Tipo de Unidad:</h6>
+                <select 
+                    name="SelectUnit"
+                    className="form-control"
+                    disabled>
+                        <option value="">Unidad Administrativa</option>
+                    </select>
+                </div> */}
                 <div className="form-group col-md-12">
                         <h6>Permisos:</h6>                       
                     <div class="modal-table"> 

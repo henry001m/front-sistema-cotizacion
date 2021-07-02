@@ -1,17 +1,19 @@
 import React,{useEffect, useState} from  'react'
+import { useForm } from "react-hook-form";
 import { PencilSquare, PlusCircle } from 'react-bootstrap-icons';
-import ModalAgregarUsuario from './ModalAgregarUsuario';
+import {Button} from 'reactstrap';
 import { getUsers } from '../../services/http/UserService' ;
 import ModalEditarUsuario from './ModalEditarUsuario';
-import {Button} from 'reactstrap';
+import ModalAgregarUsuario from './ModalAgregarUsuario';
 function Usuario(){
-
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [users, setUsers] = useState([]);
     const [flag, setFlag] = useState(false);
     const [ isShowModalEditarU, setIsShowModalEditarU ] = useState(false)
     const [ isShowModalAgregarU, setIsShowModalAgregarU ] = useState(false)
     const [user, setUser ] = useState({name:"",lastName:"",ci:"",phone:"",direction:"",email:"",userName:"",userRol:""})
-
+    const [search, setSearch] = useState("");
+    const [filteredUser, setFilteredUser] = useState([]);
     const updateUsers = ()=>{
         setFlag(!flag);
     }
@@ -34,10 +36,15 @@ function Usuario(){
             console.log(error);
         }
     };
-
     fetchData();
     }, [setUsers,flag]);;
-
+    useEffect(() => {
+        setFilteredUser(
+            users.filter((user) =>
+                user.name.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,users]);
     return(
         <>
             <div className="container" align="left">
@@ -46,9 +53,14 @@ function Usuario(){
                     <br></br>
                 <div className="row">
                     <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                       <input {...register("usuario", { required: true })}
+                        className="form-control"
+                        placeholder="Ingrese nombre de usuario" 
+                        aria-label="Search"
+                        type="search"
+                        id = "search"
+                        onChange = {(e) => setSearch(e.target.value)}                                    
+                        /> 
                     </div>
                     <div className="col-6" align="right">
                     <Button color="success" onClick={openModalAgregarU}><PlusCircle className="mr-1"/>Nuevo</Button>
@@ -72,11 +84,11 @@ function Usuario(){
                             </thead>
                             <tbody>
                                {
-                                   users.map((user,index)=>{
+                                   filteredUser.map((user,index)=>{
                                         return (
                                             <tr key={user.id}>
                                                 <td scope="row">{index+1}</td>
-                                                <td>{user.name}</td>
+                                                <td>{user.name} {user.lastName}</td>
                                                 <td>{user.ci}</td>
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
@@ -89,7 +101,6 @@ function Usuario(){
                                                         style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
-                                                <td>{console.log("esto estra en iteracion",user.id)}</td>
                                             </tr>
                                         );
                                    })
@@ -99,11 +110,7 @@ function Usuario(){
                     </div>
                 </div>
             </div>
-            <ModalEditarUsuario
-                isShowModalEditarU={ isShowModalEditarU }
-                user={ user }
-                CloseModalEditarU = {CloseModalEditarU}
-                updateUsers={updateUsers}
+            <ModalEditarUsuario isShowModalEditarU={ isShowModalEditarU } user={ user } CloseModalEditarU={CloseModalEditarU} updateUsers={updateUsers}
             />
         </>
     );

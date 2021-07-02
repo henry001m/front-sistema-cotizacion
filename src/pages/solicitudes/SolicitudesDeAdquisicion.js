@@ -4,17 +4,18 @@ import { PlusCircle, ChevronLeft, Eye, FileEarmarkText, Coin} from 'react-bootst
 import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
-
+import { useForm } from "react-hook-form";
 function SolicitudesDeAdquisicion(){
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const {idUA} = useParams();
     const {idUS} = useParams();
     const {nameUS} = useParams();
     const [abrirModalInforme, setAbrirModalInforme] = useState(false)
     const [ idSolicitud, setIdSolicitud ] = useState("")
     const [ report, setReport ] = useState({description:""})
-
+    const [ search, setSearch ] = useState("");
+    const [ filteredSolicitud, setFilteredSolicitud ] = useState([]);
     let history = useHistory();
-
-
     function ButtonAgregar(){
         history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
     }
@@ -35,9 +36,14 @@ function SolicitudesDeAdquisicion(){
             }
         }
         getAllQuotitations();
-        //eslint-disable-next-line
     }, []);
-
+    useEffect(() => {
+        setFilteredSolicitud(
+            quotitations.filter((nameSolicitud) =>
+                nameSolicitud.nameUnidadGasto.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,quotitations]);
     async function getInforme(id) {
         console.log("id",id)
         try {
@@ -159,9 +165,14 @@ function SolicitudesDeAdquisicion(){
                     <br></br>
                 <div className="row">
                     <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                        <input {...register("solicitud", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese nombre unidad de gasto" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                         /> 
                     </div>
                     <div className="col-6" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 

@@ -1,19 +1,19 @@
-  
-import React, { useState, useRef, useEffect } from 'react'
+  import React, { useState, useRef, useEffect } from 'react'
 import { PlusCircle, PencilSquare } from 'react-bootstrap-icons'
 import { useForm } from 'react-hook-form';
 import ModalRegistroUnidadAdministrativa from './ModalRegistroUnidadAdministrativa'
 import {getUnidadesAdministrativas} from '../../services/http/UniAdministrativaService'
 import ModalEditarUA from './ModalEditarUA'
 function UnidadesAdministrativas() {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const {reset} = useForm();
     const [ administrativeUnits, setAdministrativeUnits ] = useState([])
-    // const [ administrativeUnit, setAdministrativeUnit] = useState([])
     const [ administrativeUnit, setAdministrativeUnit] = useState({name:"",faculty:"",admin:[{id:"",name:"",lastName:""}]});
     const [ isShowModalRegistroUA,setIsShowModalRegistroUA ] = useState(false)
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [flag, setFlag] = useState(false);
-
+    const [search, setSearch] = useState("");
+    const [filteredAdministrative, setFilteredAdministrative] = useState([]);
     const closeModalRUA = () => {
         setIsShowModalRegistroUA( false );
     };
@@ -29,14 +29,19 @@ function UnidadesAdministrativas() {
         try {
             const response = await getUnidadesAdministrativas();
             setAdministrativeUnits(response.Administrative_unit);
-            console.log("esto se envia en UA",response);
         } catch (error) {
             console.log(error);
         }
         };
     fetchData();
     }, [setAdministrativeUnits,flag]);
-
+    useEffect(() => {
+        setFilteredAdministrative(
+            administrativeUnits.filter((unit) =>
+                unit.name.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,administrativeUnits]);
 
     return(
         <>
@@ -46,9 +51,14 @@ function UnidadesAdministrativas() {
                         <br></br>
                     <div className="row">
                         <div className="col-6">
-                            <form className="form-inline">
-                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                            </form>
+                            <input {...register("unit", { required: true })}
+                                    className="form-control"
+                                    placeholder="Ingrese nombre de unidad administrativa" 
+                                    aria-label="Search"
+                                    type="search"
+                                    id = "search"
+                                    onChange = {(e) => setSearch(e.target.value)}                                    
+                                /> 
                         </div>
                         <div className="col-6" align="right">
                             <button type="button" className="btn btn-success my-2 my-sm-0" onClick={() => setIsShowModalRegistroUA(true)}> 
@@ -71,11 +81,9 @@ function UnidadesAdministrativas() {
                                 </thead>
                                 <tbody>
                                     {
-                                        administrativeUnits.map((administrativeUnit,index)=>{
+                                        filteredAdministrative.map((administrativeUnit,index)=>{
                                             return(
                                                 <tr>
-                                                {/* <tr key={index}>
-                                                <th scope="row">{index+1}</th> */}
                                                 <td>{index+1}</td>
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>

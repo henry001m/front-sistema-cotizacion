@@ -4,7 +4,7 @@ import { getFacultyAdmin } from '../../services/http/FacultyService';
 import { getAdmins } from '../../services/http/UserService';
 import { createUnidadAdministrativa } from '../../services/http/UniAdministrativaService';
 import { useForm } from 'react-hook-form';
-
+import swal from 'sweetalert'
 function ModalRegistroUnidadAdministrativa( props ){
 
     const {register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -37,7 +37,13 @@ function ModalRegistroUnidadAdministrativa( props ){
     const updateFacultades = ()=>{
         setFlag(!flag);
     }
-
+    const alertMessage = (message) => {
+        swal({
+            text: message,
+            icon: "success",
+            button: "Ok",
+          });
+    };
     const handleInputChange = (event) => {
         if(event.target.value[0]==" "){
             setNameUnidadAdministrativa(
@@ -54,7 +60,7 @@ function ModalRegistroUnidadAdministrativa( props ){
         try{ 
             console.log("Unidad:",data.nameUnidadAdministrativa,"Facultad:",data.selectFacultad,"IdAdmin:",data.idUser);
             const res = await createUnidadAdministrativa({name:data.nameUnidadAdministrativa,faculties_id:data.selectFacultad,idUser:data.idUser});
-            alert(res.message);
+            alertMessage(res.message)
             closeModal();
         }catch(error){
             console.log( error )
