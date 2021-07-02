@@ -13,6 +13,7 @@ function RespuestaInformeCotizacion(){
     const [nameBusinesses, setNameBusinesses] = useState([]);
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
     const [ reportQuotitation, setReportQuotitation ] = useState(null)
+    const [ valorMenor, setValorMenor ] = useState([])
 
     let history = useHistory();
     const back = ()=>{
@@ -54,11 +55,27 @@ function RespuestaInformeCotizacion(){
         );
     }
 
+    const Suma = ( solicitudes ) => {
+        var suma = 0;
+        for (var i=0; i<solicitudes.length; i++){
+            solicitud.forEach(element => {
+                if(element.cotizaciones[i].total!=null){
+                    suma=suma+element.cotizaciones[i].total;
+                }
+            });
+        }
+        return(
+            <th>{suma}</th>
+        );
+    }
+
     useEffect(() => {
         async function getComparatives() {
             try {
                 const res = await getComparativeChart(id);
+                Menor(res.comparativeChart)
                 setSolicitud(res.comparativeChart)
+                console.log("solicitudes", res)
                 setNameBusinesses(res.businesses)
             } catch (error) {
                 console.log(error)
@@ -66,6 +83,20 @@ function RespuestaInformeCotizacion(){
         }
         getComparatives();
     }, []);
+
+    const Menor = (solicitudes) => {
+        var aux = valorMenor
+        solicitudes.forEach(element => {
+            var auxMenor = element.cotizaciones[0].total
+            element.cotizaciones.forEach(cotizacion => {
+                if(cotizacion.total<auxMenor && cotizacion.total!=null){
+                    auxMenor=cotizacion.total
+                }
+            });
+            aux.push(auxMenor)
+        });
+        setValorMenor(aux)
+    }
 
     const abrirModalInformeCotizacion =()=>{
         getInformeQuotitation(id)
@@ -131,8 +162,10 @@ function RespuestaInformeCotizacion(){
                                                 <td >{item.description}</td>
                                                 <td>{item.amount}</td>
                                                 {
-                                                    item.cotizaciones.map((cotizacion,index)=>(
-                                                        <td key={index}>{cotizacion.total}</td>
+                                                    item.cotizaciones.map((cotizacion,i)=>(
+                                                        (cotizacion.total==valorMenor[index])?
+                                                            (<td key={i}><strong>{cotizacion.total}</strong></td>):
+                                                            (<td key={i}>{cotizacion.total}</td>)
                                                     ))
                                                 }
                                             </tr>
