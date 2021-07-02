@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from  'react'
+import {useForm} from "react-hook-form";
 import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
 import RolDeUser from './RolDeUser';
 import EditarRol from './EditarRol';
@@ -6,13 +7,15 @@ import {getRols} from '../../services/http/RolService'
 import {Button} from 'reactstrap';
 import { getPermissions } from '../../services/http/PermissionService'
 function ListaRoles(){
-
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [ abierto, setAbierto ] = useState(false);
     const [ rols, setRols ] =useState([]);
     const [ flag, setFlag] = useState(false);
     const [ rol, setRol ] = useState({nameRol:"",description:"",permissions:[]})
     const [ permissions, setPermissions] = useState("");
     const [ abrirEditor, setAbrirEditor] = useState(false);
+    const [search, setSearch] = useState("");
+    const [filteredRol, setFilteredRol] = useState([]);
     const OpenModalRR = () => {
         setAbierto(true);
     };
@@ -42,6 +45,14 @@ function ListaRoles(){
     }, [setRols,flag] );
 
     useEffect(() => {
+        setFilteredRol(
+            rols.filter((rol) =>
+                rol.nameRol.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,rols]);
+
+    useEffect(() => {
         const fetchData = async () => {
         try {
             const response = await getPermissions();
@@ -60,9 +71,14 @@ function ListaRoles(){
                     <br></br>
                     <div className="row">
                         <div className="col-6">
-                            <form className="form-inline">
-                                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                            </form>
+                            <input {...register("rol", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese rol" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                                /> 
                         </div>
                         <div className="col-6" align="right">
                              <Button color="success" onClick={OpenModalRR}><PlusCircle className="mr-1"/>Nuevo</Button>
@@ -83,7 +99,7 @@ function ListaRoles(){
                             </thead>
                             <tbody>
                                 {
-                                    rols.map((rol,index)=>{
+                                    filteredRol.map((rol,index)=>{
                                         return (
                                             <tr key={index}>
                                                 <td scope="row">{index+1}</td>

@@ -1,18 +1,20 @@
 import React,{useState,useEffect} from 'react'
+import { useForm } from "react-hook-form";
 import RegistroUnidadGastoModal from './RegistroUnidad'
 import {Button} from 'reactstrap';
 import {PlusCircle, PencilSquare} from 'react-bootstrap-icons';
 import {getUnidadesGastos} from '../../services/http/UniGastoService';
 import ModalEditarUG from './ModalEditarUG'
-
 const MainRegistroUnidad = () => {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [abierto, setAbierto] = useState(false);
     const [abrirEditor, setAbrirEditor] = useState(false);
     const [unidadesGasto, setUnidadesGasto] = useState([]);
     const [gasto, setGasto] = useState({nameUnidadGasto:"",faculty:[{id:"",nameFacultad:""}],admin:[{id:"",name:"",lastName:""}]});
     const [flag, setFlag] = useState(false);
     const [administrador, setAdministrador] = useState({id:"",name:"",lastName:""})
-
+    const [search, setSearch] = useState("");
+    const [filteredUnidad, setFilteredUnidad] = useState([]);
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -37,6 +39,13 @@ const MainRegistroUnidad = () => {
 
         fetchData();
     }, [setUnidadesGasto,flag]);
+    useEffect(() => {
+        setFilteredUnidad(
+            unidadesGasto.filter((unit) =>
+                unit.nameUnidadGasto.toLowerCase().includes(search.toLowerCase())
+            )
+        );
+    }, [search,unidadesGasto]);
     return (
         <>
             <div className="container" align="left">
@@ -45,9 +54,14 @@ const MainRegistroUnidad = () => {
                 <br></br>
                 <div className="row">
                     <div className="col-6">
-                        <form className="form-inline">
-                                <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                        </form>
+                        <input {...register("unidad", { required: true })}
+                                className="form-control"
+                                placeholder="Ingrese nombre de unidad administrativa" 
+                                aria-label="Search"
+                                type="search"
+                                id = "search"
+                                onChange = {(e) => setSearch(e.target.value)}                                    
+                        />
                     </div>
                     <div className="col-6" align="right">
                     {/*  Botom para abrir el modal*/}
@@ -71,12 +85,11 @@ const MainRegistroUnidad = () => {
                             </thead>
                             <tbody>
                                 {
-                                    unidadesGasto.map((gasto,index)=>{
+                                    filteredUnidad.map((gasto,index)=>{
                                         return(
                                             <tr>
                                                 <td>{index+1}</td>
                                                 <td>{gasto.nameUnidadGasto}</td>
-                                                {/* <td>{gasto.faculty.nameFacultad}</td> */}
                                                 <td>{gasto.faculty}</td>
                                                 <td>{gasto.admin[0].name} {gasto.admin[0].lastName}</td>
                                                 <td><button className="btn  btn-warning" 
