@@ -1,28 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { EyeFill, PlusCircle } from 'react-bootstrap-icons'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
 import { getQuotitationList } from '../../services/http/QuotitationService';
 
-function Cotizaciones() { 
+function Cotizaciones(props) { 
 
     const {id} = useParams();
     const [ quotitations, setQuotitations ] = useState([]);
     const [abierto, setAbierto] = useState(false);
+    const [flagCotizar, setFlagCotizar] = useState(true);
+    const [finalizado, setFinalizado] = useState(false);
+    const [dataQ, setDataQ] = useState({});
     let history = useHistory()
 
     const abrirCuadro = ()=>{
-        history.push("/cuadro/"+id);
+        //history.push("/cuadro/"+id);
+        history.push({pathname:`/cuadro/${id}`,data:dataQ});
     }
 
     const agregarCotizacion = () =>{
-        history.push("/respuesta/cotizacion/ua/"+id);
+        if(!finalizado){
+            history.push("/respuesta/cotizacion/ua/"+id);
+        }else{
+            swal({
+                title: "Finalizado",
+                text: "Ya finalizo cotización de esta solicitud",
+                icon: "success",
+                button: "Entendido",
+              });
+        }
     }
     useEffect(() => {
+        const {data} = props.location;
         async function getQuotitations() {
             try {
+                setDataQ(data);
+                if(data.statusResponse ==="Finalizado"){
+                    setFinalizado(true);
+                }
                 const result = await getQuotitationList(id);
-                console.log("id de solicitud", result)
                 setQuotitations(result.Cotizaciones)
+                if(result.Cotizaciones.length>2){
+                    setFlagCotizar(false);
+                }
             } catch (error) {
                 console.log(error)
             }
@@ -39,7 +60,7 @@ function Cotizaciones() {
                         <h1>Cotizaciones</h1>
                         <br></br>
                     <div className="col" style={{textAlign:"end"}}>
-                        <button className="btn btn-secondary" onClick={abrirCuadro} >
+                        <button className="btn btn-secondary" onClick={abrirCuadro} disabled={flagCotizar} >
                           Realizar Comparación
                         </button>
                         

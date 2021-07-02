@@ -10,6 +10,7 @@ const DetalleFila = (props) => {
     const [filaCotizada, setFilaCotizada] = useState("");
     const [oferta, setOferta] = useState({})
     const [flagOferta, setflagOferta] = useState(true);
+    const [flagGuardar, setFlagGuardar] = useState(true);
     const abrirModal =()=>{
         setAbierto(true);
     }
@@ -17,6 +18,11 @@ const DetalleFila = (props) => {
         setAbierto(false);
     }
     const calcularTotal = (e)=>{
+        if(e.target.value>0){
+            setFlagGuardar(false);
+        }else{
+            setFlagGuardar(true);
+        }
         setPrecUnit(e.target.value);
         setTotal(e.target.value*props.detalle.amount);
     }
@@ -51,6 +57,7 @@ const DetalleFila = (props) => {
         }
     };
     const calcelarCotizado = ()=>{
+        setFlagGuardar(false);
         setPrecUnit(0);
         setTotal(0);
         props.elimiarCotizado(props.detalle.id);
@@ -71,7 +78,7 @@ const DetalleFila = (props) => {
                 <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>
                 {flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>}
                 {!flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={()=>{}}/></td>}
-                {flagCotizar &&<td><button style={{border:"none",}} className="btn btn-primary btn-sm" onClick={onSubmit}>Guardar</button></td>}
+                {flagCotizar &&<td><button style={{border:"none",}} disabled={flagGuardar} className="btn btn-primary btn-sm" onClick={onSubmit}>Guardar</button></td>}
                 {!flagCotizar&&<td><button style={{border:"none",}} className="btn btn-danger btn-sm" onClick={calcelarCotizado}>Cancelar</button></td>}
             </tr>
         </>

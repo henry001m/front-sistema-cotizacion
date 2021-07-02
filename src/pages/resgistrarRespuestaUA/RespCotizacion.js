@@ -119,7 +119,7 @@ function RespCotizacion(props) {
         let flag = false;
         extenciones.forEach(exten => {
             if(!flag){
-                if(exten === 'pdf' || exten === 'docx' || exten=== 'jpg'){
+                if(exten === 'pdf'|| exten === 'PDF' || exten === 'JPG' || exten === 'docx' || exten=== 'jpg'){
                     noEsValido =false;
                 }else{
                     noEsValido=true;
@@ -237,7 +237,7 @@ function RespCotizacion(props) {
                             <div className="form-row">
                                 <div className="form-group col-md-6">
                                     <label>Observaciones:</label>
-                                    <textarea {...register("observacion",{maxLength:200})} type="text" className="form-control"></textarea>
+                                    <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
                                     {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
                                 </div>
                             </div>

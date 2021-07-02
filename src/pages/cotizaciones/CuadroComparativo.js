@@ -5,7 +5,7 @@ import { getComparativeChart} from '../../services/http/QuotitationService'
 import InformeCotizacion from '../cotizaciones/InformeCotizacion'
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService'
 
-function RespuestaInformeCotizacion(){
+function RespuestaInformeCotizacion(props){
 
     const {id} = useParams();
     const [abierto, setAbierto] = useState(false);
@@ -14,10 +14,11 @@ function RespuestaInformeCotizacion(){
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
     const [ reportQuotitation, setReportQuotitation ] = useState(null)
     const [ valorMenor, setValorMenor ] = useState([])
+    const [dataQu, setDataQu] = useState({});
 
     let history = useHistory();
     const back = ()=>{
-        history.push("/cotizaciones/"+id);
+        history.push({pathname:`/cotizaciones/${id}`,data:dataQu});
     }
 
     const abrirModal =()=>{
@@ -70,8 +71,10 @@ function RespuestaInformeCotizacion(){
     }
 
     useEffect(() => {
+        const {data} = props.location;
         async function getComparatives() {
             try {
+                setDataQu(data)
                 const res = await getComparativeChart(id);
                 Menor(res.comparativeChart)
                 setSolicitud(res.comparativeChart)
@@ -131,7 +134,7 @@ function RespuestaInformeCotizacion(){
                         <h1>Cuadro Comparativo de Cotizaciones</h1>   
                     </div>
                     <div className="col-md-2" align="right">
-                        <button type="button" className="close" onClick={() => history.goBack()}>
+                        <button type="button" className="close" onClick={() =>  history.push({pathname:`/cotizaciones/${id}`,data:dataQu})}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
