@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup} from 'reactstrap';
 import { useForm } from "react-hook-form";
-
+import swal from 'sweetalert';
 const OfertaModal = (props) => {
     const modalStyles={
         top:"10%",
@@ -29,14 +29,19 @@ const OfertaModal = (props) => {
                 formData.append(name,fl[i],fl[i].name);
                 }
             }
-            console.log("Data",data)
             if(data.marca || data.industria || data.tiempo_garantia ||data.modelo){
                 data.archivo = formData;
                 props.guardarOferta(data)
-                alert("Se agrego el detalle del producto")
-                closeModal()
+                swal({
+                    text: "Se agrego el detalle del producto",
+                    button: "Aceptar",
+                  });
+                closeModal();
             }else{
-                alert("No agrego ningún detalle del producto")
+                swal({
+                    text: "No agrego ningún detalle del producto",
+                    button: "Aceptar",
+                  });
             }
         }
     }

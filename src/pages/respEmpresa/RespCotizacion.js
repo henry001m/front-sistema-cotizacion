@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import {detailsQuotitation,registrarCotizacion,registrarCotizacionDetalle,registrarCotizacionDetalleFile} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
 import { useHistory } from 'react-router-dom';
+import swal from 'sweetalert';
 
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -72,7 +73,10 @@ function RespCotizacion(props) {
                 cotizados.forEach(cotizado => {
                     enviarDetalle(cotizado,res.response.id);
                 });
-                alert(res.response.message);
+                swal({
+                    text: res.response.message,
+                    button: "Aceptar",
+                  });
                 salirHome();
             }else{
                 setMessage("No cotizo ningun detalle ó no guardo, revise por favor");

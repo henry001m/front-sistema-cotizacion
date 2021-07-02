@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import './RespCotizacion.css'
+import './RespCotizacion.css';
 import { useForm } from "react-hook-form";
 import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
 import { getEmpresas } from '../../services/http/BussinessService';
-import { FileEarmarkArrowUpFill } from 'react-bootstrap-icons';
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
 
 function RespCotizacion(props) {
     const {id} = useParams();
@@ -17,9 +17,10 @@ function RespCotizacion(props) {
     const [fechaMin, setFechaMin] = useState("");
     const [cotizados, setCotizados] = useState([]);
     const [message, setMessage] = useState("");
+    const [dataQ, setDataQ] = useState({});
     const [flag, setFlag] = useState(false);
     //files
-    const [namefiles, setNamefiles] = useState([])
+    const [namefiles, setNamefiles] = useState([]);
     const [fileValidate, setFileValidate] = useState(false);
     const [fls, setFls] = useState(null);
     const [existeFile, setExisteFile] = useState("");
@@ -51,7 +52,7 @@ function RespCotizacion(props) {
         setCotizados(cotizados);
     }
     const irAtras = ()=>{
-        history.push("/cotizaciones/"+id);
+        history.push({pathname:`/cotizaciones/${id}`,data:dataQ});
     }
     const enviarDetalle = async(detalle, id)=>{
         const res = await registrarCotizacionDetalleUA(detalle,id)
@@ -63,32 +64,36 @@ function RespCotizacion(props) {
         data.request_quotitations_id=id;
         data.answerDate=new Date().toISOString().substr(0,10);
         try {
-            if(cotizados.length>0){
-                if(fls!== null){
-                    setExisteFile("");
-                    document.getElementById('btnEnviar').disabled=true;
-                    const res = await registrarCotizacionUA(data);
-                    cotizados.forEach(cotizado => {
-                        enviarDetalle(cotizado,res.response.id);
-                    });
-                    const formData = new FormData();
-                    if(fls != null){
-                        console.log("todos los archivos",fls.length)
-                        for(var i=0 ; i<fls.length ; i++){
-                            let name = 'file';
-                            formData.append(name,fls[i],fls[i].name);
+            if(!fileValidate){
+                if(cotizados.length>0){
+                    if(fls!== null){
+                        setExisteFile("");
+                        document.getElementById('btnEnviar').disabled=true;
+                        const res = await registrarCotizacionUA(data);
+                        cotizados.forEach(cotizado => {
+                            enviarDetalle(cotizado,res.response.id);
+                        });
+                        const formData = new FormData();
+                        if(fls != null){
+                            console.log("todos los archivos",fls.length)
+                            for(var i=0 ; i<fls.length ; i++){
+                                let name = 'file';
+                                formData.append(name,fls[i],fls[i].name);
+                            }
                         }
+                        const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
+                        swal({
+                            text: res.response.message,
+                            button: "Aceptar",
+                          });
+                        irAtras();
+                    }else{
+                       setExisteFile("Abjunte el archivo de cotización por favor");
                     }
-                    const resfilegeneral = await regitrarArchivoGeneralUA(formData,res.response.id);
-                    alert(res.response.message);
-                    irAtras();
                 }else{
-                    console.log("no existe file")
-                   setExisteFile("Abjunte el archivo de cotización por favor");
+    
+                    setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
                 }
-            }else{
-
-                setMessage("No cotizo ningun detalle ó no guardo, revise por favor");
             }
         } catch (error) {
             console.log(error)
@@ -138,10 +143,12 @@ function RespCotizacion(props) {
     useEffect(() => {
         const tiempoTranscurrido = Date.now();
         const hoy = new Date(tiempoTranscurrido);
+        const {data} = props.location;
         setFechaSolic(hoy.toLocaleDateString());
         setFechaMin(fechaDeHoy());
         const fetchData = async () => {
             try {
+                setDataQ(data);
                 const response = await detailsQuotitation(id);
                 setDetalles(response);
                 const res = await getEmpresas();
