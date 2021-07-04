@@ -1,5 +1,4 @@
 #card{
-    /* width: 15rem; */
     width: 220px;
     border-style: ridge;
 }
@@ -12,11 +11,7 @@
 #card-button{
     color: seagreen;
 }
-/* @media (max-width:500px){
-    .tabla {
-       grid-template-columns: repeat(2, 1fr);
-    }
-} */
+
 .center{
     vertical-align: middle; 
     margin-left: 8%;

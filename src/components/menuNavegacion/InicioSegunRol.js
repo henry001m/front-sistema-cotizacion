@@ -93,10 +93,7 @@ function InicioSegunRol(props){
             </div>
             </div>
         </div>
-        {/* <ModalHeader>Mis Roles</ModalHeader>
-        <ModalBody>
-            <label>LISTA DE ROLES </label>
-        </ModalBody> */}
+        
      </>
     );
 }

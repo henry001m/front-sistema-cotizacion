@@ -25,11 +25,16 @@ function DetalleSolicitud(){
     let history = useHistory();
     const acceptRequest = async ( ) => {
         if(amount > montoTope){
-            alert("Monto excedido");
+            swal({
+                title:"Monto excedido",
+                button: "Aceptar",
+                icon: "warning"
+                
+            });
+            
         }else{
             const aux = {status:"Aceptado"}
             const result = await updateStatus(id,aux);
-            // history.replace("/SolicitudesDeAdquisicionAdmin")
             window.history.back();
         }
     };
@@ -37,12 +42,10 @@ function DetalleSolicitud(){
     const rejectRequest = async ( ) => {
         const aux = {status:"Rechazado"}
         const result = await updateStatus(id,aux);
-        // history.replace("/SolicitudesDeAdquisicionAdmin")
         window.history.back();
     };
 
     const closePage = ( ) => {
-        // history.replace("/SolicitudesDeAdquisicionAdmin")
         window.history.back();
     };
 

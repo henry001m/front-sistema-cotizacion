@@ -9,7 +9,6 @@ import swal from 'sweetalert';
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
-    //datos de la empresa
     const [empresa, setEmpresa] = useState("");
     const [nit, setNit] = useState("");
     const [rubro, setRubro] = useState("");
