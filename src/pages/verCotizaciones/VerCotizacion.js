@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { BagPlusFill, FileEarmarkArrowUpFill, FileEarmarkFill } from 'react-bootstrap-icons'
+import { FileEarmarkFill } from 'react-bootstrap-icons'
 import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
-import ModalVerOferta from './ModalVerOferta'
 import { getFileNameDetail, getFileNameQuotitation } from '../../services/http/FileService';
 
 function VerCotizacion(props){

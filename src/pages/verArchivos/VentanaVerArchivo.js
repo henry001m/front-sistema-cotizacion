@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import FileViewer from 'react-file-viewer'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import FileViewer from 'react-file-viewer';
+import { useParams } from 'react-router-dom';
+import {URL_API} from '../../services/const'
 
 function VentanaVerArchivo(){
     const {id} = useParams();
     const {fl} = useParams();
 
-    const file = 'http://127.0.0.1:8000/api/showFile/'+id+'/'+fl;
+    const file = URL_API+'/showFile/'+id+'/'+fl;
     const [type, setType] = useState("")
 
     useEffect(() => {

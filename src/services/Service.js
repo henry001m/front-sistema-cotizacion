@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {URL_API} from './const';
 export default axios.create({
-    baseURL: "https://sistemacotizacion.herokuapp.com/api"
+    baseURL: URL_API
 })

@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useHistory, useParams} from 'react-router-dom'
 import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
-import { createQuotitation, getInform } from '../../services/http/QuotitationService';
-import axios from 'axios';
+import { createQuotitation, getInform,saveFileDetails } from '../../services/http/QuotitationService';
 
 function AgregarDetalleSolictud(){
     const {idUS} = useParams();
@@ -117,11 +116,7 @@ function AgregarDetalleSolictud(){
             let name = 'file'+i;
             formData.append(name,fls[i],fls[i].name);
             }
-            const token=window.localStorage.getItem("tokenContizacion");
-            const headers = { headers: {'Authorization': `Bearer ${token}`}};
-            console.log("archivo que se manda",formData)
-            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
-            console.log("respuesta ",res);
+            const res = await saveFileDetails(id,formData);
         }
     }
 

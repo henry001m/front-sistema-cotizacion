@@ -131,4 +131,15 @@ export async function getComparativeChart(idRe){
         console.log(error)
     }
 }
+/*Guarda los archivos de detalle de solicitub**/
+export async function saveFileDetails(id,formData) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const res = await API.post('/upload/'+id,formData,headers);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
