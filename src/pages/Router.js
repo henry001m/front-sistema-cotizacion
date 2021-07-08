@@ -31,7 +31,8 @@ const Router = () => {
     return (
         <div>
             <Switch>
-                <Redirect exact from="/" to="/home" />
+                
+                <Route exact path="/" component={ Home }/>
                 <Route exact path="/home" component={ Home }/>
                 {/* Unidad de Gasto */}
                 <Route exact path='/SolicitudesDeAdquisicion/:idUS/:nameUS' component={ SolicitudesDeAdquisicion}/>

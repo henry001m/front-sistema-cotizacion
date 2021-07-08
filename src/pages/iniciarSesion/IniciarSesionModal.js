@@ -2,7 +2,9 @@ import React,{useState}from 'react'
 import { useForm } from "react-hook-form";
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Label} from 'reactstrap';
 import {login,detailsUser} from '../../services/http/authService';
+import {useHistory} from 'react-router-dom';
 const IniciarSesion = (props) => {
+    let history = useHistory();
     const { register, handleSubmit, formState: { errors }, reset} = useForm();
     const [ userName, setUserName ] = useState("");
     const [ passwd, setPassword ] = useState("");
