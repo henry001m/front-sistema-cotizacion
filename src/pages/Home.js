@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import logoUmss from '../assets/logoumss.png';
+import React, { useState } from 'react'
+import logoUmss from '../assets/logoumss.png'
 function Home(){
     const [user, setUser] = useState(null);
     return(
@@ -19,7 +19,7 @@ function Home(){
         )
        }
      </>
-    );
+    )
 }
 
-export default Home;
+export default Home
