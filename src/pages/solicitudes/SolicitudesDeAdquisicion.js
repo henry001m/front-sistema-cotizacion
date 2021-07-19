@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams} from 'react-router-dom'
 import { PlusCircle, ChevronLeft, Eye, FileEarmarkText, Coin} from 'react-bootstrap-icons'
-import { getQuotitationSpendingUnit } from '../../services/http/QuotitationService';
+import Pagination from 'react-js-pagination';
+import { getQuotitationSpendingUnitPage } from '../../services/http/QuotitationService';
 import InformeVista from './InformeVista';
 import { getReport } from '../../services/http/ReportService';
 import { useForm } from "react-hook-form";
@@ -15,6 +16,9 @@ function SolicitudesDeAdquisicion(){
     const [ report, setReport ] = useState({description:""})
     const [ search, setSearch ] = useState("");
     const [ filteredSolicitud, setFilteredSolicitud ] = useState([]);
+    const [currentPage, setCurrentPage] = useState(null)
+    const [perPage, setPerPage] = useState(null)
+    const [total, setTotal] = useState(null)
     let history = useHistory();
     function ButtonAgregar(){
         history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
@@ -24,19 +28,22 @@ function SolicitudesDeAdquisicion(){
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        async function getAllQuotitations() {
-            try {
-                console.log("llega esta unidad a solicitudes",idUS)
-                const result = await getQuotitationSpendingUnit(idUS);
-                console.log(result);
-                const resultQuotitations=result.request_quotitations;
-            setQuotitations(resultQuotitations);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getAllQuotitations();
+        getAllQuotitations(1);
     }, []);
+
+    async function getAllQuotitations(page) {
+        try {
+            const result = await getQuotitationSpendingUnitPage(idUS,page);
+            console.log(result);
+            setQuotitations(result.data);
+            setCurrentPage(result.current_page)
+            setPerPage(result.per_page)
+            setTotal(result.total)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         setFilteredSolicitud(
             quotitations.filter((nameSolicitud) =>
@@ -197,6 +204,18 @@ function SolicitudesDeAdquisicion(){
                                 {Quotitations}
                             </tbody>
                         </table>
+                    </div>
+                    <div className="form-row">
+                        <div className="col">
+                            <Pagination
+                            activePage = {currentPage}
+                            totalItemsCount = {total}
+                            itemsCountPerPage = {perPage}
+                            onChange = {(pageNumber)=> getAllQuotitations(pageNumber)}
+                            itemClass = "page-item"
+                            linkClass = "page-link"
+                            />
+                        </div>
                     </div>
                 </div>
             <InformeVista
