@@ -213,18 +213,11 @@ function SolicitudesVista(){
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
-                    <div className="row">
-                        <div className="col-6">
-                            <input {...register("quotitation", { required: true })}
-                                className="form-control"
-                                placeholder="Ingrese unidad de gasto" 
-                                aria-label="Search"
-                                type="search"
-                                id = "search"
-                                onChange = {(e) => setSearch(e.target.value)}                                    
-                           />
+                    <div className="form-row">
+                        <div className="col-2" style={{textAlign:"justify"}}>
+                            <h5>Estado de solicitud: </h5>
                         </div>
-                        <div className="col-6">
+                        <div className="col-3">
                             <select 
                                 name="selectRol"
                                 className="form-control"

@@ -177,18 +177,11 @@ function SolicitudesDeAdquisicion(){
                     <br></br>
                     <h1>Solicitudes</h1>
                     <br></br>
-                <div className="row">
-                    <div className="col-4">
-                        <input {...register("solicitud", { required: true })}
-                                className="form-control"
-                                placeholder="Ingrese nombre unidad de gasto" 
-                                aria-label="Search"
-                                type="search"
-                                id = "search"
-                                onChange = {(e) => setSearch(e.target.value)}                                    
-                         /> 
+                <div className="form-row">
+                    <div className="col-2">
+                        <h5>Estado de solicitud: </h5>
                     </div>
-                    <div className="col-4">
+                    <div className="col-3">
                         <select 
                             name="selectRol"
                             className="form-control"
@@ -199,7 +192,7 @@ function SolicitudesDeAdquisicion(){
                             <option value="Pendiente">Pendiente</option>   
                         </select>
                     </div>
-                    <div className="col-4" align="right">
+                    <div className="col-7" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 
                         <PlusCircle  className="mb-1"/> Nueva Solicitud </button>
                     </div>
