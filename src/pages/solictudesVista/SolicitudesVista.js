@@ -28,16 +28,18 @@ function SolicitudesVista(){
     const [currentPage, setCurrentPage] = useState(null)
     const [perPage, setPerPage] = useState(null)
     const [total, setTotal] = useState(null)
+    const [status, setStatus] = useState("")
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        getAllQuotitations(1);
+        getAllQuotitations(1,"");
         //eslint-disable-next-line
     }, []);
 
-    async function getAllQuotitations(page) {
+    async function getAllQuotitations(page,status) {
         try {
-            const result = await getQuotitationAdministrativeUnitPage(idUA,page)
+            const aux = {status:status}
+            const result = await getQuotitationAdministrativeUnitPage(idUA,page,aux)
             console.log(result.data)
             setQuotitations(result.data);
             setCurrentPage(result.current_page)
@@ -200,6 +202,11 @@ function SolicitudesVista(){
         }
     }
 
+    const handleSelectChange = (event) => {
+        setStatus(event.target.value)
+        getAllQuotitations(1,event.target.value)
+    }
+
     return(
         <>
             <div className="container" align="left" style={{marginBottom:"160px"}}>
@@ -216,6 +223,17 @@ function SolicitudesVista(){
                                 id = "search"
                                 onChange = {(e) => setSearch(e.target.value)}                                    
                            />
+                        </div>
+                        <div className="col-6">
+                            <select 
+                                name="selectRol"
+                                className="form-control"
+                                onChange={ handleSelectChange }>
+                                <option value="">Todos</option>
+                                <option value="Aceptado">Aceptado</option>
+                                <option value="Rechazado">Rechazado</option>
+                                <option value="Pendiente">Pendiente</option>   
+                            </select>
                         </div>
                     </div>
                     <br></br>
@@ -279,7 +297,7 @@ function SolicitudesVista(){
                                 activePage = {currentPage}
                                 totalItemsCount = {total}
                                 itemsCountPerPage = {perPage}
-                                onChange = {(pageNumber)=> getAllQuotitations(pageNumber)}
+                                onChange = {(pageNumber)=> getAllQuotitations(pageNumber,status)}
                                 itemClass = "page-item"
                                 linkClass = "page-link"
                                 />

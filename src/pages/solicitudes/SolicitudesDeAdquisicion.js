@@ -19,6 +19,7 @@ function SolicitudesDeAdquisicion(){
     const [currentPage, setCurrentPage] = useState(null)
     const [perPage, setPerPage] = useState(null)
     const [total, setTotal] = useState(null)
+    const [status, setStatus] = useState("")
     let history = useHistory();
     function ButtonAgregar(){
         history.push(`/AgregarDetalleSolictud/${idUS}/${nameUS}`)
@@ -28,12 +29,13 @@ function SolicitudesDeAdquisicion(){
 
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        getAllQuotitations(1);
+        getAllQuotitations(1,"");
     }, []);
 
-    async function getAllQuotitations(page) {
+    async function getAllQuotitations(page,status) {
         try {
-            const result = await getQuotitationSpendingUnitPage(idUS,page);
+            const aux = {status:status}
+            const result = await getQuotitationSpendingUnitPage(idUS,page,aux);
             console.log(result);
             setQuotitations(result.data);
             setCurrentPage(result.current_page)
@@ -122,6 +124,11 @@ function SolicitudesDeAdquisicion(){
         setReport([{description:""}])
     }
 
+    const handleSelectChange = (event) => {
+        setStatus(event.target.value)
+        getAllQuotitations(1,event.target.value)
+    }
+
     const Quotitations = quotitations.map((quotitation,index)=>{
         return(
             <tr key={index}>
@@ -171,7 +178,7 @@ function SolicitudesDeAdquisicion(){
                     <h1>Solicitudes</h1>
                     <br></br>
                 <div className="row">
-                    <div className="col-6">
+                    <div className="col-4">
                         <input {...register("solicitud", { required: true })}
                                 className="form-control"
                                 placeholder="Ingrese nombre unidad de gasto" 
@@ -181,7 +188,18 @@ function SolicitudesDeAdquisicion(){
                                 onChange = {(e) => setSearch(e.target.value)}                                    
                          /> 
                     </div>
-                    <div className="col-6" align="right">
+                    <div className="col-4">
+                        <select 
+                            name="selectRol"
+                            className="form-control"
+                            onChange={ handleSelectChange }>
+                            <option value="">Todos</option>
+                            <option value="Aceptado">Aceptado</option>
+                            <option value="Rechazado">Rechazado</option>
+                            <option value="Pendiente">Pendiente</option>   
+                        </select>
+                    </div>
+                    <div className="col-4" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 
                         <PlusCircle  className="mb-1"/> Nueva Solicitud </button>
                     </div>
@@ -211,7 +229,7 @@ function SolicitudesDeAdquisicion(){
                             activePage = {currentPage}
                             totalItemsCount = {total}
                             itemsCountPerPage = {perPage}
-                            onChange = {(pageNumber)=> getAllQuotitations(pageNumber)}
+                            onChange = {(pageNumber)=> getAllQuotitations(pageNumber,status)}
                             itemClass = "page-item"
                             linkClass = "page-link"
                             />
