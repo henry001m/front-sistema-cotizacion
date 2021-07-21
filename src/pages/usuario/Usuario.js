@@ -48,9 +48,10 @@ function Usuario(){
     return(
         <>
             <div className="container" align="left">
-                    <br></br>
-                    <h1>Usuarios</h1>
-                    <br></br>
+                <div class="card-header">
+                <h4>Usuarios</h4>
+                </div>
+                <br></br>
                 <div className="row">
                     <div className="col-6">
                        <input {...register("usuario", { required: true })}
@@ -93,12 +94,11 @@ function Usuario(){
                                                 <td>{user.phone}</td>
                                                 <td>{user.email}</td>
                                                 <td>{user.userRol}</td>
-                                                <td><button className="btn  btn-warning" 
+                                                <td><button className="btn  btn-warning" id="btn-edit"
                                                         onClick={()=>{
                                                             setIsShowModalEditarU(true)
                                                             setUser(user)
                                                         }}
-                                                        style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
                                             </tr>

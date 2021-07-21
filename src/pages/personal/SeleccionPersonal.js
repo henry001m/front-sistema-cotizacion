@@ -52,56 +52,63 @@ function SeleccionPersonal(){
     return(
         <>
             <div className="container" align="left">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <ModalHeader toggle={closePage}>
-                        Seleccion de Personal
-                    </ModalHeader>
-                        <div className="form-row">
-                            <div className="col-md-12">
-                                <div class="table table-hover">
-                                   <br></br>
-                                   <label>Estos usuarios no estan en su unidad</label>
-                                   <h5 id="titulo-tabla">Usuarios</h5>
-                                   <table id="tablaC">
-                                            <thead>
-                                                <tr>
-                                                    <th width="5%" scope="col">#</th>
-                                                    <th width="30%" scope="col">Nombre</th>
-                                                    <th width="20%" scope="col">Telefono</th>
-                                                    <th width="30%" scope="col">Seleccionar Rol</th>
-                                                </tr>
-                                            </thead> 
-                                            <tbody>
-                                                {
-                                                    users.map((userAdd,index)=>{
-                                                        if(userAdd.id != 1){
-                                                            return (
-                                                                <tr>
-                                                                    <td scope="row">{index}</td>
-                                                                    <td >{userAdd.name} {userAdd.lastName}</td>
-                                                                    <td >{userAdd.phone}</td>
-                                                                    <td >
-                                                                        <button type="button" class="btn btn-info"
-                                                                        onClick={()=>{
-                                                                            setAbierto(true)
-                                                                            setUser(userAdd)
-                                                                        }}
-                                                                        >Seleccionar Rol</button>
-                                                                    </td>
-                                                                </tr>
-                                                            );
-                                                        }
-                                                })
-                                                }
-                                            </tbody> 
-                                    </table>
-                                </div>
+               <div className="form-row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Seleccion de personal
+                                <button type="button" className="close" onClick={ closePage }>
+                                    <span aria-hidden="true">&times;</span>
+                                </button></h4>
                             </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="table table-hover">
+                                        <label>Estos usuarios no estan en su unidad</label>
+                                        <table id="tablaC">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%" scope="col">#</th>
+                                                        <th width="30%" scope="col">Nombre</th>
+                                                        <th width="20%" scope="col">Telefono</th>
+                                                        <th width="30%" scope="col">Seleccionar Rol</th>
+                                                    </tr>
+                                                </thead> 
+                                                <tbody>
+                                                    {
+                                                        users.map((userAdd,index)=>{
+                                                            if(userAdd.id != 1){
+                                                                return (
+                                                                    <tr>
+                                                                        <td scope="row">{index}</td>
+                                                                        <td >{userAdd.name} {userAdd.lastName}</td>
+                                                                        <td >{userAdd.phone}</td>
+                                                                        <td >
+                                                                            <button type="button" class="btn btn-info"
+                                                                            onClick={()=>{
+                                                                                setAbierto(true)
+                                                                                setUser(userAdd)
+                                                                            }}
+                                                                            >Seleccionar Rol</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                );
+                                                            }
+                                                    })
+                                                    }
+                                                </tbody> 
+                                        </table>
+                                        </div>
+                                        </div>
+                            </div>
+                            <ModalFooter>
+                            <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal" onClick={closePage}>Atras</button>
+                            </ModalFooter>
                         </div>
-                    <ModalFooter>
-                        <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal" onClick={closePage}>Cancelar</button>
-                    </ModalFooter>
-                </form>
+                    </div>
+                    
+                </div>
+                <br></br>
             </div>
             <ModalSeleccionRoles
                 abierto ={ abierto }

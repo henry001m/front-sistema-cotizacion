@@ -6,6 +6,7 @@ import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
+import { ModalHeader } from 'reactstrap'
 
 function AgregarDetalleSolictud(){
     const {idUS} = useParams();
@@ -171,115 +172,128 @@ function AgregarDetalleSolictud(){
     return(
         <>
             <div className="container" align="left">
+                <div class="row page-titles">
+                    <div class="col-md-12 align-self-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Solicitudes de adquisicion</li>
+                            <li class="breadcrumb-item">Nueva solicitud</li>
+                        </ol>
+                    </div>
+                </div>
                 <br></br>
-                <h1>Nueva solicitud</h1>
-                <br></br>
-                <div className="col" id="registro">
-                    <div className="form-register" id="formRegistro">
-                        <form onSubmit={handleSubmit(sendData)}>
-                        <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <label>Unidad de gasto:</label>
-                                    <div className="form-row" id="inputs">
-                                         <label className="col-form-label">{adquisicion.nameUnidadGasto}</label>
-                                    </div>
+                <div className="form-row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Nueva solicitud
+                                    <button type="button" className="close" onClick={ closePage }>
+                                    <span aria-hidden="true">&times;</span> 
+                                    </button>
+                                </h4>
+                            </div>
+                        
+                        <ModalHeader>Solicitud N&#176; 100</ModalHeader>
+                        <div class="card-body">
+                            <div className="row">
+                                <div className="form-group col-md-4" >
+                                    <label><strong>Unidad de gasto: </strong></label> <label>{adquisicion.nameUnidadGasto}</label>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label>Nombre del solicitante:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{adquisicion.aplicantName}</label>
-                                    </div>
+                                <label><strong>Solicitante: </strong></label> <label>{adquisicion.aplicantName}</label>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label>Fecha de solicitud:</label>
-                                    <div className="form-row" id="inputs">
-                                        <label className="col-form-label">{adquisicion.requestDate}</label>
-                                    </div>
+                                <label><strong>Fecha de Solicitud:</strong></label> <label>{adquisicion.requestDate}</label>
                                 </div>
-                            </div>                     
-                            <div className="form-row">
-                                <div className="form-col">
-                                    <label>Detalle de solicitud</label>
+                            </div>
+                            <br></br>
+                            <div class="row">
+                                <div className="col-md-6">
+                                    <label><strong>Detalle de solicitud</strong></label>
                                 </div>
-                                <div className="form-group col" align="end">
+                                <div className="col-md-6" align="right">
                                 <button className="btn btn-success" type="button" onClick={ abrirModal }>
                                     < PlusCircle className="mb-1"/> Agregar
                                 </button>                                                                    
                                 </div>
                             </div>
-                            <div className="form-row" id="list">
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Unidad</th>
-                                        <th scope="col">Descripcion</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {Details}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="form-row">
-                                    <label>Monto estimado:</label>
-                            </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <div className="form-row" id="inputs">
-                                        <input
-                                        name="amount"
-                                        {...register("amount",{
-                                            required:"El campo es requerido",
-                                            min:{
-                                                value:1,
-                                                message:"Dato invalido"
-                                            }
-                                        })}
-                                        value={adquisicion.amount}
-                                        type="number" 
-                                        className="form-control"
-                                        onChange={ handleInputAmount }
+                            <br></br>
+                            <div class="col">
+                                <div className="form-register">
+                                <form onSubmit={handleSubmit(sendData)}>                  
+                                <div className="form-row" id="list">
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Unidad</th>
+                                            <th scope="col">Descripcion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {Details}
+                                        </tbody>
+                                    </table>
+                                </div> <br></br>
+                                <div className="row">
+                                    <label><strong>Monto Estimado: </strong></label> 
+                                    <div className="form-group col-md-6">
+                                            <div className="form-row" id="inputs">
+                                                <input
+                                                name="amount"
+                                                {...register("amount",{
+                                                    required:"El campo es requerido",
+                                                    min:{
+                                                        value:1,
+                                                        message:"Dato invalido"
+                                                    }
+                                                })}
+                                                value={adquisicion.amount}
+                                                type="number" 
+                                                className="form-control"
+                                                onChange={ handleInputAmount }
+                                                ></input>
+                                                {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
+                                            </div>
+                                    </div>
+                                </div> <br></br><br></br>
+                                <div className="form-row">
+                                    <div className="form-group col-md-6" align="left">
+                                        <input 
+                                        name="files"
+                                        type="file" 
+                                        id="files" 
+                                        multiple 
+                                        onChange = {fileSelectHandler}
                                         ></input>
-                                        {errors.amount && <span className="text-danger text-small d-block mb-2">{errors.amount.message}</span>}
+                                        <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
+                                        <ol>
+                                            {namefile.map((name)=>{
+                                                return(
+                                                    <li>{name}</li>
+                                                )
+                                            })}
+                                        </ol>
+                                        {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, docx y jpg</label>}
+                                    </div>
+                                    
+                                    <div className="form-group col-md-6" align="right">
+                                        <button type="button" className="btn btn-secondary" id="btnV" onClick={closePage}> Cancelar </button>
+                                        <button type="submit" className="btn btn-primary" id="btnV" > Enviar </button>
                                     </div>
                                 </div>
-                                    <ol>
-                                        {namefile.map((name)=>{
-                                            return(
-                                                <li>{name}</li>
-                                            )
-                                        })}
-                                    </ol>
-                                        
-                                        {fileValidate && <label style={{color:'red'}}>Solo se permite archivos pdf, docx y jpg</label>}
-                                <div className="form-group col-md-6" align="end">
-                                    <input 
-                                    name="files"
-                                    type="file" 
-                                    id="files" 
-                                    multiple 
-                                    onChange = {fileSelectHandler}
-                                    ></input>
-                                    <label for="files"><FileEarmarkArrowUpFill className="mb-1"/> Adjuntar archivo</label>
-                                </div>
-                            </div>
-                            <div className="form-row" >
-                                <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-secondary" id="btnV" onClick={closePage}> Cancelar </button>
-                                    <button type="submit" className="btn btn-info" id="btnV" > Enviar </button>
-                                </div>
-                            </div>
-                        </form>
-                                
+                            </form>        
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                     </div>
+                </div><br></br>
                     <ModalAgregarAdquisicion
                         abierto={abierto}
                         cerrarModal={cerrarModal}
                         updateDetails={updateDetails}
                     />
-                </div>
             </div>
         </>
     );

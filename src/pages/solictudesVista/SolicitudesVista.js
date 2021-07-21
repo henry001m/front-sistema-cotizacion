@@ -194,9 +194,10 @@ function SolicitudesVista(){
     return(
         <>
             <div className="container" align="left" style={{marginBottom:"160px"}}>
-                        <br></br>
-                        <h1>Solicitudes</h1>
-                        <br></br>
+                    <div class="card-header">
+                    <h4>Solicitudes</h4>
+                    </div>
+                    <br></br>
                     <div className="row">
                         <div className="col-6">
                             <input {...register("quotitation", { required: true })}
@@ -216,6 +217,7 @@ function SolicitudesVista(){
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Cod</th>
                                         <th scope="col">Unidad de Gasto</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Estado de Solicitud</th>
@@ -228,10 +230,22 @@ function SolicitudesVista(){
                                     return(
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>
-                                            <td >{quotitation.nameUnidadGasto}</td>
+                                            <td>{quotitation.id}</td>
+                                            <td>{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
-                                            <td>{quotitation.status}</td>
-                                            <td>{quotitation.statusResponse}</td>
+                                            <td>
+                                                { (quotitation.status=="Aceptado")?(<div class="badge badge-success text-wrap">{quotitation.status}</div>):
+                                                  ((quotitation.status=="Rechazado")?(<div class="badge badge-danger text-wrap">{quotitation.status}</div>):
+                                                  (<div class="badge badge-warning">{quotitation.status}</div>))
+                                                }
+                                            </td>
+                                            <td>
+                                                { (quotitation.statusResponse=="Finalizado")?(<div class="badge badge-success text-wrap">{quotitation.statusResponse}</div>):
+                                                  ((quotitation.statusResponse=="Denegado")?(<div class="badge badge-danger text-wrap">{quotitation.statusResponse}</div>):
+                                                  (quotitation.statusResponse=="En proceso")?(<div class="badge badge-warning">{quotitation.statusResponse}</div>):
+                                                  (<div class="badge badge-light">{quotitation.statusResponse}</div>))
+                                                }
+                                            </td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>

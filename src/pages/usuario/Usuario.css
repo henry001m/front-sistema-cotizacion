@@ -4,3 +4,11 @@ label.col-form-label{
     border-radius: 5px;
     width: 100%;
   }
+#btn-edit{
+  color: white;
+  background-color: #ffc107;
+}
+#btn-edit:hover{
+  color: #ffc107;
+  background-color: white;
+}

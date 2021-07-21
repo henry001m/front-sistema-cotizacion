@@ -49,8 +49,9 @@ const MainRegistroUnidad = () => {
     return (
         <>
             <div className="container" align="left">
-                <br></br>
-                <h1>Unidades de Gasto</h1>
+                <div class="card-header">
+                <h4>Unidades de Gasto</h4>
+                </div>
                 <br></br>
                 <div className="row">
                     <div className="col-6">
@@ -92,12 +93,11 @@ const MainRegistroUnidad = () => {
                                                 <td>{gasto.nameUnidadGasto}</td>
                                                 <td>{gasto.faculty}</td>
                                                 <td>{gasto.admin[0].name} {gasto.admin[0].lastName}</td>
-                                                <td><button className="btn  btn-warning" 
+                                                <td><button className="btn  btn-warning" id="btn-edit"
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
                                                             setGasto(gasto)
                                                         }}
-                                                        style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
                                             </tr>

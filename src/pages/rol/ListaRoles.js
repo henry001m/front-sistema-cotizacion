@@ -66,9 +66,10 @@ function ListaRoles(){
     return(
         <>
             <div className="container" align="left">
-                    <br></br>
-                    <h1>Roles</h1>
-                    <br></br>
+            <div class="card-header">
+                <h4>Roles</h4>
+                </div>
+                <br></br>
                     <div className="row">
                         <div className="col-6">
                             <input {...register("rol", { required: true })}
@@ -105,12 +106,11 @@ function ListaRoles(){
                                                 <td scope="row">{index+1}</td>
                                                 <td>{rol.nameRol}</td>
                                                 <td>{rol.description}</td>
-                                                <td><button className="btn  btn-warning" 
+                                                <td><button className="btn  btn-warning" id="btn-edit"
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
                                                             setRol(rol)
                                                         }}
-                                                        style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
                                             </tr>

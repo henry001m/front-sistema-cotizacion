@@ -1,24 +1,36 @@
 #cabecera{
-    background :dodgerblue;
+    background :#225fba;
     color: white;
-    font-family: Lato; 
     border-width: 5px;
     border-color: black;
+    padding-left: 30px;
 }
-
-#userImg{
-    color: white;
+.navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
 }
+.navbar.navbar-transparent {
+    background-color: transparent !important;
+    box-shadow: none;
+    padding-top: 25px;
+    color: #fff;
+  }
 
+.navbar.navbar-transparent .navbar-toggler .navbar-toggler-icon {
+    background-color: #fff;
+}
 #navmenu{
     border: 15px;
     border-color: black;
 }
 
-a.nav-link{
-    color: #47525e;
-}
-a.nav-link:hover{
-    background-color: #e5e9f2;
-    color: #47525e; 
-}
+#title-navbar {
+    font-size: 30px;
+    font-family: 'Segoe UI';
+    z-index: 1;
+    margin-bottom: 10px;
+    color: #fff;
+  }

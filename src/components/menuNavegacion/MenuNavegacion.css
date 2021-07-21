@@ -1,11 +1,3 @@
-#cabecera{
-    background :dodgerblue;
-    color: white;
-    font-family: Lato; 
-    border-width: 5px;
-    border-color: black;
-}
-
 #userImg{
     color: white;
     align-content: center;
@@ -17,28 +9,36 @@
     color: white;
 }
 #userDrop{
-    background :dodgerblue;
-    color: white;
-    
+  background :#225fba;
+  color: white;
 }
 #userDrop:hover{
-    color:dodgerblue;
+    color:#225fba;
     background:white;
  }
 #person{
     padding-right: 30px;
 }
-#navmenu{
-    border: 15px;
-    border-color: black;
+
+#t-navbar {
+  font-size: 30px;
+  font-family: 'Segoe UI';
+  z-index: 1;
+  margin-bottom: 10px;
+  padding-left: 25px;
+  color: #fff;
+}
+a.nav-link{
+  color: #47525e;
 }
 
-a.nav-link{
-    color: #47525e;
+.nav-pills .nav-link.active,
+.show>.nav-pills .nav-link{
+    background: #225fba  !important
 }
 a.nav-link:hover{
-    background-color: #e5e9f2;
-    color: #47525e; 
+  background-color: #e5e9f2;
+  color:#225fba;
 }
 .dropbtn {
     color: #47525e;

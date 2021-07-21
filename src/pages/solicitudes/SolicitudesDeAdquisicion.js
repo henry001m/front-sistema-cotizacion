@@ -122,7 +122,7 @@ function SolicitudesDeAdquisicion(){
                     {index+1}         
                 </th>
                 <td >
-                    {quotitation.nameUnidadGasto}         
+                    {quotitation.id}         
                 </td>
                 <td >
                     {quotitation.requestDate}         
@@ -159,21 +159,12 @@ function SolicitudesDeAdquisicion(){
 
     return(
         <>
-        <div className="container" align="left" style={{marginBottom:"100px"}}>
-                    <br></br>
-                    <h1>Solicitudes</h1>
-                    <br></br>
+        <div className="container" align="left">
+                <div class="card-header">
+                <h4>Solicitudes</h4>
+                </div>
+                <br></br>
                 <div className="row">
-                    <div className="col-6">
-                        <input {...register("solicitud", { required: true })}
-                                className="form-control"
-                                placeholder="Ingrese nombre unidad de gasto" 
-                                aria-label="Search"
-                                type="search"
-                                id = "search"
-                                onChange = {(e) => setSearch(e.target.value)}                                    
-                         /> 
-                    </div>
                     <div className="col-6" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 
                         <PlusCircle  className="mb-1"/> Nueva Solicitud </button>
@@ -186,7 +177,7 @@ function SolicitudesDeAdquisicion(){
                             <thead>
                                 <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Unidad de Gasto</th>
+                                <th scope="col">Cod</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Estado de Solicitud</th>
                                 <th scope="col">Estado de Cotización</th>

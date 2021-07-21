@@ -33,14 +33,19 @@ function Navbar() {
             <nav className="navbar navbar-info justify-content-between" id="cabecera">
             <h1> Sistema de Cotizaciones </h1>
             </nav>
+            
           ):(
             (user === null) ? 
                 (<div>
-                <nav className="navbar navbar-info justify-content-between" id="cabecera">
-                    <h1> Sistema de Cotizaciones </h1>
-                    <Button type="button" color="primary" onClick={abrirModal}>
-                        Iniciar Sesión
-                    </Button>
+                <nav className="navbar navbar-color-on-scroll fixed-top navbar-expand-lg navbar-transparent" id="cabecera">
+                    <div class="container">
+                        <div class="navbar-translate">
+                            <h1 id="title-navbar"> Sistema de Cotizaciones </h1>
+                        </div>
+                             <Button type="button" color="primary" onClick={abrirModal}>
+                              Iniciar Sesión</Button>
+                    </div>
+                   
                 </nav>
                 <LoginModal abierto={abierto} cerrarModal={cerrarModal}/> 
                 </div>):( <MenuNavegacion/>

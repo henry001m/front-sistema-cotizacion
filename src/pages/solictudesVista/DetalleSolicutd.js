@@ -122,46 +122,34 @@ function DetalleSolicitud(){
     return(
         <>
             <div className="container" align="left">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h1>Solicitud # {id}</h1>   
-                    </div>
-                    <div className="col-md-6" align="right">
-                        <button type="button" className="close" onClick={ closePage }>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                </div>
-                <br></br>
-                <div className="col" id="registro">
-                    <div className="form-register">
-                        <form>
-                        <div className="form-row" id="formData">
+                <div className="form-row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Solicitud N&#176; {id}
+                                <button type="button" className="close" onClick={ closePage }>
+                                    <span aria-hidden="true">&times;</span>
+                                </button></h4>
+                            </div>
+                            <div class="card-body">
+                            <div className="row">
                                 <div className="form-group col-md-4" >
-                                    <label>Unidad de gasto:</label>
-                                    <div className="form-row" id="input">
-                                        <label class="col-form-label">{nameUnidadGasto}</label>
-                                    </div>
+                                    <label><strong>Unidad de gasto: </strong></label> <label>{nameUnidadGasto}</label>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label>Nombre del Solicitante:</label>
-                                    <div className="form-row" id="input">
-                                        <label class="col-form-label">{aplicantName}</label>
-                                    </div>
+                                <label><strong>Solicitante: </strong></label> <label>{aplicantName}</label>
                                 </div>
                                 <div className="form-group col-md-4">
-                                    <label>Fecha de Solicitud:</label>
-                                    <div className="form-row" id="input">
-                                        <label class="col-form-label">{requestDate}</label>
-                                    </div>
+                                <label><strong>Fecha de Solicitud:</strong></label> <label>{requestDate}</label>
                                 </div>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group col-md">
-                                    <label>Detalle de solicitud</label>
+                            <br></br>
+                            <div className="row">
+                                <div className="form-group col-md-4">
+                                    <label><strong>Detalle de solicitud</strong></label>
                                 </div>
                             </div>
-                            <div className="form-row" id="lista">
+                            <div className="form-row"align="center">
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
@@ -176,46 +164,47 @@ function DetalleSolicitud(){
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Monto Estimado:</label>
-                                    <div className="form-row" id="input">
-                                        <label class="col-form-label">{amount}</label>
-                                    </div>
+                            <div className="row">
+                                <div className="form-group col-md-4">
+                                    <label><strong>Monto Estimado: </strong></label> <label>{amount}</label>
                                 </div>
-                                <div className="form-group col-md-6" style={{marginTop:"33px"}}>
-                                    <button type="button" className="btn btn-secondary"
-                                        disabled={disabledVerArchivos}
-                                        onClick={()=>setIsShowModalFile(true)}
-                                    >Ver Archivos</button>
-                                </div>
+                                <div style={{color:'red'}}>{messageAmount}</div>
+                                    {
+                                        messageAmount&&<div style={{color:'red'}}>Monto tope: {montoTope}</div>
+                                    }
                             </div>
-                            <div style={{color:'red'}}>{messageAmount}</div>
-                            {
-                                messageAmount&&<div style={{color:'red'}}>Monto tope: {montoTope}</div>
-                            }
+                            <br></br>
                             <div className="form-row" >
-                                <div className="form-group col" id="toolbar">
-                                    <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ alertMessgeInforme }> Rechazar solicitud </button>
-                                    <button type="button" className="btn btn-success"  id="btnV" disabled={!btnActivo} onClick={ acceptRequest}> Aceptar Solicitud </button>
-                                </div>
+                                    <div className="form-group col-md-6" align="left">
+                                            <button type="button" className="btn btn-secondary"
+                                                disabled={disabledVerArchivos}
+                                                onClick={()=>setIsShowModalFile(true)}
+                                            >Ver Archivos</button>
+                                    </div>
+                                    <div className="form-group col-md-6" align="right">
+                                        <button type="button" className="btn btn-danger"  id="btnV" disabled={!btnActivo} onClick={ alertMessgeInforme }> Rechazar solicitud </button>
+                                        <button type="button" className="btn btn-success"  id="btnV" disabled={!btnActivo} onClick={ acceptRequest}> Aceptar Solicitud </button>
+                                    </div>
                             </div>
-                        </form>
-                                
+                
+                            </div>
+                        </div>
                     </div>
+                    
+                    <VerArchivos
+                        isShowModalFile={isShowModalFile}
+                        closeModal={closeModal}
+                        id={id}    
+                    />
+                    <CrearInforme
+                            id={id}
+                            abierto={isShowModalInforme} 
+                            cerrarModal={cerrarModalInforme}
+                            report={null}
+                            rejectRequest={rejectRequest}
+                    />
                 </div>
-                <VerArchivos
-                    isShowModalFile={isShowModalFile}
-                    closeModal={closeModal}
-                    id={id}    
-                />
-                <CrearInforme
-                        id={id}
-                        abierto={isShowModalInforme} 
-                        cerrarModal={cerrarModalInforme}
-                        report={null}
-                        rejectRequest={rejectRequest}
-                />
+                <br></br>
             </div>
         </>
     );

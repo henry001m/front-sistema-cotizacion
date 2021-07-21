@@ -1,0 +1,28 @@
+#cont-portada{
+    background:rgba(6, 12, 34, 0.98);
+    color: #fff;
+    height: 600px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  .color-overlay {
+    width: 100%;
+    height: 100%;
+    background:rgba(6, 12, 34, 0.98);
+    opacity: .3;
+    position: absolute;
+  }
+  #title-portada {
+    font-size: 40px;
+    z-index: 1;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  #text-portada {
+    font-size: 40px;
+    z-index: 1;
+  }

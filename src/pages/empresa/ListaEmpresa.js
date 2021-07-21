@@ -51,8 +51,9 @@ function ListaEmpresa(){
       
     return (
         <div className="container" align="left">
-            <br></br>
-                <h1>Empresas</h1>
+            <div class="card-header">
+              <h4>Empresas</h4>
+            </div>
             <br></br>
             <div className="form-row">
                 <div className="col-6">                                
