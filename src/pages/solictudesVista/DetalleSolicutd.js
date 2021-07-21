@@ -122,6 +122,15 @@ function DetalleSolicitud(){
     return(
         <>
             <div className="container" align="left">
+                <div class="row page-titles">
+                    <div class="col-md-12 align-self-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Solicitudes de adquisicion</li>
+                            <li class="breadcrumb-item">Solicitud N&#176; {id}</li>
+                        </ol>
+                    </div>
+                </div>
+                <br></br>
                 <div className="form-row">
                     <div class="col-md-12">
                         <div class="card">

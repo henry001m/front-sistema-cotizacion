@@ -179,7 +179,7 @@ function VerSolicitud(){
                                 </div>
                                 <div style={{color:'red'}}>{messageAmount}</div>
                                 {
-                                    messageAmount&&<div style={{color:'red'}}>Monto tope: {montoTope}</div>
+                                    messageAmount&&<div style={{color:'red'}}>: {montoTope}</div>
                                 }
                             </div>
                             <br></br>

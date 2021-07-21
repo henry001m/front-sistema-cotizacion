@@ -191,8 +191,6 @@ function AgregarDetalleSolictud(){
                                     </button>
                                 </h4>
                             </div>
-                        
-                        <ModalHeader>Solicitud N&#176; 100</ModalHeader>
                         <div class="card-body">
                             <div className="row">
                                 <div className="form-group col-md-4" >

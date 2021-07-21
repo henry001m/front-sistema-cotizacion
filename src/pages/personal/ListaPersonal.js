@@ -47,10 +47,10 @@ function ListaPersonal(){
     return (
         <>
             <div className="container" align="left">
-            <div class="card-header">
-              <h4>Personal</h4>
-            </div>
-            <br></br>
+                <div class="card-header">
+                <h4>Personal</h4>
+                </div>
+                <br></br>
                 <div className="row">
                     <div className="col-6">
                     <input {...register("personal", { required: true })}
@@ -96,7 +96,7 @@ function ListaPersonal(){
                         </table>
                     </div>
                 </div>
-            </div>
+            </div><br></br><br></br><br></br><br></br>
         </>
     )
 }

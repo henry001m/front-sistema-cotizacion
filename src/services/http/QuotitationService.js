@@ -131,4 +131,31 @@ export async function getComparativeChart(idRe){
         console.log(error)
     }
 }
-
+/**devuelve las soliciudes de cotizaciones de una unidad Aministrativa por pagina*/
+export async function getQuotitationAdministrativeUnitPage(idUnit,page,search) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const config = {
+        params:search,
+        headers:{'Authorization': `Bearer ${token}`}
+    }
+    try {
+        const response = await API.get(`Request/page/${idUnit}?page=${page}`,config);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+/**devuelve las soliciudes de cotizaciones de una unidad de gasto por pagina*/
+export async function getQuotitationSpendingUnitPage(idUnit,page,search) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const config = {
+        params:search,
+        headers:{'Authorization': `Bearer ${token}`}
+    }
+    try {
+        const response = await API.get(`Request/spending/page/${idUnit}?page=${page}`,config);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
