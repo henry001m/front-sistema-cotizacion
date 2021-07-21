@@ -6,6 +6,7 @@ import './AgregarDetalleSolicitud.css'
 import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
+import swal from 'sweetalert';
 import { ModalHeader } from 'reactstrap'
 
 function AgregarDetalleSolictud(){
@@ -120,9 +121,9 @@ function AgregarDetalleSolictud(){
             }
             const token=window.localStorage.getItem("tokenContizacion");
             const headers = { headers: {'Authorization': `Bearer ${token}`}};
-            console.log("archivo que se manda",formData)
+            
             const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
-            console.log("respuesta ",res);
+            
         }
     }
 
@@ -132,9 +133,13 @@ function AgregarDetalleSolictud(){
                 const auxFecha = fecha.getFullYear()+"-"+(fecha.getMonth()+1)+"-"+fecha.getDate()
                 const obj = {nameUnidadGasto: adquisicion.nameUnidadGasto,aplicantName:adquisicion.aplicantName, requestDate:auxFecha, details:newDetails ,amount:adquisicion.amount, spending_units_id:adquisicion.spending_units_id};
                 const result = await createQuotitation(obj);
-                console.log(obj);
+
                 console.log("resultado ",result);
                 await onSubmit(result.success);
+                swal({
+                    text: `Registrada Solicitud Nº ${result.success}`,
+                    button: "Aceptar",
+                  });
                 reset();
                 closePage();
             } catch (error) {
