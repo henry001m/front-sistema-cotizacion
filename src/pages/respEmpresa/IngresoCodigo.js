@@ -2,7 +2,7 @@ import './IngresoCodigo.css'
 import { useHistory } from 'react-router-dom'
 import React, { useState } from  'react'
 import { useForm } from 'react-hook-form'
-import {searchCode} from '../../services/http/CompanyCodeService'
+import {searchCode} from '../../services/Http/CompanyCodeService'
 
 function IngresoCodigo() {
     let history = useHistory();
