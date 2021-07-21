@@ -7,6 +7,7 @@ import ModalAgregarAdquisicion from './ModalAgregarAdquisicion'
 import { createQuotitation, getInform } from '../../services/http/QuotitationService';
 import axios from 'axios';
 import swal from 'sweetalert';
+import {URL_API} from '../../services/const';
 import { ModalHeader } from 'reactstrap'
 
 function AgregarDetalleSolictud(){
@@ -122,7 +123,7 @@ function AgregarDetalleSolictud(){
             const token=window.localStorage.getItem("tokenContizacion");
             const headers = { headers: {'Authorization': `Bearer ${token}`}};
             
-            const res = await axios.post('http://127.0.0.1:8000/api/upload/'+id,formData,headers);
+            const res = await axios.post(URL_API+'/upload/'+id,formData,headers);
             
         }
     }

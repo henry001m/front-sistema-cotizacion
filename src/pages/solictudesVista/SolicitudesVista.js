@@ -10,6 +10,7 @@ import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
 import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
+import {URL_API} from '../../services/const';
 import { ModalHeader } from 'reactstrap';
 
 function SolicitudesVista(){
@@ -92,7 +93,7 @@ function SolicitudesVista(){
 
     const EnablebuttonImprimir=(quotitation)=>{
         if(quotitation.status=="Aceptado" && quotitation.statusResponse !== "Finalizado"){
-            const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
+            const urlQuotitation = URL_API+"/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
                     <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir cotización</a>
