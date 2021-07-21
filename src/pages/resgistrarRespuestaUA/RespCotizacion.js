@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './RespCotizacion.css';
 import { useForm } from "react-hook-form";
-import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/Http/CompanyCodeService';
+import {detailsQuotitation,registrarCotizacionUA,registrarCotizacionDetalleUA,registrarCotizacionDetalleFileUA,regitrarArchivoGeneralUA} from '../../services/http/CompanyCodeService';
 import DetalleFila from './DetalleFila';
-import { getEmpresas } from '../../services/Http/BussinessService';
+import { getEmpresas } from '../../services/http/BussinessService';
 import { useHistory, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 
