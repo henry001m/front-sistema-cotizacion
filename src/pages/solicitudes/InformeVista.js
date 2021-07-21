@@ -25,17 +25,11 @@ function InformeVista(props){
                 </ModalHeader>
                 <ModalBody>
                     <div className="form-row">
-                        <div className="form-group col-md-7">
-                            <div className="form-row">
-                                <h5>Encargado: </h5>
-                                <label>{props.report.administrative_username}</label>
-                            </div>
+                        <div className="form-group col-md-6" >
+                            <label><strong>Encargado: </strong></label> <label>{props.report.administrative_username}</label>
                         </div>
-                        <div className="form-group col-md-5">
-                            <div className="form-row">
-                                <h5>Fecha: </h5>
-                                <label>{props.report.dateReport}</label>
-                            </div>
+                        <div className="form-group col-md-6" >
+                            <label><strong>Fecha: </strong></label> <label>{props.report.dateReport}</label>
                         </div>
                     </div>
                     <div className="container" id="containerInforme">

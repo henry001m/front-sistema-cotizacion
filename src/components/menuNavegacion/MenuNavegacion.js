@@ -140,7 +140,8 @@ function MenuNavegacion (){
          {(bandera!=null | numRoles == 1)?(
            <div>   
            <nav className="navbar navbar-light justify-content-between" id="cabecera">
-               <h1> Sistema de Cotizaciones </h1>
+               <div class="navbar-translate"><h1 id="t-navbar"> Sistema de Cotizaciones </h1></div>
+               
                <div>
                    <li className="nav-container--item dropdown" id="person">
                            <div className="dropdown">

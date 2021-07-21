@@ -63,28 +63,24 @@ function MontoLimite() {
     return(
         <>
             <div className="container" align="left">
-                <br></br>
-                <br></br>
+            <div class="card-header">
+              <h4>Monto Limite</h4>
+            </div>
+            <br></br>
                     <div className="row">
-                        <div className="col-6">
+                        <div className="col-md-4" >
                             <div className="form-inline">
                                     <strong>Gestion Actual</strong>
                                     <input value="2021" className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}} readonly></input>
                             </div>
                         </div>
-                        <div className="col-6" align="right">
+                        <div className="col-md-4" align="right">
                             <div className="form-inline" align="right">
                                     <strong>Monto Limite Actual</strong>
                                     <input value={final.monto} className="form-control mr-sm-2" style={{width: "100px", marginLeft:"10px"}} readonly></input>
                             </div>
                         </div>
-                    </div>
-                    <br></br>
-                    <div className="row">
-                        <div className="col-6">
-                            
-                        </div>
-                        <div className="col-6" align="right">
+                        <div className="col-md-4" align="right">
                             <Button type="button" className="btn btn-success my-2 my-sm-0" onClick={abrirModal}> 
                             <PlusCircle  className="mb-1"/> Actualizar Monto </Button>
                         </div>

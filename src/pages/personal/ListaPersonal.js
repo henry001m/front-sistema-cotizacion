@@ -47,8 +47,9 @@ function ListaPersonal(){
     return (
         <>
             <div className="container" align="left">
-                <br></br>
-                <h1>Personal</h1>
+                <div class="card-header">
+                <h4>Personal</h4>
+                </div>
                 <br></br>
                 <div className="row">
                     <div className="col-6">
@@ -95,7 +96,7 @@ function ListaPersonal(){
                         </table>
                     </div>
                 </div>
-            </div>
+            </div><br></br><br></br><br></br><br></br>
         </>
     )
 }

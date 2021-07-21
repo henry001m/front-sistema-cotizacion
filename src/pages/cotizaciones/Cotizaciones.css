@@ -3,3 +3,7 @@
     border: 1px solid #ccc;
     overflow-y:auto;
   }
+#btn-eye:hover{
+  color: dodgerblue;
+  background-color: white;
+}

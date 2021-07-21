@@ -136,16 +136,23 @@ function SolicitudesDeAdquisicion(){
                     {index+1}         
                 </th>
                 <td >
-                    {quotitation.nameUnidadGasto}         
+                    {quotitation.id}         
                 </td>
                 <td >
                     {quotitation.requestDate}         
                 </td>
                 <td>
-                    {quotitation.status}         
+                   { (quotitation.status=="Aceptado")?(<div class="badge badge-success text-wrap">{quotitation.status}</div>):
+                    ((quotitation.status=="Rechazado")?(<div class="badge badge-danger text-wrap">{quotitation.status}</div>):
+                    (<div class="badge badge-warning">{quotitation.status}</div>))
+                    }       
                 </td>
                 <td>
-                    {quotitation.statusResponse}         
+                    { (quotitation.statusResponse=="Finalizado")?(<div class="badge badge-success text-wrap">{quotitation.statusResponse}</div>):
+                    ((quotitation.statusResponse=="Denegado")?(<div class="badge badge-danger text-wrap">{quotitation.statusResponse}</div>):
+                    (quotitation.statusResponse=="En proceso")?(<div class="badge badge-warning">{quotitation.statusResponse}</div>):
+                    (<div class="badge badge-light">{quotitation.statusResponse}</div>))
+                    }       
                 </td>
                 <td >
                     <li className="nav-container--item dropdown">
@@ -173,26 +180,29 @@ function SolicitudesDeAdquisicion(){
 
     return(
         <>
-        <div className="container" align="left" style={{marginBottom:"100px"}}>
-                    <br></br>
-                    <h1>Solicitudes</h1>
-                    <br></br>
+        <div className="container" align="left">
+                <div class="card-header">
+                <h4>Solicitudes</h4>
+                </div>
+                <br></br>
                 <div className="form-row">
-                    <div className="col-2">
-                        <h5>Estado de solicitud: </h5>
+                    <div className="col-4" style={{textAlign:"justify"}}>
+                        <h6>Buscar por estado de solicitud: </h6>
                     </div>
-                    <div className="col-3">
-                        <select 
-                            name="selectRol"
-                            className="form-control"
-                            onChange={ handleSelectChange }>
-                            <option value="">Todos</option>
-                            <option value="Aceptado">Aceptado</option>
-                            <option value="Rechazado">Rechazado</option>
-                            <option value="Pendiente">Pendiente</option>   
-                        </select>
-                    </div>
-                    <div className="col-7" align="right">
+                </div>
+                <div className="form-row">
+                        <div className="col-md-4" align="left">
+                            <select 
+                                name="selectRol"
+                                className="form-control"
+                                onChange={ handleSelectChange }>
+                                <option value="">Todos</option>
+                                <option value="Aceptado">Aceptado</option>
+                                <option value="Rechazado">Rechazado</option>
+                                <option value="Pendiente">Pendiente</option>   
+                            </select>
+                        </div>
+                    <div className="col-md-8" align="right">
                         <button type="button" className="btn btn-success my-2 my-sm-0" onClick={ ButtonAgregar }> 
                         <PlusCircle  className="mb-1"/> Nueva Solicitud </button>
                     </div>
@@ -204,7 +214,7 @@ function SolicitudesDeAdquisicion(){
                             <thead>
                                 <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Unidad de Gasto</th>
+                                <th scope="col">Cod</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Estado de Solicitud</th>
                                 <th scope="col">Estado de Cotización</th>
@@ -235,7 +245,7 @@ function SolicitudesDeAdquisicion(){
                 idSolicitud={idSolicitud}
                 report={report}
             />
-        </div>
+        </div><br></br><br></br><br></br>
         </>
     );
 }

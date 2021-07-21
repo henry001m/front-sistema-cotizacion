@@ -10,6 +10,7 @@ import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
 import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
+import { ModalHeader } from 'reactstrap';
 
 function SolicitudesVista(){
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -209,15 +210,18 @@ function SolicitudesVista(){
 
     return(
         <>
-            <div className="container" align="left" style={{marginBottom:"160px"}}>
-                        <br></br>
-                        <h1>Solicitudes</h1>
-                        <br></br>
+            <div className="container" align="left">
+                    <div class="card-header">
+                    <h4>Solicitudes</h4>
+                    </div>
+                    <br></br>
                     <div className="form-row">
-                        <div className="col-2" style={{textAlign:"justify"}}>
-                            <h5>Estado de solicitud: </h5>
+                        <div className="col-4" style={{textAlign:"justify"}}>
+                            <h6>Buscar por estado de solicitud: </h6>
                         </div>
-                        <div className="col-3">
+                    </div>
+                    <div className="form-row">
+                        <div className="col-4">
                             <select 
                                 name="selectRol"
                                 className="form-control"
@@ -236,6 +240,7 @@ function SolicitudesVista(){
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">Cod</th>
                                         <th scope="col">Unidad de Gasto</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Estado de Solicitud</th>
@@ -248,10 +253,22 @@ function SolicitudesVista(){
                                     return(
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>
-                                            <td >{quotitation.nameUnidadGasto}</td>
+                                            <td>{quotitation.id}</td>
+                                            <td>{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
-                                            <td>{quotitation.status}</td>
-                                            <td>{quotitation.statusResponse}</td>
+                                            <td>
+                                                { (quotitation.status=="Aceptado")?(<div class="badge badge-success text-wrap">{quotitation.status}</div>):
+                                                  ((quotitation.status=="Rechazado")?(<div class="badge badge-danger text-wrap">{quotitation.status}</div>):
+                                                  (<div class="badge badge-warning">{quotitation.status}</div>))
+                                                }
+                                            </td>
+                                            <td>
+                                                { (quotitation.statusResponse=="Finalizado")?(<div class="badge badge-success text-wrap">{quotitation.statusResponse}</div>):
+                                                  ((quotitation.statusResponse=="Denegado")?(<div class="badge badge-danger text-wrap">{quotitation.statusResponse}</div>):
+                                                  (quotitation.statusResponse=="En proceso")?(<div class="badge badge-warning">{quotitation.statusResponse}</div>):
+                                                  (<div class="badge badge-light">{quotitation.statusResponse}</div>))
+                                                }
+                                            </td>
                                             <td>
                                                 <div className="dropdown">
                                                     <button className="dropbtn"><ChevronLeft/> Acciones</button>
@@ -314,7 +331,7 @@ function SolicitudesVista(){
                         cerrarModal={cerrarModalInformeCotizacion}
                         report={reportQuotitation}
                     />
-            </div>
+            </div><br></br><br></br><br></br><br></br><br></br>
         </>
     );
 }

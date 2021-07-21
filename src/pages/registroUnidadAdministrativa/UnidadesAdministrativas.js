@@ -46,9 +46,10 @@ function UnidadesAdministrativas() {
     return(
         <>
             <div className="container" align="left">
-                        <br></br>
-                        <h1>Unidades Administrativas</h1>
-                        <br></br>
+                <div class="card-header">
+                <h4>Unidades Administrativas</h4>
+                </div>
+                <br></br>
                     <div className="row">
                         <div className="col-6">
                             <input {...register("unit", { required: true })}
@@ -88,12 +89,11 @@ function UnidadesAdministrativas() {
                                                 <td>{administrativeUnit.name}</td>
                                                 <td>{administrativeUnit.faculty}</td>
                                                 <td>{administrativeUnit.admin[0].name} {administrativeUnit.admin[0].lastName}</td>
-                                                <td><button className="btn  btn-warning" 
+                                                <td><button className="btn  btn-warning" id="btn-edit"
                                                         onClick={()=>{
                                                             setAbrirEditor(true)
                                                             setAdministrativeUnit(administrativeUnit)
                                                         }}
-                                                        style={{color:'white', backgroundColor:'orange'}}
                                                     ><PencilSquare/></button>
                                                 </td>
                                                 </tr>
