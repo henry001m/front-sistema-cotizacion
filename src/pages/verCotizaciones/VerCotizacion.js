@@ -87,7 +87,6 @@ function VerCotizacion(props){
                 </div>
                 <h3>Detalle por item de Cotización</h3>
                 <div className="col">
-                {/* <div className="col" style={{marginLeft:"5%", marginRight:"5%"}}></div> */}
                     <table className="table table-striped">
                         <thead>
                             <tr>
@@ -113,10 +112,6 @@ function VerCotizacion(props){
                                                 <td>{detalle.description}</td>
                                                 <td>{detalle.unitPrice}</td>
                                                 <td>{detalle.totalPrice}</td>
-                                                {/* <td><button className="btn btn-warning" 
-                                                style={{color:"white", backgroundColor:"orange"}}
-                                                onClick={()=>AbrirModalOferta(detalle)}
-                                                ><BagPlusFill/></button></td> */}
                                                 <td>Marca: {detalle.brand} <br></br>Modelo: {detalle.model}<br></br>Industria: {detalle.industry}<br></br> Tiempo de Garantia: {detalle.warrantyTime}</td>
                                                 <td>
                                                 { (files[index])?
@@ -155,11 +150,6 @@ function VerCotizacion(props){
                     </div>
                 </div>
             </div>
-            {/* <ModalVerOferta 
-            abrirOferta={abrirOferta} 
-            cerrarOferta={cerrarOferta} 
-            oferta={oferta}
-            file={file}/> */}
         </>
     );
 }

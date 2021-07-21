@@ -1,5 +1,4 @@
 import React, { Fragment,useState,useEffect } from 'react'
-import './Home.css';
 function Home(){
     const [user, setUser] = useState(null);
     return(

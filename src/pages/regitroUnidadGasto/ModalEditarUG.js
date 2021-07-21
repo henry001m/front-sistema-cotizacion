@@ -10,11 +10,7 @@ function ModalEditarUG (props){
     const [ flag, setFlag] = useState(false);
     const [ idAdmin, setIdAdmin ] = useState("");
     const [ admin, setAdmin] = useState({id:"",name:"",lastName:""})
-    // const [ admins, setAdmins] = useState([
-    //     {id:1 , name:"Rodrigo Cespedes"},
-    //     {id:2 , name:"Yurguen Pariente"},
-    //     {id:3 , name:"Ramiro Saavedra"},
-    // ]);
+
     const modalStyles={
         top:"10%",
         transfrom: 'translate(-50%, -50%)'

@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import './SolicitudesVista.css'
 import { useForm } from "react-hook-form";
-import { getQuotitationAdministrativeUnit} from '../../services/http/QuotitationService';
+import { getQuotitationAdministrativeUnitPage} from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import { Eye, FileEarmarkText, Envelope, ChevronLeft, Printer, Coin } from 'react-bootstrap-icons'
+import Pagination from 'react-js-pagination';
 import EnviarCotizacion from '../enviarFormulario/EnviarCotizacion'
 import CrearInforme from '../informe/CrearInforme';
 import { getReport } from '../../services/http/ReportService';
@@ -24,21 +25,31 @@ function SolicitudesVista(){
     const [reportQuotitation, setReportQuotitation ] = useState(null)
     const [search, setSearch] = useState("");
     const [filteredQuontitation, setFilteredQuotitation] = useState([])
+    const [currentPage, setCurrentPage] = useState(null)
+    const [perPage, setPerPage] = useState(null)
+    const [total, setTotal] = useState(null)
+    const [status, setStatus] = useState("")
+
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
-        async function getAllQuotitations() {
-            try {
-                const result = await getQuotitationAdministrativeUnit(idUA);
-                const resultQuotitations=result.request_quotitations;
-                console.log(resultQuotitations)
-                setQuotitations(resultQuotitations);
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getAllQuotitations();
+        getAllQuotitations(1,"");
         //eslint-disable-next-line
     }, []);
+
+    async function getAllQuotitations(page,status) {
+        try {
+            const aux = {status:status}
+            const result = await getQuotitationAdministrativeUnitPage(idUA,page,aux)
+            console.log(result.data)
+            setQuotitations(result.data);
+            setCurrentPage(result.current_page)
+            setPerPage(result.per_page)
+            setTotal(result.total)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         setFilteredQuotitation(
             quotitations.filter((quantitation) =>
@@ -79,7 +90,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonImprimir=(quotitation)=>{
-        if(quotitation.status=="Aceptado"){
+        if(quotitation.status=="Aceptado" && quotitation.statusResponse !== "Finalizado"){
             const urlQuotitation = "http://127.0.0.1:8000/api/requestquotitationpdf/"+quotitation.id;
             return(
                 <button className="dropdown-item">
@@ -191,22 +202,31 @@ function SolicitudesVista(){
         }
     }
 
+    const handleSelectChange = (event) => {
+        setStatus(event.target.value)
+        getAllQuotitations(1,event.target.value)
+    }
+
     return(
         <>
             <div className="container" align="left" style={{marginBottom:"160px"}}>
                         <br></br>
                         <h1>Solicitudes</h1>
                         <br></br>
-                    <div className="row">
-                        <div className="col-6">
-                            <input {...register("quotitation", { required: true })}
+                    <div className="form-row">
+                        <div className="col-2" style={{textAlign:"justify"}}>
+                            <h5>Estado de solicitud: </h5>
+                        </div>
+                        <div className="col-3">
+                            <select 
+                                name="selectRol"
                                 className="form-control"
-                                placeholder="Ingrese unidad de gasto" 
-                                aria-label="Search"
-                                type="search"
-                                id = "search"
-                                onChange = {(e) => setSearch(e.target.value)}                                    
-                           />
+                                onChange={ handleSelectChange }>
+                                <option value="">Todos</option>
+                                <option value="Aceptado">Aceptado</option>
+                                <option value="Rechazado">Rechazado</option>
+                                <option value="Pendiente">Pendiente</option>   
+                            </select>
                         </div>
                     </div>
                     <br></br>
@@ -263,6 +283,18 @@ function SolicitudesVista(){
                                     
                                 </tbody>
                             </table>
+                        </div>
+                        <div className="form-row">
+                            <div className="col">
+                                <Pagination
+                                activePage = {currentPage}
+                                totalItemsCount = {total}
+                                itemsCountPerPage = {perPage}
+                                onChange = {(pageNumber)=> getAllQuotitations(pageNumber,status)}
+                                itemClass = "page-item"
+                                linkClass = "page-link"
+                                />
+                            </div>
                         </div>
                     </div>
                     <EnviarCotizacion

@@ -11,7 +11,6 @@ function EnviarCotizacion( props ){
     const {register, formState: { errors }, handleSubmit, reset} = useForm();
     const [emailMessage, setEmailMessage]  = useState({emails:"", description:""});
     const [espera, setEspera] = useState("")
-    /**esta es la lista de los emails */
     const [correos, setCorreos ] = useState([""])
     const [errorsCorreos, setErrorsCorreos] = useState([""])
 
@@ -38,9 +37,7 @@ function EnviarCotizacion( props ){
     };
 
     const handleInputChange = (event) => {
-        //console.log("cambio",event.target.value[0])
         if(event.target.value[0]==" "){
-            //console.log("primer",event.target.value[0])
             setEmailMessage({
                 ...emailMessage,
                 [event.target.name] : event.target.value.substring(1)
@@ -72,6 +69,7 @@ function EnviarCotizacion( props ){
             swal({
                 text: result.data.result,
                 button: "Aceptar",
+                icon:"success"
               });
             setEmailMessage({email:"",description:""});
             setEspera("");

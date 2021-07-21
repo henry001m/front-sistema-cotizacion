@@ -113,9 +113,8 @@ function MenuNavegacion (){
                 console.log(user)
                 setUserName(user.user.name);
                 setLogin(true)
-                if(user.user.roles.length === 1){ //si solo hay un rol
+                if(user.user.roles.length === 1){ 
                     setRolEntrante(user.user.roles[0])
-                    //console.log("entra a menu navegacion CON ESTE UNICO ROL",user.user.roles[0]);
                     cambiarPermisos(user.user.roles[0].permissions)
                     setUserRol(user.user.roles[0].nameRol)
                     setNumRoles(1)
@@ -183,11 +182,7 @@ function MenuNavegacion (){
                            <NavLink className="nav-link" to="/home"><HouseDoorFill style={{height:'23px',width:'23px'}}/></NavLink>
                        </li>
                    }
-                   {/* {perfil &&
-                       <li className="nav-container--item">
-                           <NavLink className="nav-link" type="button" to="/perfil">Mi Perfil</NavLink>
-                       </li>
-                   } */}
+                  
                    {realizarSolicitudesAdqui &&
                        <li className="nav-container--item">
                            <NavLink className="nav-link" type="button" to={`/SolicitudesDeAdquisicion/${idUnitS}/${nameUnitS}`}>Solicitudes De Adquisicion</NavLink>

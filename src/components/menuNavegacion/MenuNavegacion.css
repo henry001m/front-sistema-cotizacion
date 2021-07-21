@@ -8,7 +8,6 @@
 
 #userImg{
     color: white;
-    /* background:royalblue; */
     align-content: center;
     padding-bottom: 20px;
     height: 55px;
@@ -16,7 +15,6 @@
 }
 #userButton{
     color: white;
-    /* background: gold; */
 }
 #userDrop{
     background :dodgerblue;

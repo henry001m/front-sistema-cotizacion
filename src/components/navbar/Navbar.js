@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import LoginModal from '../../pages/IniciarSesion/IniciarSesionModal';
+import LoginModal from '../../pages/iniciarSesion/IniciarSesionModal';
 import MenuNavegacion from '../menuNavegacion/MenuNavegacion';
 import {Button} from 'reactstrap'
 import './Navbar.css'
@@ -19,7 +19,6 @@ function Navbar() {
             try {
                 const user = JSON.parse(window.localStorage.getItem("userDetails"));
                 setUser(user.user);
-                //console.log(user.user);
             } catch (error) {
                 console.log(error);
             }

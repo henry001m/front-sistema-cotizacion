@@ -155,15 +155,6 @@ function EditarRol (props){
                     ></input>
                     {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                 </div>
-                {/* <div className="form-group col-md-12">
-                    <h6>Tipo de Unidad:</h6>
-                <select 
-                    name="SelectUnit"
-                    className="form-control"
-                    disabled>
-                        <option value="">Unidad Administrativa</option>
-                    </select>
-                </div> */}
                 <div className="form-group col-md-12">
                         <h6>Permisos:</h6>                       
                     <div class="modal-table"> 

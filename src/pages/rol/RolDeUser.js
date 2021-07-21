@@ -135,25 +135,6 @@ function RolDeUser(props){
                                 />
                                 {errors.description && <span className="text-danger text-small d-block mb-2">{errors.description.message}</span>}
                         </div>
-                        {/* <div className="form-group col-md-12">
-                            <h6>Tipo de Unidad:</h6>
-                                <select 
-                                name="selectUnit"
-                                {...register("selectUnit",{
-                                    required:"Campo requerido"
-                                })}
-                                className="form-control">
-                                    <option value="">Seleccione tipo unidad</option>
-                                    {
-                                    units.map((unit)=>{
-                                        return(
-                                            <option value={unit.id}>{unit.typeUnit}</option>   
-                                        )
-                                    })
-                                }
-                                </select>
-                                {errors.selectUnit && <span className="text-danger text-small d-block mb-2">{errors.selectUnit.message}</span>}
-                        </div> */}
                         <div className="form-group col-md-12">
                             <h6>Asignar Permisos:</h6>
                             <div class="modal-table">
