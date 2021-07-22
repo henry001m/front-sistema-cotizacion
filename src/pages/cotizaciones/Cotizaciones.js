@@ -49,6 +49,7 @@ function Cotizaciones(props) {
                 if(result.Cotizaciones.length>2){
                     setFlagCotizar(false);
                 }
+                console.log(result);
             } catch (error) {
                 console.log(error)
             }
@@ -132,7 +133,7 @@ function Cotizaciones(props) {
               </div><br></br>
             </div>
         </div><br></br><br></br><br></br><br></br><br></br>
-            <SolicitudesCotizacion abierto={ abierto } cerrarSolicitudes = {cerrarSolicitudes} />  
+            <SolicitudesCotizacion id={id} abierto={ abierto } cerrarSolicitudes = {cerrarSolicitudes} />  
         </> 
     )
 }

@@ -22,8 +22,9 @@ function ImprimirCotizacion(props){
     }
 
 
-    const servicioImprimir =(event)=>{
-        event.preventDefault()
+    const actualizarImpresoVerify =()=>{
+        props.actualizar(true);
+        closeModal()
     }
     
     useEffect(()=>{
@@ -72,7 +73,7 @@ function ImprimirCotizacion(props){
                
             </ModalBody>
             <ModalFooter>    
-                <a className="btn btn-primary" target="true" href={urlPdf} style={{textDecoration:'none', color:"#fff"}}> Listo</a>
+                <a onClick={actualizarImpresoVerify} className="btn btn-primary" target="true" href={urlPdf} style={{textDecoration:'none', color:"#fff"}}> Listo</a>
             </ModalFooter>
         </Modal>
         

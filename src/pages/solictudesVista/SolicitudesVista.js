@@ -32,12 +32,16 @@ function SolicitudesVista(){
     const [perPage, setPerPage] = useState(null)
     const [total, setTotal] = useState(null)
     const [status, setStatus] = useState("")
+    const [updateListQuote, setUpdateListQuote] = useState(false);
 
+    const actualizar = (data) => {
+        setUpdateListQuote(data);
+    }
     useEffect(() => {
-        const user = JSON.parse(window.localStorage.getItem("userDetails"));
+        
         getAllQuotitations(1,"");
-        //eslint-disable-next-line
-    }, []);
+        
+    }, [updateListQuote]);
 
     async function getAllQuotitations(page,status) {
         try {
@@ -111,7 +115,7 @@ function SolicitudesVista(){
     }
 
     const EnablebuttonQuotitation = (quotitation) =>{
-        if(quotitation.statusResponse==="En proceso" || quotitation.statusResponse==="Finalizado"){
+        if(quotitation.verify){
             return(
                 <button className="dropdown-item" onClick={() => {history.push({pathname:`/cotizaciones/${quotitation.id}`,data:quotitation});}}>
                     <Coin/> Cotizaciones
@@ -332,6 +336,7 @@ function SolicitudesVista(){
                     </div>
                     <EnviarCotizacion
                         id={quotitationId}
+                        actualizar={actualizar}
                         abiertoEmail={abiertoEmail} 
                         cerrarModal={cerrarModalEmail}
                     />
@@ -344,6 +349,7 @@ function SolicitudesVista(){
                     />
                     <ImprimirCotización
                         id={quotitationId}
+                        actualizar={actualizar}
                         abierto={abiertoModalImprimir}
                         cerrarModal = {cerrarModalImprimir}
                     />

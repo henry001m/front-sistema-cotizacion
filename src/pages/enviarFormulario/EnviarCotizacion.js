@@ -66,6 +66,7 @@ function EnviarCotizacion( props ){
             console.log(aux,props.id);
             document.getElementById('btnIE').disabled=true;
             const result = await sendEmail(aux,props.id);
+            props.actualizar(true);
             swal({
                 text: result.data.result,
                 button: "Aceptar",

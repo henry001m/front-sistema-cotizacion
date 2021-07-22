@@ -182,3 +182,22 @@ export async function getCodeNotAnswer(idRe){
         console.log(error)
     }
 }
+
+export async function solicitudesDeCotizacion(id){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`ua/quotitacion/all/${id}`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+export async function verificarSolicitudDeCotizacion(id){
+    try {
+        const response = await API.get(`ua/quotitacion/verify/${id}`);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
