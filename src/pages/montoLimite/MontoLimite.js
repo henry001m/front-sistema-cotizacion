@@ -63,10 +63,10 @@ function MontoLimite() {
     return(
         <>
             <div className="container" align="left">
-            <div class="card-header">
-              <h4>Monto Limite</h4>
-            </div>
-            <br></br>
+                <div class="card-header">
+                <h4>Monto Limite</h4>
+                </div>
+                <br></br>
                     <div className="row">
                         <div className="col-md-4" >
                             <div className="form-inline">
@@ -106,7 +106,7 @@ function MontoLimite() {
                             </table>
                         </div>
                     </div>
-            </div>
+            </div><br></br><br></br>
         </>
     );
 };

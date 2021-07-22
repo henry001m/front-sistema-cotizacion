@@ -30,9 +30,13 @@ function Navbar() {
         <> 
           {(window.location.pathname=="/ingresoCodigo") ? 
           (
-            <nav className="navbar navbar-info justify-content-between" id="cabecera">
-            <h1> Sistema de Cotizaciones </h1>
-            </nav>
+            <nav className="navbar navbar-light justify-content-between" id="cabecera">
+            <div class="container">
+                <div class="navbar-translate">
+                    <h1 id="t-navbar"> Sistema de Cotizaciones </h1>
+                </div>
+            </div> 
+         </nav>
             
           ):(
             (user === null) ? 
