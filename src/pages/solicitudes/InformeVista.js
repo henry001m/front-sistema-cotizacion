@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap'
 
 function InformeVista(props){
 
@@ -36,6 +36,9 @@ function InformeVista(props){
                         <div dangerouslySetInnerHTML={convertFromJSONToHTML(props.report.description)} ></div >
                     </div>
                 </ModalBody>
+                <ModalFooter>
+                <button className="btn btn-secondary" style={{marginRight:"5px"}} onClick={closeModal}>Cerrar</button>
+                </ModalFooter>
             </Modal>
         </>
     )

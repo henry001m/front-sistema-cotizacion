@@ -60,7 +60,7 @@ function SolicitudesVista(){
         );
     }, [search,quotitations]);
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="Pendiente"){
+        if(quotitation.statusReport){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
                     <FileEarmarkText/> Informe Solicitud

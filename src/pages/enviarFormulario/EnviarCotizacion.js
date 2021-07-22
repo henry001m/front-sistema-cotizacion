@@ -195,7 +195,7 @@ function EnviarCotizacion( props ){
                                             </div>
                                         </div>
                                         <div className="form-row  justify-content-end" align="right">
-                                                <div style={{color:"red"}}>
+                                                <div style={{color:"green"}}>
                                                     {espera}
                                                 </div>
                                                 <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
