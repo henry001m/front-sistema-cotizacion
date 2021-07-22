@@ -192,7 +192,7 @@ function RespCotizacion(props) {
                                       <div className="col">
                                             <div className="form-row">
                                                 <div className="col-md-4">
-                                                    <select {...register("codigo",{required:true})} className="form-select form-control" aria-label="Default select example">
+                                                    <select {...register("idQuotation",{required:true})} className="form-select form-control" aria-label="Default select example">
                                                         <option value="" >Seleccione codigo cotizacion</option>
                                                         {
                                                             codigos.map((cod)=>(
@@ -200,7 +200,7 @@ function RespCotizacion(props) {
                                                             ))
                                                         }
                                                     </select>
-                                                    {errors.codigo?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                                    {errors.idQuotation?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                                 </div>
                                                 <div className="col-md-4">
                                                     <select {...register("idEmpresa",{required:true})} className="form-select form-control" aria-label="Default select example">
