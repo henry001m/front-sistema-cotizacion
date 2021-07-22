@@ -13,6 +13,7 @@ function ImprimirCotizacion(props){
     var idBussines = 0;
     const [urlPdf, setUrlPdf] = useState("");
     const closeModal=()=>{
+        setUrlPdf(URL_API+"/v2requestquotitationpdf/"+props.id+"/0");
         props.cerrarModal()
     }
 
@@ -24,7 +25,7 @@ function ImprimirCotizacion(props){
 
     const actualizarImpresoVerify =()=>{
         props.actualizar(true);
-        closeModal()
+        
     }
     
     useEffect(()=>{

@@ -101,7 +101,7 @@ function Cotizaciones(props) {
                                 <thead>
                                     <tr>
                                         <th width="5%" scope="col">#</th>
-                                        <th width="10%" scope="col">Cod.</th>
+                                        <th width="10%" scope="col">Codigo</th>
                                         <th width="30%" scope="col">Empresa</th>
                                         <th width="20%" scope="col">Items Cotizados</th>
                                         <th width="20%" scope="col">Total en Bs</th>

@@ -255,7 +255,7 @@ function SolicitudesVista(){
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Cod</th>
+                                        <th scope="col">Codigo</th>
                                         <th scope="col">Unidad de Gasto</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Estado de Solicitud</th>
@@ -268,12 +268,7 @@ function SolicitudesVista(){
                                     return(
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>
-                                            <td>
-                                                { (quotitation.id>0 && quotitation.id<10)?(<div >00000{quotitation.id}</div>):
-                                                  ((quotitation.id>9 && quotitation.id<100)?(<div >0000{quotitation.id}</div>):
-                                                  (<div >000{quotitation.id}</div>))
-                                                }
-                                            </td>
+                                            <td>{quotitation.id}</td>
                                             <td>{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>
