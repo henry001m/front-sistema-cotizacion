@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import FileViewer from 'react-file-viewer'
 import { useParams } from 'react-router-dom'
+import {URL_API} from '../../services/const';
 
 function VerArchivoCotizacion(){
     
     const {aux} = useParams();
     const {fl} = useParams();
 
-    const file = 'http://127.0.0.1:8000/api/quotation/showFiles/detail/'+fl;
+    const file = URL_API+'/quotation/showFiles/detail/'+fl;
     const [type, setType] = useState("")
 
     useEffect(() => {
@@ -26,9 +27,9 @@ function VerArchivoCotizacion(){
     const getRuta = () => {
         console.log(aux)
         if(aux==1){
-            return('http://127.0.0.1:8000/api/quotation/showFiles/detail/'+fl)
+            return(URL_API+'/quotation/showFiles/detail/'+fl)
         }else{
-            return('http://127.0.0.1:8000/api/ua/quotation/showFiles/detail/'+fl)
+            return(URL_API+'/ua/quotation/showFiles/detail/'+fl)
         }
     }
 
