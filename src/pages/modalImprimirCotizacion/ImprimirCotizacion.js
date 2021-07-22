@@ -1,59 +1,36 @@
 import React, {useState, useEffect} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { getEmpresas } from '../../services/http/BussinessService';
-import { getPdf} from '../../services/http/QuotitationService'
-import { useHistory, useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import {URL_API} from '../../services/const';
 
 
 function ImprimirCotizacion(props){
-    const { register, formState: { errors },handleSubmit, reset } = useForm();
     const [emp, setEmp] = useState([]);
-    const {idUA} = useParams();
-    const [quotitations, setQuotitations] = useState([]);
-    const [flag, setFlag] = useState(false);
-    const [idEmp, setIdEmp ] = useState([])
-    const urlQuotitation = URL_API+"/requestquotitationpdf/"+props.id;
-
-    const getpdf = async () => {
-        try {
-            const result = await getPdf(props.id,"smartcube@gmail.com", "Smart Cube")
-            console.log(result.data)
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }  
-
-    console.log(props.id)
+    const {id} = props;
     
-
+    
+    var idBussines = 0;
+    const [urlPdf, setUrlPdf] = useState("");
     const closeModal=()=>{
         props.cerrarModal()
-        reset()
-    }
-
-    const updateEmpresas = ()=>{
-        setFlag(!flag);
     }
 
     const handleSelectChange = (event) => {
-        console.log("funciona")
-        setIdEmp({
-            ...idEmp,
-           [event.target.name]: event.target.value
-        })
-        
+        idBussines= event.target.value;
+        setUrlPdf(URL_API+"/v2requestquotitationpdf/"+props.id+"/"+idBussines);
     }
+
 
     const servicioImprimir =(event)=>{
         event.preventDefault()
     }
-
+    
     useEffect(()=>{
         const fetchData = async () => {
             try {
+                console.log("id de cotizacion"+id);
+                setUrlPdf(URL_API+"/v2requestquotitationpdf/"+id+"/0");
                 const response = await getEmpresas();
                 console.log(response)
                 setEmp(response.business);
@@ -62,16 +39,13 @@ function ImprimirCotizacion(props){
             }
             };
             fetchData();
-    }, []);
+    }, [id]);
 
 
-    console.log("esto",emp)
-    console.log(emp.nameEmpresa)
     return(
         <>
         <div>
         <Modal isOpen={props.abierto}>
-            <form onSubmit={servicioImprimir}>
             <ModalHeader toggle={closeModal} >
                Imprimir Cotización
             </ModalHeader>
@@ -84,7 +58,7 @@ function ImprimirCotizacion(props){
                     className="form-control"
                     onChange={ handleSelectChange }
                     >
-                        <option >Empresas</option>
+                        <option value={0} >Seleccione empresa</option>
                         {
                             emp.map((empresa, index)=>{
                                return(
@@ -97,12 +71,9 @@ function ImprimirCotizacion(props){
                 </div>
                
             </ModalBody>
-            <ModalFooter>
-                <Button   type= "submit" color="primary" onSubmit={getpdf}>
-                        Listo
-                </Button>
+            <ModalFooter>    
+                <a className="btn btn-primary" target="true" href={urlPdf} style={{textDecoration:'none', color:"#fff"}}> Listo</a>
             </ModalFooter>
-            </form>
         </Modal>
         
     </div>

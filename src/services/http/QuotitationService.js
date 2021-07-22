@@ -74,11 +74,11 @@ export async function getRequest(id) {
 }
 
 /**devuleve el pdf de la solicitud */
-export async function getPdf(id) {
+export async function getPdf(id,bussunes) {
     const token=window.localStorage.getItem("tokenContizacion");
     const headers = { headers: {'Authorization': `Bearer ${token}`}};
     try {
-        const response = await API.get(`/requestquotitationpdf`,headers);
+        const response = await API.get(`/v2requestquotitationpdf`);
         return response.data;
     } catch (error) {
         console.log(error)
