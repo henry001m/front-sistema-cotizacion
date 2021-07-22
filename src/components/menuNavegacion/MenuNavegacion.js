@@ -257,7 +257,7 @@ function MenuNavegacion (){
                 setRolEntrante={setRolEntrante}
                 />
                 <nav className="navbar navbar-light justify-content-between" id="cabecera">
-                <h1> Sistema de Cotizaciones </h1>
+                <h1 id="t-navbar"> Sistema de Cotizaciones </h1>
                 <div>
                 <li className="nav-container--item dropdown" id="person">
                 <div className="dropdown">

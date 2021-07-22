@@ -7,7 +7,7 @@ import { getEmpresas } from '../../services/http/BussinessService';
 import { useHistory, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import { ModalHeader } from 'reactstrap';
-
+import { getCodeNotAnswer } from '../../services/http/QuotitationService';
 function RespCotizacion(props) {
     const {id} = useParams();
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -25,12 +25,7 @@ function RespCotizacion(props) {
     const [fileValidate, setFileValidate] = useState(false);
     const [fls, setFls] = useState(null);
     const [existeFile, setExisteFile] = useState("");
-    const [codigos, setCodigos] = useState([
-        {id:"000001"},
-        {id:"000002"},
-        {id:"000003"},
-        {id:"000004"},
-    ]);
+    const [codigos, setCodigos] = useState([]);
     const detallesCotizado =(dato)=>{
         setMessage("");
         var yaExiste = false;
@@ -159,7 +154,8 @@ function RespCotizacion(props) {
                 setDetalles(response);
                 const res = await getEmpresas();
                 setEmpresas(res.business);
-                console.log(res)
+                const resp = await getCodeNotAnswer(id);
+                setCodigos(resp);
             } catch (error) {
                 console.log(error);
             }
@@ -196,15 +192,15 @@ function RespCotizacion(props) {
                                       <div className="col">
                                             <div className="form-row">
                                                 <div className="col-md-4">
-                                                    <select {...register("codigo",{required:true})} className="form-select form-control" aria-label="Default select example">
+                                                    <select {...register("idQuotation",{required:true})} className="form-select form-control" aria-label="Default select example">
                                                         <option value="" >Seleccione codigo cotizacion</option>
                                                         {
                                                             codigos.map((cod)=>(
-                                                                <option key={cod.id} value={cod.id}>{cod.id}</option>
+                                                                <option key={cod} value={cod}>{cod}</option>
                                                             ))
                                                         }
                                                     </select>
-                                                    {errors.codigo?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                                    {errors.idQuotation?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                                 </div>
                                                 <div className="col-md-4">
                                                     <select {...register("idEmpresa",{required:true})} className="form-select form-control" aria-label="Default select example">
@@ -221,7 +217,7 @@ function RespCotizacion(props) {
                                                     <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
                                                 </div>
                                             </div>
-                                            </div>
+                                        </div>
 
                                         <ModalHeader>Datos de cotización</ModalHeader><br></br>
                                         <div className="col">
@@ -277,13 +273,13 @@ function RespCotizacion(props) {
                                         </div>
                                     <div style={{textAlign:'right',width:'100%'}}><span style={{color:'red'}}>{message}</span></div>
                                     <div class="col">
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <label>Observaciones:</label>
-                                            <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
-                                            {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                        <div className="form-row">
+                                            <div className="form-group col-md-6">
+                                                <label>Observaciones:</label>
+                                                <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
+                                                {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="col">
                                         <div className="form-row" >
@@ -299,7 +295,6 @@ function RespCotizacion(props) {
                                                 <label style={{color:'red'}}>{existeFile}</label>
                                                 {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx</label>}
                                             </div>
-                                            
                                             <div className="form-group col-md-6" id="toolbar">
                                                 <button className="btn btn-secondary" onClick={irAtras}  id="btnV">Cancelar</button>
                                                 <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Registrar</button>
@@ -307,25 +302,12 @@ function RespCotizacion(props) {
                                         </div>
                                     </div>
                            </form>
-                    
-                </div>
                         </div>
-                        
-
+                        </div>
                     </div>
                     <br></br>
                 </div>
-
             </div>
-            {/* <div className="form-row ">
-                <h3 className="col-md-9" >Datos del proveedor</h3>
-                <di className="col-md-3 " align="end">
-                    <button type="button" className="close" onClick={irAtras}>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </di>
-            </div> */}
-                
             </div>
             
         </>

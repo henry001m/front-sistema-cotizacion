@@ -159,3 +159,14 @@ export async function getQuotitationSpendingUnitPage(idUnit,page,search) {
         console.log(error)
     }
 }
+/**devuelve los codigos de cotizaciones impresas que no han sido respondidas*/
+export async function getCodeNotAnswer(idRe){
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`/ua/quotitacion/printedQuotesValides/${idRe}`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}

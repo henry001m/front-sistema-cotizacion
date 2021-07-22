@@ -5,7 +5,7 @@ import {detailsQuotitation,registrarCotizacion,registrarCotizacionDetalle,regist
 import DetalleFila from './DetalleFila';
 import { useHistory } from 'react-router-dom';
 import swal from 'sweetalert';
-
+import { ModalHeader } from 'reactstrap';
 function RespCotizacion(props) {
     const { register, formState: { errors }, handleSubmit } = useForm();
     let history = useHistory();
@@ -130,98 +130,120 @@ function RespCotizacion(props) {
     }, []);
     return(
         <>
+        <br></br>
             <div className="container" align="left">
-                <div className="col">
-                    <div className="form-register">
+                <div className="form-row">
+                    <div className="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                                <h4>Realizar cotizacion
+                                <button type="button" className="close" onClick={salirHome}>
+                                <span aria-hidden="true">&times;</span>
+                                </button></h4>
+                            </div>
+                        </div>
+                        <div class="body">
+                        <div className="form-register">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <h3>Datos del proveedor</h3>
-                            <hr style={{margin:'0px'}}></hr>
-                            <div className="form-row">
-                                {existeEmpresa&&<div className="form-group col-md-4">
-                                    <label>Empresa:</label>
-                                    <input readOnly id="nameEmpresa"  value={empresa} type="text" className="form-control form-control-sm"></input>
+                            <ModalHeader>Datos del proveedor</ModalHeader><br></br>
+                            <div className="col">
+                                <div className="form-row">
+                                    {existeEmpresa&&<div className="form-group col-md-4">
+                                        <label>Empresa:</label>
+                                        <input readOnly id="nameEmpresa"  value={empresa} type="text" className="form-control form-control-sm"></input>
+                                        </div>}
+                                    {!existeEmpresa&&<div className="form-group col-md-4">
+                                        <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                        <input autoFocus id="nameEmpresa"  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
+                                        {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                        </div>}
+                                    {!existeEmpresa && <div className="form-group col-md-4">
+                                            <label>NIT:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                            <input  value={nit} {...register("nit",{required:true})} onChange={registrarNit} type="text" className="form-control form-control-sm"></input>
+                                            {errors.nit?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                     </div>}
-                                {!existeEmpresa&&<div className="form-group col-md-4">
-                                    <label>Empresa:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                    <input autoFocus id="nameEmpresa"  value={empresa} {...register("nameEmpresa",{required:true})} onChange={registraNombreEmpresa} type="text" className="form-control form-control-sm"></input>
-                                    {errors.nameEmpresa?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                    {!existeEmpresa && <div className="form-group col-md-4">
+                                            <label>Rubro:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                            <input  value={rubro} {...register("rubro",{required:true})} onChange={registrarRubro} type="text" className="form-control form-control-sm"></input>
+                                            {errors.rubro?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
                                     </div>}
-                                {!existeEmpresa && <div className="form-group col-md-4">
-                                        <label>NIT:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input  value={nit} {...register("nit",{required:true})} onChange={registrarNit} type="text" className="form-control form-control-sm"></input>
-                                        {errors.nit?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                </div>}
-                                {!existeEmpresa && <div className="form-group col-md-4">
-                                        <label>Rubro:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input  value={rubro} {...register("rubro",{required:true})} onChange={registrarRubro} type="text" className="form-control form-control-sm"></input>
-                                        {errors.rubro?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                </div>}
-                            </div>
-                            <h3>Datos de Cotización</h3>
-                            <hr style={{margin:'0px'}}></hr>
-                            <div className="form-row">
-                                    <div className="form-group col-md-3">
-                                        <label>Validez de la oferta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input {...register("offerValidity",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
-                                        {errors.offerValidity?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
-                                    </div>
-                                    <div className="form-group col-md-3">
-                                        <label>Fecha de Respuesta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input value={fechaSolic} onChange={()=>{}} type="text" className="form-control form-control-sm"></input>
-                                    </div>
-                                    <div className="form-group col-md-3">
-                                    <label>Formas de Pago:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                    <select {...register("paymentMethod")} className="form-control form-control-sm" aria-label="Default select example">
-                                        <option value="efectivo">Efectivo</option>
-                                        <option value="credito">Credito</option>
-                                    </select>
-                                    </div>
-                                    <div className="form-group col-md-3">
-                                        <label>Tiempo de Entrega:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
-                                        <input {...register("deliveryTime",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
-                                        {errors.deliveryTime &&<span style={{color:"red"}}>Este campo es requerido</span>}
-                                    </div>   
-                            </div>
-                            <table className="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th width="3%" scope="col">N&#176;</th>
-                                    <th width="10%" scope="col">Cantidad</th>
-                                    <th width="10%" scope="col">Unidad</th>
-                                    <th width="40%" scope="col">Destalle</th>
-                                    <th width="12%" scope="col">Precio Unit.</th>
-                                    <th width="13%" scope="col">Precio total</th>
-                                    <th width="6%" scope="col">Oferta</th>
-                                    <th width="6%" scope="col">Cotizar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    {
-                                        detalles.map((detalle,index)=>{
-                                            return(
-                                                    <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} setMessage={setMessage} elimiarCotizado={elimiarCotizado} detalle={detalle} index={index} register={register}/>
-                                                )
-                                        })
-                                    }
-                            </tbody>
-                            </table>
-                            <div style={{textAlign:'right',width:'100%'}}><span style={{color:'red'}}>{message}</span></div>
-                            <div className="form-row">
-                                <div className="form-group col-md-6">
-                                    <label>Observaciones:</label>
-                                    <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
-                                    {errors.observation?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
                                 </div>
-                            </div>
+                                </div>
+                                <ModalHeader>Datos de cotizacion</ModalHeader><br></br>
+                                <div className="col">
+                                    <div className="form-row">
+                                            <div className="form-group col-md-3">
+                                                <label>Validez de la oferta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                                <input {...register("offerValidity",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
+                                                {errors.offerValidity?.type === 'required' && <span style={{color:"red"}}>Este campo es requerido</span>}
+                                            </div>
+                                            <div className="form-group col-md-3">
+                                                <label>Fecha de Respuesta:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                                <input value={fechaSolic} onChange={()=>{}} type="text" className="form-control form-control-sm"></input>
+                                            </div>
+                                            <div className="form-group col-md-3">
+                                            <label>Formas de Pago:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                            <select {...register("paymentMethod")} className="form-control form-control-sm" aria-label="Default select example">
+                                                <option value="efectivo">Efectivo</option>
+                                                <option value="credito">Credito</option>
+                                            </select>
+                                            </div>
+                                            <div className="form-group col-md-3">
+                                                <label>Tiempo de Entrega:<span style={{color:"red",fontSize:"20px"}}>*</span></label>
+                                                <input {...register("deliveryTime",{required:true})} type="date" min={fechaMin} className="form-control form-control-sm"></input>
+                                                {errors.deliveryTime &&<span style={{color:"red"}}>Este campo es requerido</span>}
+                                            </div>   
+                                    </div>
+                                </div>
+                                <ModalHeader>Detalle</ModalHeader><br></br>
+                                <div class="col">
+                                    <table className="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th width="3%" scope="col">N&#176;</th>
+                                            <th width="10%" scope="col">Cantidad</th>
+                                            <th width="10%" scope="col">Unidad</th>
+                                            <th width="40%" scope="col">Destalle</th>
+                                            <th width="12%" scope="col">Precio Unit.</th>
+                                            <th width="13%" scope="col">Precio total</th>
+                                            <th width="6%" scope="col">Oferta</th>
+                                            <th width="6%" scope="col">Cotizar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            {
+                                                detalles.map((detalle,index)=>{
+                                                    return(
+                                                            <DetalleFila key={detalle.id} detallesCotizado={detallesCotizado} setMessage={setMessage} elimiarCotizado={elimiarCotizado} detalle={detalle} index={index} register={register}/>
+                                                        )
+                                                })
+                                            }
+                                    </tbody>
+                                    </table>
+                                    </div>
+                            <div style={{textAlign:'right',width:'100%'}}><span style={{color:'red'}}>{message}</span></div>
+                            <div class="col">   
+                                <div className="form-row">
+                                    <div className="form-group col-md-6">
+                                        <label>Observaciones:</label>
+                                        <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
+                                        {errors.observation?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col">  
                             <div className="form-row" >
-                                <div className="form-group col" id="toolbar">
+                                <div className="col-md-12"  align="right">
                                     <button className="btn btn-secondary" onClick={salirHome}  id="btnV">Cancelar</button>
                                     <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Enviar</button>
                                 </div>
                             </div>
+                            </div>
                         </form>
                     </div>
-                </div>
+                    </div>
+                    </div>  
+                </div> <br></br>
             </div>
             
         </>

@@ -4,7 +4,7 @@ import { getQuotitationId } from '../../services/http/QuotitationService';
 import { useHistory, useParams } from 'react-router-dom'
 import ModalVerOferta from './ModalVerOferta'
 import { getFileNameDetail, getFileNameQuotitation } from '../../services/http/FileService';
-
+import { ModalHeader } from 'reactstrap';
 function VerCotizacion(props){
     const {idRe} = useParams();
     const {idCo} = useParams();
@@ -55,101 +55,116 @@ function VerCotizacion(props){
     return(
         <>
             <div className="container" align="left">
-                <br></br>
-                    <h1> Cotización</h1>
-                <br></br>
-                <h3>Datos de Cotización</h3>
-                <div className="col" >
-                    <div className="form-register">
-                        <form>
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <h5>Validez de la oferta</h5>
-                                    <input className="form-control" value={ cotizacion.offerValidity}></input>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <h5>Fecha de Cotizacion</h5>
-                                    <input className="form-control" value={ cotizacion.answerDate}></input>
-                                </div>      
-                            </div>     
-                            <div className="form-row">
-                                <div className="form-group col-md-4">
-                                    <h5>Tiempo de Entrega</h5>
-                                    <input className="form-control" value={ cotizacion.deliveryTime}></input>
-                                </div>
-                                <div className="form-group col-md-4">
-                                    <h5>Forma de Pago</h5>
-                                    <input className="form-control" value={ cotizacion.paymentMethod}></input>
-                                </div>
+                <div class="row page-titles">
+                    <div class="col-md-12 align-self-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">Solicitudes de adquisicion</li>
+                            <li class="breadcrumb-item">Solicitud N&#176; {idRe}</li>
+                            <li class="breadcrumb-item">Cotizaciones</li>
+                            <li class="breadcrumb-item">Cotizacion N&#176; {idCo}</li>
+                        </ol>
+                    </div> 
+                </div><br></br>
+                <div className="form-row">
+                    <div className="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Cotizacion N&#176; {idCo}
+                                <button type="button" className="close" onClick={()=>{cerrarVerCotizacion();}}>
+                                <span aria-hidden="true">&times;</span>
+                                </button></h4>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <h3>Detalle por item de Cotización</h3>
-                <div className="col">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th width="3%" scope="col">#</th>
-                                <th width="8%" scope="col">Cant.</th>
-                                <th width="8%" scope="col">Unidad</th>
-                                <th width="22%" scope="col">Detalle</th>
-                                <th width="11%" scope="col">Precio Unit.</th>
-                                <th width="11%" scope="col">Precio total</th>
-                                <th width="23%" scope="col">Oferta</th>
-                                <th width="16%" scope="col">Archivo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                detalles.map((detalle,index)=>{
-                                    if(detalle){
-                                        return(
-                                            <tr key={detalle.id}>
-                                                <th scope="row">{index+1}</th>
-                                                <td >{detalle.amount}</td>
-                                                <td>{detalle.unitMeasure}</td>
-                                                <td>{detalle.description}</td>
-                                                <td>{detalle.unitPrice}</td>
-                                                <td>{detalle.totalPrice}</td>
-                                                <td>Marca: {detalle.brand} <br></br>Modelo: {detalle.model}<br></br>Industria: {detalle.industry}<br></br> Tiempo de Garantia: {detalle.warrantyTime}</td>
-                                                <td>
-                                                { (files[index])?
-                                                (<a
-                                                href={`/showFileQuotitationDetail/${1}/${files[index]}`} 
-                                                className="btn btn-secondary sm" target="_blank"
-                                                ><FileEarmarkFill className="mb-1"/>Ver archivo</a>):
-                                                (<button className="btn btn-secondary sm" disabled><FileEarmarkFill className="mb-1"/>Ver archivo</button>)
-                                                }
-                                                </td>
+                            <div class="card-body">
+                                <div className="form-register">
+                                    <ModalHeader>Datos de cotizacion</ModalHeader><br></br>
+                                    <div className="col">
+                                    <div className="form-row">
+                                        <div className="form-group col-md-3">
+                                            <label><strong>Fecha de Cotizacion: </strong></label> <label>{cotizacion.answerDate}</label>
+                                        </div>    
+                                        <div className="form-group col-md-3">
+                                            <label><strong>Validez de la oferta: </strong></label> <label>{cotizacion.offerValidity}</label>
+                                        </div>
+                                        <div className="form-group col-md-3">
+                                            <label><strong>Tiempo de Entrega: </strong></label> <label>{cotizacion.deliveryTime}</label>
+                                        </div>
+                                        <div className="form-group col-md-3">
+                                           <label><strong>Forma de Pago: </strong></label> <label>{cotizacion.paymentMethod}</label>
+                                        </div>
+                                    </div>  
+                                    </div>  
+                                    <ModalHeader>Detalle por item</ModalHeader><br></br>
+                                    <div class="col">
+                                    <table className="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th width="3%" scope="col">#</th>
+                                                <th width="8%" scope="col">Cant.</th>
+                                                <th width="8%" scope="col">Unidad</th>
+                                                <th width="22%" scope="col">Detalle</th>
+                                                <th width="11%" scope="col">Precio Unit.</th>
+                                                <th width="11%" scope="col">Precio total</th>
+                                                <th width="23%" scope="col">Oferta</th>
+                                                <th width="16%" scope="col">Archivo</th>
                                             </tr>
-                                        )
-                                    }
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div className="form-row" >
-                    <div className="col-6" style={{marginLeft:"5%", marginRight:"5%"}}>
-                        <h4>Observaciones</h4>
-                        <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                detalles.map((detalle,index)=>{
+                                                    if(detalle){
+                                                        return(
+                                                            <tr key={detalle.id}>
+                                                                <th scope="row">{index+1}</th>
+                                                                <td >{detalle.amount}</td>
+                                                                <td>{detalle.unitMeasure}</td>
+                                                                <td>{detalle.description}</td>
+                                                                <td>{detalle.unitPrice}</td>
+                                                                <td>{detalle.totalPrice}</td>
+                                                                <td>Marca: {detalle.brand} <br></br>Modelo: {detalle.model}<br></br>Industria: {detalle.industry}<br></br> Tiempo de Garantia: {detalle.warrantyTime}</td>
+                                                                <td>
+                                                                { (files[index])?
+                                                                (<a
+                                                                href={`/showFileQuotitationDetail/${1}/${files[index]}`} 
+                                                                className="btn btn-secondary sm" target="_blank"
+                                                                ><FileEarmarkFill className="mb-1"/>Ver archivo</a>):
+                                                                (<button className="btn btn-secondary sm" disabled><FileEarmarkFill className="mb-1"/>Ver archivo</button>)
+                                                                }
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>   
+                                </div>
+                                <div className="col">
+                                    <div className="form-row" >
+                                        <div className="form-group col-md-6">
+                                            <label><strong>Observaciones:</strong></label>
+                                            <textarea type="text" className="form-control" value={ cotizacion.observation}></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                <div className="form-row" >
+                                    <div className="form-group col-md-6">
+                                        {(verCotizacion) && 
+                                            (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkFill className="mb-1"/> Ver archivo</a>)
+                                        }
+                                    </div>
+                                    <div className="form-group col-md-6" id="toolbar">
+                                        <button className="btn btn-secondary" id="btnV" onClick={()=>{cerrarVerCotizacion();}}>Cerrar</button>
+                                    </div>
+                                </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <br></br>
-                <div className="form-row" >
-                    <div className="col-6"  style={{marginLeft:"5%", marginRight:"5%"}}>
-                        {(verCotizacion) && 
-                            (<a href={`/showFileQuotitationDetail/${2}/${nameFile}`} className="btn btn-secondary sm" target="_blank"><FileEarmarkFill className="mb-1"/> Ver archivo</a>)
-                        }
-                    </div>
-                    </div>
-                <div className="form-row" >
-                    <div className="form-group col" id="toolbar">
-                        <button className="btn btn-secondary" id="btnV" onClick={()=>{cerrarVerCotizacion();}}>Cerrar</button>
-                    </div>
-                </div>
-            </div>
+            </div><br></br>
         </>
     );
 }
