@@ -112,7 +112,7 @@ function Cotizaciones(props) {
                                     return(
                                         <tr key={quotitation.idCotizacion}>
                                             <th scope="row">{index+1}</th>
-                                            <td >000001</td>
+                                            <td>{quotitation.idCotizacion}</td>
                                             <td>{quotitation.Empresa}</td>
                                             <td>{quotitation.ItemsCotizados}</td>
                                             <td>{quotitation.TotalEnBs}</td>
@@ -129,11 +129,9 @@ function Cotizaciones(props) {
                         </div>
                     </div>
                 </div>
-              </div>
+              </div><br></br>
             </div>
-        </div>
-        <br></br>
-        
+        </div><br></br><br></br><br></br><br></br><br></br>
             <SolicitudesCotizacion abierto={ abierto } cerrarSolicitudes = {cerrarSolicitudes} />  
         </> 
     )

@@ -7,7 +7,7 @@ import { getEmpresas } from '../../services/http/BussinessService';
 import { useHistory, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import { ModalHeader } from 'reactstrap';
-
+import { getCodeNotAnswer } from '../../services/http/QuotitationService';
 function RespCotizacion(props) {
     const {id} = useParams();
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -25,12 +25,7 @@ function RespCotizacion(props) {
     const [fileValidate, setFileValidate] = useState(false);
     const [fls, setFls] = useState(null);
     const [existeFile, setExisteFile] = useState("");
-    const [codigos, setCodigos] = useState([
-        {id:"000001"},
-        {id:"000002"},
-        {id:"000003"},
-        {id:"000004"},
-    ]);
+    const [codigos, setCodigos] = useState([]);
     const detallesCotizado =(dato)=>{
         setMessage("");
         var yaExiste = false;
@@ -159,7 +154,8 @@ function RespCotizacion(props) {
                 setDetalles(response);
                 const res = await getEmpresas();
                 setEmpresas(res.business);
-                console.log(res)
+                const resp = await getCodeNotAnswer(id);
+                setCodigos(resp);
             } catch (error) {
                 console.log(error);
             }
@@ -200,7 +196,7 @@ function RespCotizacion(props) {
                                                         <option value="" >Seleccione codigo cotizacion</option>
                                                         {
                                                             codigos.map((cod)=>(
-                                                                <option key={cod.id} value={cod.id}>{cod.id}</option>
+                                                                <option key={cod} value={cod}>{cod}</option>
                                                             ))
                                                         }
                                                     </select>
@@ -221,7 +217,7 @@ function RespCotizacion(props) {
                                                     <button onClick={()=>{history.push("/empresas");}} className="btn btn-secondary btn-sm">Registrar Nueva Empresa</button>
                                                 </div>
                                             </div>
-                                            </div>
+                                        </div>
 
                                         <ModalHeader>Datos de cotización</ModalHeader><br></br>
                                         <div className="col">
@@ -299,7 +295,6 @@ function RespCotizacion(props) {
                                                 <label style={{color:'red'}}>{existeFile}</label>
                                                 {fileValidate && <label style={{color:'red'}}>Los formatos de archivos permitidos son jpg, pdf y docx</label>}
                                             </div>
-                                            
                                             <div className="form-group col-md-6" id="toolbar">
                                                 <button className="btn btn-secondary" onClick={irAtras}  id="btnV">Cancelar</button>
                                                 <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Registrar</button>

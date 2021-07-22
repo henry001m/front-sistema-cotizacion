@@ -96,7 +96,8 @@ function ListaPersonal(){
                         </table>
                     </div>
                 </div>
-            </div><br></br><br></br><br></br><br></br>
+            </div><br></br> <br></br>
+            <br></br> <br></br> 
         </>
     )
 }
