@@ -26,15 +26,19 @@ function DetalleSolicitud(){
     const acceptRequest = async ( ) => {
         if(amount > montoTope){
             swal({
-                title:"Monto excedido",
-                button: "Aceptar",
+                text:"Monto excedido",
+                button: "Ok",
                 icon: "warning"
                 
             });
-            
         }else{
             const aux = {status:"Aceptado"}
             const result = await updateStatus(id,aux);
+            swal({
+                text:"Solicitud aprobada",
+                button: "Ok",
+                icon: "success"
+            });
             window.history.back();
         }
     };
@@ -211,6 +215,7 @@ function DetalleSolicitud(){
                             cerrarModal={cerrarModalInforme}
                             report={null}
                             rejectRequest={rejectRequest}
+                            title={"Agregar Informe"}
                     />
                 </div>
                 <br></br>

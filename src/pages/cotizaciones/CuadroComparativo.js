@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { getComparativeChart} from '../../services/http/QuotitationService'
 import InformeCotizacion from '../cotizaciones/InformeCotizacion'
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService'
-
+import swal from 'sweetalert';
 function RespuestaInformeCotizacion(props){
 
     const {id} = useParams();
@@ -48,10 +48,17 @@ function RespuestaInformeCotizacion(props){
         });
         setValorMenor(aux)
     }
-
     const abrirModalInformeCotizacion =()=>{
-        getInformeQuotitation(id)
-        setAbiertoInformeCotizacion(true);
+        if(reportQuotitation!=" "){
+            swal({
+                text: "Ya realizo informe de respuesta a esta solicitud",
+                icon: "warning",
+                button: "Ok",
+              });
+        }else{
+            getInformeQuotitation(id)
+            setAbiertoInformeCotizacion(true);
+        }
     }
 
     const cerrarModalInformeCotizacion=()=>{
@@ -167,17 +174,10 @@ function RespuestaInformeCotizacion(props){
                                     <button type="submit" className="btn btn-primary ml-4" id="btnEnviar" onClick={abrirModalInformeCotizacion} >Realizar Informe</button>
                                 </div>           
                             </div>
-                        </div>
-                           
+                        </div>   
                     </div>
-                    {/* <div className="col-md-2" align="right">
-                        <button type="button" className="close" onClick={() =>  history.push({pathname:`/cotizaciones/${id}`,data:dataQu})}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> */}
                 </div>
                 <br></br>
-               
                 <InformeCotizacion
                     id={id}
                     abierto={abiertoInformeCotizacion} 

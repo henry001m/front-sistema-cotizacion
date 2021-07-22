@@ -19,10 +19,12 @@ function InformeCotizacion (props) {
     const[ date, setDate] = useState(new Date())
     const[ editorState, setEditorState ] = useState(EditorState.createEmpty())
     const [message, setMessage] = useState("");
+    const [msg, setMsg] = useState("");
 
     const closeModal = () => {
         setDate(new Date())
         setMessage("");
+        setMsg("");
         setEditorState(EditorState.createEmpty())
         props.cerrarModal()
     }
@@ -80,10 +82,10 @@ function InformeCotizacion (props) {
                 if(props.rejectRequest){
                     props.rejectRequest()
                 }
+                setMsg("Se adjunto el cuadro comparativo...");
                 const result = await createReportQuotitation(htm);
-
                 swal({
-                    title: result.message,
+                    text: result.message,
                     button: "Aceptar",
                 });
                 props.setinformeEnviado(true);
@@ -107,19 +109,19 @@ function InformeCotizacion (props) {
                     <div className="form-row">
                         <div className="form-group col-md-7">
                             <div className="form-row">
-                                <h5>Encargado:</h5>
+                               <label><strong>Encargado:</strong></label> 
                                 {(props.report!=null)?
-                                    (<label style={{fontSize:"20px"}}>{props.report.aplicantName}</label>):
-                                    (<label style={{fontSize:"20px"}}>{" "+userName}</label>)
+                                    (<label>{props.report.aplicantName}</label>):
+                                    (<label>{" "+userName}</label>)
                                 }
                             </div>
                         </div>
                         <div className="form-group col-md-5">
                             <div className="form-row">
-                                <h5>Fecha: </h5>
+                                <label><strong>Fecha : </strong></label> 
                                 {(props.report!=null)?
-                                    (<label style={{fontSize:"20px"}}>{props.report.dateReport}</label>):
-                                    (<label style={{fontSize:"20px"}}>{" "+date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()}</label>)
+                                    (<label>{props.report.dateReport}</label>):
+                                    (<label>{" "+date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()}</label>)
                                 }
                             </div>
                         </div>
@@ -129,12 +131,12 @@ function InformeCotizacion (props) {
                     }
                     <span style={{color:'red'}}>{message}</span>
                     <br></br>
-                    <label style={{fontSize:"20px"}}> Se adjunto el cuadro comparativo...</label>
+                    <label style={{color:'green'}}>{msg}</label>
                     <div className="form-col" style={{textAlign:"right"}}>
                         <button className="btn btn-secondary" style={{marginRight:"5px"}} onClick={closeModal}>Cancelar</button>
                         {(props.report!=null)?
-                            (<button className="btn btn-primary" disabled> enviar </button>):
-                            (<button className="btn btn-primary" onClick={onSubmit}> enviar </button>)
+                            (<button className="btn btn-primary" disabled> Enviar </button>):
+                            (<button className="btn btn-primary" onClick={onSubmit}> Enviar </button>)
                         }
                     </div>
                 </ModalBody>

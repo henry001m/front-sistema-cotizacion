@@ -12,7 +12,7 @@ import InformeCotizacion from '../cotizaciones/InformeCotizacion';
 import { getReportQuotitation } from '../../services/http/ReportQuotitationService';
 import {URL_API} from '../../services/const';
 import { ModalHeader } from 'reactstrap';
-
+import ImprimirCotización from '../modalImprimirCotizacion/ImprimirCotizacion';
 function SolicitudesVista(){
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const {idUA} = useParams();
@@ -22,6 +22,7 @@ function SolicitudesVista(){
     let history = useHistory();
     const [request, setRequest ] = useState({});
     const [abiertoInforme, setAbiertoInforme] = useState(false);
+    const [abiertoModalImprimir, setAbiertoModalImprimir] = useState(false);
     const [report, setReport ] = useState(null)
     const [abiertoInformeCotizacion, setAbiertoInformeCotizacion] = useState(false);
     const [reportQuotitation, setReportQuotitation ] = useState(null)
@@ -60,7 +61,7 @@ function SolicitudesVista(){
         );
     }, [search,quotitations]);
     const EnablebuttonAddReport = (quotitation) =>{
-        if(quotitation.status!="Pendiente"){
+        if(quotitation.statusReport){
             return(
                 <button className="dropdown-item" onClick={() => abrirModalInforme(quotitation.id)}>
                     <FileEarmarkText/> Informe Solicitud
@@ -93,10 +94,11 @@ function SolicitudesVista(){
 
     const EnablebuttonImprimir=(quotitation)=>{
         if(quotitation.status=="Aceptado" && quotitation.statusResponse !== "Finalizado"){
-            const urlQuotitation = URL_API+"/requestquotitationpdf/"+quotitation.id;
+            /* const urlQuotitation = URL_API+"/requestquotitationpdf/"+quotitation.id; */
             return(
-                <button className="dropdown-item">
-                    <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir cotización</a>
+                <button className="dropdown-item" onClick={() => abrirModalImprimir(quotitation.id)} >
+{/*                     <a target="true" href={urlQuotitation} style={{textDecoration:'none',padding:'0px', color:"#000"}}><Printer/> Imprimir cotización</a>
+ */}              <Printer/> Imprimir cotización
                 </button>                                    
             );
         }else{
@@ -156,6 +158,14 @@ function SolicitudesVista(){
     const cerrarModalInforme=()=>{
         setReport(null)
         setAbiertoInforme(false);
+    }
+
+    const abrirModalImprimir=(id)=>{
+        setQuotitationID(id);
+        setAbiertoModalImprimir(true);
+    }
+    const cerrarModalImprimir=()=>{
+        setAbiertoModalImprimir(false);
     }
 
     const abrirModalInformeCotizacion =(id)=>{
@@ -254,7 +264,12 @@ function SolicitudesVista(){
                                     return(
                                         <tr key={quotitation.id}>
                                             <th scope="row">{index+1}</th>
-                                            <td>{quotitation.id}</td>
+                                            <td>
+                                                { (quotitation.id>0 && quotitation.id<10)?(<div >00000{quotitation.id}</div>):
+                                                  ((quotitation.id>9 && quotitation.id<100)?(<div >0000{quotitation.id}</div>):
+                                                  (<div >000{quotitation.id}</div>))
+                                                }
+                                            </td>
                                             <td>{quotitation.nameUnidadGasto}</td>
                                             <td>{quotitation.requestDate}</td>
                                             <td>
@@ -325,6 +340,12 @@ function SolicitudesVista(){
                         abierto={abiertoInforme} 
                         cerrarModal={cerrarModalInforme}
                         report={report}
+                        title={"Informe solicitud"}
+                    />
+                    <ImprimirCotización
+                        id={quotitationId}
+                        abierto={abiertoModalImprimir}
+                        cerrarModal = {cerrarModalImprimir}
                     />
                     <InformeCotizacion
                         id={quotitationId}
