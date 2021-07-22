@@ -325,6 +325,7 @@ function SolicitudesVista(){
                         abierto={abiertoInforme} 
                         cerrarModal={cerrarModalInforme}
                         report={report}
+                        title={"Informe solicitud"}
                     />
                     <InformeCotizacion
                         id={quotitationId}

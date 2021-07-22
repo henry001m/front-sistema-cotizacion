@@ -11,7 +11,6 @@ import './CrearInforme.css'
 import { createReport } from '../../services/http/ReportService';
 
 const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
-
 function CrearInforme (props) {
 
     const user = JSON.parse(window.localStorage.getItem("userDetails"));
@@ -43,6 +42,7 @@ function CrearInforme (props) {
             return(
                 <Editor
                     editorState={state}
+                    toolbarHidden 
                     wrapperClassName = "wrapper-class" 
                     editorClassName = "editor-class" 
                     toolbarClassName = "toolbar-class"
@@ -51,6 +51,7 @@ function CrearInforme (props) {
                     }}
                     readOnly
                 />
+
             )
         }else{
             return(
@@ -100,7 +101,7 @@ function CrearInforme (props) {
         <div>
             <Modal isOpen={props.abierto} >
                 <ModalHeader toggle={closeModal}>
-                    <h4>Agregar Informe</h4>
+                    <h5>{props.title}</h5>
                 </ModalHeader>
                 <ModalBody>
                     <div className="form-row">
