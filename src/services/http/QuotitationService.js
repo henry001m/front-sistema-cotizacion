@@ -73,6 +73,18 @@ export async function getRequest(id) {
     }
 }
 
+/**devuleve el pdf de la solicitud */
+export async function getPdf(id) {
+    const token=window.localStorage.getItem("tokenContizacion");
+    const headers = { headers: {'Authorization': `Bearer ${token}`}};
+    try {
+        const response = await API.get(`/requestquotitationpdf`,headers);
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 /**actualiza el estado de un solicitud "aceptado, rechazado" */
 export async function updateStatus(id,status) {
     const token=window.localStorage.getItem("tokenContizacion");

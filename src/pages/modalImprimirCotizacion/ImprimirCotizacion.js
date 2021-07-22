@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Modal, ModalHeader, ModalBody, ModalFooter, Table, FormGroup, Button} from 'reactstrap';
 import { getEmpresas } from '../../services/http/BussinessService';
+import { getPdf} from '../../services/http/QuotitationService'
 import { useHistory, useParams } from 'react-router-dom'
 import { useForm } from "react-hook-form";
 import {URL_API} from '../../services/const';
@@ -15,7 +16,19 @@ function ImprimirCotizacion(props){
     const [idEmp, setIdEmp ] = useState([])
     const urlQuotitation = URL_API+"/requestquotitationpdf/"+props.id;
 
+    const getpdf = async () => {
+        try {
+            const result = await getPdf(props.id,"smartcube@gmail.com", "Smart Cube")
+            console.log(result.data)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }  
+
     console.log(props.id)
+    
+
     const closeModal=()=>{
         props.cerrarModal()
         reset()
@@ -44,7 +57,6 @@ function ImprimirCotizacion(props){
                 const response = await getEmpresas();
                 console.log(response)
                 setEmp(response.business);
-                
             } catch (error) {
                 console.log(error);
             }
@@ -52,6 +64,9 @@ function ImprimirCotizacion(props){
             fetchData();
     }, []);
 
+
+    console.log("esto",emp)
+    console.log(emp.nameEmpresa)
     return(
         <>
         <div>
@@ -83,7 +98,7 @@ function ImprimirCotizacion(props){
                
             </ModalBody>
             <ModalFooter>
-                <Button   type= "submit" color="primary" href={urlQuotitation}>
+                <Button   type= "submit" color="primary" onSubmit={getpdf}>
                         Listo
                 </Button>
             </ModalFooter>
