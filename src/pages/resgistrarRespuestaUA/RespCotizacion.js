@@ -277,13 +277,13 @@ function RespCotizacion(props) {
                                         </div>
                                     <div style={{textAlign:'right',width:'100%'}}><span style={{color:'red'}}>{message}</span></div>
                                     <div class="col">
-                                    <div className="form-row">
-                                        <div className="form-group col-md-6">
-                                            <label>Observaciones:</label>
-                                            <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
-                                            {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                        <div className="form-row">
+                                            <div className="form-group col-md-6">
+                                                <label>Observaciones:</label>
+                                                <textarea {...register("observation",{maxLength:200})} type="text" className="form-control"></textarea>
+                                                {errors.observacion?.type === 'maxLength' && <span style={{color:"red"}}>Supero el limite de 200 caracteres</span>}
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="col">
                                         <div className="form-row" >
@@ -307,25 +307,12 @@ function RespCotizacion(props) {
                                         </div>
                                     </div>
                            </form>
-                    
-                </div>
                         </div>
-                        
-
+                        </div>
                     </div>
                     <br></br>
                 </div>
-
             </div>
-            {/* <div className="form-row ">
-                <h3 className="col-md-9" >Datos del proveedor</h3>
-                <di className="col-md-3 " align="end">
-                    <button type="button" className="close" onClick={irAtras}>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </di>
-            </div> */}
-                
             </div>
             
         </>
