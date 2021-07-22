@@ -51,7 +51,7 @@ function SeleccionPersonal(){
 
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                <div className="form-row">
                     <div class="col-md-12">
                         <div class="card">
@@ -106,9 +106,7 @@ function SeleccionPersonal(){
                             </ModalFooter>
                         </div>
                     </div>
-                    
                 </div>
-                <br></br>
             </div>
             <ModalSeleccionRoles
                 abierto ={ abierto }

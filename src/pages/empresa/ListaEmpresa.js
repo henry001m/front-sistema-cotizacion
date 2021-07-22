@@ -50,7 +50,7 @@ function ListaEmpresa(){
     }, [search,empresas]);
       
     return (
-        <div className="container" align="left">
+        <div className="container" align="left" id="wrapper">
             <div class="card-header">
               <h4>Empresas</h4>
             </div>

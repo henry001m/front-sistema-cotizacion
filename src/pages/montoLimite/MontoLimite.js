@@ -62,7 +62,7 @@ function MontoLimite() {
 
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="card-header">
                 <h4>Monto Limite</h4>
                 </div>
@@ -106,7 +106,7 @@ function MontoLimite() {
                             </table>
                         </div>
                     </div>
-            </div><br></br><br></br>
+            </div>
         </>
     );
 };

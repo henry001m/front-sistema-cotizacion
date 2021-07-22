@@ -125,12 +125,14 @@ function CrearInforme (props) {
                     }
                     <span style={{color:'red'}}>{message}</span>
                     <br></br>
-                    <div className="form-col" style={{textAlign:"right"}}>
-                        <button className="btn btn-secondary" style={{marginRight:"5px"}} onClick={closeModal}>Cerrar</button>
+                    <div className="form-row" align="right">
+                        <div className="form-group col-md-12">
                         {(props.report!=null)?
-                            (<button className="btn btn-primary" disabled> Enviar </button>):
+                            (<button className="btn btn-primary" style={{visibility:"hidden"}}> Enviar </button>):
                             (<button className="btn btn-primary" onClick={onSubmit}> Enviar </button>)
-                        }
+                        } <label> </label>
+                        <button className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
+                        </div>
                     </div>
                 </ModalBody>
             </Modal>

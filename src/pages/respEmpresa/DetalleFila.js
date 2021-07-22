@@ -77,8 +77,10 @@ const DetalleFila = (props) => {
                 <td>{props.detalle.description}</td>
                 <td><input id="precioUnitario" className="form-control"  value={precUnit} type="number" onChange={calcularTotal}/></td>
                 <td> <input className="form-control" type="number" value={total} onChange={()=>{}} readOnly/> </td>
-                {flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={abrirModal}/></td>}
-                {!flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" style={{color:'orange', fontSize:'22px'}} onClick={()=>{}}/></td>}
+                {flagOferta&&<td style={{textAlign:'center'}}> <button className="btn  btn-warning" id="btn-oferta" onClick={()=>{ setAbierto(true)}} ><BagFill/></button> </td>}
+                {!flagOferta&&<td style={{textAlign:'center'}}>  <button className="btn  btn-warning" id="btn-oferta" onClick={()=>{ }}><BagFill/></button> </td>}
+                {/* {flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" id="btn-oferta" onClick={abrirModal}/></td>}
+                {!flagOferta&&<td style={{textAlign:'center'}}><BagFill id="ofertaDetalle" id="btn-oferta" onClick={()=>{}}/></td>} */}
                 {flagCotizar &&<td><button style={{border:"none",}} disabled={flagGuardar} className="btn btn-primary btn-sm" onClick={onSubmitDetail}>Guardar</button></td>}
                 {!flagCotizar&&<td><button style={{border:"none",}} className="btn btn-danger btn-sm" onClick={calcelarCotizado}>Cancelar</button></td>}
             </tr>

@@ -131,7 +131,7 @@ function RespCotizacion(props) {
     return(
         <>
         <br></br>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div className="form-row">
                     <div className="col-md-12">
                     <div class="card">
@@ -140,7 +140,6 @@ function RespCotizacion(props) {
                                 <button type="button" className="close" onClick={salirHome}>
                                 <span aria-hidden="true">&times;</span>
                                 </button></h4>
-                            </div>
                         </div>
                         <div class="body">
                         <div className="form-register">
@@ -197,7 +196,7 @@ function RespCotizacion(props) {
                                 </div>
                                 <ModalHeader>Detalle</ModalHeader><br></br>
                                 <div class="col">
-                                    <table className="table table-sm">
+                                    <table className="table table-sm table-hover">
                                     <thead>
                                         <tr>
                                             <th width="3%" scope="col">N&#176;</th>
@@ -233,7 +232,7 @@ function RespCotizacion(props) {
                             </div> 
                             <div class="col">  
                             <div className="form-row" >
-                                <div className="col-md-12"  align="right">
+                                <div className="form-group col-md-12" id="toolbar">
                                     <button className="btn btn-secondary" onClick={salirHome}  id="btnV">Cancelar</button>
                                     <button type="submit" className="btn btn-success ml-4" id="btnEnviar">Enviar</button>
                                 </div>
@@ -242,8 +241,9 @@ function RespCotizacion(props) {
                         </form>
                     </div>
                     </div>
+                    </div>
                     </div>  
-                </div> <br></br>
+                </div>
             </div>
             
         </>

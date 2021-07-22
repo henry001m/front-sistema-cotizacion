@@ -46,7 +46,7 @@ function ListaPersonal(){
     }, [search,personal]);
     return (
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="card-header">
                 <h4>Personal</h4>
                 </div>
@@ -96,8 +96,7 @@ function ListaPersonal(){
                         </table>
                     </div>
                 </div>
-            </div><br></br> <br></br>
-            <br></br> <br></br> 
+            </div>
         </>
     )
 }
