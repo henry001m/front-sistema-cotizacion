@@ -21,9 +21,21 @@ function Home(){
             </div>
             
         ):(
-            <div className="text-center">
-            <h1>Bienvenido al sistema</h1>
-            <img src="./logoumss.png"></img>
+            <div className="container" align="left">
+                <div className="form-row">
+                    <div class="col-md-6">
+                        <img src="./logoumss.png"></img>
+                    </div>
+                    <div class="col-md-6" id="cont-bienvenida">
+                        <h3>Bienvenido/a , {user.user.name}</h3>
+                        <p >En este sistema podra realizar sus respectivas funciones <br></br>
+                            en la unidad o unidades a las que pertenece.<br></br>
+                            Si necesita mas informacion sobre el uso del mismo<br></br>
+                            comuniquese al correo o cosulte los manuales.
+                        </p>
+                        <a class="btn btn-info" href="https://drive.google.com/drive/folders/1a3yRE9I8NpsgWkRn5AVgz7MwBQEVh1Ux?usp=sharing" target="_blank"> Ver manuales</a>
+                    </div>
+                </div>
             </div>
         )
        }

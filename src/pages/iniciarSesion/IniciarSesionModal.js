@@ -48,8 +48,8 @@ const IniciarSesion = (props) => {
     return (
         <div>
             <Modal isOpen={props.abierto} style={modalStyles}>
-                <ModalHeader>
-                   INICIAR SESIÓN
+                <ModalHeader toggle={closeModal}>
+                   Iniciar sesión
                 </ModalHeader>
                 <form onSubmit={handleSubmit(onSubmit)}>
                 <ModalBody>
@@ -104,7 +104,7 @@ const IniciarSesion = (props) => {
                             </span>}
                 </ModalBody>
                 <ModalFooter>
-                    <Button  onClick={closeModal} >Cancelar</Button>
+                    {/* <Button  onClick={closeModal} >Cancelar</Button> */}
                     <Button type="submit" color="primary">Ingresar</Button>
                 </ModalFooter>
                 </form>

@@ -6,7 +6,7 @@ function Footer() {
         <> 
         
           <footer id="dk-footer" class="dk-footer">
-              <div class="container" >
+              <div class="container">
                   <div class="copyright" >
                       <div class="row">
                           <div class="col-md-6">
