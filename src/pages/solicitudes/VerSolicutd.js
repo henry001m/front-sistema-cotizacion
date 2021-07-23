@@ -120,7 +120,7 @@ function VerSolicitud(){
     }, []);
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="row page-titles">
                     <div class="col-md-12 align-self-center">
                         <ol class="breadcrumb">
@@ -199,7 +199,6 @@ function VerSolicitud(){
                         </div>
                     </div>
                 </div>
-                <br></br>
                 <VerArchivos
                     isShowModalFile={isShowModalFile}
                     closeModal={closeModal}

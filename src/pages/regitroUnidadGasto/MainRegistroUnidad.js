@@ -48,7 +48,7 @@ const MainRegistroUnidad = () => {
     }, [search,unidadesGasto]);
     return (
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="card-header">
                 <h4>Unidades de Gasto</h4>
                 </div>

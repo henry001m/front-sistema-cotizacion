@@ -4,3 +4,23 @@
 #btnV{
     margin-left: 15px;
 }
+/* #btn-oferta{
+    color: orange;
+    background-color: white;
+   
+}
+#btn-oferta:hover{
+    color: white;
+    background-color: orange;
+} */
+
+#btn-oferta{
+    color: white;
+    background-color: orange
+    ;
+   
+}
+#btn-oferta:hover{
+    color: orange;
+    background-color: white;
+}

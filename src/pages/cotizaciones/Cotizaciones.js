@@ -62,7 +62,7 @@ function Cotizaciones(props) {
     return(
         <>  
         
-        <div className="container"  align="left">
+        <div className="container"  align="left" id="wrapper">
             <div class="row page-titles">
                 <div class="col-md-12 align-self-center">
                     <ol class="breadcrumb">
@@ -130,9 +130,9 @@ function Cotizaciones(props) {
                         </div>
                     </div>
                 </div>
-              </div><br></br>
+              </div>
             </div>
-        </div><br></br><br></br><br></br><br></br><br></br>
+        </div>
             <SolicitudesCotizacion id={id} abierto={ abierto } cerrarSolicitudes = {cerrarSolicitudes} />  
         </> 
     )

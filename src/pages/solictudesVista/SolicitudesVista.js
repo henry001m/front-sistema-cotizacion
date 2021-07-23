@@ -225,7 +225,7 @@ function SolicitudesVista(){
 
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                     <div class="card-header">
                     <h4>Solicitudes</h4>
                     </div>
@@ -354,7 +354,7 @@ function SolicitudesVista(){
                         cerrarModal={cerrarModalInformeCotizacion}
                         report={reportQuotitation}
                     />
-            </div><br></br><br></br><br></br><br></br><br></br>
+            </div>
         </>
     );
 }

@@ -175,7 +175,7 @@ function EnviarCotizacion( props ){
                                                         rows="6" 
                                                         name="description"
                                                         {...register("description",{
-                                                            required:"Campo requerido",
+                                                            required:"Este campo es requerido",
                                                             minLength:{
                                                                 value:10,
                                                                 message:"Este campo debe tener entre 10 y 300 caracteres"
@@ -199,7 +199,7 @@ function EnviarCotizacion( props ){
                                                 <div style={{color:"green"}}>
                                                     {espera}
                                                 </div>
-                                                <button type="submit" className="btn btn-info my-2 my-sm-0" id="btnIE"> Enviar </button>
+                                                <button type="submit" className="btn btn-primary my-2 my-sm-0" id="btnIE"> Enviar </button>
                                         </div>
                                 </div>
                             </div>

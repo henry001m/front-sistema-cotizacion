@@ -125,7 +125,7 @@ function DetalleSolicitud(){
     }, []);
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="row page-titles">
                     <div class="col-md-12 align-self-center">
                         <ol class="breadcrumb">
@@ -218,7 +218,6 @@ function DetalleSolicitud(){
                             title={"Agregar Informe"}
                     />
                 </div>
-                <br></br>
             </div>
         </>
     );

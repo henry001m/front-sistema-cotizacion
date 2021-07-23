@@ -45,7 +45,7 @@ function UnidadesAdministrativas() {
 
     return(
         <>
-            <div className="container" align="left">
+            <div className="container" align="left" id="wrapper">
                 <div class="card-header">
                 <h4>Unidades Administrativas</h4>
                 </div>
