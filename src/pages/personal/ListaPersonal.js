@@ -24,15 +24,19 @@ function ListaPersonal(){
     useEffect(() => {
         const user = JSON.parse(window.localStorage.getItem("userDetails"));
         async function getAllUsers() {
-            if (idUS === "null" ){
-                const response = await getPersonal(idUA);
-                setPersonal(response.users);   
-                console.log("Personal",personal,idUS,idUA)
-            }
-            if (idUA === "null"){
-                const resp = await getPersonalUG(idUS);
-                setPersonal(resp.users);
-                console.log("Personal",personal,idUS,idUA)
+            try {
+                if (idUS === "null" ){
+                    const response = await getPersonal(idUA);
+                    setPersonal(response.users);   
+                    console.log("Personal",response,idUS,idUA)
+                }
+                if (idUA === "null"){
+                    const resp = await getPersonalUG(idUS);
+                    setPersonal(resp.users);
+                    console.log("Personal",resp,idUS,idUA)
+                }
+            } catch (error) {
+                console.log(error);
             }
         }
         getAllUsers();

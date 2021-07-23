@@ -28,7 +28,8 @@ function VerCotizacion(props){
         async function getQuotitation() {
             try {
                 setDataQ(data);
-                const result = await getQuotitationId(idRe, idCo)
+                console.log("data",data,"re",idRe,"idc",idCo);
+                const result = await getQuotitationId(idCo, idRe)
                 setCotizacion(result.Cotizacion[0])
                 var aux = []
                 var files = []
