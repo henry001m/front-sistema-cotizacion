@@ -49,7 +49,7 @@ function Cotizaciones(props) {
                 if(result.Cotizaciones.length>2){
                     setFlagCotizar(false);
                 }
-                console.log(result);
+                console.log("Lista respondidas",result);
             } catch (error) {
                 console.log(error)
             }
@@ -119,7 +119,7 @@ function Cotizaciones(props) {
                                             <td>{quotitation.TotalEnBs}</td>
                                             <td><button className="btn btn-primary" id="btn-eye"
                                             onClick={() => {
-                                                history.push({pathname:`/verCotizacion/${id}/${quotitation.idCotizacion}`,data:dataQ})
+                                                history.push({pathname:`/verCotizacion/${id}/${quotitation.id}`,data:dataQ})
                                             }}><EyeFill/></button></td>
                                         </tr>
                                     );
